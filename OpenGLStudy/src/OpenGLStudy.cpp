@@ -155,6 +155,7 @@ int main(void)
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(1); // Synchronize with VSync
 
     if(glewInit() != GLEW_OK)
     {
@@ -215,7 +216,16 @@ int main(void)
     unsigned shader = CreateShader(Source.VertexSource, Source.FragmentSource);
 
     glUseProgram(shader);
-    
+
+    // We call only call uniform when the shader is bound (glUseProgram)
+    // Location: id of the uniform. When shader is created, every uniform is assigned to an id
+    GLCall(int ColorUniformLocation = glGetUniformLocation(shader, "u_Color")); // name needs to exactly matches the one declared on .shader
+    ASSERT(ColorUniformLocation != -1); // It algo might return -1 if the uniform is declared on source code but not used anywhere on the shader and the compiler has removed it
+    //glUniform4f is to set uniform that receives 4 floats. There are other Uniform functions for other params 
+    GLCall(glUniform4f(ColorUniformLocation, 0.5f, 0.0f, 0.5f, 1.0f));
+
+    float R = 0.0f;
+    float Increment = 0.05f;
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
@@ -228,6 +238,8 @@ int main(void)
         // How many vertex there are
         //glDrawArrays(GL_TRIANGLES, 0, 6);
 
+        GLCall(glUniform4f(ColorUniformLocation, R, 0.0f, 0.5f, 1.0f));
+        
         // Approach for a draw call with an index buffer
         // Mode: Triangles
         // How many indices there are
@@ -235,6 +247,17 @@ int main(void)
         // Pointer to the indices. Since we have used glBindBuffer(GL_ELEMENT_ARRAY_BUFFER... we don't need to specify one
         GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
+        if(R > 1.0f)
+        {
+            Increment = -0.05f;
+        }
+        else if(R < 0.0f)
+        {
+            Increment = 0.05f;
+        }
+
+        R += Increment;
+        
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
