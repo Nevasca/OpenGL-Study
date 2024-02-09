@@ -2,6 +2,63 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+static unsigned int CompileShader(unsigned int Type, const std::string& Source)
+{
+    unsigned int Id = glCreateShader(Type);
+    const char* Src = Source.c_str();
+
+    // Shader Id
+    // Number of source codes
+    // Pointer to the C string source code
+    // The length of source code in case we are providing multiples, nullptr if just one
+    glShaderSource(Id, 1, &Src, nullptr);
+    glCompileShader(Id);
+
+    int result;
+    glGetShaderiv(Id, GL_COMPILE_STATUS, &result);
+
+    if(result == GL_FALSE)
+    {
+        int length;
+        glGetShaderiv(Id, GL_INFO_LOG_LENGTH, &length);
+        char* message = (char*)alloca(length * sizeof(char)); // To hack doing this to allocate on stack: char message[length];
+        glGetShaderInfoLog(Id, length, &length, message);
+
+        std::cout << "Failed to compile " << (Type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader!\n";
+        std::cout << message << "\n";
+
+        // Delete shader as the compilation didn't work out
+        glDeleteShader(Id);
+
+        return 0;
+    }
+    
+    return Id;
+}
+
+// Marked as static to don't appear on other translation units
+// Takes source code of each shader and compile into shaders
+static int CreateShader(const std::string& VertexShader, const std::string& FragmentShader)
+{
+    // It's recommended to using the C++ type, like unsigned int, instead of the OpenGL defined
+    // so when dealing with multiple APIs you don't need to include OpenGL on the header or so
+    unsigned int Program = glCreateProgram();
+    unsigned int Vs = CompileShader(GL_VERTEX_SHADER, VertexShader); 
+    unsigned int Fs = CompileShader(GL_FRAGMENT_SHADER, FragmentShader); 
+
+    // Link both shaders into the program 
+    glAttachShader(Program, Vs);
+    glAttachShader(Program, Fs);
+    glLinkProgram(Program);
+    glValidateProgram(Program);
+
+    // Delete the intermediate shaders as they are now compiled into program
+    glDeleteShader(Vs);
+    glDeleteShader(Fs);
+
+    return Program;
+}
+
 int main(void)
 {
     GLFWwindow* window;
@@ -55,7 +112,39 @@ int main(void)
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
     
     // Tells how OpenGL should interpreted that data, it does not know yet they are vertex positions
+
+    // R"myDelim()myDelim" is a C++ 11 way of defining a multiline string, instead of using \n on each line and concatenating them
     
+    // Using OpenGL shader language version 330, core means to not let using deprecated functions
+    // layout(location = 0) tells the incoming vec4 position uses the location 0 of the layout, the same index 0 we set on glVertexAttribPointer above
+    // vec4 so OpenGL convert our two points (X,Y) into the vec4 expected by the gl_Position
+    std::string VertexShader = R"glsl(
+        #version 330 core
+
+        layout(location = 0) in vec4 position;        
+
+        void main()
+        {
+            gl_Position = position;
+        }
+    )glsl";
+
+    // We don't need to leave the layout definition here, it's optional for the out (maybe if it's going to be used for a next shader pass?)
+    // out vec4 Color is RGBA, normalized (between 0 and 1)
+    std::string FragmentShader = R"glsl(
+        #version 330 core
+
+        layout(location = 0) out vec4 color;        
+
+        void main()
+        {            
+            color = vec4(0.5, 0.0, 0.5, 1.0);
+        }
+    )glsl";
+    
+        
+    unsigned shader = CreateShader(VertexShader, FragmentShader);
+    glUseProgram(shader);
     
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -75,6 +164,9 @@ int main(void)
         /* Poll for and process events */
         glfwPollEvents();
     }
+
+    // Clean shader after usage so we don't leak on VRAM
+    glDeleteProgram(shader);
 
     glfwTerminate();
     return 0;
