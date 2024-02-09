@@ -132,16 +132,30 @@ int main(void)
 
     std::cout << glGetString(GL_VERSION) << '\n';
 
-    float positions[6] = {
-        -0.5f, -0.5f,
-         0.0f,  0.5f,
-         0.5f, -0.5f
+    float positions[] = {
+        -0.5f, -0.5f, // 0
+         0.5f, -0.5f, // 1
+         0.5f,  0.5f, // 2
+        -0.5f,  0.5f, // 3
+    };
+
+    // We could use unsigned char, for instance,
+    // but for more complex models it will require more bytes
+    // but it must be an unsigned type
+    unsigned int indices[] = {
+        0, 1, 2,
+        2, 3, 0
     };
     
     unsigned int buffer; // Will store the generated buffer id (an object that can be a vertex buffer, vertex array, a texture, shader...)
     glGenBuffers(1, &buffer); // How many buffers to generate (1) and pointer to set the generated buffer id (&buffer)
     glBindBuffer(GL_ARRAY_BUFFER, buffer); // Select the buffer to use with how it`s going to be used
-    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW); // Static means it will be modified once and used many times, and to draw
+    glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(float), positions, GL_STATIC_DRAW); // Static means it will be modified once and used many times, and to draw
+
+    unsigned int ibo; // Index buffer object
+    glGenBuffers(1, &ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo); // Select the buffer to use with how it`s going to be used
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW); // Static means it will be modified once and used many times, and to draw
 
     // glBindBuffer(GL_ARRAY_BUFFER, 0); // Select no buffer
 
@@ -181,7 +195,14 @@ int main(void)
         // Mode: GL_TRIANGLES
         // First element to start, in case we want to offset the data in selected buffer
         // How many vertex there are
-        glDrawArrays(GL_TRIANGLES, 0, 3); 
+        //glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        // Approach for a draw call with an index buffer
+        // Mode: Triangles
+        // How many indices there are
+        // Type of the index on the index array
+        // Pointer to the indices. Since we have used glBindBuffer(GL_ELEMENT_ARRAY_BUFFER... we don't need to specify one
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
