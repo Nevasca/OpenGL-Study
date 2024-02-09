@@ -1,6 +1,53 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <fstream>
+#include <string>
+#include <sstream>
+
+struct ShaderProgramSource
+{
+    std::string VertexSource;
+    std::string FragmentSource;
+};
+
+static ShaderProgramSource ParseShader(const std::string& FilePath)
+{
+    // This is the modern C++ approach of opening a file
+    // In a serious game engine we should consider using the C approach, as it's faster than this
+    std::ifstream Stream(FilePath);
+
+    enum class ShaderType
+    {
+        NONE = -1, VERTEX = 0, FRAGMENT = 1
+    };
+
+    std::string Line;
+    std::stringstream Ss[2]; // One for the vertex shader [0] and other for the fragment [1]
+    ShaderType Type = ShaderType::NONE;
+
+    while(getline(Stream, Line))
+    {
+        // #shader is a custom token we are using to separate the shaders
+        if(Line.find("#shader") != std::string::npos)
+        {
+            if(Line.find("vertex") != std::string::npos)
+            {
+                Type = ShaderType::VERTEX;
+            }
+            else if(Line.find("fragment") != std::string::npos)
+            {
+                Type = ShaderType::FRAGMENT;
+            }
+        }
+        else
+        {
+            Ss[(int)Type] << Line << "\n";
+        }
+    }
+
+    return {Ss[0].str(), Ss[1].str()};
+}
 
 static unsigned int CompileShader(unsigned int Type, const std::string& Source)
 {
@@ -113,37 +160,15 @@ int main(void)
     
     // Tells how OpenGL should interpreted that data, it does not know yet they are vertex positions
 
-    // R"myDelim()myDelim" is a C++ 11 way of defining a multiline string, instead of using \n on each line and concatenating them
-    
     // Using OpenGL shader language version 330, core means to not let using deprecated functions
     // layout(location = 0) tells the incoming vec4 position uses the location 0 of the layout, the same index 0 we set on glVertexAttribPointer above
     // vec4 so OpenGL convert our two points (X,Y) into the vec4 expected by the gl_Position
-    std::string VertexShader = R"glsl(
-        #version 330 core
 
-        layout(location = 0) in vec4 position;        
+    // Relative path from working directory. If running on a .exe, it will be the directory where it's running on.
+    // For debugging mode on Rider, it will be whatever is set on Project Properties > Local Debugger (Debugging) > Working Directory (default set as ProjectDir)
+    ShaderProgramSource Source = ParseShader("res/shaders/Basic.shader");
+    unsigned shader = CreateShader(Source.VertexSource, Source.FragmentSource);
 
-        void main()
-        {
-            gl_Position = position;
-        }
-    )glsl";
-
-    // We don't need to leave the layout definition here, it's optional for the out (maybe if it's going to be used for a next shader pass?)
-    // out vec4 Color is RGBA, normalized (between 0 and 1)
-    std::string FragmentShader = R"glsl(
-        #version 330 core
-
-        layout(location = 0) out vec4 color;        
-
-        void main()
-        {            
-            color = vec4(0.5, 0.0, 0.5, 1.0);
-        }
-    )glsl";
-    
-        
-    unsigned shader = CreateShader(VertexShader, FragmentShader);
     glUseProgram(shader);
     
     /* Loop until the user closes the window */
