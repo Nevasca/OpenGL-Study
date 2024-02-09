@@ -5,6 +5,37 @@
 #include <string>
 #include <sstream>
 
+// To use param as condition on macro, need to wrap on (), as (x)
+#define ASSERT(x) if (!(x)) __debugbreak()
+
+#ifdef _DEBUG
+    #define GLCall(x) GLClearError();\
+        x;\
+        ASSERT(GLLogCall(#x, __FILE__, __LINE__))
+#else
+    #define GLCall(x) x
+#endif
+
+
+static void GLClearError()
+{
+    while(glGetError() != GL_NO_ERROR);
+
+    // GL_NO_ERROR is 0, we could write like this:
+    // while(!glGetError());
+}
+
+static bool GLLogCall(const char* Function, const char* File, int Line)
+{
+    while(GLenum error = glGetError())
+    {
+        std::cout << "[OpenGL Error] (" << error << "): " << Function << " " << File << ":" << Line << "\n";
+        return false;
+    }
+
+    return true;
+}
+
 struct ShaderProgramSource
 {
     std::string VertexSource;
@@ -202,7 +233,7 @@ int main(void)
         // How many indices there are
         // Type of the index on the index array
         // Pointer to the indices. Since we have used glBindBuffer(GL_ELEMENT_ARRAY_BUFFER... we don't need to specify one
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
