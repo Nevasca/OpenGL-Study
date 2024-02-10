@@ -145,6 +145,10 @@ int main(void)
     if (!glfwInit())
         return -1;
 
+    // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    // glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
     if (!window)
@@ -178,6 +182,10 @@ int main(void)
         0, 1, 2,
         2, 3, 0
     };
+
+    unsigned int vao; // vertex array object id
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
     
     unsigned int buffer; // Will store the generated buffer id (an object that can be a vertex buffer, vertex array, a texture, shader...)
     glGenBuffers(1, &buffer); // How many buffers to generate (1) and pointer to set the generated buffer id (&buffer)
@@ -200,7 +208,7 @@ int main(void)
     // size: count of the types it has
     // type: what type of data it is
     // normalized: should we normalize it to 0-1?
-    // offset: bytes offset to next vertex
+    // stride: bytes offset to next vertex
     // pointer: bytes offset on a single vertex where this attribute starts on (if not zero, we would need to use (const void*)8 for instance)
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
     
@@ -224,6 +232,12 @@ int main(void)
     //glUniform4f is to set uniform that receives 4 floats. There are other Uniform functions for other params 
     GLCall(glUniform4f(ColorUniformLocation, 0.5f, 0.0f, 0.5f, 1.0f));
 
+    // Unbind all to test how vertex array works
+    glUseProgram(0);
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    
     float R = 0.0f;
     float Increment = 0.05f;
     /* Loop until the user closes the window */
@@ -238,7 +252,12 @@ int main(void)
         // How many vertex there are
         //glDrawArrays(GL_TRIANGLES, 0, 6);
 
-        GLCall(glUniform4f(ColorUniformLocation, R, 0.0f, 0.5f, 1.0f));
+        glUseProgram(shader);
+        glUniform4f(ColorUniformLocation, R, 0.0f, 0.5f, 1.0f);
+        
+        glBindVertexArray(vao);
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
         
         // Approach for a draw call with an index buffer
         // Mode: Triangles
