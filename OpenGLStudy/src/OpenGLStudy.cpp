@@ -8,6 +8,8 @@
 #include "Renderer.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "VertexArray.h"
+#include "VertexBufferLayout.h"
 
 struct ShaderProgramSource
 {
@@ -157,30 +159,17 @@ int main(void)
             2, 3, 0
         };
 
-        unsigned int vao; // vertex array object id
-        glGenVertexArrays(1, &vao);
-        glBindVertexArray(vao);
+        VertexArray va{};
 
         VertexBuffer vb{positions, 4 * 2 * sizeof(float)};
 
-        // Enables the vertex attribute of index 0, could be called after the attribute call as well, as long as it's called after bind
-        // If we don't enable it, the attribute won't work
-        glEnableVertexAttribArray(0); 
+        VertexBufferLayout layout;
+        layout.Push<float>(2);
 
-        // Define the layout of the buffer
-        // index: index of the attribute we are specifying
-        // size: count of the types it has
-        // type: what type of data it is
-        // normalized: should we normalize it to 0-1?
-        // stride: bytes offset to next vertex
-        // pointer: bytes offset on a single vertex where this attribute starts on (if not zero, we would need to use (const void*)8 for instance)
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+        va.AddBuffer(vb, layout);
 
         IndexBuffer ib{indices, 6};
 
-        // glBindBuffer(GL_ARRAY_BUFFER, 0); // Select no buffer
-
-    
         // Tells how OpenGL should interpreted that data, it does not know yet they are vertex positions
 
         // Using OpenGL shader language version 330, core means to not let using deprecated functions
@@ -203,7 +192,7 @@ int main(void)
 
         // Unbind all to test how vertex array works
         glUseProgram(0);
-        glBindVertexArray(0);
+        va.Unbind();
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     
@@ -223,9 +212,8 @@ int main(void)
 
             glUseProgram(shader);
             glUniform4f(ColorUniformLocation, R, 0.0f, 0.5f, 1.0f);
-        
-            glBindVertexArray(vao);
 
+            va.Bind();
             ib.Bind();
         
             // Approach for a draw call with an index buffer

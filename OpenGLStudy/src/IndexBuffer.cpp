@@ -26,5 +26,5 @@ void IndexBuffer::Bind() const
 
 void IndexBuffer::Unbind() const
 {
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)); // Select the buffer to use with how it`s going to be used
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)); // Unbind by binding it to 0
 }
