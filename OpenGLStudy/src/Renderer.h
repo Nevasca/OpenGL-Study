@@ -13,5 +13,16 @@
     #define GLCall(x) x
 #endif
 
+class Shader;
+class IndexBuffer;
+class VertexArray;
 void GLClearError();
 bool GLLogCall(const char* Function, const char* File, int Line);
+
+class Renderer
+{
+public:
+
+    void Clear() const;
+    void Draw(const VertexArray& Va, const IndexBuffer& Ib, const Shader& Shader) const;
+};

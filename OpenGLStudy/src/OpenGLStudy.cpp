@@ -83,6 +83,8 @@ int main(void)
         const std::string ColorUniformName = "u_Color";
         shader.SetUniform4f(ColorUniformName, 0.5f, 0.0f, 0.5f, 1.0f);
 
+        Renderer renderer{};
+        
         // Unbind all to test how vertex array works
         va.Unbind();
         vb.Unbind();
@@ -95,26 +97,12 @@ int main(void)
         while (!glfwWindowShouldClose(window))
         {
             /* Render here */
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            // Approach for a draw call without an index buffer (using the current bound buffer (glBindBuffer)
-            // Mode: GL_TRIANGLES
-            // First element to start, in case we want to offset the data in selected buffer
-            // How many vertex there are
-            //glDrawArrays(GL_TRIANGLES, 0, 6);
+            renderer.Clear();
 
             shader.Bind();
             shader.SetUniform4f(ColorUniformName, R, 0.0f, 0.5f, 1.0f);
 
-            va.Bind();
-            ib.Bind();
-        
-            // Approach for a draw call with an index buffer
-            // Mode: Triangles
-            // How many indices there are
-            // Type of the index on the index array
-            // Pointer to the indices. Since we have used glBindBuffer(GL_ELEMENT_ARRAY_BUFFER... we don't need to specify one
-            GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+            renderer.Draw(va, ib, shader);
 
             if(R > 1.0f)
             {
