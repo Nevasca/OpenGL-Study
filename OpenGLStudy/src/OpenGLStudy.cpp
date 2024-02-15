@@ -7,6 +7,7 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "Shader.h"
+#include "Texture.h"
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
 
@@ -43,10 +44,10 @@ int main(void)
 
     { // Creating a new scope so the stack allocated vertex and index buffers can proper destroy themselves before the OpenGL context is destroyed (glfwTerminate)
         float positions[] = {
-            -0.5f, -0.5f, // 0
-             0.5f, -0.5f, // 1
-             0.5f,  0.5f, // 2
-            -0.5f,  0.5f, // 3
+            -0.5f, -0.5f, 0.0f, 0.0f, // 0 // Bottom left vertex
+             0.5f, -0.5f, 1.0f, 0.0f, // 1 // Bottom right
+             0.5f,  0.5f, 1.0f, 1.0f, // 2 // Top right
+            -0.5f,  0.5f, 0.0f, 1.0f  // 3 // Top left
         };
 
         // We could use unsigned char, for instance,
@@ -57,12 +58,17 @@ int main(void)
             2, 3, 0
         };
 
+        // Set OpenGL behaviour for handling transparency and enable it
+        GLCall(glEnable(GL_BLEND));
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)); 
+        
         VertexArray va{};
 
-        VertexBuffer vb{positions, 4 * 2 * sizeof(float)};
+        VertexBuffer vb{positions, 4 * 4 * sizeof(float)};
 
         VertexBufferLayout layout;
-        layout.Push<float>(2);
+        layout.Push<float>(2); // First 2 floats are positions
+        layout.Push<float>(2); // Next 2 floats are UV (texture coordinates)
 
         va.AddBuffer(vb, layout);
 
@@ -83,6 +89,12 @@ int main(void)
         const std::string ColorUniformName = "u_Color";
         shader.SetUniform4f(ColorUniformName, 0.5f, 0.0f, 0.5f, 1.0f);
 
+        Texture texture{"res/textures/FancyPigeon.png"};
+        texture.Bind();
+        // Set the uniform with the slot our texture sampler is
+        // The value needs to be the same slot we bound the texture to, if we had texture.Bind(2), this would be 2
+        shader.SetUniform1i("u_Texture", 0); 
+        
         Renderer renderer{};
         
         // Unbind all to test how vertex array works
