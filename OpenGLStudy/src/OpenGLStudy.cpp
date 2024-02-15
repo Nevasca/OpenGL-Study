@@ -11,6 +11,9 @@
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
 int main(void)
 {
     GLFWwindow* window;
@@ -74,6 +77,10 @@ int main(void)
 
         IndexBuffer ib{indices, 6};
 
+        // Create a mat 4x4 with 4:3 aspect ratio (left edge, right edge...)
+        // On orthographic projection, objects that are far away don't get smaller, opposed to a perspective projection
+        glm::mat4 proj = glm::ortho(-2.f, 2.f, -1.5f, 1.5f, -1.f, 1.f);
+        
         // Tells how OpenGL should interpreted that data, it does not know yet they are vertex positions
 
         // Using OpenGL shader language version 330, core means to not let using deprecated functions
@@ -88,6 +95,7 @@ int main(void)
         shader.Bind();
         const std::string ColorUniformName = "u_Color";
         shader.SetUniform4f(ColorUniformName, 0.5f, 0.0f, 0.5f, 1.0f);
+        shader.SetUniformMat4f("u_MVP", proj); // Since is not changing, we don't need to set it every frame
 
         Texture texture{"res/textures/FancyPigeon.png"};
         texture.Bind();

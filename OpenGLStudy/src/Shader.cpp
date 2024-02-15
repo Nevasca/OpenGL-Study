@@ -50,6 +50,15 @@ void Shader::SetUniform4f(const std::string& Name, float V0, float V1, float V2,
     GLCall(glUniform4f(GetUniformLocation(Name), V0, V1, V2, V3));
 }
 
+void Shader::SetUniformMat4f(const std::string& Name, const glm::mat4& mat)
+{
+    // location,
+    // how many matrices we are providing, just 1
+    // if we need to transpose, since we are using glm, it already creates in memory the matrix the way OpenGL expects it
+    // Address of the first element
+    GLCall(glUniformMatrix4fv(GetUniformLocation(Name), 1, GL_FALSE, &mat[0][0]));
+}
+
 int Shader::GetUniformLocation(const std::string& Name)
 {
     // Instead of calling glGetUniformLocation every single time we need to set a uniform,
