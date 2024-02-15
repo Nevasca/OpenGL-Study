@@ -27,7 +27,7 @@ int main(void)
     // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(960, 540, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -47,10 +47,10 @@ int main(void)
 
     { // Creating a new scope so the stack allocated vertex and index buffers can proper destroy themselves before the OpenGL context is destroyed (glfwTerminate)
         float positions[] = {
-            -0.5f, -0.5f, 0.0f, 0.0f, // 0 // Bottom left vertex
-             0.5f, -0.5f, 1.0f, 0.0f, // 1 // Bottom right
-             0.5f,  0.5f, 1.0f, 1.0f, // 2 // Top right
-            -0.5f,  0.5f, 0.0f, 1.0f  // 3 // Top left
+            100.f, 100.f, 0.0f, 0.0f, // 0 // Bottom left vertex
+            200.f, 100.f, 1.0f, 0.0f, // 1 // Bottom right
+            200.f, 200.f, 1.0f, 1.0f, // 2 // Top right
+            100.f, 200.f, 0.0f, 1.0f  // 3 // Top left
         };
 
         // We could use unsigned char, for instance,
@@ -79,7 +79,19 @@ int main(void)
 
         // Create a mat 4x4 with 4:3 aspect ratio (left edge, right edge...)
         // On orthographic projection, objects that are far away don't get smaller, opposed to a perspective projection
-        glm::mat4 proj = glm::ortho(-2.f, 2.f, -1.5f, 1.5f, -1.f, 1.f);
+        // glm::mat4 proj = glm::ortho(-2.f, 2.f, -1.5f, 1.5f, -1.f, 1.f);
+        glm::mat4 proj = glm::ortho(0.f, 960.f, 0.f, 540.f, -1.f, 1.f); // Here we define we will work with pixels values
+        
+        // Creates a identity matrix (glm::mat4{1.f}), translate it to the left in 100 units and set as the view,
+        // The 'camera' here is positioned a little to the right, so we need to do the inverse so we move objects to the left, therefore the -100.f instead of 100.f
+        // In other words, moving the camera to the right means moving all objects to the left
+        // If we had a Camera class, we would automate this negation
+        glm::mat4 view = glm::translate(glm::mat4{1.f}, glm::vec3{-100.f, 0.f, 0.f});
+
+        // Creates the model matrix as if the object was moved to the right and up
+        glm::mat4 model = glm::translate(glm::mat4{1.f}, glm::vec3{200.f, 200.f, 0.f});
+
+        glm::mat4 mvp = proj * view * model; // Creates the MVP, in OpenGL we multiply it on reverse order
         
         // Tells how OpenGL should interpreted that data, it does not know yet they are vertex positions
 
@@ -95,7 +107,7 @@ int main(void)
         shader.Bind();
         const std::string ColorUniformName = "u_Color";
         shader.SetUniform4f(ColorUniformName, 0.5f, 0.0f, 0.5f, 1.0f);
-        shader.SetUniformMat4f("u_MVP", proj); // Since is not changing, we don't need to set it every frame
+        shader.SetUniformMat4f("u_MVP", mvp); // Since is not changing, we don't need to set it every frame
 
         Texture texture{"res/textures/FancyPigeon.png"};
         texture.Bind();
@@ -113,6 +125,10 @@ int main(void)
     
         float R = 0.0f;
         float Increment = 0.05f;
+
+        float X = 0.f;
+        float XIncrement = 10.f;
+        
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
@@ -121,6 +137,10 @@ int main(void)
 
             shader.Bind();
             shader.SetUniform4f(ColorUniformName, R, 0.0f, 0.5f, 1.0f);
+            
+            model = glm::translate(glm::mat4{1.f}, glm::vec3{X, 0.f, 0.f});
+            mvp = proj * view * model;
+            shader.SetUniformMat4f("u_MVP", mvp);
 
             renderer.Draw(va, ib, shader);
 
@@ -133,7 +153,17 @@ int main(void)
                 Increment = 0.05f;
             }
 
+            if(X > 960.f)
+            {
+                XIncrement = -10.f;
+            }
+            else if(X < 0.f)
+            {
+                XIncrement = 10.f;
+            }
+
             R += Increment;
+            X += XIncrement;
         
             /* Swap front and back buffers */
             glfwSwapBuffers(window);
