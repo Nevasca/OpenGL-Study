@@ -51,10 +51,10 @@ int main(void)
 
     { // Creating a new scope so the stack allocated vertex and index buffers can proper destroy themselves before the OpenGL context is destroyed (glfwTerminate)
         float positions[] = {
-            100.f, 100.f, 0.0f, 0.0f, // 0 // Bottom left vertex
-            200.f, 100.f, 1.0f, 0.0f, // 1 // Bottom right
-            200.f, 200.f, 1.0f, 1.0f, // 2 // Top right
-            100.f, 200.f, 0.0f, 1.0f  // 3 // Top left
+            -50.f, -50.f, 0.0f, 0.0f, // 0 // Bottom left vertex
+             50.f, -50.f, 1.0f, 0.0f, // 1 // Bottom right
+             50.f,  50.f, 1.0f, 1.0f, // 2 // Top right
+            -50.f,  50.f, 0.0f, 1.0f  // 3 // Top left
         };
 
         // We could use unsigned char, for instance,
@@ -90,7 +90,8 @@ int main(void)
         // The 'camera' here is positioned a little to the right, so we need to do the inverse so we move objects to the left, therefore the -100.f instead of 100.f
         // In other words, moving the camera to the right means moving all objects to the left
         // If we had a Camera class, we would automate this negation
-        glm::mat4 view = glm::translate(glm::mat4{1.f}, glm::vec3{-100.f, 0.f, 0.f});
+        // glm::mat4 view = glm::translate(glm::mat4{1.f}, glm::vec3{-100.f, 0.f, 0.f});
+        glm::mat4 view = glm::translate(glm::mat4{1.f}, glm::vec3{0.f, 0.f, 0.f});
         
         // Tells how OpenGL should interpreted that data, it does not know yet they are vertex positions
 
@@ -104,8 +105,8 @@ int main(void)
 
         // We call only call uniform when the shader is bound (glUseProgram)
         shader.Bind();
-        const std::string ColorUniformName = "u_Color";
-        shader.SetUniform4f(ColorUniformName, 0.5f, 0.0f, 0.5f, 1.0f);
+        // const std::string ColorUniformName = "u_Color";
+        // shader.SetUniform4f(ColorUniformName, 0.5f, 0.0f, 0.5f, 1.0f);
 
         Texture texture{"res/textures/FancyPigeon.png"};
         texture.Bind();
@@ -124,7 +125,8 @@ int main(void)
         ImGui_ImplOpenGL3_Init(glsl_version);
         ImGui::StyleColorsDark();
 
-        glm::vec3 translation = glm::vec3{200.f, 200.f, 0.f};
+        glm::vec3 translationA = glm::vec3{200.f, 200.f, 0.f};
+        glm::vec3 translationB = glm::vec3{400.f, 200.f, 0.f};
         
         // Unbind all to test how vertex array works
         va.Unbind();
@@ -145,15 +147,31 @@ int main(void)
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            // Creates the model matrix
-            glm::mat4 model = glm::translate(glm::mat4{1.f}, translation);
-            glm::mat4 mvp = proj * view * model; // Creates the MVP, in OpenGL we multiply it on reverse order
-            
-            shader.Bind();
-            shader.SetUniform4f(ColorUniformName, R, 0.0f, 0.5f, 1.0f);
-            shader.SetUniformMat4f("u_MVP", mvp);
+            // Draws first object
+            {
+                // Creates the model matrix
+                glm::mat4 model = glm::translate(glm::mat4{1.f}, translationA);
+                glm::mat4 mvp = proj * view * model; // Creates the MVP, in OpenGL we multiply it on reverse order
+                
+                shader.Bind();
+                // shader.SetUniform4f(ColorUniformName, R, 0.0f, 0.5f, 1.0f);
+                shader.SetUniformMat4f("u_MVP", mvp);
 
-            renderer.Draw(va, ib, shader);
+                renderer.Draw(va, ib, shader);
+            }
+
+            // Draws second object
+            {
+                glm::mat4 model = glm::translate(glm::mat4{1.f}, translationB);
+                glm::mat4 mvp = proj * view * model; // Creates the MVP, in OpenGL we multiply it on reverse order
+
+                // Redundant second bind, since is already bound and will cost some performance
+                // In a more robust engine we would have something to check that is already bound and ignore the call
+                shader.Bind();
+                shader.SetUniformMat4f("u_MVP", mvp);
+
+                renderer.Draw(va, ib, shader);
+            }
 
             if(R > 1.0f)
             {
@@ -167,8 +185,9 @@ int main(void)
             R += Increment;
 
             {
-                ImGui::Begin("OpenGL Study");                          // Create a window called "Hello, world!" and append into it.
-                ImGui::SliderFloat3("Translation", &translation.x, 0.0f, 960.0f);
+                ImGui::Begin("OpenGL Study");
+                ImGui::SliderFloat3("Translation A", &translationA.x, 0.0f, 960.0f);
+                ImGui::SliderFloat3("Translation B", &translationB.x, 0.0f, 960.0f);
                 ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
                 ImGui::End();
             }
