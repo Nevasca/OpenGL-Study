@@ -11,7 +11,7 @@ namespace tests
         ~TestClearColor() override;
         
         void OnUpdate(float DeltaTime) override;
-        void OnRender(const Renderer& Renderer) override;
+        void OnRender() override;
         void OnImGuiRender() override;
 
     private:

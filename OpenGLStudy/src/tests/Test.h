@@ -11,7 +11,7 @@ namespace tests
         virtual ~Test() = default;
 
         virtual void OnUpdate(float DeltaTime);
-        virtual void OnRender(const Renderer& Renderer);
+        virtual void OnRender();
         virtual void OnImGuiRender();
     };
 }

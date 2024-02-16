@@ -5,7 +5,7 @@ namespace tests
     void Test::OnUpdate(float DeltaTime)
     { }
 
-    void Test::OnRender(const Renderer& Renderer)
+    void Test::OnRender()
     { }
 
     void Test::OnImGuiRender()

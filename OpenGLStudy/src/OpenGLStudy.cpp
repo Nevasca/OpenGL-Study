@@ -9,7 +9,7 @@
 #include "imgui/imgui_impl_opengl3.h"
 #include "tests/TestClearColor.h"
 #include "tests/TestMenu.h"
-#include "tests/TestTexturedSquare.h"
+#include "tests/TestTexture2D.h"
 
 int main(void)
 {
@@ -69,7 +69,7 @@ int main(void)
         currentTest = testMenu;
 
         testMenu->RegisterTest<tests::TestClearColor>("Clear Color");
-        testMenu->RegisterTest<tests::TestTexturedSquare>("Textured Square");
+        testMenu->RegisterTest<tests::TestTexture2D>("2D Texture");
         
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
@@ -84,7 +84,7 @@ int main(void)
             if(currentTest)
             {
                 currentTest->OnUpdate(0.f);
-                currentTest->OnRender(renderer);
+                currentTest->OnRender();
 
                 ImGui::Begin("Test");
 
