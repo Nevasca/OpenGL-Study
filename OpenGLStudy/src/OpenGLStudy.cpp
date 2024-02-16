@@ -8,6 +8,7 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "tests/TestClearColor.h"
+#include "tests/TestMenu.h"
 #include "tests/TestTexturedSquare.h"
 
 int main(void)
@@ -59,23 +60,45 @@ int main(void)
         ImGui_ImplOpenGL3_Init(glsl_version);
         ImGui::StyleColorsDark();
 
-        tests::TestClearColor test{};
+        tests::Test* currentTest = nullptr;
+        tests::TestMenu* testMenu = new tests::TestMenu{currentTest};
 
+        // Starts with menu,
+        // we could add a argument to boot application with an specific test as well
+        // to spare going through the menu every time testing something new
+        currentTest = testMenu;
+
+        testMenu->RegisterTest<tests::TestClearColor>("Clear Color");
+        testMenu->RegisterTest<tests::TestTexturedSquare>("Textured Square");
+        
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
-            /* Render here */
+            GLCall(glClearColor(0.f, 0.f, 0.f, 1.f)); // Sets clear color to black
             renderer.Clear();
 
-            test.OnUpdate(0.f);
-            test.OnRender(renderer);
-            
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
-            
-            test.OnImGuiRender();
-            
+
+            if(currentTest)
+            {
+                currentTest->OnUpdate(0.f);
+                currentTest->OnRender(renderer);
+
+                ImGui::Begin("Test");
+
+                // Return to menu if back button clicked
+                if(currentTest != testMenu && ImGui::Button("<-"))
+                {
+                    delete currentTest;
+                    currentTest = testMenu;
+                }
+
+                currentTest->OnImGuiRender();
+                ImGui::End();
+            }
+
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -84,6 +107,13 @@ int main(void)
 
             /* Poll for and process events */
             glfwPollEvents();
+        }
+
+        delete currentTest;
+
+        if(currentTest != testMenu)
+        {
+            delete testMenu;
         }
     }
 
