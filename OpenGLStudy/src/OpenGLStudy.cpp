@@ -13,6 +13,9 @@
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_opengl3.h"
 
 int main(void)
 {
@@ -22,8 +25,9 @@ int main(void)
     if (!glfwInit())
         return -1;
 
-    // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    // glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    const char* glsl_version = "#version 130";
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
@@ -87,11 +91,6 @@ int main(void)
         // In other words, moving the camera to the right means moving all objects to the left
         // If we had a Camera class, we would automate this negation
         glm::mat4 view = glm::translate(glm::mat4{1.f}, glm::vec3{-100.f, 0.f, 0.f});
-
-        // Creates the model matrix as if the object was moved to the right and up
-        glm::mat4 model = glm::translate(glm::mat4{1.f}, glm::vec3{200.f, 200.f, 0.f});
-
-        glm::mat4 mvp = proj * view * model; // Creates the MVP, in OpenGL we multiply it on reverse order
         
         // Tells how OpenGL should interpreted that data, it does not know yet they are vertex positions
 
@@ -107,7 +106,6 @@ int main(void)
         shader.Bind();
         const std::string ColorUniformName = "u_Color";
         shader.SetUniform4f(ColorUniformName, 0.5f, 0.0f, 0.5f, 1.0f);
-        shader.SetUniformMat4f("u_MVP", mvp); // Since is not changing, we don't need to set it every frame
 
         Texture texture{"res/textures/FancyPigeon.png"};
         texture.Bind();
@@ -116,6 +114,17 @@ int main(void)
         shader.SetUniform1i("u_Texture", 0); 
         
         Renderer renderer{};
+
+        // Setup ImGUI
+        ImGui::CreateContext();
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+        ImGui_ImplGlfw_InitForOpenGL(window, true);
+        ImGui_ImplOpenGL3_Init(glsl_version);
+        ImGui::StyleColorsDark();
+
+        glm::vec3 translation = glm::vec3{200.f, 200.f, 0.f};
         
         // Unbind all to test how vertex array works
         va.Unbind();
@@ -126,20 +135,22 @@ int main(void)
         float R = 0.0f;
         float Increment = 0.05f;
 
-        float X = 0.f;
-        float XIncrement = 10.f;
-        
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
             /* Render here */
             renderer.Clear();
 
+            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplGlfw_NewFrame();
+            ImGui::NewFrame();
+
+            // Creates the model matrix
+            glm::mat4 model = glm::translate(glm::mat4{1.f}, translation);
+            glm::mat4 mvp = proj * view * model; // Creates the MVP, in OpenGL we multiply it on reverse order
+            
             shader.Bind();
             shader.SetUniform4f(ColorUniformName, R, 0.0f, 0.5f, 1.0f);
-            
-            model = glm::translate(glm::mat4{1.f}, glm::vec3{X, 0.f, 0.f});
-            mvp = proj * view * model;
             shader.SetUniformMat4f("u_MVP", mvp);
 
             renderer.Draw(va, ib, shader);
@@ -153,18 +164,18 @@ int main(void)
                 Increment = 0.05f;
             }
 
-            if(X > 960.f)
+            R += Increment;
+
             {
-                XIncrement = -10.f;
-            }
-            else if(X < 0.f)
-            {
-                XIncrement = 10.f;
+                ImGui::Begin("OpenGL Study");                          // Create a window called "Hello, world!" and append into it.
+                ImGui::SliderFloat3("Translation", &translation.x, 0.0f, 960.0f);
+                ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+                ImGui::End();
             }
 
-            R += Increment;
-            X += XIncrement;
-        
+            ImGui::Render();
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
             /* Swap front and back buffers */
             glfwSwapBuffers(window);
 
@@ -172,6 +183,10 @@ int main(void)
             glfwPollEvents();
         }
     }
+
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
 
     glfwTerminate();
     return 0;
