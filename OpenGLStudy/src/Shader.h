@@ -30,10 +30,13 @@ private:
 
     unsigned int m_RendererID;
     std::string m_FilePath; // For debugging purpose
-    std::unordered_map<std::string, int> m_UniformLocationCache; // Hash table/map
+
+    // Hash table/map
+    // mutable means this member can be edited inside a const method
+    mutable std::unordered_map<std::string, int> m_UniformLocationCache; 
 
     ShaderProgramSource ParseShader(const std::string& FilePath);
     unsigned int CreateShader(const std::string& VertexShader, const std::string& FragmentShader);
     unsigned int CompileShader(unsigned int Type, const std::string& Source);
-    int GetUniformLocation(const std::string& Name);
+    int GetUniformLocation(const std::string& Name) const;
 };

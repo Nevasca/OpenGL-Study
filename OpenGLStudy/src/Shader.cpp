@@ -59,7 +59,7 @@ void Shader::SetUniformMat4f(const std::string& Name, const glm::mat4& mat)
     GLCall(glUniformMatrix4fv(GetUniformLocation(Name), 1, GL_FALSE, &mat[0][0]));
 }
 
-int Shader::GetUniformLocation(const std::string& Name)
+int Shader::GetUniformLocation(const std::string& Name) const
 {
     // Instead of calling glGetUniformLocation every single time we need to set a uniform,
     // we can increase performance by checking our location cache first
