@@ -13,7 +13,7 @@ Texture::Texture(const std::string& FilePath)
     // Desired channels is how many channels we expect this image to have, 4 as we expect RGBA
     m_LocalBuffer = stbi_load(FilePath.c_str(), &m_Width, &m_Height, &m_BPP, 4);
     
-    GLCall(glGenTextures(0, &m_RendererID));
+    GLCall(glGenTextures(1, &m_RendererID));
     GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
 
     // To set params for our generated texture, we call the glTexParameter with the suffix of the type of data we are trying to set
@@ -61,6 +61,9 @@ void Texture::Bind(unsigned int Slot) const
 {
     GLCall(glActiveTexture(GL_TEXTURE0 + Slot)); // Set slot X as active texture slot
     GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
+
+    // On OpenGL 4.5 onwards, we can do this single call instead
+    //glBindTextureUnit(Slot, m_RendererID);
 }
 
 void Texture::Unbind() const
