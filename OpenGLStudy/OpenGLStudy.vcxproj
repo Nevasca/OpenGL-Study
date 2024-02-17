@@ -173,6 +173,7 @@
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\tests\Test.cpp" />
+    <ClCompile Include="src\tests\TestStaticBatchRendering.cpp" />
     <ClCompile Include="src\tests\TestClearColor.cpp" />
     <ClCompile Include="src\tests\TestMenu.cpp" />
     <ClCompile Include="src\tests\TestTexture2D.cpp" />
@@ -192,7 +193,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="res\shaders\Basic.shader" />
+    <Content Include="res\shaders\BasicBatch.shader" />
     <Content Include="res\textures\FancyPigeon.png" />
+    <Content Include="res\textures\UnownJar.png" />
     <Content Include="src\vendor\glm\CMakeLists.txt" />
     <Content Include="src\vendor\glm\copying.txt" />
   </ItemGroup>
@@ -201,6 +204,7 @@
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\tests\Test.h" />
+    <ClInclude Include="src\tests\TestStaticBatchRendering.h" />
     <ClInclude Include="src\tests\TestClearColor.h" />
     <ClInclude Include="src\tests\TestMenu.h" />
     <ClInclude Include="src\tests\TestTexture2D.h" />

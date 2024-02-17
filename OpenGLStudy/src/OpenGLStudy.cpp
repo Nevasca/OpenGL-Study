@@ -7,6 +7,7 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
+#include "tests/TestStaticBatchRendering.h"
 #include "tests/TestClearColor.h"
 #include "tests/TestMenu.h"
 #include "tests/TestTexture2D.h"
@@ -70,6 +71,7 @@ int main(void)
 
         testMenu->RegisterTest<tests::TestClearColor>("Clear Color");
         testMenu->RegisterTest<tests::TestTexture2D>("2D Texture");
+        testMenu->RegisterTest<tests::TestStaticBatchRendering>("Static Batch Rendering");
         
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
