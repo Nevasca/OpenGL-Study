@@ -74,8 +74,8 @@ namespace tests
         Renderer renderer{};
 
         m_Shader->Bind();
-        
         m_Shader->SetUniformMat4f("u_MVP", m_Proj * m_View);
+        // We could also set an uniform for a transform matrix of the whole batch, like moving all objects to the left
 
         renderer.Draw(*m_VertexArray, *m_IndexBuffer, *m_Shader);
     }
