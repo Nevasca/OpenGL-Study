@@ -4,6 +4,7 @@
 #include <fstream>
 
 #include "Renderer.h"
+#include "GameTime.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
@@ -12,6 +13,7 @@
 #include "tests/TestDynamicBatchRendering.h"
 #include "tests/TestMenu.h"
 #include "tests/TestTexture2D.h"
+#include "tests/TestTransform.h"
 
 void HandleWindowResized(GLFWwindow* Window, int Width, int Height)
 {
@@ -94,6 +96,7 @@ int main(void)
         testMenu->RegisterTest<tests::TestTexture2D>("2D Texture");
         testMenu->RegisterTest<tests::TestStaticBatchRendering>("Static Batch Rendering");
         testMenu->RegisterTest<tests::TestDynamicBatchRendering>("Dynamic Batch Rendering");
+        testMenu->RegisterTest<tests::TestTransform>("Transform");
         
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
@@ -103,7 +106,7 @@ int main(void)
             GLCall(glClearColor(0.f, 0.f, 0.f, 1.f)); // Sets clear color to black
             renderer.Clear();
 
-            float time = static_cast<float>(glfwGetTime());
+            GameTime::Time = static_cast<float>(glfwGetTime());
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();

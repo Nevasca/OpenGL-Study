@@ -178,7 +178,9 @@
     <ClCompile Include="src\tests\TestClearColor.cpp" />
     <ClCompile Include="src\tests\TestMenu.cpp" />
     <ClCompile Include="src\tests\TestTexture2D.cpp" />
+    <ClCompile Include="src\tests\TestTransform.cpp" />
     <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="src\GameTime.cpp" />
     <ClCompile Include="src\vendor\glm\detail\glm.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_demo.cpp" />
@@ -210,7 +212,9 @@
     <ClInclude Include="src\tests\TestClearColor.h" />
     <ClInclude Include="src\tests\TestMenu.h" />
     <ClInclude Include="src\tests\TestTexture2D.h" />
+    <ClInclude Include="src\tests\TestTransform.h" />
     <ClInclude Include="src\Texture.h" />
+    <ClInclude Include="src\GameTime.h" />
     <ClInclude Include="src\vendor\glm\common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_vector_relational.hpp" />

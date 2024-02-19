@@ -37,7 +37,11 @@ void Renderer::Draw(const VertexArray& Va, const IndexBuffer& Ib, const Shader& 
 {
     Shader.Bind();
     Va.Bind();
-    // Ib.Bind(); // We actually don't need to bind IndexBuffer, VertexArray stores the index buffer bind call
+    
+    // We actually don't need to bind IndexBuffer, VertexArray stores the index buffer bind call
+    // but it seems it only works if when we created the object, we bound the index after adding the vertex buffer and layout to the vertex array
+    // if the index buffer was created (our constructor bind it as well) before the add buffer call, it crashes if we don't bind it here
+    // Ib.Bind(); 
 
     // Approach for a draw call without an index buffer (using the current bound buffer (glBindBuffer)
     // Mode: GL_TRIANGLES
