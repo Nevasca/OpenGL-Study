@@ -32,8 +32,11 @@ namespace tests
 
         glm::vec3 m_Position{300.f, 300.f, 0.f};
         glm::vec3 m_Scale{3.f, 3.f, 3.f};
-        float m_RotationSpeed{1.f};
+        glm::vec3 m_Rotation{0.f, 0.f, 0.f};
+        float m_RotationZSpeed{0.f};
         glm::mat4 m_Proj;
         glm::mat4 m_MVP;
+
+        glm::mat4 GetRotationMatrix() const;
     };
 }

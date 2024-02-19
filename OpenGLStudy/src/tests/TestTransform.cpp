@@ -7,8 +7,11 @@
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
+#include "glm/detail/type_quat.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
+#include "glm/ext/quaternion_trigonometric.hpp"
+#include "glm/gtc/quaternion.hpp"
 #include "imgui/imgui.h"
 
 namespace tests
@@ -67,15 +70,62 @@ namespace tests
         // if we don't do on this order, we will get wierd behaviour
         model = glm::translate(model, m_Position);
 
+        model *= GetRotationMatrix();
+        
         // glm expect angles in radians, we can use radians(degrees) for that. Rotates in the Z axis (0, 0, 1)
         // model = glm::rotate(model, glm::radians(45.f), glm::vec3(0.f, 0.f, 1.f));
-        model = glm::rotate(model, GameTime::Time * m_RotationSpeed, glm::vec3(0.f, 0.f, 1.f));
+        model = glm::rotate(model, GameTime::Time * m_RotationZSpeed, glm::vec3(0.f, 0.f, 1.f));
         
         model = glm::scale(model, m_Scale);
         
         glm::mat4 view = glm::mat4(1.f);
 
         m_MVP = m_Proj * view * model; // Once again, read from right to left 
+    }
+
+    glm::mat4 TestTransform::GetRotationMatrix() const
+    {
+        // Approach using quaternions to prevent gimbal lock, step by step -----------
+        
+        // // Convert Euler angles to radians
+        // glm::vec3 rotation = glm::radians(m_Rotation);
+        //
+        // // Create quaternions for each axis
+        // glm::quat quatX = glm::angleAxis(rotation.x, glm::vec3(1.f, 0.f, 0.f));
+        // glm::quat quatY = glm::angleAxis(rotation.y, glm::vec3(0.f, 1.f, 0.f));
+        // glm::quat quatZ = glm::angleAxis(rotation.z, glm::vec3(0.f, 0.f, 1.f));
+        //
+        // // Combine quaternions
+        // glm::quat rotationQuat = quatX * quatY * quatZ;
+        //
+        // // Convert quaternion to rotation matrix
+        // glm::mat4 rotationMatrix = glm::mat4_cast(rotationQuat);
+        //
+        // return rotationMatrix;
+
+        // Approach using quaternions to prevent gimbal lock, shorter version ----------
+
+        // Create quaternion rotation from euler angles converted to radians
+        glm::quat rotationQuat = glm::quat(glm::radians(m_Rotation));
+
+        // Convert quaternion to rotation matrix
+        glm::mat4 rotationMatrix = glm::mat4_cast(rotationQuat);
+        
+        return rotationMatrix;
+
+        // Approach using only euler angles (has gimbal lock) --------------------------
+        
+        // The simpler approach would just use the euler angles and apply the X, Y, Z rotations in this order
+        // but this would cause gimbal lock
+
+        // glm::vec3 rotation = glm::radians(m_Rotation);
+        
+        // glm::mat4 rotationMatrix = glm::mat4(1.f);
+        // rotationMatrix = glm::rotate(rotationMatrix, rotation.z, glm::vec3(0.f, 0.f, 1.f));
+        // rotationMatrix = glm::rotate(rotationMatrix, rotation.y, glm::vec3(0.f, 1.f, 0.f));
+        // rotationMatrix = glm::rotate(rotationMatrix, rotation.x, glm::vec3(1.f, 0.f, 0.f));
+        //
+        // return rotationMatrix;
     }
 
     void TestTransform::OnRender()
@@ -92,6 +142,7 @@ namespace tests
     {
         ImGui::InputFloat3("Position", &m_Position.x);
         ImGui::InputFloat3("Scale", &m_Scale.x);
-        ImGui::InputFloat("Rotation Speed", &m_RotationSpeed);
+        ImGui::InputFloat3("Rotation", &m_Rotation.x);
+        ImGui::InputFloat("Rotation Z Speed", &m_RotationZSpeed);
     }
 }
