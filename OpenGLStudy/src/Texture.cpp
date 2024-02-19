@@ -22,7 +22,7 @@ Texture::Texture(const std::string& FilePath)
     // param name (pname): GL_TEXTURE_MIN_FILTER is the minification filter, how our texture is going to be resample down if it needs to be rendered smaller
     //                     GL_MAG_FILTER is for it needs to be rendered larger
     // param: set to linear resample it
-    GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+    GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
     GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
     GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)); // Horizontal wrap set to clamp
     GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)); // Vertical wrap set to clamp
@@ -40,6 +40,7 @@ Texture::Texture(const std::string& FilePath)
     // type: type of the data, each channel is unsigned byte
     // pixels: the pixels data. If we didn't have it right now, we could pass a nullptr so we just allocated memory on GPU for now so we can later provide it
     GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer));
+    GLCall(glGenerateMipmap(GL_TEXTURE_2D)); // Generate mipmaps for the bound texture
 
     // We are done setting up the texture, so unbind
     GLCall(glBindTexture(GL_TEXTURE_2D, 0));
