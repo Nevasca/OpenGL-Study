@@ -10,7 +10,7 @@ uniform mat4 u_MVP; // Model View Projection matrix
 
 void main()
 {
-    gl_Position = u_MVP * position;
+    gl_Position = u_MVP * position; // Apply MVP to position to transform it on Normalized Device Coordinates (NDC, from -1 to 1)
     v_TexCoord = texCoord;
 }
 

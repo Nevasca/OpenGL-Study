@@ -13,6 +13,21 @@
 #include "tests/TestMenu.h"
 #include "tests/TestTexture2D.h"
 
+void HandleWindowResized(GLFWwindow* Window, int Width, int Height)
+{
+    std::cout << "Window has been resized to (" << Width << ", " << Height << ")\n";
+    
+    // Update the Projection matrix here, or use glViewport(0, 0, Width, Height) if not using matrices
+}
+
+void ProcessInput(GLFWwindow* Window)
+{
+    if(glfwGetKey(Window, GLFW_KEY_ESCAPE) == GLFW_PRESS) // returns GLFW_RELEASE if not pressed
+    {
+        glfwSetWindowShouldClose(Window, true);
+    }
+}
+
 int main(void)
 {
     GLFWwindow* window;
@@ -27,7 +42,7 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(960, 540, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(960, 540, "OpenGL Study", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -37,6 +52,8 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Synchronize with VSync
+    
+    glfwSetFramebufferSizeCallback(window, HandleWindowResized); // Add callback for window resized
 
     if(glewInit() != GLEW_OK)
     {
@@ -44,6 +61,9 @@ int main(void)
     }
 
     std::cout << glGetString(GL_VERSION) << '\n';
+    int maxVertexAttributes;
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxVertexAttributes);
+    std::cout << "Max vertex attributes supported: " << maxVertexAttributes << "\n";
 
     { // Creating a new scope so the stack allocated vertex and index buffers can proper destroy themselves before the OpenGL context is destroyed (glfwTerminate)
 
@@ -78,8 +98,12 @@ int main(void)
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
+            ProcessInput(window);
+
             GLCall(glClearColor(0.f, 0.f, 0.f, 1.f)); // Sets clear color to black
             renderer.Clear();
+
+            float time = static_cast<float>(glfwGetTime());
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
@@ -109,7 +133,7 @@ int main(void)
             /* Swap front and back buffers */
             glfwSwapBuffers(window);
 
-            /* Poll for and process events */
+            /* Poll for and process events, like keyboard input and mouse movement */
             glfwPollEvents();
         }
 

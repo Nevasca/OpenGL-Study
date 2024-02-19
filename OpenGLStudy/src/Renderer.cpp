@@ -37,7 +37,7 @@ void Renderer::Draw(const VertexArray& Va, const IndexBuffer& Ib, const Shader& 
 {
     Shader.Bind();
     Va.Bind();
-    Ib.Bind();
+    // Ib.Bind(); // We actually don't need to bind IndexBuffer, VertexArray stores the index buffer bind call
 
     // Approach for a draw call without an index buffer (using the current bound buffer (glBindBuffer)
     // Mode: GL_TRIANGLES
@@ -45,6 +45,9 @@ void Renderer::Draw(const VertexArray& Va, const IndexBuffer& Ib, const Shader& 
     // How many vertex there are
     //glDrawArrays(GL_TRIANGLES, 0, 6);
 
+    // If we wanted to render as wireframe
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    
     // Approach for a draw call with an index buffer
     // Mode: Triangles
     // How many indices there are
