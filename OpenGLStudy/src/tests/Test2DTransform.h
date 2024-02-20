@@ -12,11 +12,11 @@ class VertexArray;
 
 namespace tests
 {
-    class TestTransform : public Test
+    class Test2DTransform : public Test
     {
     public:
-        TestTransform();
-        ~TestTransform() override;
+        Test2DTransform();
+        ~Test2DTransform() override;
 
         void OnUpdate(float DeltaTime) override;
         void OnRender() override;

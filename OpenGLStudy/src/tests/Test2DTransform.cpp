@@ -1,4 +1,4 @@
-#include "TestTransform.h"
+#include "Test2DTransform.h"
 
 #include "IndexBuffer.h"
 #include "Shader.h"
@@ -16,7 +16,7 @@
 
 namespace tests
 {
-    TestTransform::TestTransform()
+    Test2DTransform::Test2DTransform()
     {
         m_VAO = std::make_unique<VertexArray>();
 
@@ -53,13 +53,13 @@ namespace tests
         m_Texture->Bind(0);
         m_Shader->SetUniform1i("u_Texture", 0);
 
-        m_Proj = glm::ortho(0.f, 960.f, 0.f, 540.f);
+        m_Proj = glm::ortho(0.f, 960.f, 0.f, 540.f, -1.f, 100.f);
     }
 
-    TestTransform::~TestTransform()
+    Test2DTransform::~Test2DTransform()
     { }
 
-    void TestTransform::OnUpdate(float DeltaTime)
+    void Test2DTransform::OnUpdate(float DeltaTime)
     {
         // Creates an identity matrix so we can start applying the transforms
         glm::mat4 model = glm::mat4(1.f);
@@ -83,7 +83,7 @@ namespace tests
         m_MVP = m_Proj * view * model; // Once again, read from right to left 
     }
 
-    glm::mat4 TestTransform::GetRotationMatrix() const
+    glm::mat4 Test2DTransform::GetRotationMatrix() const
     {
         // Approach using quaternions to prevent gimbal lock, step by step -----------
         
@@ -128,7 +128,7 @@ namespace tests
         // return rotationMatrix;
     }
 
-    void TestTransform::OnRender()
+    void Test2DTransform::OnRender()
     {
         Renderer renderer{};
 
@@ -138,7 +138,7 @@ namespace tests
         renderer.Draw(*m_VAO, *m_IBO, *m_Shader);
     }
 
-    void TestTransform::OnImGuiRender()
+    void Test2DTransform::OnImGuiRender()
     {
         ImGui::InputFloat3("Position", &m_Position.x);
         ImGui::InputFloat3("Scale", &m_Scale.x);

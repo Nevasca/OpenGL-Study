@@ -13,7 +13,8 @@
 #include "tests/TestDynamicBatchRendering.h"
 #include "tests/TestMenu.h"
 #include "tests/TestTexture2D.h"
-#include "tests/TestTransform.h"
+#include "tests/Test2DTransform.h"
+#include "tests/Test3DTransform.h"
 
 void HandleWindowResized(GLFWwindow* Window, int Width, int Height)
 {
@@ -73,6 +74,9 @@ int main(void)
         GLCall(glEnable(GL_BLEND));
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
+        // Enables depth test so OpenGL can proper decide to draw or not a pixel on top of existing one when using perspective
+        GLCall(glEnable(GL_DEPTH_TEST));
+
         Renderer renderer{};
         
         // Setup ImGUI
@@ -96,7 +100,8 @@ int main(void)
         testMenu->RegisterTest<tests::TestTexture2D>("2D Texture");
         testMenu->RegisterTest<tests::TestStaticBatchRendering>("Static Batch Rendering");
         testMenu->RegisterTest<tests::TestDynamicBatchRendering>("Dynamic Batch Rendering");
-        testMenu->RegisterTest<tests::TestTransform>("Transform");
+        testMenu->RegisterTest<tests::Test2DTransform>("2D Transform");
+        testMenu->RegisterTest<tests::Test3DTransform>("3D Transform");
         
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
