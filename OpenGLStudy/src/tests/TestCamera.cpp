@@ -199,5 +199,10 @@ namespace tests
         glm::vec3 rotation = m_Camera->GetRotation();
         rotationText += std::to_string(rotation.x) + ", " + std::to_string(rotation.y) + ", " + std::to_string(rotation.z);
         ImGui::Text(rotationText.c_str());
+
+        std::string positionText = "Camera Position: ";
+        glm::vec3 position = m_Camera->Position;
+        positionText += std::to_string(position.x) + ", " + std::to_string(position.y) + ", " + std::to_string(position.z);
+        ImGui::Text(positionText.c_str());
     }
 }

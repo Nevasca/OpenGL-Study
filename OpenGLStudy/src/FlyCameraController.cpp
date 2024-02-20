@@ -49,13 +49,26 @@ void FlyCameraController::Shutdown(GLFWwindow* Window)
 
 void FlyCameraController::ProcessInput(GLFWwindow* Window)
 {
+    const bool bIsHoldingShift = glfwGetKey(Window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS;
+
+    if(bIsHoldingShift)
+    {
+        m_Speed = m_BaseSpeed * m_FastSpeedMultiplier;
+        m_Sensitivity = m_BaseSensitivity * m_FastSpeedMultiplier;
+    }
+    else
+    {
+        m_Speed = m_BaseSpeed;
+        m_Sensitivity = m_BaseSensitivity;
+    }
+    
     UpdateCameraPosition(Window);
     UpdateCameraRotation(Window);
 }
 
 void FlyCameraController::UpdateCameraPosition(GLFWwindow* Window)
 {
-    const float cameraSpeed = m_CameraSpeed * GameTime::DeltaTime;
+    float cameraSpeed = m_Speed * GameTime::DeltaTime;
 
     if(glfwGetKey(Window, GLFW_KEY_W) == GLFW_PRESS)
     {
@@ -76,6 +89,16 @@ void FlyCameraController::UpdateCameraPosition(GLFWwindow* Window)
     {
         m_Camera->Position += m_Camera->GetRightVector() * cameraSpeed;
     }
+
+    if(glfwGetKey(Window, GLFW_KEY_E) == GLFW_PRESS)
+    {
+        m_Camera->Position += m_Camera->GetUpVector() * cameraSpeed;
+    }
+
+    if(glfwGetKey(Window, GLFW_KEY_Q) == GLFW_PRESS)
+    {
+        m_Camera->Position -= m_Camera->GetUpVector() * cameraSpeed;
+    }
 }
 
 void FlyCameraController::UpdateCameraRotation(GLFWwindow* Window)
@@ -88,9 +111,8 @@ void FlyCameraController::UpdateCameraRotation(GLFWwindow* Window)
     m_CursorLastX = cursorX;
     m_CursorLastY = cursorY;
 
-    const float sensitivity = 0.1f;
-    xOffset *= sensitivity;
-    yOffset *= sensitivity;
+    xOffset *= m_Sensitivity;
+    yOffset *= m_Sensitivity;
 
     glm::vec3 eulerRotation = m_Camera->GetRotation();
     eulerRotation.y += xOffset;
