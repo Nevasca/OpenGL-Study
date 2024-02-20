@@ -15,6 +15,7 @@
 #include "tests/TestTexture2D.h"
 #include "tests/Test2DTransform.h"
 #include "tests/Test3DTransform.h"
+#include "tests/TestCamera.h"
 
 void HandleWindowResized(GLFWwindow* Window, int Width, int Height)
 {
@@ -89,7 +90,7 @@ int main(void)
         ImGui::StyleColorsDark();
 
         tests::Test* currentTest = nullptr;
-        tests::TestMenu* testMenu = new tests::TestMenu{currentTest};
+        tests::TestMenu* testMenu = new tests::TestMenu{currentTest, *window};
 
         // Starts with menu,
         // we could add a argument to boot application with an specific test as well
@@ -102,16 +103,23 @@ int main(void)
         testMenu->RegisterTest<tests::TestDynamicBatchRendering>("Dynamic Batch Rendering");
         testMenu->RegisterTest<tests::Test2DTransform>("2D Transform");
         testMenu->RegisterTest<tests::Test3DTransform>("3D Transform");
+        testMenu->RegisterTest<tests::TestCamera>("Camera");
+
+        float lastFrameTime = 0.f;
         
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
+            GameTime::Time = static_cast<float>(glfwGetTime());
+
+            GameTime::DeltaTime = GameTime::Time - lastFrameTime;
+            lastFrameTime = GameTime::Time;            
+            
             ProcessInput(window);
 
             GLCall(glClearColor(0.f, 0.f, 0.f, 1.f)); // Sets clear color to black
             renderer.Clear();
 
-            GameTime::Time = static_cast<float>(glfwGetTime());
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
@@ -119,7 +127,8 @@ int main(void)
 
             if(currentTest)
             {
-                currentTest->OnUpdate(0.f);
+                currentTest->OnProcessInput(window);
+                currentTest->OnUpdate(GameTime::DeltaTime);
                 currentTest->OnRender();
 
                 ImGui::Begin("Test");
@@ -127,6 +136,7 @@ int main(void)
                 // Return to menu if back button clicked
                 if(currentTest != testMenu && ImGui::Button("<-"))
                 {
+                    currentTest->Shutdown(window);
                     delete currentTest;
                     currentTest = testMenu;
                 }

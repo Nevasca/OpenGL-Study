@@ -2,6 +2,12 @@
 
 namespace tests
 {
+    void Test::Setup(GLFWwindow* Window)
+    { }
+
+    void Test::OnProcessInput(GLFWwindow* Window)
+    { }
+
     void Test::OnUpdate(float DeltaTime)
     { }
 
@@ -9,5 +15,8 @@ namespace tests
     { }
 
     void Test::OnImGuiRender()
+    { }
+
+    void Test::Shutdown(GLFWwindow* Window)
     { }
 }

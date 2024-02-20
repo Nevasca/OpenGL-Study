@@ -174,6 +174,7 @@
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\tests\Test.cpp" />
     <ClCompile Include="src\tests\Test3DTransform.cpp" />
+    <ClCompile Include="src\tests\TestCamera.cpp" />
     <ClCompile Include="src\tests\TestDynamicBatchRendering.cpp" />
     <ClCompile Include="src\tests\TestStaticBatchRendering.cpp" />
     <ClCompile Include="src\tests\TestClearColor.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\Test3DTransform.h" />
+    <ClInclude Include="src\tests\TestCamera.h" />
     <ClInclude Include="src\tests\TestDynamicBatchRendering.h" />
     <ClInclude Include="src\tests\TestStaticBatchRendering.h" />
     <ClInclude Include="src\tests\TestClearColor.h" />

@@ -4,8 +4,8 @@
 
 namespace tests
 {
-    TestMenu::TestMenu(Test*& CurrentTest)
-        : m_CurrentTest(CurrentTest)
+    TestMenu::TestMenu(Test*& CurrentTest, GLFWwindow& CurrentWindow)
+        : m_CurrentTest(CurrentTest), m_CurrentWindow(CurrentWindow)
     { }
 
     void TestMenu::OnImGuiRender()
@@ -15,6 +15,7 @@ namespace tests
             if(ImGui::Button(Test.first.c_str()))
             {
                 m_CurrentTest = Test.second();
+                m_CurrentTest->Setup(&m_CurrentWindow);
             }
         }
     }

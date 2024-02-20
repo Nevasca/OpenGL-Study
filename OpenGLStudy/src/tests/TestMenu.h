@@ -12,7 +12,7 @@ namespace tests
     class TestMenu : public Test
     {
     public:
-        TestMenu(Test*& CurrentTest);
+        TestMenu(Test*& CurrentTest, GLFWwindow& CurrentWindow);
         
         void OnImGuiRender() override;
 
@@ -29,6 +29,7 @@ namespace tests
 
         // A ref to a pointer so we can change the current test and reflect on the external pointer
         Test*& m_CurrentTest;
+        GLFWwindow& m_CurrentWindow;
 
         // Instead of having a Test* and making all of them available from start
         // We want to create them on demand, so we can better allocate and free memory
