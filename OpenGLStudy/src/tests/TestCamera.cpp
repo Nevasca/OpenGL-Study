@@ -195,6 +195,8 @@ namespace tests
 
     void TestCamera::OnImGuiRender()
     {
+        m_CameraController->OnImGuiRender();
+        
         std::string rotationText = "Camera Rotation: ";
         glm::vec3 rotation = m_Camera->GetRotation();
         rotationText += std::to_string(rotation.x) + ", " + std::to_string(rotation.y) + ", " + std::to_string(rotation.z);

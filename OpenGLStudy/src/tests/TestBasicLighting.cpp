@@ -292,6 +292,8 @@ namespace tests
 
     void TestBasicLighting::OnImGuiRender()
     {
+        m_CameraController->OnImGuiRender();
+
         ImGui::ColorEdit3("Light Color", &m_LightColor.x);
     }
 }
