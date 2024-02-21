@@ -106,7 +106,7 @@ namespace tests
 
         m_CubeIBO = std::make_unique<IndexBuffer>(indices, 6 * 6);
 
-        m_CubeShader = std::make_unique<Shader>("res/shaders/BasicLight.shader");
+        m_CubeShader = std::make_unique<Shader>("res/shaders/BasicLit.shader");
 
         m_CubeShader->Bind();
         m_CubeShader->SetUniform3f("u_ObjectColor", 1.f, 0.5f, 0.31f);

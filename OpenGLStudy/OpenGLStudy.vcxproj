@@ -202,7 +202,7 @@
   <ItemGroup>
     <Content Include="res\shaders\Basic.shader" />
     <Content Include="res\shaders\BasicBatch.shader" />
-    <Content Include="res\shaders\BasicLight.shader" />
+    <Content Include="res\shaders\BasicLit.shader" />
     <Content Include="res\shaders\BasicLightCube.shader" />
     <Content Include="res\textures\FancyPigeon.png" />
     <Content Include="res\textures\UnownJar.png" />
