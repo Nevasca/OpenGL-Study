@@ -106,11 +106,9 @@ namespace tests
 
         m_CubeIBO = std::make_unique<IndexBuffer>(indices, 6 * 6);
 
-        m_CubeShader = std::make_unique<Shader>("res/shaders/BasicLit.shader");
+        m_CubeShader = std::make_unique<Shader>("res/shaders/BasicLitCustom.shader");
 
         m_CubeShader->Bind();
-        m_CubeShader->SetUniform3f("u_ObjectColor", 1.f, 0.5f, 0.31f);
-        
 
         glm::vec3 initialPositions []
         {
@@ -214,7 +212,7 @@ namespace tests
     
     void TestBasicLighting::Setup(GLFWwindow* Window)
     {
-        m_CameraController->Setup(Window);
+        m_CameraController->Setup(Window, false);
     }
     
     void TestBasicLighting::Shutdown(GLFWwindow* Window)
@@ -247,7 +245,7 @@ namespace tests
 
             m_LightCubeShader->Bind();
             m_LightCubeShader->SetUniformMat4f("u_MVP", m_MVP);
-            m_LightCubeShader->SetUniform3f("u_Color", m_LightColor);
+            m_LightCubeShader->SetUniform3f("u_Color", m_LightDiffuseColor);
 
             renderer.Draw(*m_LightCubeVAO, *m_LightCubeIBO, *m_LightCubeShader);
         }
@@ -255,8 +253,15 @@ namespace tests
         // Draw cubes
         {
             m_CubeShader->Bind();
-            m_CubeShader->SetUniform3f("u_LightColor", m_LightColor);
-            m_CubeShader->SetUniform3f("u_LightPosition", m_LightSourcePosition);
+            m_CubeShader->SetUniform3f("u_Light.position", m_LightSourcePosition);
+            m_CubeShader->SetUniform3f("u_Light.ambient", m_LightAmbientColor);
+            m_CubeShader->SetUniform3f("u_Light.diffuse", m_LightDiffuseColor);
+            m_CubeShader->SetUniform3f("u_Light.specular", m_LightSpecularColor);
+
+            m_CubeShader->SetUniform3f("u_Material.ambient", m_CubeAmbientColor);
+            m_CubeShader->SetUniform3f("u_Material.diffuse", m_CubeDiffuseColor);
+            m_CubeShader->SetUniform3f("u_Material.specular", m_CubeSpecularColor);
+            m_CubeShader->SetUniform1f("u_Material.shininess", m_CubeShininess);
 
             // If we were calculating light in view space, we wouldn't need to pass the view position
             // since it would be 0,0,0
@@ -292,8 +297,21 @@ namespace tests
 
     void TestBasicLighting::OnImGuiRender()
     {
-        m_CameraController->OnImGuiRender();
+        if(ImGui::CollapsingHeader("Light"))
+        {
+            ImGui::ColorEdit3("L Ambient", &m_LightAmbientColor.x);
+            ImGui::ColorEdit3("L Diffuse", &m_LightDiffuseColor.x);
+            ImGui::ColorEdit3("L Specular", &m_LightSpecularColor.x);
+        }
 
-        ImGui::ColorEdit3("Light Color", &m_LightColor.x);
+        if(ImGui::CollapsingHeader("Cube"))
+        {
+            ImGui::ColorEdit3("C Ambient Color", &m_CubeAmbientColor.x);
+            ImGui::ColorEdit3("C Diffuse Color", &m_CubeDiffuseColor.x);
+            ImGui::ColorEdit3("C Specular Color", &m_CubeSpecularColor.x);
+            ImGui::InputFloat("C Shininess", &m_CubeShininess);
+        }
+        
+        m_CameraController->OnImGuiRender();
     }
 }

@@ -11,7 +11,7 @@ public:
 
     FlyCameraController(const std::shared_ptr<Camera>& Camera);
 
-    void Setup(GLFWwindow* Window);
+    void Setup(GLFWwindow* Window, bool bEnable = true);
     void Shutdown(GLFWwindow* Window);
     void ProcessInput(GLFWwindow* Window);
     void UpdateCameraZoom(GLFWwindow* Window, double XScrollOffset, double YScrollOffset);

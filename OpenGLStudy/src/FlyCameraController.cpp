@@ -22,9 +22,12 @@ FlyCameraController::FlyCameraController(const std::shared_ptr<Camera>& Camera)
     : m_Camera(Camera)
 { }
 
-void FlyCameraController::Setup(GLFWwindow* Window)
+void FlyCameraController::Setup(GLFWwindow* Window, bool bEnabled)
 {
-    EnableNavigation(Window);
+    if(bEnabled)
+    {
+        EnableNavigation(Window);
+    }
     
     g_CameraController = this;
     glfwSetScrollCallback(Window, ScrollCallbackWrapper);
@@ -150,6 +153,11 @@ void FlyCameraController::UpdateCameraRotation(GLFWwindow* Window)
 
 void FlyCameraController::UpdateCameraZoom(GLFWwindow* Window, double XScrollOffset, double YScrollOffset)
 {
+    if(!m_NavigationEnabled)
+    {
+        return;
+    }
+
     float fov = m_Camera->GetFov();
     fov -= static_cast<float>(YScrollOffset);
 

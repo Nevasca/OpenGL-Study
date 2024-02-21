@@ -47,7 +47,15 @@ namespace tests
         
         glm::vec3 m_LightSourcePosition{1.2f, 1.f, 2.f};
         glm::vec3 m_LightSourceScale{0.2f, 0.2f, 0.2f};
-        glm::vec3 m_LightColor{1.f, 1.f, 1.1};
+        glm::vec3 m_LightAmbientColor{0.2f, 0.2f, 0.2f};
+        glm::vec3 m_LightDiffuseColor{0.5f, 0.5f, 0.5f};
+        glm::vec3 m_LightSpecularColor{1.f, 1.f, 1.f};
+
+        glm::vec3 m_CubeAmbientColor{1.f, 0.5f, 0.31f};
+        glm::vec3 m_CubeDiffuseColor{1.f, 0.5f, 0.31f};
+        glm::vec3 m_CubeSpecularColor{0.5f, 0.5f, 0.5f};
+        float m_CubeShininess{32.f};
+        
         glm::mat4 m_MVP;
 
         std::shared_ptr<Camera> m_Camera;
