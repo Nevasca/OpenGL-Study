@@ -25,7 +25,7 @@ void FlyCameraController::Setup(GLFWwindow* Window)
 {
     // We need to disable the cursor so we can "capture" it (invisible and always on center).
     // We will need that to proper move camera around when we move the mouse
-    glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    // glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
     // Set last known cursor position when entering to prevent large sudden jump on first focus
     double cursorX, cursorY;

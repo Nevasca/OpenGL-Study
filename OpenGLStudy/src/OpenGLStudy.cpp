@@ -16,6 +16,13 @@
 #include "tests/Test2DTransform.h"
 #include "tests/Test3DTransform.h"
 #include "tests/TestCamera.h"
+#include "tests/TestBasicLighting.h"
+
+namespace
+{
+    tests::Test* currentTest = nullptr;
+    tests::TestMenu* testMenu = nullptr;
+}
 
 void HandleWindowResized(GLFWwindow* Window, int Width, int Height)
 {
@@ -26,7 +33,8 @@ void HandleWindowResized(GLFWwindow* Window, int Width, int Height)
 
 void ProcessInput(GLFWwindow* Window)
 {
-    if(glfwGetKey(Window, GLFW_KEY_ESCAPE) == GLFW_PRESS) // returns GLFW_RELEASE if not pressed
+    // Request close when ESC and is on main menu
+    if(glfwGetKey(Window, GLFW_KEY_ESCAPE) == GLFW_PRESS && currentTest == testMenu) // returns GLFW_RELEASE if not pressed
     {
         glfwSetWindowShouldClose(Window, true);
     }
@@ -89,8 +97,8 @@ int main(void)
         ImGui_ImplOpenGL3_Init(glsl_version);
         ImGui::StyleColorsDark();
 
-        tests::Test* currentTest = nullptr;
-        tests::TestMenu* testMenu = new tests::TestMenu{currentTest, *window};
+        currentTest = nullptr;
+        testMenu = new tests::TestMenu{currentTest, *window};
 
         // Starts with menu,
         // we could add a argument to boot application with an specific test as well
@@ -104,6 +112,7 @@ int main(void)
         testMenu->RegisterTest<tests::Test2DTransform>("2D Transform");
         testMenu->RegisterTest<tests::Test3DTransform>("3D Transform");
         testMenu->RegisterTest<tests::TestCamera>("Camera");
+        testMenu->RegisterTest<tests::TestBasicLighting>("Basic Lighting");
 
         float lastFrameTime = 0.f;
         

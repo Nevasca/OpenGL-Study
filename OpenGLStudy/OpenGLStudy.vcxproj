@@ -177,6 +177,7 @@
     <ClCompile Include="src\tests\Test.cpp" />
     <ClCompile Include="src\tests\Test3DTransform.cpp" />
     <ClCompile Include="src\tests\TestCamera.cpp" />
+    <ClCompile Include="src\tests\TestBasicLighting.cpp" />
     <ClCompile Include="src\tests\TestDynamicBatchRendering.cpp" />
     <ClCompile Include="src\tests\TestStaticBatchRendering.cpp" />
     <ClCompile Include="src\tests\TestClearColor.cpp" />
@@ -201,6 +202,8 @@
   <ItemGroup>
     <Content Include="res\shaders\Basic.shader" />
     <Content Include="res\shaders\BasicBatch.shader" />
+    <Content Include="res\shaders\BasicLight.shader" />
+    <Content Include="res\shaders\BasicLightCube.shader" />
     <Content Include="res\textures\FancyPigeon.png" />
     <Content Include="res\textures\UnownJar.png" />
     <Content Include="src\vendor\glm\CMakeLists.txt" />
@@ -215,6 +218,7 @@
     <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\Test3DTransform.h" />
     <ClInclude Include="src\tests\TestCamera.h" />
+    <ClInclude Include="src\tests\TestBasicLighting.h" />
     <ClInclude Include="src\tests\TestDynamicBatchRendering.h" />
     <ClInclude Include="src\tests\TestStaticBatchRendering.h" />
     <ClInclude Include="src\tests\TestClearColor.h" />

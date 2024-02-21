@@ -45,6 +45,16 @@ void Shader::SetUniform1f(const std::string& Name, float Value)
     GLCall(glUniform1f(GetUniformLocation(Name), Value));
 }
 
+void Shader::SetUniform3f(const std::string& Name, float V0, float V1, float V2)
+{
+    GLCall(glUniform3f(GetUniformLocation(Name), V0, V1, V2));
+}
+
+void Shader::SetUniform3f(const std::string& Name, const glm::vec3& Value)
+{
+    SetUniform3f(Name, Value.x, Value.y, Value.z);
+}
+
 // In a more robust solution for a game engine, we would probably have a SetValue method with overloads for different value types
 // to call the proper uniform function 
 void Shader::SetUniform4f(const std::string& Name, float V0, float V1, float V2, float V3)
