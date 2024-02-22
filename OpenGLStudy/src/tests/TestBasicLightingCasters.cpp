@@ -23,8 +23,8 @@ namespace tests
 {
     TestBasicLightingCasters::TestBasicLightingCasters()
     {
-        CreateCube();
-        CreateLightSource();
+        CreateCubes();
+        CreateLightSources();
 
         m_Camera = std::make_shared<Camera>(960.f, 540.f);
         m_Camera->Position.z = 5.f;
@@ -32,7 +32,7 @@ namespace tests
         m_CameraController = std::make_unique<FlyCameraController>(m_Camera);
     }
 
-    void TestBasicLightingCasters::CreateCube()
+    void TestBasicLightingCasters::CreateCubes()
     {
         m_CubeVAO = std::make_unique<VertexArray>();
 
@@ -129,7 +129,7 @@ namespace tests
             {0.f, 0.f, -3.5f},
         };
         
-        for(int i = 0; i < m_TotalCubes; i++)
+        for(int i = 0; i < TOTAL_CUBES; i++)
         {
             
             m_Positions[i] = initialPositions[i];
@@ -141,7 +141,7 @@ namespace tests
 
     // Create a cube to act as light point,
     // it's just so we can understand where the light position is, the cube itself doesn't emit light 
-    void TestBasicLightingCasters::CreateLightSource()
+    void TestBasicLightingCasters::CreateLightSources()
     {
         m_LightCubeVAO = std::make_unique<VertexArray>();
 
@@ -218,6 +218,19 @@ namespace tests
         m_LightCubeIBO = std::make_unique<IndexBuffer>(indices, 6 + 4 * 3);
 
         m_LightCubeShader = std::make_unique<Shader>("res/shaders/BasicLightCube.shader");
+
+        for(int i = 0; i < TOTAL_LIGHT_POINTS; i++)
+        {
+            glm::vec3 position = {i, i + 1.f, i};
+            m_PointLightPositions[i] = position;
+            m_PointLightRotations[i] = {0.f, 0.f, 0.f};
+            m_PointLightAmbientColors[i] = {0.2f, 0.2f, 0.2f};
+            m_PointLightDiffuseColors[i] = {0.5f, 0.5f, 0.5f};
+            m_PointLightSpecularColors[i] = {1.f, 1.f, 1.f};
+            m_PointLightConstants[i] = 1.f;
+            m_PointLightLinears[i] = 0.09f;
+            m_PointLightQuadratics[i] = 0.032f;
+        }
     }
 
     TestBasicLightingCasters::~TestBasicLightingCasters()
@@ -240,31 +253,57 @@ namespace tests
 
     void TestBasicLightingCasters::OnUpdate(float DeltaTime)
     {
-        if(!m_OrbitLightEnabled)
-        {
-            return;
-        }
-
-        const float orbitRadius = 4.5f;
-        m_LightSourcePosition.x = sin(GameTime::Time) * orbitRadius;
-        m_LightSourcePosition.z = cos(GameTime::Time) * orbitRadius;
+        // if(!m_OrbitLightEnabled)
+        // {
+        //     return;
+        // }
+        //
+        // const float orbitRadius = 4.5f;
+        // m_PointLightPositions.x = sin(GameTime::Time) * orbitRadius;
+        // m_PointLightPositions.z = cos(GameTime::Time) * orbitRadius;
     }
 
     void TestBasicLightingCasters::OnRender()
     {
         Renderer renderer{};
 
-        // Draw light source visualization cube
+        // Draw light sources visualization cube
         {
+            m_LightCubeShader->Bind();
+
             glm::mat4 model = glm::mat4(1.f);
-            model = glm::translate(model, m_LightSourcePosition);
-            model *= GetRotationMatrix(m_LightSourceRotation);
-            model = glm::scale(model, m_LightSourceScale);
+            model = glm::translate(model, m_DirectionalLightPosition);
+            model *= GetRotationMatrix(m_DirectionalLightRotation);
+            model = glm::scale(model, m_LightCubeScale);
             m_MVP = m_Camera->GetViewProjectionMatrix() * model;
 
-            m_LightCubeShader->Bind();
             m_LightCubeShader->SetUniformMat4f("u_MVP", m_MVP);
-            m_LightCubeShader->SetUniform3f("u_Color", m_LightDiffuseColor);
+            m_LightCubeShader->SetUniform3f("u_Color", m_DirectionalLightDiffuseColor);
+
+            renderer.Draw(*m_LightCubeVAO, *m_LightCubeIBO, *m_LightCubeShader);
+            
+            for(int i = 0; i < TOTAL_LIGHT_POINTS; i++)
+            {
+                model = glm::mat4(1.f);
+                model = glm::translate(model, m_PointLightPositions[i]);
+                model *= GetRotationMatrix(m_PointLightRotations[i]);
+                model = glm::scale(model, m_LightCubeScale);
+                m_MVP = m_Camera->GetViewProjectionMatrix() * model;
+
+                m_LightCubeShader->SetUniformMat4f("u_MVP", m_MVP);
+                m_LightCubeShader->SetUniform3f("u_Color", m_PointLightDiffuseColors[i]);
+
+                renderer.Draw(*m_LightCubeVAO, *m_LightCubeIBO, *m_LightCubeShader);
+            }
+
+            model = glm::mat4(1.f);
+            model = glm::translate(model, m_SpotLightPosition);
+            model *= GetRotationMatrix(m_SpotLightRotation);
+            model = glm::scale(model, m_LightCubeScale);
+            m_MVP = m_Camera->GetViewProjectionMatrix() * model;
+
+            m_LightCubeShader->SetUniformMat4f("u_MVP", m_MVP);
+            m_LightCubeShader->SetUniform3f("u_Color", m_SpotLightDiffuseColor);
 
             renderer.Draw(*m_LightCubeVAO, *m_LightCubeIBO, *m_LightCubeShader);
         }
@@ -272,27 +311,40 @@ namespace tests
         // Draw cubes
         {
             m_CubeShader->Bind();
-            m_CubeShader->SetUniform3f("u_Light.position", m_LightSourcePosition);
-            m_CubeShader->SetUniform3f("u_Light.direction", GetForwardVector(m_LightSourceRotation));
-            m_CubeShader->SetUniform3f("u_Light.ambient", m_LightAmbientColor);
-            m_CubeShader->SetUniform3f("u_Light.diffuse", m_LightDiffuseColor);
-            m_CubeShader->SetUniform3f("u_Light.specular", m_LightSpecularColor);
-            m_CubeShader->SetUniform1f("u_Light.constant", m_LightConstant);
-            m_CubeShader->SetUniform1f("u_Light.linear", m_LightLinear);
-            m_CubeShader->SetUniform1f("u_Light.quadratic", m_LightQuadratic);
-            m_CubeShader->SetUniform1f("u_Light.cutoff", glm::cos(glm::radians(m_LightCutoff))); // Pass the cos as it will be used in a dot product comparisson
-            m_CubeShader->SetUniform1f("u_Light.outerCutoff", glm::cos(glm::radians(m_LightOuterCutoff)));
 
-            // m_CubeShader->SetUniform3f("u_Material.ambient", m_CubeAmbientColor);
-            // m_CubeShader->SetUniform3f("u_Material.diffuse", m_CubeDiffuseColor); // We are now using a diffuse map on setup (texture)
-            // m_CubeShader->SetUniform3f("u_Material.specular", m_CubeSpecularColor);
-            m_CubeShader->SetUniform1f("u_Material.shininess", m_CubeShininess);
+            // Update light information on cube shader
+            m_CubeShader->SetUniform3f("u_DirLight.direction",GetForwardVector(m_DirectionalLightRotation));
+            m_CubeShader->SetUniform3f("u_DirLight.ambient", m_DirectionalLightAmbientColor);
+            m_CubeShader->SetUniform3f("u_DirLight.diffuse", m_DirectionalLightDiffuseColor);
+            m_CubeShader->SetUniform3f("u_DirLight.specular", m_DirectionalLightSpecularColor);
+
+            for(int i = 0; i < TOTAL_LIGHT_POINTS; i++)
+            {
+                m_CubeShader->SetUniform3f("u_PointLights[" + std::to_string(i) + "].position", m_PointLightPositions[i]);
+                m_CubeShader->SetUniform1f("u_PointLights[" + std::to_string(i) + "].constant", m_PointLightConstants[i]);
+                m_CubeShader->SetUniform1f("u_PointLights[" + std::to_string(i) + "].linear", m_PointLightLinears[i]);
+                m_CubeShader->SetUniform1f("u_PointLights[" + std::to_string(i) + "].quadratic", m_PointLightQuadratics[i]);
+                m_CubeShader->SetUniform3f("u_PointLights[" + std::to_string(i) + "].ambient", m_PointLightAmbientColors[i]);
+                m_CubeShader->SetUniform3f("u_PointLights[" + std::to_string(i) + "].diffuse", m_PointLightDiffuseColors[i]);
+                m_CubeShader->SetUniform3f("u_PointLights[" + std::to_string(i) + "].specular", m_PointLightSpecularColors[i]);
+            }
+            
+            m_CubeShader->SetUniform3f("u_SpotLight.position", m_SpotLightPosition);
+            m_CubeShader->SetUniform3f("u_SpotLight.direction", GetForwardVector(m_SpotLightRotation));
+            m_CubeShader->SetUniform1f("u_SpotLight.cutoff", glm::cos(glm::radians(m_SpotLightCutoff))); // Pass the cos as it will be used in a dot product comparison
+            m_CubeShader->SetUniform1f("u_SpotLight.outerCutoff", glm::cos(glm::radians(m_SpotLightOuterCutoff)));
+            m_CubeShader->SetUniform3f("u_SpotLight.ambient", m_SpotLightAmbientColor);
+            m_CubeShader->SetUniform3f("u_SpotLight.diffuse", m_SpotLightDiffuseColor);
+            m_CubeShader->SetUniform3f("u_SpotLight.specular", m_SpotLightSpecularColor);
 
             // If we were calculating light in view space, we wouldn't need to pass the view position
             // since it would be 0,0,0
             m_CubeShader->SetUniform3f("u_ViewPosition", m_Camera->Position);
             
-            for(int i = 0; i < m_TotalCubes; i++)
+            // Update material properties
+            m_CubeShader->SetUniform1f("u_Material.shininess", m_CubeShininess);
+            
+            for(int i = 0; i < TOTAL_CUBES; i++)
             {
                 glm::mat4 model = glm::mat4(1.f);
         
@@ -332,21 +384,50 @@ namespace tests
 
     void TestBasicLightingCasters::OnImGuiRender()
     {
-        if(ImGui::CollapsingHeader("Light"))
+        // ImGui::Checkbox("Enable Orbit", &m_OrbitLightEnabled);
+
+        if(ImGui::CollapsingHeader("Directional Light"))
         {
-            ImGui::Checkbox("Enable Orbit", &m_OrbitLightEnabled);
-            ImGui::InputFloat3("L Position", &m_LightSourcePosition.x);
-            ImGui::InputFloat3("L Rotation", &m_LightSourceRotation.x);
+            ImGui::InputFloat3("Dir Position", &m_DirectionalLightPosition.x);
+            ImGui::InputFloat3("Dir Rotation", &m_DirectionalLightRotation.x);
 
-            ImGui::ColorEdit3("L Ambient", &m_LightAmbientColor.x);
-            ImGui::ColorEdit3("L Diffuse", &m_LightDiffuseColor.x);
-            ImGui::ColorEdit3("L Specular", &m_LightSpecularColor.x);
+            ImGui::ColorEdit3("Dir Ambient", &m_DirectionalLightAmbientColor.x);
+            ImGui::ColorEdit3("Dir Diffuse", &m_DirectionalLightDiffuseColor.x);
+            ImGui::ColorEdit3("Dir Specular", &m_DirectionalLightSpecularColor.x);
+        }
+        
+        if(ImGui::CollapsingHeader("Point Lights"))
+        {
+            for(int i = 0; i < TOTAL_LIGHT_POINTS; i++)
+            {
+                if(ImGui::CollapsingHeader(("Point Light" + std::to_string(i)).c_str()))
+                {
+                    ImGui::InputFloat3(("Position" + std::to_string(i)).c_str(), &m_PointLightPositions[i].x);
+                    ImGui::InputFloat3(("Rotation" + std::to_string(i)).c_str(), &m_PointLightRotations[i].x);
 
-            ImGui::InputFloat("Constant", &m_LightConstant);
-            ImGui::InputFloat("Linear", &m_LightLinear);
-            ImGui::InputFloat("Quadratic", &m_LightQuadratic);
-            ImGui::InputFloat("Cutoff", &m_LightCutoff);
-            ImGui::InputFloat("Outer Cutoff", &m_LightOuterCutoff);
+                    ImGui::ColorEdit3(("Ambient" + std::to_string(i)).c_str(), &m_PointLightAmbientColors[i].x);
+                    ImGui::ColorEdit3(("Diffuse" + std::to_string(i)).c_str(), &m_PointLightDiffuseColors[i].x);
+                    ImGui::ColorEdit3(("Specular" + std::to_string(i)).c_str(), &m_PointLightSpecularColors[i].x);
+
+                    ImGui::InputFloat(("Constant" + std::to_string(i)).c_str(), &m_PointLightConstants[i]);
+                    ImGui::InputFloat(("Linear" + std::to_string(i)).c_str(), &m_PointLightLinears[i]);
+                    ImGui::InputFloat(("Quadratic" + std::to_string(i)).c_str(), &m_PointLightQuadratics[i]);        
+                }
+            }
+
+        }
+
+        if(ImGui::CollapsingHeader("Spot Light"))
+        {
+            ImGui::InputFloat3("Spot Position", &m_SpotLightPosition.x);
+            ImGui::InputFloat3("Spot Rotation", &m_SpotLightRotation.x);
+
+            ImGui::ColorEdit3("Spot Ambient", &m_SpotLightAmbientColor.x);
+            ImGui::ColorEdit3("Spot Diffuse", &m_SpotLightDiffuseColor.x);
+            ImGui::ColorEdit3("Spot Specular", &m_SpotLightSpecularColor.x);
+            
+            ImGui::InputFloat("Cutoff", &m_SpotLightCutoff);
+            ImGui::InputFloat("Outer Cutoff", &m_SpotLightOuterCutoff);
         }
 
         if(ImGui::CollapsingHeader("Cube"))

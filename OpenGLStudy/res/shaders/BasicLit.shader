@@ -30,7 +30,7 @@ void main()
 
 // We can create structs to organize uniforms
 // it will react as namespace on C++ side, like setting a uniform of name "u_Material.ambient"
-// Sampler2D can't be instantiated, using it inside struct as uniform is fine, but we can't instantiate it like a return value of a function,
+// Sampler2D can't be instantiated, using it inside struct as uniform is fine, but we can't instantiate it like a return value of a function or pass as param,
 // otherwise it could throw strange errors
 struct Material
 {
@@ -41,23 +41,37 @@ struct Material
     float shininess; // impacts the scattering/radius of the specular highlight
 };
 
-struct Light
+struct DirLight
 {
-    vec3 position; // No need for position on directional light, the global direction will be used
-    vec3 direction; // No need for direction on point light, we calculate direction for each fragment
+    vec3 direction;
 
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
+};
 
-    // Point light behaviour
+struct PointLight
+{
+    vec3 position;
     float constant;
     float linear;
     float quadratic;
 
-    // Spot light behaviour
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+
+struct SpotLight
+{
+    vec3 position;
+    vec3 direction;
     float cutoff;
     float outerCutoff;
+
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
 };
 
 layout(location = 0) out vec4 o_Color;
@@ -67,51 +81,98 @@ in vec2 v_UV;
 in vec3 v_FragPosition;
 
 uniform Material u_Material;
-uniform Light u_Light;
+uniform DirLight u_DirLight;
+#define NR_POINT_LIGHTS 4 // define number of lights we have on our scene
+uniform PointLight u_PointLights[NR_POINT_LIGHTS];
+uniform SpotLight u_SpotLight;
 uniform vec3 u_ViewPosition;
+
+vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
+vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
+vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
 void main()
 {   
-    vec3 lightDirection = normalize(u_Light.position - v_FragPosition);
+    vec3 normal = normalize(v_Normal);
+    vec3 viewDir = normalize(u_ViewPosition - v_FragPosition);
 
-    // Spot light
-    float theta = dot(lightDirection, normalize(-u_Light.direction));
-    // To smooth edge
-    float epsilon = u_Light.cutoff - u_Light.outerCutoff;
-    float intensity = clamp((theta - u_Light.outerCutoff) / epsilon, 0.f, 1.f);
+    vec3 result = CalcDirLight(u_DirLight, normal, viewDir);
 
-    // Point light attenuation
-    // float distance = length(u_Light.position - v_FragPosition);
-    // float attenuation = 1.f / (u_Light.constant + u_Light.linear * distance + u_Light.quadratic * (distance * distance)); 
+    for(int i = 0; i < NR_POINT_LIGHTS; i++)
+    {
+        result += CalcPointLight(u_PointLights[i], normal, v_FragPosition, viewDir);
+    }
 
-    // Directional Light
-    // vec3 lightDirection = normalize(-u_Light.direction); // Negate because original direction is from light towards frag, we need opposite
+    result += CalcSpotLight(u_SpotLight, normal, v_FragPosition, viewDir);
 
+    o_Color = vec4(result, 1.f);
+}
+
+vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
+{
     // Ambient lighting   
-    vec3 ambient = u_Light.ambient * vec3(texture(u_Material.diffuse, v_UV));
-    // ambient *= attenuation; // We could leave ambient alone, but for multiple light source it would start to stack up
-    // ambient *= intensity; // Leave ambient alone for spot light
+    vec3 ambient = light.ambient * vec3(texture(u_Material.diffuse, v_UV));
 
     // Diffuse lighting
-    vec3 normal = normalize(v_Normal);
-    float diffValue = max(dot(v_Normal, lightDirection), 0.f); // If greater than 90° it becomes negative and we don't want that, hence max()
-    vec3 diffuse = u_Light.diffuse * diffValue * vec3(texture(u_Material.diffuse, v_UV));
-    // diffuse *= attenuation;
+    vec3 lightDir = normalize(-light.direction); // Negate because original direction is from light towards frag, we need opposite
+    float diffValue = max(dot(normal, lightDir), 0.f); // If greater than 90° it becomes negative and we don't want that, hence max()
+    vec3 diffuse = light.diffuse * diffValue * vec3(texture(u_Material.diffuse, v_UV));
+
+    // Specular lighting
+    vec3 reflectDirection = reflect(light.direction, normal); // reflect() expects a direction to point FROM the light source
+    float specularValue = pow(max(dot(viewDir, reflectDirection), 0.f), u_Material.shininess); // Shininess is the value of the highlight, the higher the more it reflects the light instead of scattering around
+    vec3 specular = light.specular * specularValue * vec3(texture(u_Material.specular, v_UV));
+
+    return (ambient + diffuse + specular);
+}
+
+vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
+{
+    // Point light attenuation
+    float distance = length(light.position - fragPos);
+    float attenuation = 1.f / (light.constant + light.linear * distance + light.quadratic * (distance * distance)); 
+
+    // Ambient lighting   
+    vec3 ambient = light.ambient * vec3(texture(u_Material.diffuse, v_UV));
+    ambient *= attenuation; // We could leave ambient alone, but for multiple light source it would start to stack up
+
+    // Diffuse lighting
+    vec3 lightDir = normalize(light.position - fragPos);
+    float diffValue = max(dot(normal, lightDir), 0.f); // If greater than 90° it becomes negative and we don't want that, hence max()
+    vec3 diffuse = light.diffuse * diffValue * vec3(texture(u_Material.diffuse, v_UV));
+    diffuse *= attenuation;
+
+    // Specular lighting
+    vec3 reflectDirection = reflect(-lightDir, normal); // reflect() expects a direction to point FROM the light source
+    float specularValue = pow(max(dot(viewDir, reflectDirection), 0.f), u_Material.shininess); // Shininess is the value of the highlight, the higher the more it reflects the light instead of scattering around
+    vec3 specular = light.specular * specularValue * vec3(texture(u_Material.specular, v_UV));
+    specular *= attenuation;
+
+    return (ambient + diffuse + specular);
+}
+
+vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
+{
+    vec3 lightDir = normalize(light.position - fragPos);
+
+    float theta = dot(lightDir, normalize(-light.direction));
+    // To smooth edge
+    float epsilon = light.cutoff - light.outerCutoff;
+    float intensity = clamp((theta - light.outerCutoff) / epsilon, 0.f, 1.f);
+
+    // Ambient lighting
+    vec3 ambient = light.ambient * vec3(texture(u_Material.diffuse, v_UV)); // Leave ambient light alone without * intensity
+
+    // Diffuse lighting
+    float diffValue = max(dot(normal, lightDir), 0.f); // If greater than 90° it becomes negative and we don't want that, hence max()
+    vec3 diffuse = light.diffuse * diffValue * vec3(texture(u_Material.diffuse, v_UV));
     diffuse *= intensity;
 
     // Specular lighting
-    vec3 viewDirection = normalize(u_ViewPosition - v_FragPosition);
-    vec3 reflectDirection = reflect(-lightDirection, normal); // We do -lightDirection because reflect() expects a direction to point FROM the light source, the var is currently the opposite    
-    float specularValue = pow(max(dot(viewDirection, reflectDirection), 0.f), u_Material.shininess); // Shininess is the value of the highlight, the higher the more it reflects the light instead of scattering around
-    vec3 specular = u_Light.specular * specularValue * vec3(texture(u_Material.specular, v_UV));
-    // specular *= attenuation;
+    vec3 reflectDirection = reflect(light.direction, normal); // reflect() expects a direction to point FROM the light source
+    float specularValue = pow(max(dot(viewDir, reflectDirection), 0.f), u_Material.shininess); // Shininess is the value of the highlight, the higher the more it reflects the light instead of scattering around
+    vec3 specular = light.specular * specularValue * vec3(texture(u_Material.specular, v_UV));
     specular *= intensity;
-    
-    // Emission
-    // vec3 emission = vec3(texture(u_Material.emission, v_UV));
-    vec3 emission = vec3(0.f);
 
-    vec3 result = ambient + diffuse + specular + emission;
-
-    o_Color = vec4(result, 1.f);
+    return (ambient + diffuse + specular);
 }

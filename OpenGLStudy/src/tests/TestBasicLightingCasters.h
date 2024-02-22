@@ -43,23 +43,41 @@ namespace tests
         std::unique_ptr<IndexBuffer> m_LightCubeIBO;
         std::unique_ptr<Shader> m_LightCubeShader;
 
-        static constexpr int m_TotalCubes = 5;
-        glm::vec3 m_Positions[m_TotalCubes];
-        glm::vec3 m_Scales[m_TotalCubes];
-        glm::vec3 m_Rotations[m_TotalCubes];
+        static constexpr int TOTAL_CUBES = 5;
+        glm::vec3 m_Positions[TOTAL_CUBES];
+        glm::vec3 m_Scales[TOTAL_CUBES];
+        glm::vec3 m_Rotations[TOTAL_CUBES];
 
         bool m_OrbitLightEnabled{false};
-        glm::vec3 m_LightSourcePosition{1.2f, 1.f, 2.f};
-        glm::vec3 m_LightSourceScale{0.2f, 0.2f, 0.2f};
-        glm::vec3 m_LightSourceRotation{130.f, 0.f, 0.f};
-        glm::vec3 m_LightAmbientColor{0.2f, 0.2f, 0.2f};
-        glm::vec3 m_LightDiffuseColor{0.5f, 0.5f, 0.5f};
-        glm::vec3 m_LightSpecularColor{1.f, 1.f, 1.f};
-        float m_LightConstant{1.f};
-        float m_LightLinear{0.09f};
-        float m_LightQuadratic{0.032f};
-        float m_LightCutoff{12.5f};
-        float m_LightOuterCutoff{17.5f};
+
+        glm::vec3 m_LightCubeScale{0.2f, 0.2f, 0.2f};
+        
+        glm::vec3 m_DirectionalLightPosition{1.2f, 1.f, 2.f};
+        glm::vec3 m_DirectionalLightRotation{130.f, 0.f, 0.f};
+        glm::vec3 m_DirectionalLightAmbientColor{0.2f, 0.2f, 0.2f};
+        glm::vec3 m_DirectionalLightDiffuseColor{0.5f, 0.5f, 0.5f};
+        glm::vec3 m_DirectionalLightSpecularColor{1.f, 1.f, 1.f};
+
+        // Needs to be the same as on shader, otherwise nothing will show up.
+        // Maybe try experimenting having a flag on the PointLight uniform struct like isEnabled and on start up set all array elements to false?
+        // And when a light is created keep track of its index and set that to enabled...
+        static constexpr int TOTAL_LIGHT_POINTS = 4; 
+        glm::vec3 m_PointLightPositions[TOTAL_LIGHT_POINTS];
+        glm::vec3 m_PointLightRotations[TOTAL_LIGHT_POINTS];
+        glm::vec3 m_PointLightAmbientColors[TOTAL_LIGHT_POINTS];
+        glm::vec3 m_PointLightDiffuseColors[TOTAL_LIGHT_POINTS];
+        glm::vec3 m_PointLightSpecularColors[TOTAL_LIGHT_POINTS];
+        float m_PointLightConstants[TOTAL_LIGHT_POINTS];
+        float m_PointLightLinears[TOTAL_LIGHT_POINTS];
+        float m_PointLightQuadratics[TOTAL_LIGHT_POINTS];
+
+        glm::vec3 m_SpotLightPosition{1.2f, 2.f, 2.f};
+        glm::vec3 m_SpotLightRotation{130.f, 0.f, 0.f};
+        glm::vec3 m_SpotLightAmbientColor{0.2f, 0.2f, 0.2f};
+        glm::vec3 m_SpotLightDiffuseColor{0.5f, 0.5f, 0.5f};
+        glm::vec3 m_SpotLightSpecularColor{1.f, 1.f, 1.f};
+        float m_SpotLightCutoff{12.5f};
+        float m_SpotLightOuterCutoff{17.5f};
 
         float m_CubeShininess{32.f};
         
@@ -68,8 +86,8 @@ namespace tests
         std::shared_ptr<Camera> m_Camera;
         std::unique_ptr<FlyCameraController> m_CameraController;
 
-        void CreateCube();
-        void CreateLightSource();
+        void CreateCubes();
+        void CreateLightSources();
         glm::mat4 GetRotationMatrix(const glm::vec3& EulerRotation) const;
         glm::vec3 GetForwardVector(const glm::vec3& EulerRotation) const;
     };
