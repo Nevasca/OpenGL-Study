@@ -176,6 +176,7 @@
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\tests\Test.cpp" />
     <ClCompile Include="src\tests\Test3DTransform.cpp" />
+    <ClCompile Include="src\tests\TestBasicLightingCasters.cpp" />
     <ClCompile Include="src\tests\TestCamera.cpp" />
     <ClCompile Include="src\tests\TestBasicLighting.cpp" />
     <ClCompile Include="src\tests\TestDynamicBatchRendering.cpp" />
@@ -203,6 +204,7 @@
     <Content Include="res\shaders\Basic.shader" />
     <Content Include="res\shaders\BasicBatch.shader" />
     <Content Include="res\shaders\BasicLit.shader" />
+    <Content Include="res\shaders\BasicLitNoCustomColors.shader" />
     <Content Include="res\shaders\BasicLightCube.shader" />
     <Content Include="res\shaders\BasicLitCustomColors.shader" />
     <Content Include="res\shaders\BasicLitCustomMaps.shader" />
@@ -222,6 +224,7 @@
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\Test3DTransform.h" />
+    <ClInclude Include="src\tests\TestBasicLightingCasters.h" />
     <ClInclude Include="src\tests\TestCamera.h" />
     <ClInclude Include="src\tests\TestBasicLighting.h" />
     <ClInclude Include="src\tests\TestDynamicBatchRendering.h" />

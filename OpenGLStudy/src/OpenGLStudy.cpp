@@ -17,6 +17,7 @@
 #include "tests/Test3DTransform.h"
 #include "tests/TestCamera.h"
 #include "tests/TestBasicLighting.h"
+#include "tests/TestBasicLightingCasters.h"
 
 namespace
 {
@@ -113,6 +114,7 @@ int main(void)
         testMenu->RegisterTest<tests::Test3DTransform>("3D Transform");
         testMenu->RegisterTest<tests::TestCamera>("Camera");
         testMenu->RegisterTest<tests::TestBasicLighting>("Basic Lighting");
+        testMenu->RegisterTest<tests::TestBasicLightingCasters>("Basic Lighting Casters");
 
         float lastFrameTime = 0.f;
         
