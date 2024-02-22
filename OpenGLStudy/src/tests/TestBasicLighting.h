@@ -34,6 +34,9 @@ namespace tests
         std::unique_ptr<VertexBuffer> m_CubeVBO;
         std::unique_ptr<IndexBuffer> m_CubeIBO;
         std::unique_ptr<Shader> m_CubeShader;
+        std::unique_ptr<Texture> m_CubeTextureDiff;
+        std::unique_ptr<Texture> m_CubeTextureSpec;
+        std::unique_ptr<Texture> m_CubeTextureEmission;
 
         std::unique_ptr<VertexArray> m_LightCubeVAO;
         std::unique_ptr<VertexBuffer> m_LightCubeVBO;
@@ -51,9 +54,9 @@ namespace tests
         glm::vec3 m_LightDiffuseColor{0.5f, 0.5f, 0.5f};
         glm::vec3 m_LightSpecularColor{1.f, 1.f, 1.f};
 
-        glm::vec3 m_CubeAmbientColor{1.f, 0.5f, 0.31f};
-        glm::vec3 m_CubeDiffuseColor{1.f, 0.5f, 0.31f};
-        glm::vec3 m_CubeSpecularColor{0.5f, 0.5f, 0.5f};
+        // glm::vec3 m_CubeAmbientColor{1.f, 0.5f, 0.31f};
+        // glm::vec3 m_CubeDiffuseColor{1.f, 0.5f, 0.31f};
+        // glm::vec3 m_CubeSpecularColor{0.5f, 0.5f, 0.5f};
         float m_CubeShininess{32.f};
         
         glm::mat4 m_MVP;

@@ -38,42 +38,42 @@ namespace tests
 
         float vertices[]
         {
-            // Position             // Normal
-            // Front face
-             -0.5f, -0.5f, 0.5f,   0.f, 0.f, 1.f,
-              0.5f, -0.5f, 0.5f,   0.f, 0.f, 1.f,
-              0.5f,  0.5f, 0.5f,   0.f, 0.f, 1.f,
-             -0.5f,  0.5f, 0.5f,   0.f, 0.f, 1.f,
+             // Position                 Normal           UV
+             // Front face
+             -0.5f, -0.5f,  0.5f,    0.f, 0.f, 1.f,    0.f, 0.f,
+              0.5f, -0.5f,  0.5f,    0.f, 0.f, 1.f,    1.f, 0.f,
+              0.5f,  0.5f,  0.5f,    0.f, 0.f, 1.f,    1.f, 1.f,
+             -0.5f,  0.5f,  0.5f,    0.f, 0.f, 1.f,    0.f, 1.f,
 
-            // Back face
-             -0.5f, -0.5f,  -0.5f,   0.f, 0.f, -1.f,
-              0.5f, -0.5f,  -0.5f,   0.f, 0.f, -1.f,
-              0.5f,  0.5f,  -0.5f,   0.f, 0.f, -1.f,   
-             -0.5f,  0.5f,  -0.5f,   0.f, 0.f, -1.f,
+             // Back face
+             -0.5f, -0.5f, -0.5f,    0.f, 0.f, -1.f,   0.f, 0.f,
+              0.5f, -0.5f, -0.5f,    0.f, 0.f, -1.f,   1.f, 0.f,
+              0.5f,  0.5f, -0.5f,    0.f, 0.f, -1.f,   1.f, 1.f,
+             -0.5f,  0.5f, -0.5f,    0.f, 0.f, -1.f,   0.f, 1.f, 
 
-            // Right face
-              0.5f, -0.5f, 0.5f,   1.f, 0.f, 0.f,
-              0.5f, -0.5f, -0.5f,   1.f, 0.f, 0.f,
-              0.5f,  0.5f, -0.5f,   1.f, 0.f, 0.f,
-              0.5f,  0.5f, 0.5f,   1.f, 0.f, 0.f,
+             // Right face
+              0.5f, -0.5f,  0.5f,    1.f, 0.f, 0.f,    0.f, 0.f,
+              0.5f, -0.5f, -0.5f,    1.f, 0.f, 0.f,    1.f, 0.f,
+              0.5f,  0.5f, -0.5f,    1.f, 0.f, 0.f,    1.f, 1.f,
+              0.5f,  0.5f,  0.5f,    1.f, 0.f, 0.f,    0.f, 1.f,
 
-            // Left face
-              -0.5f, -0.5f, 0.5f,  -1.f, 0.f, 0.f,
-              -0.5f, -0.5f, -0.5f,  -1.f, 0.f, 0.f,
-              -0.5f,  0.5f, -0.5f,  -1.f, 0.f, 0.f,
-              -0.5f,  0.5f, 0.5f,  -1.f, 0.f, 0.f,
+             // Left face
+             -0.5f, -0.5f,  0.5f,   -1.f, 0.f, 0.f,    0.f, 0.f,
+             -0.5f, -0.5f, -0.5f,   -1.f, 0.f, 0.f,    1.f, 0.f,
+             -0.5f,  0.5f, -0.5f,   -1.f, 0.f, 0.f,    1.f, 1.f,
+             -0.5f,  0.5f,  0.5f,   -1.f, 0.f, 0.f,    0.f, 1.f,
 
-            // Top face
-             -0.5f,  0.5f, 0.5f,   0.f, 1.f, 0.f,
-              0.5f,  0.5f, 0.5f,   0.f, 1.f, 0.f,
-              0.5f,  0.5f, -0.5f,   0.f, 1.f, 0.f,
-             -0.5f,  0.5f, -0.5f,   0.f, 1.f, 0.f,
+             // Top face
+             -0.5f,  0.5f,  0.5f,    0.f, 1.f, 0.f,    0.f, 0.f,
+              0.5f,  0.5f,  0.5f,    0.f, 1.f, 0.f,    1.f, 0.f,
+              0.5f,  0.5f, -0.5f,    0.f, 1.f, 0.f,    1.f, 1.f,
+             -0.5f,  0.5f, -0.5f,    0.f, 1.f, 0.f,    0.f, 1.f,
 
-            // Bottom face
-             -0.5f,  -0.5f, 0.5f,  0.f, -1.f, 0.f,
-              0.5f,  -0.5f, 0.5f,  0.f, -1.f, 0.f,
-              0.5f,  -0.5f, -0.5f,  0.f, -1.f, 0.f,
-             -0.5f,  -0.5f, -0.5f,  0.f, -1.f, 0.f
+             // Bottom face
+             -0.5f,  -0.5f,  0.5f,   0.f, -1.f, 0.f,   0.f, 0.f,
+              0.5f,  -0.5f,  0.5f,   0.f, -1.f, 0.f,   1.f, 0.f,
+              0.5f,  -0.5f, -0.5f,   0.f, -1.f, 0.f,   1.f, 1.f,
+             -0.5f,  -0.5f, -0.5f,   0.f, -1.f, 0.f,   0.f, 1.f
         };
 
         unsigned int indices[]
@@ -102,13 +102,23 @@ namespace tests
         VertexBufferLayout layout{};
         layout.Push<float>(3);
         layout.Push<float>(3);
+        layout.Push<float>(2);
         m_CubeVAO->AddBuffer(*m_CubeVBO, layout);
 
         m_CubeIBO = std::make_unique<IndexBuffer>(indices, 6 * 6);
 
-        m_CubeShader = std::make_unique<Shader>("res/shaders/BasicLitCustom.shader");
-
+        m_CubeShader = std::make_unique<Shader>("res/shaders/BasicLitCustomMaps.shader");
         m_CubeShader->Bind();
+        m_CubeShader->SetUniform1i("u_Material.diffuse", 0);
+        m_CubeShader->SetUniform1i("u_Material.specular", 1);
+        m_CubeShader->SetUniform1i("u_Material.emission", 2);
+
+        m_CubeTextureDiff = std::make_unique<Texture>("res/textures/Container_Diff.png");
+        m_CubeTextureSpec = std::make_unique<Texture>("res/textures/Container_Spec.png");
+        m_CubeTextureEmission = std::make_unique<Texture>("res/textures/Container_Emission.png");
+        m_CubeTextureDiff->Bind(0);
+        m_CubeTextureSpec->Bind(1);
+        m_CubeTextureEmission->Bind(2);
 
         glm::vec3 initialPositions []
         {
@@ -258,9 +268,9 @@ namespace tests
             m_CubeShader->SetUniform3f("u_Light.diffuse", m_LightDiffuseColor);
             m_CubeShader->SetUniform3f("u_Light.specular", m_LightSpecularColor);
 
-            m_CubeShader->SetUniform3f("u_Material.ambient", m_CubeAmbientColor);
-            m_CubeShader->SetUniform3f("u_Material.diffuse", m_CubeDiffuseColor);
-            m_CubeShader->SetUniform3f("u_Material.specular", m_CubeSpecularColor);
+            // m_CubeShader->SetUniform3f("u_Material.ambient", m_CubeAmbientColor);
+            // m_CubeShader->SetUniform3f("u_Material.diffuse", m_CubeDiffuseColor); // We are now using a diffuse map on setup (texture)
+            // m_CubeShader->SetUniform3f("u_Material.specular", m_CubeSpecularColor);
             m_CubeShader->SetUniform1f("u_Material.shininess", m_CubeShininess);
 
             // If we were calculating light in view space, we wouldn't need to pass the view position
@@ -306,9 +316,9 @@ namespace tests
 
         if(ImGui::CollapsingHeader("Cube"))
         {
-            ImGui::ColorEdit3("C Ambient Color", &m_CubeAmbientColor.x);
-            ImGui::ColorEdit3("C Diffuse Color", &m_CubeDiffuseColor.x);
-            ImGui::ColorEdit3("C Specular Color", &m_CubeSpecularColor.x);
+            // ImGui::ColorEdit3("C Ambient Color", &m_CubeAmbientColor.x);
+            // ImGui::ColorEdit3("C Diffuse Color", &m_CubeDiffuseColor.x);
+            // ImGui::ColorEdit3("C Specular Color", &m_CubeSpecularColor.x);
             ImGui::InputFloat("C Shininess", &m_CubeShininess);
         }
         

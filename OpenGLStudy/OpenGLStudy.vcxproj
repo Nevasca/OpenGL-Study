@@ -204,7 +204,11 @@
     <Content Include="res\shaders\BasicBatch.shader" />
     <Content Include="res\shaders\BasicLit.shader" />
     <Content Include="res\shaders\BasicLightCube.shader" />
-    <Content Include="res\shaders\BasicLitCustom.shader" />
+    <Content Include="res\shaders\BasicLitCustomColors.shader" />
+    <Content Include="res\shaders\BasicLitCustomMaps.shader" />
+    <Content Include="res\textures\Container_Diff.png" />
+    <Content Include="res\textures\Container_Emission.png" />
+    <Content Include="res\textures\Container_Spec.png" />
     <Content Include="res\textures\FancyPigeon.png" />
     <Content Include="res\textures\UnownJar.png" />
     <Content Include="src\vendor\glm\CMakeLists.txt" />
