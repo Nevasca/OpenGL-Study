@@ -8,7 +8,7 @@ class Texture
 {
 public:
 
-    Texture(const std::string& FilePath);
+    Texture(const std::string& FilePath, unsigned int InternalFormat = GL_RGBA8, unsigned int Format = GL_RGBA);
     ~Texture();
 
     // In OpenGL we have slots to bind texture, we can bind more than one texture at once

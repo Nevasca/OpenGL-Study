@@ -13,7 +13,8 @@ namespace tests
     {
     public:
         TestMenu(Test*& CurrentTest, GLFWwindow& CurrentWindow);
-        
+
+        void OpenTest(const std::string& Name);
         void OnImGuiRender() override;
 
         template <typename T>

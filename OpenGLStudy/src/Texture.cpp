@@ -2,7 +2,7 @@
 
 #include "stb_image/stb_image.h"
 
-Texture::Texture(const std::string& FilePath)
+Texture::Texture(const std::string& FilePath, unsigned int InternalFormat, unsigned int Format)
     : m_FilePath(FilePath)
 {
     // Makes the image upside down
@@ -39,7 +39,7 @@ Texture::Texture(const std::string& FilePath)
     // format: the format of the data we are providing, m_LocalBuffer is GL_RGBA
     // type: type of the data, each channel is unsigned byte
     // pixels: the pixels data. If we didn't have it right now, we could pass a nullptr so we just allocated memory on GPU for now so we can later provide it
-    GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer));
+    GLCall(glTexImage2D(GL_TEXTURE_2D, 0, InternalFormat, m_Width, m_Height, 0, Format, GL_UNSIGNED_BYTE, m_LocalBuffer));
     GLCall(glGenerateMipmap(GL_TEXTURE_2D)); // Generate mipmaps for the bound texture
 
     // We are done setting up the texture, so unbind
