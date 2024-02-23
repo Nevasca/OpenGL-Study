@@ -23,7 +23,7 @@ namespace Breakout
 
     void Game::Init()
     {
-        m_SpriteShader = std::make_shared<Shader>("res/shaders/breakout/Sprite.shader");
+        m_SpriteShader = std::make_shared<Shader>("res/breakout/shaders/Sprite.shader");
 
         m_SpriteShader->Bind();
         m_SpriteShader->SetUniform1i("u_Image", 0);
@@ -33,7 +33,7 @@ namespace Breakout
 
         m_SpriteRenderer = std::make_unique<SpriteRenderer>(m_SpriteShader);
         
-        m_FaceTexture = std::make_unique<Texture>("res/textures/breakout/awesomeface.png", true, false);
+        m_FaceTexture = std::make_unique<Texture>("res/breakout/textures/awesomeface.png", true, false);
         m_BackgroundTexture = std::make_unique<Texture>("res/breakout/textures/background.jpg", false, false);
         m_SolidBlockTexture = std::make_shared<Texture>("res/breakout/textures/block_solid.png", false, false);
         m_BlockTexture = std::make_shared<Texture>("res/breakout/textures/block.png", false, false);
