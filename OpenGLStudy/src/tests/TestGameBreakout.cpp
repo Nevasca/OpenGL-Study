@@ -64,6 +64,7 @@ namespace tests
         GLCall(glViewport(0, 0, m_previousScreenWidth, m_previousScreenHeight));
 
         glfwSetFramebufferSizeCallback(Window, nullptr);
+        glfwSetKeyCallback(Window, nullptr);
     }
 
     void TestGameBreakout::OnProcessInput(GLFWwindow* Window)
