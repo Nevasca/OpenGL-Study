@@ -34,10 +34,12 @@ namespace tests
     
     TestGameBreakout::TestGameBreakout()
     {
+        GLCall(glDisable(GL_DEPTH_TEST));
     }
 
     TestGameBreakout::~TestGameBreakout()
     {
+        GLCall(glEnable(GL_DEPTH_TEST));
     }
 
     void TestGameBreakout::Setup(GLFWwindow* Window)

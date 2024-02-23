@@ -176,6 +176,8 @@
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\tests\Breakout\Game.cpp" />
+    <ClCompile Include="src\tests\Breakout\GameLevel.cpp" />
+    <ClCompile Include="src\tests\Breakout\GameObject.cpp" />
     <ClCompile Include="src\tests\Breakout\SpriteRenderer.cpp" />
     <ClCompile Include="src\tests\Test.cpp" />
     <ClCompile Include="src\tests\Test3DTransform.cpp" />
@@ -205,6 +207,14 @@
     <ClCompile Include="src\VertexBufferLayout.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="res\breakout\levels\01.lvl" />
+    <Content Include="res\breakout\levels\03.lvl" />
+    <Content Include="res\breakout\levels\02.lvl" />
+    <Content Include="res\breakout\levels\04.lvl" />
+    <Content Include="res\breakout\textures\background.jpg" />
+    <Content Include="res\breakout\textures\block.png" />
+    <Content Include="res\breakout\textures\block_solid.png" />
+    <Content Include="res\breakout\textures\paddle.png" />
     <Content Include="res\shaders\Basic.shader" />
     <Content Include="res\shaders\BasicBatch.shader" />
     <Content Include="res\shaders\BasicLit.shader" />
@@ -231,6 +241,8 @@
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\tests\Breakout\EGameState.h" />
     <ClInclude Include="src\tests\Breakout\Game.h" />
+    <ClInclude Include="src\tests\Breakout\GameLevel.h" />
+    <ClInclude Include="src\tests\Breakout\GameObject.h" />
     <ClInclude Include="src\tests\Breakout\SpriteRenderer.h" />
     <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\Test3DTransform.h" />

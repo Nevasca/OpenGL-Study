@@ -8,7 +8,7 @@ class Texture
 {
 public:
 
-    Texture(const std::string& FilePath, bool bFlipVertically = true, bool bUseAlpha = true);
+    Texture(const std::string& FilePath, bool bUseAlpha = true, bool bFlipVertically = true);
     ~Texture();
 
     // In OpenGL we have slots to bind texture, we can bind more than one texture at once

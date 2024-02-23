@@ -2,7 +2,7 @@
 
 #include "stb_image/stb_image.h"
 
-Texture::Texture(const std::string& FilePath, bool bFlipVertically, bool bUseAlpha)
+Texture::Texture(const std::string& FilePath, bool bUseAlpha, bool bFlipVertically)
     : m_FilePath(FilePath)
 {
     // Makes the image upside down
@@ -15,10 +15,11 @@ Texture::Texture(const std::string& FilePath, bool bFlipVertically, bool bUseAlp
 
     unsigned int InternalFormat = bUseAlpha ? GL_RGBA8 : GL_RGB;
     unsigned int Format = bUseAlpha ? GL_RGBA : GL_RGB;
+    int DesiredChannels = bUseAlpha ? 4 : 3;
 
     // We pass pointers for the width, height and so on so the function can set the proper values on them after figuring it out when loading the texture
     // Desired channels is how many channels we expect this image to have, 4 as we expect RGBA
-    m_LocalBuffer = stbi_load(FilePath.c_str(), &m_Width, &m_Height, &m_BPP, 4);
+    m_LocalBuffer = stbi_load(FilePath.c_str(), &m_Width, &m_Height, &m_BPP, DesiredChannels);
     
     GLCall(glGenTextures(1, &m_RendererID));
     GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
