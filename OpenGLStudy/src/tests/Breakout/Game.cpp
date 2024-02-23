@@ -4,6 +4,7 @@
 #include "Core.h"
 #include <GLFW/glfw3.h>
 
+#include "Ball.h"
 #include "Shader.h"
 #include "SpriteRenderer.h"
 #include "Texture.h"
@@ -33,7 +34,7 @@ namespace Breakout
 
         m_SpriteRenderer = std::make_unique<SpriteRenderer>(m_SpriteShader);
         
-        m_FaceTexture = std::make_unique<Texture>("res/breakout/textures/awesomeface.png", true, false);
+        m_FaceTexture = std::make_shared<Texture>("res/breakout/textures/awesomeface.png", true, false);
         m_BackgroundTexture = std::make_unique<Texture>("res/breakout/textures/background.jpg", false, false);
         m_SolidBlockTexture = std::make_shared<Texture>("res/breakout/textures/block_solid.png", false, false);
         m_BlockTexture = std::make_shared<Texture>("res/breakout/textures/block.png", false, false);
@@ -56,6 +57,10 @@ namespace Breakout
         m_PaddleTexture = std::make_unique<Texture>("res/breakout/textures/paddle.png", true, false);
         glm::vec2 playerStartPosition = glm::vec2{Width / 2.f - PLAYER_SIZE.x / 2.f, Height - PLAYER_SIZE.y};
         m_Player = std::make_unique<GameObject>(playerStartPosition, PLAYER_SIZE, m_PaddleTexture);
+
+        glm::vec2 ballStartPosition = playerStartPosition + glm::vec2{PLAYER_SIZE.x / 2.f - BALL_RADIUS, -BALL_RADIUS * 2.f};
+        
+        m_Ball = std::make_unique<Ball>(ballStartPosition, BALL_RADIUS, BALL_INITIAL_VELOCITY, m_FaceTexture);
     }
 
     void Game::ProcessInput(float deltaTime)
@@ -69,6 +74,10 @@ namespace Breakout
                 if(m_Player->Position.x >= 0.f)
                 {
                     m_Player->Position.x -= velocity;
+                    if(m_Ball->Stuck)
+                    {
+                        m_Ball->Position.x -= velocity;
+                    }
                 }
             }
 
@@ -77,13 +86,23 @@ namespace Breakout
                 if(m_Player->Position.x < Width - PLAYER_SIZE.x)
                 {
                     m_Player->Position.x += velocity;
+                    if(m_Ball->Stuck)
+                    {
+                        m_Ball->Position.x += velocity;
+                    }
                 }
+            }
+
+            if(Keys[GLFW_KEY_SPACE])
+            {
+                m_Ball->Stuck = false;
             }
         }
     }
 
     void Game::Update(float deltaTime)
     {
+        m_Ball->Move(deltaTime, Width);
     }
 
     void Game::Render()
@@ -95,6 +114,8 @@ namespace Breakout
             Levels[Level].Draw(*m_SpriteRenderer);
 
             m_Player->Draw(*m_SpriteRenderer);
+
+            m_Ball->Draw(*m_SpriteRenderer);
         }
     }
 }

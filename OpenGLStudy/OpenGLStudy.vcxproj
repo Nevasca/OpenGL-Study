@@ -175,6 +175,7 @@
     <ClCompile Include="src\OpenGLStudy.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\tests\Breakout\Ball.cpp" />
     <ClCompile Include="src\tests\Breakout\Game.cpp" />
     <ClCompile Include="src\tests\Breakout\GameLevel.cpp" />
     <ClCompile Include="src\tests\Breakout\GameObject.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\tests\Breakout\Ball.h" />
     <ClInclude Include="src\tests\Breakout\EGameState.h" />
     <ClInclude Include="src\tests\Breakout\Game.h" />
     <ClInclude Include="src\tests\Breakout\GameLevel.h" />
