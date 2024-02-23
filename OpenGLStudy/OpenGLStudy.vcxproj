@@ -176,6 +176,7 @@
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\tests\Breakout\Game.cpp" />
+    <ClCompile Include="src\tests\Breakout\SpriteRenderer.cpp" />
     <ClCompile Include="src\tests\Test.cpp" />
     <ClCompile Include="src\tests\Test3DTransform.cpp" />
     <ClCompile Include="src\tests\TestBasicLightingCasters.cpp" />
@@ -211,6 +212,8 @@
     <Content Include="res\shaders\BasicLightCube.shader" />
     <Content Include="res\shaders\BasicLitCustomColors.shader" />
     <Content Include="res\shaders\BasicLitCustomMaps.shader" />
+    <Content Include="res\shaders\breakout\Sprite.shader" />
+    <Content Include="res\textures\breakout\awesomeface.png" />
     <Content Include="res\textures\Container_Diff.png" />
     <Content Include="res\textures\Container_Emission.png" />
     <Content Include="res\textures\Container_Spec.png" />
@@ -228,6 +231,7 @@
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\tests\Breakout\EGameState.h" />
     <ClInclude Include="src\tests\Breakout\Game.h" />
+    <ClInclude Include="src\tests\Breakout\SpriteRenderer.h" />
     <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\Test3DTransform.h" />
     <ClInclude Include="src\tests\TestBasicLightingCasters.h" />

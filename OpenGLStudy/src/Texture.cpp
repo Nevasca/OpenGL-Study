@@ -2,12 +2,19 @@
 
 #include "stb_image/stb_image.h"
 
-Texture::Texture(const std::string& FilePath, unsigned int InternalFormat, unsigned int Format)
+Texture::Texture(const std::string& FilePath, bool bFlipVertically, bool bUseAlpha)
     : m_FilePath(FilePath)
 {
     // Makes the image upside down
-    // We need to do this because the 0,0 on OpenGL is the bottom left, instead of the top left on .png format 
-    stbi_set_flip_vertically_on_load(1);
+    // We need to do this because the 0,0 on OpenGL is the bottom left, instead of the top left on .png format
+    // In 2D games, we can make ortho projection to start on top left, so we don't need to flip if that's the case
+    if(bFlipVertically)
+    {
+        stbi_set_flip_vertically_on_load(1);
+    }
+
+    unsigned int InternalFormat = bUseAlpha ? GL_RGBA8 : GL_RGB;
+    unsigned int Format = bUseAlpha ? GL_RGBA : GL_RGB;
 
     // We pass pointers for the width, height and so on so the function can set the proper values on them after figuring it out when loading the texture
     // Desired channels is how many channels we expect this image to have, 4 as we expect RGBA
