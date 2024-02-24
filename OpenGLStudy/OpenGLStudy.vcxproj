@@ -179,6 +179,7 @@
     <ClCompile Include="src\tests\Breakout\Game.cpp" />
     <ClCompile Include="src\tests\Breakout\GameLevel.cpp" />
     <ClCompile Include="src\tests\Breakout\GameObject.cpp" />
+    <ClCompile Include="src\tests\Breakout\ParticleGenerator.cpp" />
     <ClCompile Include="src\tests\Breakout\SpriteRenderer.cpp" />
     <ClCompile Include="src\tests\Test.cpp" />
     <ClCompile Include="src\tests\Test3DTransform.cpp" />
@@ -212,12 +213,14 @@
     <Content Include="res\breakout\levels\03.lvl" />
     <Content Include="res\breakout\levels\02.lvl" />
     <Content Include="res\breakout\levels\04.lvl" />
+    <Content Include="res\breakout\shaders\Particle.shader" />
     <Content Include="res\breakout\shaders\Sprite.shader" />
     <Content Include="res\breakout\textures\awesomeface.png" />
     <Content Include="res\breakout\textures\background.jpg" />
     <Content Include="res\breakout\textures\block.png" />
     <Content Include="res\breakout\textures\block_solid.png" />
     <Content Include="res\breakout\textures\paddle.png" />
+    <Content Include="res\breakout\textures\particle.png" />
     <Content Include="res\shaders\Basic.shader" />
     <Content Include="res\shaders\BasicBatch.shader" />
     <Content Include="res\shaders\BasicLit.shader" />
@@ -245,6 +248,7 @@
     <ClInclude Include="src\tests\Breakout\Game.h" />
     <ClInclude Include="src\tests\Breakout\GameLevel.h" />
     <ClInclude Include="src\tests\Breakout\GameObject.h" />
+    <ClInclude Include="src\tests\Breakout\ParticleGenerator.h" />
     <ClInclude Include="src\tests\Breakout\SpriteRenderer.h" />
     <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\Test3DTransform.h" />

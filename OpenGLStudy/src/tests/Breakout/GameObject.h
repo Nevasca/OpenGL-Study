@@ -4,15 +4,12 @@
 #include "glm/vec2.hpp"
 #include "glm/vec3.hpp"
 
-namespace Breakout
-{
-    class SpriteRenderer;
-}
-
 class Texture;
 
 namespace Breakout
 {
+    class SpriteRenderer;
+
     class GameObject
     {
     public:

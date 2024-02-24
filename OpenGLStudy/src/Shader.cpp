@@ -45,6 +45,11 @@ void Shader::SetUniform1f(const std::string& Name, float Value)
     GLCall(glUniform1f(GetUniformLocation(Name), Value));
 }
 
+void Shader::SetUniform2f(const std::string& Name, const glm::vec2& Value)
+{
+    GLCall(glUniform2f(GetUniformLocation(Name), Value.x, Value.y));
+}
+
 void Shader::SetUniform3f(const std::string& Name, float V0, float V1, float V2)
 {
     GLCall(glUniform3f(GetUniformLocation(Name), V0, V1, V2));
@@ -63,6 +68,11 @@ void Shader::SetUniform4f(const std::string& Name, float V0, float V1, float V2,
     
     // Location: id of the uniform. When shader is created, every uniform is assigned to an id
     GLCall(glUniform4f(GetUniformLocation(Name), V0, V1, V2, V3));
+}
+
+void Shader::SetUniform4f(const std::string& Name, const glm::vec4& Value)
+{
+    GLCall(glUniform4f(GetUniformLocation(Name), Value.x, Value.y, Value.z, Value.w));
 }
 
 void Shader::SetUniformMat4f(const std::string& Name, const glm::mat4& mat)

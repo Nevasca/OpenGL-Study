@@ -2,8 +2,9 @@
 
 #include "Core.h"
 
-class Shader;
 class IndexBuffer;
+class Shader;
+
 class VertexArray;
 
 class Renderer

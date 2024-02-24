@@ -6,17 +6,15 @@
 #include "EGameState.h"
 #include "GameLevel.h"
 
-namespace Breakout
-{
-    class Ball;
-}
-
 class Texture;
 class Shader;
-class SpriteRenderer;
 
 namespace Breakout
 {
+    class ParticleGenerator;
+    class Ball;
+    class SpriteRenderer;
+    
     enum EDirection
     {
         UP,
@@ -66,6 +64,9 @@ namespace Breakout
         std::unique_ptr<Ball> m_Ball;
         std::shared_ptr<Texture> m_FaceTexture;
 
+        std::unique_ptr<ParticleGenerator> m_Particles;
+        std::shared_ptr<Shader> m_ParticleShader;
+        std::shared_ptr<Texture> m_ParticleTexture;
         
         bool CheckCollision(const GameObject& one, const GameObject& two) const; //AABB - AABB collision
         Collision CheckCollision(const Ball& one, const GameObject& two) const; //AABB - Circle collision

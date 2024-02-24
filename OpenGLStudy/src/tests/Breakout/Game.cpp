@@ -1,10 +1,10 @@
 #include "Game.h"
 
 #include <memory>
-#include "Core.h"
 #include <GLFW/glfw3.h>
 
 #include "Ball.h"
+#include "ParticleGenerator.h"
 #include "Shader.h"
 #include "SpriteRenderer.h"
 #include "Texture.h"
@@ -62,6 +62,15 @@ namespace Breakout
         glm::vec2 ballStartPosition = GetBallStartPosition(playerStartPosition);
         
         m_Ball = std::make_unique<Ball>(ballStartPosition, BALL_RADIUS, BALL_INITIAL_VELOCITY, m_FaceTexture);
+
+        m_ParticleShader = std::make_unique<Shader>("res/breakout/shaders/Particle.shader");
+        m_ParticleShader->Bind();
+        m_ParticleShader->SetUniformMat4f("u_Projection", projection);
+        m_ParticleShader->SetUniform1i("u_Sprite", 0);
+
+        m_ParticleTexture = std::make_unique<Texture>("res/breakout/textures/particle.png", true, false);
+
+        m_Particles = std::make_unique<ParticleGenerator>(m_ParticleShader, m_ParticleTexture, 500);
     }
 
     void Game::ProcessInput(float deltaTime)
@@ -105,6 +114,8 @@ namespace Breakout
     {
         m_Ball->Move(deltaTime, Width);
 
+        m_Particles->Update(deltaTime, *m_Ball, 2, glm::vec2(m_Ball->Radius / 2.f));
+
         DoCollisions();
 
         if(m_Ball->Position.y > Height)
@@ -124,6 +135,8 @@ namespace Breakout
 
             m_Player->Draw(*m_SpriteRenderer);
 
+            m_Particles->Draw();
+            
             m_Ball->Draw(*m_SpriteRenderer);
         }
     }

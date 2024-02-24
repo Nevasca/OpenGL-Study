@@ -1,6 +1,7 @@
 #include "VertexBuffer.h"
 
-#include "Renderer.h"
+#include "Core.h"
+
 
 VertexBuffer::VertexBuffer(const void* Data, unsigned int Size, bool bIsDynamic)
 {

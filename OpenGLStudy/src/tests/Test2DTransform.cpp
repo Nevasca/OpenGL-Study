@@ -4,6 +4,7 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "GameTime.h"
+#include "Renderer.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"

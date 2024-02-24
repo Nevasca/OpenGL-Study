@@ -1,6 +1,6 @@
 #include "IndexBuffer.h"
 
-#include "Renderer.h"
+#include "Core.h"
 
 IndexBuffer::IndexBuffer(const unsigned int* Data, unsigned int Count)
     : m_Count(Count)
