@@ -14,6 +14,7 @@ namespace Breakout
         void Load(const char* filePath, unsigned int levelWidth, unsigned int levelHeight);
         void Draw(const SpriteRenderer& renderer);
         bool IsCompleted() const;
+        void Reset();
 
     private:
 

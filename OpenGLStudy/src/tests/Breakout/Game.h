@@ -17,6 +17,16 @@ class SpriteRenderer;
 
 namespace Breakout
 {
+    enum EDirection
+    {
+        UP,
+        RIGHT,
+        DOWN,
+        LEFT
+    };
+    
+    typedef std::tuple<bool, EDirection, glm::vec2> Collision;
+
     class Game
     {
     public:
@@ -36,6 +46,7 @@ namespace Breakout
         void ProcessInput(float deltaTime);
         void Update(float deltaTime);
         void Render();
+        void DoCollisions();
 
     private:
 
@@ -54,5 +65,14 @@ namespace Breakout
 
         std::unique_ptr<Ball> m_Ball;
         std::shared_ptr<Texture> m_FaceTexture;
+
+        
+        bool CheckCollision(const GameObject& one, const GameObject& two) const; //AABB - AABB collision
+        Collision CheckCollision(const Ball& one, const GameObject& two) const; //AABB - Circle collision
+        EDirection GetClosestDirection(glm::vec2 direction) const;
+        void ResetLevel();
+        void ResetPlayer();
+        glm::vec2 GetPlayerStartPosition();
+        glm::vec2 GetBallStartPosition(const glm::vec2& playerPosition);
     };
 }

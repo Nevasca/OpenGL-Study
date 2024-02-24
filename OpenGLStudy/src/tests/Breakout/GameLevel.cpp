@@ -116,4 +116,12 @@ namespace Breakout
         return true;
     }
 
+    void GameLevel::Reset()
+    {
+        for(GameObject& Brick : Bricks)
+        {
+            Brick.Destroyed = false;
+        }
+    }
+
 }
