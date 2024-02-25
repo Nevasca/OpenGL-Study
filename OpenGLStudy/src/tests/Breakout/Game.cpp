@@ -71,6 +71,9 @@ namespace Breakout
         m_ParticleTexture = std::make_unique<Texture>("res/breakout/textures/particle.png", true, false);
 
         m_Particles = std::make_unique<ParticleGenerator>(m_ParticleShader, m_ParticleTexture, 500);
+        
+        m_SoundEngine = irrklang::createIrrKlangDevice();
+        m_SoundEngine->play2D("res/breakout/audio/breakout.mp3", true);
     }
 
     void Game::ProcessInput(float deltaTime)
@@ -160,7 +163,12 @@ namespace Breakout
 
             if(!brick.IsSolid)
             {
+                m_SoundEngine->play2D("res/breakout/audio/bleep.mp3");
                 brick.Destroyed = true;
+            }
+            else
+            {
+                m_SoundEngine->play2D("res/breakout/audio/solid.wav");
             }
 
             // Collision resolution
@@ -211,6 +219,8 @@ namespace Breakout
         {
             return;
         }
+
+        m_SoundEngine->play2D("res/breakout/audio/bleep.wav");
 
         // Check how far from center of the paddle the ball has collided
         float centerPaddle = m_Player->Position.x + m_Player->Size.x / 2.f;

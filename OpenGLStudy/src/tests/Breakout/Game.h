@@ -5,6 +5,7 @@
 
 #include "EGameState.h"
 #include "GameLevel.h"
+#include <irrKlang.h>
 
 class Texture;
 class Shader;
@@ -67,6 +68,8 @@ namespace Breakout
         std::unique_ptr<ParticleGenerator> m_Particles;
         std::shared_ptr<Shader> m_ParticleShader;
         std::shared_ptr<Texture> m_ParticleTexture;
+
+        irrklang::ISoundEngine* m_SoundEngine;
         
         bool CheckCollision(const GameObject& one, const GameObject& two) const; //AABB - AABB collision
         Collision CheckCollision(const Ball& one, const GameObject& two) const; //AABB - Circle collision
