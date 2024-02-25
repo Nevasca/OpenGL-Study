@@ -12,6 +12,7 @@ public:
 
     void Bind() const;
     void Unbind() const;
+    void SetSubData(const void* Data, unsigned int Size) const;
 
 private:
 

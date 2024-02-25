@@ -191,6 +191,7 @@
     <ClCompile Include="src\tests\TestStaticBatchRendering.cpp" />
     <ClCompile Include="src\tests\TestClearColor.cpp" />
     <ClCompile Include="src\tests\TestMenu.cpp" />
+    <ClCompile Include="src\tests\TestTextRendering.cpp" />
     <ClCompile Include="src\tests\TestTexture2D.cpp" />
     <ClCompile Include="src\tests\Test2DTransform.cpp" />
     <ClCompile Include="src\Texture.cpp" />
@@ -228,6 +229,7 @@
     <Content Include="res\shaders\BasicLightCube.shader" />
     <Content Include="res\shaders\BasicLitCustomColors.shader" />
     <Content Include="res\shaders\BasicLitCustomMaps.shader" />
+    <Content Include="res\shaders\Text.shader" />
     <Content Include="res\textures\Container_Diff.png" />
     <Content Include="res\textures\Container_Emission.png" />
     <Content Include="res\textures\Container_Spec.png" />
@@ -260,6 +262,7 @@
     <ClInclude Include="src\tests\TestStaticBatchRendering.h" />
     <ClInclude Include="src\tests\TestClearColor.h" />
     <ClInclude Include="src\tests\TestMenu.h" />
+    <ClInclude Include="src\tests\TestTextRendering.h" />
     <ClInclude Include="src\tests\TestTexture2D.h" />
     <ClInclude Include="src\tests\Test2DTransform.h" />
     <ClInclude Include="src\Texture.h" />
@@ -705,6 +708,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="res\breakout\audio\" />
+    <Folder Include="res\breakout\fonts\" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
