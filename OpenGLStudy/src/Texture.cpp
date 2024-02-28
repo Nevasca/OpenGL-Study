@@ -9,10 +9,7 @@ Texture::Texture(const std::string& FilePath, bool bUseAlpha, bool bFlipVertical
     // Makes the image upside down
     // We need to do this because the 0,0 on OpenGL is the bottom left, instead of the top left on .png format
     // In 2D games, we can make ortho projection to start on top left, so we don't need to flip if that's the case
-    if(bFlipVertically)
-    {
-        stbi_set_flip_vertically_on_load(1);
-    }
+    stbi_set_flip_vertically_on_load(bFlipVertically);
 
     int DesiredChannels = bUseAlpha ? 4 : 3;
 
@@ -20,24 +17,8 @@ Texture::Texture(const std::string& FilePath, bool bUseAlpha, bool bFlipVertical
     // Desired channels is how many channels we expect this image to have, 4 as we expect RGBA
     m_LocalBuffer = stbi_load(FilePath.c_str(), &m_Width, &m_Height, &m_Channels, DesiredChannels);
 
-    unsigned int InternalFormat = GL_RGB;
-    unsigned int Format = GL_RGB;
-    
-    if(m_Channels == 1)
-    {
-        InternalFormat = GL_RED;
-        Format = GL_RED;
-    }
-    else if(m_Channels == 3)
-    {
-        InternalFormat = GL_RGB;
-        Format = GL_RGB;
-    }
-    else if(m_Channels == 4)
-    {
-        InternalFormat = GL_RGBA8;
-        Format = GL_RGBA;
-    }
+    unsigned int InternalFormat = bUseAlpha ? GL_RGBA8 : GL_RGB;
+    unsigned int Format = bUseAlpha ? GL_RGBA : GL_RGB;
     
     GLCall(glGenTextures(1, &m_RendererID));
     GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
