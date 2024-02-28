@@ -14,13 +14,30 @@ Texture::Texture(const std::string& FilePath, bool bUseAlpha, bool bFlipVertical
         stbi_set_flip_vertically_on_load(1);
     }
 
-    unsigned int InternalFormat = bUseAlpha ? GL_RGBA8 : GL_RGB;
-    unsigned int Format = bUseAlpha ? GL_RGBA : GL_RGB;
     int DesiredChannels = bUseAlpha ? 4 : 3;
 
     // We pass pointers for the width, height and so on so the function can set the proper values on them after figuring it out when loading the texture
     // Desired channels is how many channels we expect this image to have, 4 as we expect RGBA
-    m_LocalBuffer = stbi_load(FilePath.c_str(), &m_Width, &m_Height, &m_BPP, DesiredChannels);
+    m_LocalBuffer = stbi_load(FilePath.c_str(), &m_Width, &m_Height, &m_Channels, DesiredChannels);
+
+    unsigned int InternalFormat = GL_RGB;
+    unsigned int Format = GL_RGB;
+    
+    if(m_Channels == 1)
+    {
+        InternalFormat = GL_RED;
+        Format = GL_RED;
+    }
+    else if(m_Channels == 3)
+    {
+        InternalFormat = GL_RGB;
+        Format = GL_RGB;
+    }
+    else if(m_Channels == 4)
+    {
+        InternalFormat = GL_RGBA8;
+        Format = GL_RGBA;
+    }
     
     GLCall(glGenTextures(1, &m_RendererID));
     GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
@@ -79,4 +96,14 @@ void Texture::Bind(unsigned int Slot) const
 void Texture::Unbind() const
 {
     GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+}
+
+void Texture::SetType(const std::string& Type)
+{
+    m_Type = Type;
+}
+
+void Texture::SetPath(const std::string& Path)
+{
+    m_Path = Path;
 }

@@ -19,6 +19,7 @@
 #include "tests/TestBasicLighting.h"
 #include "tests/TestBasicLightingCasters.h"
 #include "tests/TestGameBreakout.h"
+#include "tests/TestModelLoading.h"
 #include "tests/TestTextRendering.h"
 
 namespace
@@ -118,9 +119,10 @@ int main(void)
         testMenu->RegisterTest<tests::TestBasicLighting>("Basic Lighting");
         testMenu->RegisterTest<tests::TestBasicLightingCasters>("Basic Lighting Casters");
         testMenu->RegisterTest<tests::TestTextRendering>("Text Rendering");
+        testMenu->RegisterTest<tests::TestModelLoading>("Model Loading");
         testMenu->RegisterTest<tests::TestGameBreakout>("Breakout Game");
 
-        testMenu->OpenTest("Breakout Game");
+        // testMenu->OpenTest("Breakout Game");
 
         float lastFrameTime = 0.f;
         

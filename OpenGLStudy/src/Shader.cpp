@@ -1,11 +1,11 @@
 #include "Shader.h"
 
+#include "Core.h"
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
-
-#include "Renderer.h"
 
 Shader::Shader(const std::string& FilePath)
     : m_FilePath(FilePath), m_RendererID(0)
