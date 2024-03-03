@@ -18,6 +18,7 @@
 #include "tests/TestCamera.h"
 #include "tests/TestBasicLighting.h"
 #include "tests/TestBasicLightingCasters.h"
+#include "tests/TestFramebuffer.h"
 #include "tests/TestGameBreakout.h"
 #include "tests/TestModelLoading.h"
 #include "tests/TestTextRendering.h"
@@ -120,6 +121,7 @@ int main(void)
         testMenu->RegisterTest<tests::TestBasicLightingCasters>("Basic Lighting Casters");
         testMenu->RegisterTest<tests::TestTextRendering>("Text Rendering");
         testMenu->RegisterTest<tests::TestModelLoading>("Model Loading");
+        testMenu->RegisterTest<tests::TestFramebuffer>("Framebuffer");
         testMenu->RegisterTest<tests::TestGameBreakout>("Breakout Game");
 
         // testMenu->OpenTest("Breakout Game");

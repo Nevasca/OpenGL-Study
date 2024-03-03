@@ -160,6 +160,22 @@ unsigned int Shader::CreateShader(const std::string& VertexShader, const std::st
     GLCall(glLinkProgram(Program));
     GLCall(glValidateProgram(Program));
 
+    int result;
+    GLCall(glGetProgramiv(Program, GL_LINK_STATUS, &result));
+
+    if(result == GL_FALSE)
+    {
+        int length;
+        GLCall(glGetProgramiv(Program, GL_INFO_LOG_LENGTH, &length));
+        char* message = (char*)alloca(length * sizeof(char)); // To hack doing this to allocate on stack: char message[length];
+        GLCall(glGetProgramInfoLog(Program, length, &length, message));
+
+        std::cout << "Failed to link shaders!\n";
+        std::cout << message << "\n";
+
+        Program = 0;
+    }
+
     // Delete the intermediate shaders as they are now compiled into program
     GLCall(glDeleteShader(Vs));
     GLCall(glDeleteShader(Fs));

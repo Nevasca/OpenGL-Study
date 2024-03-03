@@ -189,6 +189,7 @@
     <ClCompile Include="src\tests\TestCamera.cpp" />
     <ClCompile Include="src\tests\TestBasicLighting.cpp" />
     <ClCompile Include="src\tests\TestDynamicBatchRendering.cpp" />
+    <ClCompile Include="src\tests\TestFramebuffer.cpp" />
     <ClCompile Include="src\tests\TestGameBreakout.cpp" />
     <ClCompile Include="src\tests\TestModelLoading.cpp" />
     <ClCompile Include="src\tests\TestStaticBatchRendering.cpp" />
@@ -232,6 +233,8 @@
     <Content Include="res\shaders\BasicLightCube.shader" />
     <Content Include="res\shaders\BasicLitCustomColors.shader" />
     <Content Include="res\shaders\BasicLitCustomMaps.shader" />
+    <Content Include="res\shaders\BasicGray.glsl" />
+    <Content Include="res\shaders\PostProcessing.glsl" />
     <Content Include="res\shaders\Text.shader" />
     <Content Include="res\textures\Container_Diff.png" />
     <Content Include="res\textures\Container_Emission.png" />
@@ -263,6 +266,7 @@
     <ClInclude Include="src\tests\TestCamera.h" />
     <ClInclude Include="src\tests\TestBasicLighting.h" />
     <ClInclude Include="src\tests\TestDynamicBatchRendering.h" />
+    <ClInclude Include="src\tests\TestFramebuffer.h" />
     <ClInclude Include="src\tests\TestGameBreakout.h" />
     <ClInclude Include="src\tests\TestModelLoading.h" />
     <ClInclude Include="src\tests\TestStaticBatchRendering.h" />
