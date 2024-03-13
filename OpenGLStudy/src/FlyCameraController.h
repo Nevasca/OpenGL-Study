@@ -11,10 +11,10 @@ public:
 
     FlyCameraController(const std::shared_ptr<Camera>& Camera);
 
-    void Setup(GLFWwindow* Window, bool bEnable = true);
-    void Shutdown(GLFWwindow* Window);
-    void ProcessInput(GLFWwindow* Window);
-    void UpdateCameraZoom(GLFWwindow* Window, double XScrollOffset, double YScrollOffset);
+    void Setup(bool bEnable = true);
+    void Shutdown();
+    void Update();
+    void UpdateCameraZoom(double XScrollOffset, double YScrollOffset);
     void OnImGuiRender();
 
 private:
@@ -29,8 +29,8 @@ private:
     float m_CursorLastX{960.f / 2}; // Initialize last cursor pos on center screen
     float m_CursorLastY{540.f / 2};
 
-    void EnableNavigation(GLFWwindow* Window);
-    void DisableNavigation(GLFWwindow* Window);
-    void UpdateCameraPosition(GLFWwindow* Window);
-    void UpdateCameraRotation(GLFWwindow* Window);
+    void EnableNavigation();
+    void DisableNavigation();
+    void UpdateCameraPosition();
+    void UpdateCameraRotation();
 };

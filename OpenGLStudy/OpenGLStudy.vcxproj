@@ -170,6 +170,7 @@
   <ItemGroup>
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Core.cpp" />
+    <ClCompile Include="src\core\Application.cpp" />
     <ClCompile Include="src\core\Input.cpp" />
     <ClCompile Include="src\FlyCameraController.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
@@ -248,6 +249,7 @@
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Core.h" />
+    <ClInclude Include="src\core\Application.h" />
     <ClInclude Include="src\core\Input.h" />
     <ClInclude Include="src\FlyCameraController.h" />
     <ClInclude Include="src\IndexBuffer.h" />

@@ -12,7 +12,6 @@ namespace tests
         virtual ~Test() = default;
 
         virtual void Setup(GLFWwindow* Window);
-        virtual void OnProcessInput(GLFWwindow* Window);
         virtual void OnUpdate(float DeltaTime);
         virtual void OnRender();
         virtual void OnImGuiRender();

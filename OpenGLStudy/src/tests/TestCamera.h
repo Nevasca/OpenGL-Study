@@ -22,7 +22,6 @@ namespace tests
 
         void Setup(GLFWwindow* Window) override;
         void Shutdown(GLFWwindow* Window) override;
-        void OnProcessInput(GLFWwindow* Window) override;
         void OnUpdate(float DeltaTime) override;
         void OnRender() override;
         void OnImGuiRender() override;

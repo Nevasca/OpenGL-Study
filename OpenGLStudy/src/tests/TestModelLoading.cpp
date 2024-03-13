@@ -30,21 +30,18 @@ namespace tests
 
     void TestModelLoading::Setup(GLFWwindow* Window)
     {
-        m_CameraController->Setup(Window);
+        m_CameraController->Setup();
     }
 
     void TestModelLoading::Shutdown(GLFWwindow* Window)
     {
-        m_CameraController->Shutdown(Window);
-    }
-
-    void TestModelLoading::OnProcessInput(GLFWwindow* Window)
-    {
-        m_CameraController->ProcessInput(Window);
+        m_CameraController->Shutdown();
     }
 
     void TestModelLoading::OnUpdate(float DeltaTime)
-    { }
+    {
+        m_CameraController->Update();
+    }
 
     void TestModelLoading::OnRender()
     {

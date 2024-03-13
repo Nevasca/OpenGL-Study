@@ -130,21 +130,17 @@ namespace tests
     
     void TestCamera::Setup(GLFWwindow* Window)
     {
-        m_CameraController->Setup(Window);
+        m_CameraController->Setup();
     }
     
     void TestCamera::Shutdown(GLFWwindow* Window)
     {
-        m_CameraController->Shutdown(Window);
-    }
-
-    void TestCamera::OnProcessInput(GLFWwindow* Window)
-    {
-        m_CameraController->ProcessInput(Window);
+        m_CameraController->Shutdown();
     }
 
     void TestCamera::OnUpdate(float DeltaTime)
     {
+        m_CameraController->Update();
         // UpdateCameraOrbitAround();
     }
 

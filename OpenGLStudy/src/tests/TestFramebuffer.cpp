@@ -86,21 +86,17 @@ namespace tests
 
     void TestFramebuffer::Setup(GLFWwindow* Window)
     {
-        m_CameraController->Setup(Window);
+        m_CameraController->Setup();
     }
 
     void TestFramebuffer::Shutdown(GLFWwindow* Window)
     {
-        m_CameraController->Shutdown(Window);
-    }
-
-    void TestFramebuffer::OnProcessInput(GLFWwindow* Window)
-    {
-        m_CameraController->ProcessInput(Window);
+        m_CameraController->Shutdown();
     }
 
     void TestFramebuffer::OnUpdate(float DeltaTime)
     {
+        m_CameraController->Update();
     }
 
     void TestFramebuffer::OnRender()

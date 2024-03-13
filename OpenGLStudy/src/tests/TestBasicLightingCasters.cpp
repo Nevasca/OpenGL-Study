@@ -239,21 +239,18 @@ namespace tests
     
     void TestBasicLightingCasters::Setup(GLFWwindow* Window)
     {
-        m_CameraController->Setup(Window, false);
+        m_CameraController->Setup(false);
     }
     
     void TestBasicLightingCasters::Shutdown(GLFWwindow* Window)
     {
-        m_CameraController->Shutdown(Window);
-    }
-
-    void TestBasicLightingCasters::OnProcessInput(GLFWwindow* Window)
-    {
-        m_CameraController->ProcessInput(Window);
+        m_CameraController->Shutdown();
     }
 
     void TestBasicLightingCasters::OnUpdate(float DeltaTime)
     {
+        m_CameraController->Update();
+
         // if(!m_OrbitLightEnabled)
         // {
         //     return;

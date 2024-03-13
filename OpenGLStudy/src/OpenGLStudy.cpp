@@ -5,6 +5,7 @@
 
 #include "Renderer.h"
 #include "GameTime.h"
+#include "core/Application.h"
 #include "core/Input.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
@@ -70,6 +71,7 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Synchronize with VSync
+    Application::SetCurrentWindow(window);
     
     glfwSetFramebufferSizeCallback(window, HandleWindowResized); // Add callback for window resized
 
@@ -148,7 +150,6 @@ int main(void)
 
             if(currentTest)
             {
-                currentTest->OnProcessInput(window);
                 currentTest->OnUpdate(GameTime::DeltaTime);
                 currentTest->OnRender();
 

@@ -223,21 +223,18 @@ namespace tests
     
     void TestBasicLighting::Setup(GLFWwindow* Window)
     {
-        m_CameraController->Setup(Window, false);
+        m_CameraController->Setup(false);
     }
     
     void TestBasicLighting::Shutdown(GLFWwindow* Window)
     {
-        m_CameraController->Shutdown(Window);
-    }
-
-    void TestBasicLighting::OnProcessInput(GLFWwindow* Window)
-    {
-        m_CameraController->ProcessInput(Window);
+        m_CameraController->Shutdown();
     }
 
     void TestBasicLighting::OnUpdate(float DeltaTime)
     {
+        m_CameraController->Update();
+
         const float orbitRadius = 4.5f;
         m_LightSourcePosition.x = sin(GameTime::Time) * orbitRadius;
         m_LightSourcePosition.z = cos(GameTime::Time) * orbitRadius;

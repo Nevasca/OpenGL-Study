@@ -69,13 +69,9 @@ namespace tests
         glfwSetKeyCallback(Window, nullptr);
     }
 
-    void TestGameBreakout::OnProcessInput(GLFWwindow* Window)
-    {
-        m_Breakout.ProcessInput(GameTime::DeltaTime);
-    }
-
     void TestGameBreakout::OnUpdate(float DeltaTime)
     {
+        m_Breakout.ProcessInput(GameTime::DeltaTime);
         m_Breakout.Update(DeltaTime);
     }
 

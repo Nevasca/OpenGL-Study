@@ -2,6 +2,8 @@
 
 #include "Camera.h"
 #include "GameTime.h"
+#include "core/Application.h"
+#include "core/Input.h"
 #include "imgui/imgui.h"
 
 // Anonymous namespace is preferred over using static for vars and methods you don't want to accidentally expose to other translation units 
@@ -14,7 +16,7 @@ namespace
 
     void ScrollCallbackWrapper(GLFWwindow* Window, double XOffset, double YOffset)
     {
-        g_CameraController->UpdateCameraZoom(Window, XOffset, YOffset);
+        g_CameraController->UpdateCameraZoom(XOffset, YOffset);
     }
 }
 
@@ -22,35 +24,35 @@ FlyCameraController::FlyCameraController(const std::shared_ptr<Camera>& Camera)
     : m_Camera(Camera)
 { }
 
-void FlyCameraController::Setup(GLFWwindow* Window, bool bEnabled)
+void FlyCameraController::Setup(bool bEnabled)
 {
     if(bEnabled)
     {
-        EnableNavigation(Window);
+        EnableNavigation();
     }
     
     g_CameraController = this;
-    glfwSetScrollCallback(Window, ScrollCallbackWrapper);
+    glfwSetScrollCallback(Application::GetCurrentWindow(), ScrollCallbackWrapper);
 }
 
-void FlyCameraController::Shutdown(GLFWwindow* Window)
+void FlyCameraController::Shutdown()
 {
     // Restore cursor default state
-    glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSetInputMode(Application::GetCurrentWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
     g_CameraController = nullptr;
-    glfwSetScrollCallback(Window, nullptr);
+    glfwSetScrollCallback(Application::GetCurrentWindow(), nullptr);
 }
 
-void FlyCameraController::ProcessInput(GLFWwindow* Window)
+void FlyCameraController::Update()
 {
-    if(m_NavigationEnabled && glfwGetKey(Window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    if(m_NavigationEnabled && Input::GetKeyDown(GLFW_KEY_ESCAPE))
     {
-        DisableNavigation(Window);
+        DisableNavigation();
     }
-    else if(!m_NavigationEnabled && glfwGetKey(Window, GLFW_KEY_F) == GLFW_PRESS)
+    else if(!m_NavigationEnabled && Input::GetKeyDown(GLFW_KEY_F))
     {
-        EnableNavigation(Window);
+        EnableNavigation();
     }
 
     if(!m_NavigationEnabled)
@@ -58,9 +60,7 @@ void FlyCameraController::ProcessInput(GLFWwindow* Window)
         return;
     }
     
-    const bool bIsHoldingShift = glfwGetKey(Window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS;
-
-    if(bIsHoldingShift)
+    if(Input::GetKey(GLFW_KEY_LEFT_SHIFT))
     {
         m_Speed = m_BaseSpeed * m_FastSpeedMultiplier;
         m_Sensitivity = m_BaseSensitivity * m_FastSpeedMultiplier;
@@ -71,70 +71,70 @@ void FlyCameraController::ProcessInput(GLFWwindow* Window)
         m_Sensitivity = m_BaseSensitivity;
     }
     
-    UpdateCameraPosition(Window);
-    UpdateCameraRotation(Window);
+    UpdateCameraPosition();
+    UpdateCameraRotation();
 }
 
-void FlyCameraController::EnableNavigation(GLFWwindow* Window)
+void FlyCameraController::EnableNavigation()
 {
     m_NavigationEnabled = true;
 
-    glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(Application::GetCurrentWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // Set last known cursor position when entering to prevent large sudden jump on first focus
     double cursorX, cursorY;
-    glfwGetCursorPos(Window, &cursorX, &cursorY);
+    glfwGetCursorPos(Application::GetCurrentWindow(), &cursorX, &cursorY);
 
-    m_CursorLastX = cursorX;
-    m_CursorLastY = cursorY;
+    m_CursorLastX = static_cast<float>(cursorX);
+    m_CursorLastY = static_cast<float>(cursorY);
 }
 
-void FlyCameraController::DisableNavigation(GLFWwindow* Window)
+void FlyCameraController::DisableNavigation()
 {
     m_NavigationEnabled = false;
 
-    glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSetInputMode(Application::GetCurrentWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 
-void FlyCameraController::UpdateCameraPosition(GLFWwindow* Window)
+void FlyCameraController::UpdateCameraPosition()
 {
     float cameraSpeed = m_Speed * GameTime::DeltaTime;
 
-    if(glfwGetKey(Window, GLFW_KEY_W) == GLFW_PRESS)
+    if(Input::GetKey(GLFW_KEY_W))
     {
         m_Camera->Position += cameraSpeed * m_Camera->GetForwardVector(); 
     }
 
-    if(glfwGetKey(Window, GLFW_KEY_S) == GLFW_PRESS)
+    if(Input::GetKey(GLFW_KEY_S))
     {
         m_Camera->Position -= cameraSpeed * m_Camera->GetForwardVector();
     }
 
-    if(glfwGetKey(Window, GLFW_KEY_A) == GLFW_PRESS)
+    if(Input::GetKey(GLFW_KEY_A))
     {
         m_Camera->Position -= m_Camera->GetRightVector() * cameraSpeed;
     }
 
-    if(glfwGetKey(Window, GLFW_KEY_D) == GLFW_PRESS)
+    if(Input::GetKey(GLFW_KEY_D))
     {
         m_Camera->Position += m_Camera->GetRightVector() * cameraSpeed;
     }
 
-    if(glfwGetKey(Window, GLFW_KEY_E) == GLFW_PRESS)
+    if(Input::GetKey(GLFW_KEY_E))
     {
         m_Camera->Position += m_Camera->GetUpVector() * cameraSpeed;
     }
 
-    if(glfwGetKey(Window, GLFW_KEY_Q) == GLFW_PRESS)
+    if(Input::GetKey(GLFW_KEY_Q))
     {
         m_Camera->Position -= m_Camera->GetUpVector() * cameraSpeed;
     }
 }
 
-void FlyCameraController::UpdateCameraRotation(GLFWwindow* Window)
+void FlyCameraController::UpdateCameraRotation()
 {
     double cursorX, cursorY;
-    glfwGetCursorPos(Window, &cursorX, &cursorY);
+    glfwGetCursorPos(Application::GetCurrentWindow(), &cursorX, &cursorY);
 
     float xOffset = cursorX - m_CursorLastX;
     float yOffset = m_CursorLastY - cursorY; // Reversed since y-coord range from bottom to top
@@ -151,7 +151,7 @@ void FlyCameraController::UpdateCameraRotation(GLFWwindow* Window)
     m_Camera->SetRotation(eulerRotation);
 }
 
-void FlyCameraController::UpdateCameraZoom(GLFWwindow* Window, double XScrollOffset, double YScrollOffset)
+void FlyCameraController::UpdateCameraZoom(double XScrollOffset, double YScrollOffset)
 {
     if(!m_NavigationEnabled)
     {
