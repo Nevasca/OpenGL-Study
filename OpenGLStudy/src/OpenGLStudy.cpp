@@ -5,6 +5,7 @@
 
 #include "Renderer.h"
 #include "GameTime.h"
+#include "core/Input.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
@@ -141,7 +142,6 @@ int main(void)
             GLCall(glClearColor(0.f, 0.f, 0.f, 1.f)); // Sets clear color to black
             renderer.Clear();
 
-
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
@@ -173,7 +173,9 @@ int main(void)
             glfwSwapBuffers(window);
 
             /* Poll for and process events, like keyboard input and mouse movement */
+            Input::SwapBuffers();
             glfwPollEvents();
+            Input::Process(window);
         }
 
         delete currentTest;
