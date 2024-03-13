@@ -172,6 +172,7 @@
     <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\core\Application.cpp" />
     <ClCompile Include="src\core\Input.cpp" />
+    <ClCompile Include="src\core\Transform.cpp" />
     <ClCompile Include="src\FlyCameraController.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -251,6 +252,7 @@
     <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\core\Application.h" />
     <ClInclude Include="src\core\Input.h" />
+    <ClInclude Include="src\core\Transform.h" />
     <ClInclude Include="src\FlyCameraController.h" />
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Mesh.h" />
