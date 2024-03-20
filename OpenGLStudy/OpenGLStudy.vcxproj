@@ -170,9 +170,11 @@
   <ItemGroup>
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Core.cpp" />
+    <ClCompile Include="src\core\GameObject.cpp" />
     <ClCompile Include="src\core\Application.cpp" />
     <ClCompile Include="src\core\Input.cpp" />
     <ClCompile Include="src\core\Transform.cpp" />
+    <ClCompile Include="src\core\World.cpp" />
     <ClCompile Include="src\FlyCameraController.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -183,14 +185,16 @@
     <ClCompile Include="src\tests\Breakout\Ball.cpp" />
     <ClCompile Include="src\tests\Breakout\Game.cpp" />
     <ClCompile Include="src\tests\Breakout\GameLevel.cpp" />
-    <ClCompile Include="src\tests\Breakout\GameObject.cpp" />
+    <ClCompile Include="src\tests\Breakout\BreakoutGameObject.cpp" />
     <ClCompile Include="src\tests\Breakout\ParticleGenerator.cpp" />
     <ClCompile Include="src\tests\Breakout\SpriteRenderer.cpp" />
+    <ClCompile Include="src\tests\testCore\DummyGameObject.cpp" />
     <ClCompile Include="src\tests\Test.cpp" />
     <ClCompile Include="src\tests\Test3DTransform.cpp" />
     <ClCompile Include="src\tests\TestBasicLightingCasters.cpp" />
     <ClCompile Include="src\tests\TestCamera.cpp" />
     <ClCompile Include="src\tests\TestBasicLighting.cpp" />
+    <ClCompile Include="src\tests\testCore\TestCore.cpp" />
     <ClCompile Include="src\tests\TestDynamicBatchRendering.cpp" />
     <ClCompile Include="src\tests\TestFramebuffer.cpp" />
     <ClCompile Include="src\tests\TestGameBreakout.cpp" />
@@ -250,9 +254,11 @@
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Core.h" />
+    <ClInclude Include="src\core\GameObject.h" />
     <ClInclude Include="src\core\Application.h" />
     <ClInclude Include="src\core\Input.h" />
     <ClInclude Include="src\core\Transform.h" />
+    <ClInclude Include="src\core\World.h" />
     <ClInclude Include="src\FlyCameraController.h" />
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\Mesh.h" />
@@ -263,9 +269,11 @@
     <ClInclude Include="src\tests\Breakout\EGameState.h" />
     <ClInclude Include="src\tests\Breakout\Game.h" />
     <ClInclude Include="src\tests\Breakout\GameLevel.h" />
-    <ClInclude Include="src\tests\Breakout\GameObject.h" />
+    <ClInclude Include="src\tests\Breakout\BreakoutGameObject.h" />
     <ClInclude Include="src\tests\Breakout\ParticleGenerator.h" />
     <ClInclude Include="src\tests\Breakout\SpriteRenderer.h" />
+    <ClInclude Include="src\tests\testCore\DummyGameObject.h" />
+    <ClInclude Include="src\tests\testCore\TestCore.h" />
     <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\Test3DTransform.h" />
     <ClInclude Include="src\tests\TestBasicLightingCasters.h" />

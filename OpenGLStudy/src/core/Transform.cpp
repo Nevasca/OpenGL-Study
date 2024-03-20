@@ -3,34 +3,23 @@
 #include "glm/fwd.hpp"
 #include "glm/gtc/quaternion.hpp"
 
-void Transform::SetPosition(glm::vec3 position)
+Transform::Transform(const glm::vec3& position, const glm::vec3& eulerRotation, const glm::vec3& scale)
+    : m_Position(position), m_Rotation(eulerRotation), m_Scale(scale)
+{ }
+
+void Transform::SetPosition(const glm::vec3& position)
 {
     m_Position = position;
 }
 
-void Transform::SetRotation(glm::vec3 eulerRotation)
+void Transform::SetRotation(const glm::vec3& eulerRotation)
 {
     m_Rotation = eulerRotation;
 }
 
-void Transform::SetScale(glm::vec3 scale)
+void Transform::SetScale(const glm::vec3& scale)
 {
     m_Scale = scale;
-}
-
-glm::vec3 Transform::GetPosition() const
-{
-    return m_Position;
-}
-
-glm::vec3 Transform::GetRotation() const
-{
-    return m_Rotation;
-}
-
-glm::vec3 Transform::GetScale() const
-{
-    return m_Scale;
 }
 
 glm::vec3 Transform::GetForwardVector() const

@@ -1,14 +1,14 @@
 #pragma once
 #include <vector>
 
-#include "GameObject.h"
+#include "BreakoutGameObject.h"
 
 namespace Breakout
 {
     class GameLevel
     {
     public:
-        std::vector<GameObject> Bricks;
+        std::vector<BreakoutGameObject> Bricks;
 
         GameLevel(const std::shared_ptr<Texture>& solidBlockTexture, const std::shared_ptr<Texture>& blockTexture);
         void Load(const char* filePath, unsigned int levelWidth, unsigned int levelHeight);

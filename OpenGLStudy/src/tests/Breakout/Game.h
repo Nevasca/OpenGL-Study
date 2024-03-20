@@ -59,7 +59,7 @@ namespace Breakout
         std::unique_ptr<Texture> m_BackgroundTexture;
         std::shared_ptr<Texture> m_SolidBlockTexture;
 
-        std::unique_ptr<GameObject> m_Player;
+        std::unique_ptr<BreakoutGameObject> m_Player;
         std::shared_ptr<Texture> m_PaddleTexture;
 
         std::unique_ptr<Ball> m_Ball;
@@ -71,8 +71,8 @@ namespace Breakout
 
         irrklang::ISoundEngine* m_SoundEngine;
         
-        bool CheckCollision(const GameObject& one, const GameObject& two) const; //AABB - AABB collision
-        Collision CheckCollision(const Ball& one, const GameObject& two) const; //AABB - Circle collision
+        bool CheckCollision(const BreakoutGameObject& one, const BreakoutGameObject& two) const; //AABB - AABB collision
+        Collision CheckCollision(const Ball& one, const BreakoutGameObject& two) const; //AABB - Circle collision
         EDirection GetClosestDirection(glm::vec2 direction) const;
         void ResetLevel();
         void ResetPlayer();

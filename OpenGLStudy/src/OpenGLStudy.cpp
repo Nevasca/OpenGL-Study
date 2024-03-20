@@ -20,6 +20,7 @@
 #include "tests/TestCamera.h"
 #include "tests/TestBasicLighting.h"
 #include "tests/TestBasicLightingCasters.h"
+#include "tests/testCore/TestCore.h"
 #include "tests/TestFramebuffer.h"
 #include "tests/TestGameBreakout.h"
 #include "tests/TestModelLoading.h"
@@ -45,6 +46,24 @@ void ProcessInput(GLFWwindow* Window)
     {
         glfwSetWindowShouldClose(Window, true);
     }
+}
+
+void CreateTests()
+{
+    testMenu->RegisterTest<tests::TestClearColor>("Clear Color");
+    testMenu->RegisterTest<tests::TestTexture2D>("2D Texture");
+    testMenu->RegisterTest<tests::TestStaticBatchRendering>("Static Batch Rendering");
+    testMenu->RegisterTest<tests::TestDynamicBatchRendering>("Dynamic Batch Rendering");
+    testMenu->RegisterTest<tests::Test2DTransform>("2D Transform");
+    testMenu->RegisterTest<tests::Test3DTransform>("3D Transform");
+    testMenu->RegisterTest<tests::TestCamera>("Camera");
+    testMenu->RegisterTest<tests::TestBasicLighting>("Basic Lighting");
+    testMenu->RegisterTest<tests::TestBasicLightingCasters>("Basic Lighting Casters");
+    testMenu->RegisterTest<tests::TestTextRendering>("Text Rendering");
+    testMenu->RegisterTest<tests::TestModelLoading>("Model Loading");
+    testMenu->RegisterTest<tests::TestFramebuffer>("Framebuffer");
+    testMenu->RegisterTest<tests::TestGameBreakout>("Breakout Game");
+    testMenu->RegisterTest<tests::TestCore>("Core");
 }
 
 int main(void)
@@ -113,19 +132,7 @@ int main(void)
         // to spare going through the menu every time testing something new
         currentTest = testMenu;
 
-        testMenu->RegisterTest<tests::TestClearColor>("Clear Color");
-        testMenu->RegisterTest<tests::TestTexture2D>("2D Texture");
-        testMenu->RegisterTest<tests::TestStaticBatchRendering>("Static Batch Rendering");
-        testMenu->RegisterTest<tests::TestDynamicBatchRendering>("Dynamic Batch Rendering");
-        testMenu->RegisterTest<tests::Test2DTransform>("2D Transform");
-        testMenu->RegisterTest<tests::Test3DTransform>("3D Transform");
-        testMenu->RegisterTest<tests::TestCamera>("Camera");
-        testMenu->RegisterTest<tests::TestBasicLighting>("Basic Lighting");
-        testMenu->RegisterTest<tests::TestBasicLightingCasters>("Basic Lighting Casters");
-        testMenu->RegisterTest<tests::TestTextRendering>("Text Rendering");
-        testMenu->RegisterTest<tests::TestModelLoading>("Model Loading");
-        testMenu->RegisterTest<tests::TestFramebuffer>("Framebuffer");
-        testMenu->RegisterTest<tests::TestGameBreakout>("Breakout Game");
+        CreateTests();
 
         // testMenu->OpenTest("Breakout Game");
 

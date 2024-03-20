@@ -65,7 +65,7 @@ namespace Breakout
                 
                 if(tileCode == 1) // solid
                 {
-                    GameObject brick{pos, size, m_SolidBlockTexture, glm::vec3{0.8f, 0.8f, 0.7f}};
+                    BreakoutGameObject brick{pos, size, m_SolidBlockTexture, glm::vec3{0.8f, 0.8f, 0.7f}};
                     brick.IsSolid = true;
 
                     Bricks.emplace_back(std::move(brick));
@@ -94,7 +94,7 @@ namespace Breakout
 
     void GameLevel::Draw(const SpriteRenderer& renderer)
     {
-        for(const GameObject& Brick : Bricks)
+        for(const BreakoutGameObject& Brick : Bricks)
         {
             if(!Brick.Destroyed)
             {
@@ -105,7 +105,7 @@ namespace Breakout
 
     bool GameLevel::IsCompleted() const
     {
-        for(const GameObject& Brick : Bricks)
+        for(const BreakoutGameObject& Brick : Bricks)
         {
             if(!Brick.IsSolid && !Brick.Destroyed)
             {
@@ -118,7 +118,7 @@ namespace Breakout
 
     void GameLevel::Reset()
     {
-        for(GameObject& Brick : Bricks)
+        for(BreakoutGameObject& Brick : Bricks)
         {
             Brick.Destroyed = false;
         }

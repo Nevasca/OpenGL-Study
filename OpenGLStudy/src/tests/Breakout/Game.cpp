@@ -57,7 +57,7 @@ namespace Breakout
 
         m_PaddleTexture = std::make_unique<Texture>("res/breakout/textures/paddle.png", true, false);
         glm::vec2 playerStartPosition = GetPlayerStartPosition();
-        m_Player = std::make_unique<GameObject>(playerStartPosition, PLAYER_SIZE, m_PaddleTexture);
+        m_Player = std::make_unique<BreakoutGameObject>(playerStartPosition, PLAYER_SIZE, m_PaddleTexture);
 
         glm::vec2 ballStartPosition = GetBallStartPosition(playerStartPosition);
         
@@ -146,7 +146,7 @@ namespace Breakout
 
     void Game::DoCollisions()
     {
-        for(GameObject& brick : Levels[Level].Bricks)
+        for(BreakoutGameObject& brick : Levels[Level].Bricks)
         {
             if(brick.Destroyed)
             {
@@ -235,7 +235,7 @@ namespace Breakout
         m_Ball->Velocity = glm::normalize(m_Ball->Velocity) * glm::length(oldVelocity);
     }
 
-    bool Game::CheckCollision(const GameObject& one, const GameObject& two) const //AABB - AABB collision
+    bool Game::CheckCollision(const BreakoutGameObject& one, const BreakoutGameObject& two) const //AABB - AABB collision
     {
         // Position.xy is top left
         
@@ -249,7 +249,7 @@ namespace Breakout
         return bIsOverlappingX && bIsOverlappingY;
     }
 
-    Collision Game::CheckCollision(const Ball& one, const GameObject& two) const //AABB - Circle collision
+    Collision Game::CheckCollision(const Ball& one, const BreakoutGameObject& two) const //AABB - Circle collision
     {
         glm::vec2 circleCenter = one.Position + one.Radius;
 

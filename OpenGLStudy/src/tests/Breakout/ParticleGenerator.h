@@ -13,7 +13,7 @@
 
 namespace Breakout
 {
-    class GameObject;
+    class BreakoutGameObject;
 
     struct Particle
     {
@@ -29,7 +29,7 @@ namespace Breakout
 
         ParticleGenerator(const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture, unsigned int amount);
 
-        void Update(float deltaTime, GameObject& objectAttached, unsigned int newParticles, glm::vec2 offset = glm::vec2{0.f});
+        void Update(float deltaTime, BreakoutGameObject& objectAttached, unsigned int newParticles, glm::vec2 offset = glm::vec2{0.f});
         void Draw() const;
 
     private:
@@ -46,6 +46,6 @@ namespace Breakout
 
         void Init();
         unsigned int FindFirstUnusedParticle();
-        void RespawnParticle(Particle& particle, const GameObject& objectAttached, glm::vec2 offset = glm::vec2{0.f});
+        void RespawnParticle(Particle& particle, const BreakoutGameObject& objectAttached, glm::vec2 offset = glm::vec2{0.f});
     };
 }

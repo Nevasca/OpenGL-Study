@@ -1,9 +1,9 @@
 #pragma once
-#include "GameObject.h"
+#include "BreakoutGameObject.h"
 
 namespace Breakout
 {
-    class Ball : public GameObject
+    class Ball : public BreakoutGameObject
     {
     public:
 

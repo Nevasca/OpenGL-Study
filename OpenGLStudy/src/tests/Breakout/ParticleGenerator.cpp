@@ -1,6 +1,6 @@
 #include "ParticleGenerator.h"
 
-#include "GameObject.h"
+#include "BreakoutGameObject.h"
 
 #include "VertexBufferLayout.h"
 
@@ -47,7 +47,7 @@ namespace Breakout
         }
     }
 
-    void ParticleGenerator::Update(float deltaTime, GameObject& objectAttached, unsigned int newParticles, glm::vec2 offset)
+    void ParticleGenerator::Update(float deltaTime, BreakoutGameObject& objectAttached, unsigned int newParticles, glm::vec2 offset)
     {
         // Add new particles
         for(unsigned int i = 0; i < newParticles; i++)
@@ -125,7 +125,7 @@ namespace Breakout
         return 0;
     }
 
-    void ParticleGenerator::RespawnParticle(Particle& particle, const GameObject& objectAttached, glm::vec2 offset)
+    void ParticleGenerator::RespawnParticle(Particle& particle, const BreakoutGameObject& objectAttached, glm::vec2 offset)
     {
         float random = (rand() % 100 - 50) / 10.f;
         float randomColor = 0.5f + (rand() % 100) / 100.f;

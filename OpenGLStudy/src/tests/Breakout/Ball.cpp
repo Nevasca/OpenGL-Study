@@ -3,7 +3,7 @@
 namespace Breakout
 {
     Ball::Ball(glm::vec2 position, float radius, glm::vec2 velocity, const std::shared_ptr<Texture>& sprite)
-        : GameObject(position, glm::vec2{radius * 2.f}, sprite, glm::vec3{1.f}, velocity)
+        : BreakoutGameObject(position, glm::vec2{radius * 2.f}, sprite, glm::vec3{1.f}, velocity)
     { }
 
     glm::vec2 Ball::Move(float deltaTime, unsigned windowWidth)

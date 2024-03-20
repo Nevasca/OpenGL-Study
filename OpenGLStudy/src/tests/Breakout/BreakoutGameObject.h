@@ -10,7 +10,7 @@ namespace Breakout
 {
     class SpriteRenderer;
 
-    class GameObject
+    class BreakoutGameObject
     {
     public:
         glm::vec2 Position{0.f, 0.f};
@@ -23,8 +23,8 @@ namespace Breakout
 
         std::shared_ptr<Texture> Sprite{};
 
-        GameObject();
-        GameObject(glm::vec2 position, glm::vec2 size, const std::shared_ptr<Texture>& sprite, glm::vec3 color = glm::vec3(1.0f), glm::vec2 velocity = glm::vec2(0.0f, 0.0f));
+        BreakoutGameObject();
+        BreakoutGameObject(glm::vec2 position, glm::vec2 size, const std::shared_ptr<Texture>& sprite, glm::vec3 color = glm::vec3(1.0f), glm::vec2 velocity = glm::vec2(0.0f, 0.0f));
         void Draw(const SpriteRenderer& Renderer) const;
     };
 }
