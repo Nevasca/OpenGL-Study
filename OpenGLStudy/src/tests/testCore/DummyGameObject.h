@@ -1,5 +1,5 @@
 #pragma once
-#include "core/GameObject.h"
+#include "core/GameObject/GameObject.h"
 
 namespace tests
 {

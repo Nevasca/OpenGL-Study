@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-#include "GameObject.h"
+#include "GameObject/GameObject.h"
 
 class World
 {

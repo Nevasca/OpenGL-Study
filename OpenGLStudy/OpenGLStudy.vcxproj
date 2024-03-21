@@ -170,10 +170,11 @@
   <ItemGroup>
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Core.cpp" />
-    <ClCompile Include="src\core\GameObject.cpp" />
     <ClCompile Include="src\core\Application.cpp" />
+    <ClCompile Include="src\core\GameObject\Component.cpp" />
+    <ClCompile Include="src\core\GameObject\GameObject.cpp" />
+    <ClCompile Include="src\core\GameObject\Transform.cpp" />
     <ClCompile Include="src\core\Input.cpp" />
-    <ClCompile Include="src\core\Transform.cpp" />
     <ClCompile Include="src\core\World.cpp" />
     <ClCompile Include="src\FlyCameraController.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
@@ -188,6 +189,7 @@
     <ClCompile Include="src\tests\Breakout\BreakoutGameObject.cpp" />
     <ClCompile Include="src\tests\Breakout\ParticleGenerator.cpp" />
     <ClCompile Include="src\tests\Breakout\SpriteRenderer.cpp" />
+    <ClCompile Include="src\tests\testCore\DummyComponent.cpp" />
     <ClCompile Include="src\tests\testCore\DummyGameObject.cpp" />
     <ClCompile Include="src\tests\Test.cpp" />
     <ClCompile Include="src\tests\Test3DTransform.cpp" />
@@ -254,10 +256,11 @@
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Core.h" />
-    <ClInclude Include="src\core\GameObject.h" />
     <ClInclude Include="src\core\Application.h" />
+    <ClInclude Include="src\core\GameObject\Component.h" />
+    <ClInclude Include="src\core\GameObject\GameObject.h" />
+    <ClInclude Include="src\core\GameObject\Transform.h" />
     <ClInclude Include="src\core\Input.h" />
-    <ClInclude Include="src\core\Transform.h" />
     <ClInclude Include="src\core\World.h" />
     <ClInclude Include="src\FlyCameraController.h" />
     <ClInclude Include="src\IndexBuffer.h" />
@@ -272,6 +275,7 @@
     <ClInclude Include="src\tests\Breakout\BreakoutGameObject.h" />
     <ClInclude Include="src\tests\Breakout\ParticleGenerator.h" />
     <ClInclude Include="src\tests\Breakout\SpriteRenderer.h" />
+    <ClInclude Include="src\tests\testCore\DummyComponent.h" />
     <ClInclude Include="src\tests\testCore\DummyGameObject.h" />
     <ClInclude Include="src\tests\testCore\TestCore.h" />
     <ClInclude Include="src\tests\Test.h" />
