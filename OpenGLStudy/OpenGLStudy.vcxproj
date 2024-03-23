@@ -168,17 +168,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\core\Basics\CameraComponent.cpp" />
+    <ClCompile Include="src\core\Basics\MeshComponent.cpp" />
+    <ClCompile Include="src\core\Rendering\Primitive.cpp" />
+    <ClCompile Include="src\LegacyCamera.cpp" />
     <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\core\Application.cpp" />
     <ClCompile Include="src\core\GameObject\Component.cpp" />
     <ClCompile Include="src\core\GameObject\GameObject.cpp" />
     <ClCompile Include="src\core\GameObject\Transform.cpp" />
     <ClCompile Include="src\core\Input.cpp" />
+    <ClCompile Include="src\core\Rendering\Mesh.cpp" />
+    <ClCompile Include="src\core\Rendering\MeshRenderer.cpp" />
+    <ClCompile Include="src\core\Screen.cpp" />
     <ClCompile Include="src\core\World.cpp" />
     <ClCompile Include="src\FlyCameraController.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
-    <ClCompile Include="src\Mesh.cpp" />
+    <ClCompile Include="src\LegacyMesh.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\OpenGLStudy.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -235,6 +241,7 @@
     <Content Include="res\breakout\textures\block_solid.png" />
     <Content Include="res\breakout\textures\paddle.png" />
     <Content Include="res\breakout\textures\particle.png" />
+    <Content Include="res\core\shaders\Default.glsl" />
     <Content Include="res\shaders\Basic.shader" />
     <Content Include="res\shaders\BasicBatch.shader" />
     <Content Include="res\shaders\BasicLit.shader" />
@@ -254,17 +261,23 @@
     <Content Include="src\vendor\glm\copying.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\core\Basics\CameraComponent.h" />
+    <ClInclude Include="src\core\Basics\MeshComponent.h" />
+    <ClInclude Include="src\core\Rendering\Primitive.h" />
+    <ClInclude Include="src\LegacyCamera.h" />
     <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\core\Application.h" />
     <ClInclude Include="src\core\GameObject\Component.h" />
     <ClInclude Include="src\core\GameObject\GameObject.h" />
     <ClInclude Include="src\core\GameObject\Transform.h" />
     <ClInclude Include="src\core\Input.h" />
+    <ClInclude Include="src\core\Rendering\Mesh.h" />
+    <ClInclude Include="src\core\Rendering\MeshRenderer.h" />
+    <ClInclude Include="src\core\Screen.h" />
     <ClInclude Include="src\core\World.h" />
     <ClInclude Include="src\FlyCameraController.h" />
     <ClInclude Include="src\IndexBuffer.h" />
-    <ClInclude Include="src\Mesh.h" />
+    <ClInclude Include="src\LegacyMesh.h" />
     <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />

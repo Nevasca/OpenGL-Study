@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "Camera.h"
+#include "LegacyCamera.h"
 #include "Core.h"
 #include "FlyCameraController.h"
 #include "Model.h"
@@ -145,7 +145,7 @@ namespace tests
 
     void TestFramebuffer::CreateTestWorld()
     {
-        m_Camera = std::make_shared<Camera>(960.f, 540.f);
+        m_Camera = std::make_shared<LegacyCamera>(960.f, 540.f);
         m_Camera->Position = {10.f, 10.f,15.f};
 
         m_CameraController = std::make_unique<FlyCameraController>(m_Camera);
@@ -159,16 +159,16 @@ namespace tests
     void TestFramebuffer::CreateScreenQuad()
     {
         // Since we don't need to transform this quad, we can directly use native device position (from -1 to 1) 
-        std::vector<Vertex> vertices = {
-            Vertex{{-1.f, -1.f, 0.f}, {1.f, 0.f, 0.f}, {0.f, 0.f}},
-            Vertex{{1.f, -1.f, 0.f}, {1.f, 0.f, 0.f}, {1.f, 0.f}},
-            Vertex{{1.f, 1.f, 0.f}, {1.f, 0.f, 0.f}, {1.f, 1.f}},
-            Vertex{{-1.f, 1.f, 0.f}, {1.f, 0.f, 0.f}, {0.f, 1.f}}
+        std::vector<LegacyVertex> vertices = {
+            LegacyVertex{{-1.f, -1.f, 0.f}, {1.f, 0.f, 0.f}, {0.f, 0.f}},
+            LegacyVertex{{1.f, -1.f, 0.f}, {1.f, 0.f, 0.f}, {1.f, 0.f}},
+            LegacyVertex{{1.f, 1.f, 0.f}, {1.f, 0.f, 0.f}, {1.f, 1.f}},
+            LegacyVertex{{-1.f, 1.f, 0.f}, {1.f, 0.f, 0.f}, {0.f, 1.f}}
         };
 
         std::vector<unsigned int> indices = {0, 1, 2, 2, 3, 0};
         
-        m_ScreenQuad = std::make_unique<Mesh>(vertices, indices, std::vector<std::shared_ptr<Texture>>{});
+        m_ScreenQuad = std::make_unique<LegacyMesh>(vertices, indices, std::vector<std::shared_ptr<Texture>>{});
 
         m_PostProcessingShader = std::make_unique<Shader>("res/shaders/PostProcessing.glsl");
         m_PostProcessingShader->Bind();

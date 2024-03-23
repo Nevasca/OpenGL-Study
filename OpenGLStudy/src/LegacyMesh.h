@@ -12,18 +12,18 @@ class Renderer;
 class Shader;
 class Texture;
 
-struct Vertex
+struct LegacyVertex
 {
     glm::vec3 Position;
     glm::vec3 Normal;
     glm::vec2 UV;
 };
 
-class Mesh
+class LegacyMesh
 {
 public:
 
-    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const std::vector<std::shared_ptr<Texture>>& textures);
+    LegacyMesh(std::vector<LegacyVertex> vertices, std::vector<unsigned int> indices, const std::vector<std::shared_ptr<Texture>>& textures);
     void Draw(Shader& shader);
 
 private:

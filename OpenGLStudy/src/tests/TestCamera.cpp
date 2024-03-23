@@ -121,7 +121,7 @@ namespace tests
             m_Rotations[i] = { 55 + i % 360, 55 + i % 360, 55 + i % 360};
         }
 
-        m_Camera = std::make_shared<Camera>(960.f, 540.f);
+        m_Camera = std::make_shared<LegacyCamera>(960.f, 540.f);
         m_CameraController = std::make_unique<FlyCameraController>(m_Camera);
     }
 

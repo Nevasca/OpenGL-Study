@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "Camera.h"
+#include "LegacyCamera.h"
 #include "FlyCameraController.h"
 #include "Test.h"
 #include "glm/glm.hpp"
@@ -60,7 +60,7 @@ namespace tests
         
         glm::mat4 m_MVP;
 
-        std::shared_ptr<Camera> m_Camera;
+        std::shared_ptr<LegacyCamera> m_Camera;
         std::unique_ptr<FlyCameraController> m_CameraController;
 
         void CreateCube();

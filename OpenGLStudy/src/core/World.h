@@ -2,8 +2,12 @@
 #include <memory>
 #include <memory>
 #include <vector>
+#include "glm/vec3.hpp"
+#include "Rendering/MeshRenderer.h"
 
-#include "GameObject/GameObject.h"
+class MeshComponent;
+class CameraComponent;
+class GameObject;
 
 class World
 {
@@ -13,14 +17,14 @@ public:
     void Update(float deltaTime);
     void Render();
     void Shutdown();
+    void AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
+    void SetActiveCamera(const std::shared_ptr<CameraComponent>& camera);
 
     template <typename TObjectType, typename = std::enable_if_t<std::is_base_of_v<GameObject, TObjectType>>>
     std::shared_ptr<TObjectType> Spawn()
     {
-        std::shared_ptr<TObjectType> instance = std::make_shared<TObjectType>();
-
-        instance->Initialize();
-        instance->Start();
+        std::shared_ptr<TObjectType> instance = std::make_shared<TObjectType>(*this);
+        InitializeGameObject(instance);
     
         m_GameObjects.push_back(instance);
     
@@ -28,15 +32,10 @@ public:
     }
     
     template <typename TObjectType, typename = std::enable_if_t<std::is_base_of_v<GameObject, TObjectType>>>
-    std::shared_ptr<TObjectType> Spawn(const glm::vec3& position, const glm::vec3& eulerRotation = glm::vec3{0.f}, const glm::vec3 scale = glm::vec3{1.f})
+    std::shared_ptr<TObjectType> Spawn(const glm::vec3& position, const glm::vec3& eulerRotation = glm::vec3{0.f}, const glm::vec3& scale = glm::vec3{1.f})
     {
-        std::shared_ptr<TObjectType> instance = std::make_shared<TObjectType>();
-        instance->SetPosition(position);
-        instance->SetRotation(eulerRotation);
-        instance->SetScale(scale);
-
-        instance->Initialize();
-        instance->Start();
+        std::shared_ptr<TObjectType> instance = std::make_shared<TObjectType>(*this);
+        InitializeGameObject(instance, position, eulerRotation, scale);
     
         m_GameObjects.push_back(instance);
     
@@ -45,5 +44,11 @@ public:
 
 private:
 
-    std::vector<std::shared_ptr<GameObject>> m_GameObjects;
+    void InitializeGameObject(const std::shared_ptr<GameObject>& gameObject) const;
+    void InitializeGameObject(const std::shared_ptr<GameObject>& gameObject, const glm::vec3& position, const glm::vec3& eulerRotation, const glm::vec3& scale) const;
+    
+    std::vector<std::shared_ptr<GameObject>> m_GameObjects{};
+    std::vector<std::shared_ptr<MeshComponent>> m_MeshComponents{};
+    MeshRenderer m_MeshRenderer{};
+    std::shared_ptr<CameraComponent> m_ActiveCamera{};
 };

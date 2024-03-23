@@ -3,9 +3,9 @@
 
 class DummyComponent : public Component
 {
-public:
-
     GENERATE_COMPONENT_BODY(DummyComponent)
+
+public:
 
     void Update(float deltaTime) override;
 };

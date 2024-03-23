@@ -5,6 +5,8 @@ namespace tests
 {
     class DummyGameObject : public GameObject
     {
+        GENERATE_OBJECT_BODY(DummyGameObject)
+
     public:
 
         void Initialize() override;

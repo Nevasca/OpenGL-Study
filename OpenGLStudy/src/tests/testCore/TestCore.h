@@ -18,7 +18,7 @@ namespace tests
 
     private:
 
-        World m_World{};
+        std::unique_ptr<World> m_World{};
         std::shared_ptr<DummyGameObject> m_DummyObjectA;
         std::shared_ptr<DummyGameObject> m_DummyObjectB;
     };

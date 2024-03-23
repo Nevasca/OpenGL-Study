@@ -13,7 +13,7 @@ Model::Model(const std::string& path)
 
 void Model::Draw(Shader& shader)
 {
-    for(const std::unique_ptr<Mesh>& mesh : m_Meshes)
+    for(const std::unique_ptr<LegacyMesh>& mesh : m_Meshes)
     {
         mesh->Draw(shader);
     }
@@ -65,16 +65,16 @@ void Model::ProcessNode(aiNode* node, const aiScene* scene)
     // this example doesn't use this, but it's nice to keep this approach for that
 }
 
-std::unique_ptr<Mesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+std::unique_ptr<LegacyMesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 {
-    std::vector<Vertex> vertices{};
+    std::vector<LegacyVertex> vertices{};
     std::vector<unsigned int> indices{};
     std::vector<std::shared_ptr<Texture>> textures{};
 
     for(unsigned int i = 0; i < mesh->mNumVertices; i++)
     {
         // Process vertex positions, normals and texture coordinates
-        Vertex vertex{};
+        LegacyVertex vertex{};
         
         glm::vec3 position{};
         position.x = mesh->mVertices[i].x;
@@ -128,7 +128,7 @@ std::unique_ptr<Mesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     }
 
-    return std::make_unique<Mesh>(vertices, indices, textures);
+    return std::make_unique<LegacyMesh>(vertices, indices, textures);
 }
 
 std::vector<std::shared_ptr<Texture>> Model::LoadMaterialTextures(aiMaterial* material, aiTextureType type, const std::string& typeName)

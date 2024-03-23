@@ -4,13 +4,25 @@
 #include <GLFW/glfw3.h>
 
 #include "core/Input.h"
+#include "glm/vec3.hpp"
 
 void DummyComponent::Update(float deltaTime)
 {
     Component::Update(deltaTime);
 
-    if(Input::GetKeyDown(GLFW_KEY_H))
+    constexpr float speed = 10;
+
+    if(Input::GetKey(GLFW_KEY_A))
     {
-        std::cout << "Hello World!\n";
+        glm::vec3 position = GetOwnerPosition();
+        position.x -= speed * deltaTime;
+        SetOwnerPosition(position);
+    }
+
+    if(Input::GetKey(GLFW_KEY_D))
+    {
+        glm::vec3 position = GetOwnerPosition();
+        position.x += speed * deltaTime;
+        SetOwnerPosition(position);
     }
 }

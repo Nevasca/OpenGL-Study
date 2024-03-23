@@ -1,11 +1,11 @@
 #pragma once
 #include "glm/glm.hpp"
 
-class Camera
+class LegacyCamera
 {
 public:
 
-    Camera(float ScreenWidth, float ScreenHeight);
+    LegacyCamera(float ScreenWidth, float ScreenHeight);
 
     glm::vec3 Position{0.f, 0.f, 3.f};
 

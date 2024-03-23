@@ -1,37 +1,37 @@
-#include "Camera.h"
+#include "LegacyCamera.h"
 
 #include "glm/detail/type_quat.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/gtc/quaternion.hpp"
 
-Camera::Camera(float ScreenWidth, float ScreenHeight)
+LegacyCamera::LegacyCamera(float ScreenWidth, float ScreenHeight)
     : m_ScreenWidth(ScreenWidth), m_ScreenHeight(ScreenHeight)
 {
     m_Projection = glm::perspective(glm::radians(m_Fov), m_ScreenWidth / m_ScreenHeight, m_NearPlane, m_FarPlane);
 }
 
-glm::vec3 Camera::GetForwardVector() const
+glm::vec3 LegacyCamera::GetForwardVector() const
 {
     return m_Forward;
 }
 
-glm::vec3 Camera::GetUpVector() const
+glm::vec3 LegacyCamera::GetUpVector() const
 {
     return m_Up;
 }
 
-glm::vec3 Camera::GetRightVector() const
+glm::vec3 LegacyCamera::GetRightVector() const
 {
     return glm::normalize(glm::cross(m_Forward, m_Up));
 }
 
-glm::vec3 Camera::GetRotation() const
+glm::vec3 LegacyCamera::GetRotation() const
 {
     return m_Rotation;
 }
 
-void Camera::SetRotation(const glm::vec3& EulerRotation)
+void LegacyCamera::SetRotation(const glm::vec3& EulerRotation)
 {
     m_Rotation = EulerRotation;
     
@@ -64,26 +64,26 @@ void Camera::SetRotation(const glm::vec3& EulerRotation)
     // m_Forward = glm::normalize(rotationMatrix * forward);
 }
 
-float Camera::GetFov() const
+float LegacyCamera::GetFov() const
 {
     return m_Fov;
 }
 
-void Camera::SetFov(float Fov)
+void LegacyCamera::SetFov(float Fov)
 {
     m_Fov = glm::clamp(Fov, m_MinFov, m_MaxFov);
 
     m_Projection = glm::perspective(glm::radians(m_Fov), m_ScreenWidth / m_ScreenHeight, m_NearPlane, m_FarPlane);
 }
 
-glm::mat4 Camera::GetViewMatrix() const
+glm::mat4 LegacyCamera::GetViewMatrix() const
 {
     // Since the camera front is something like (0.f, 0.f, -1.f), adding it to the position will make the target position be in front of the camera
     // Ensuring that however we move, the camera keeps looking at the target direction (0.f, 0.f, -1.f)
     return glm::lookAt(Position, Position + m_Forward, m_Up);
 }
 
-glm::mat4 Camera::GetViewProjectionMatrix() const
+glm::mat4 LegacyCamera::GetViewProjectionMatrix() const
 {
     return m_Projection * GetViewMatrix();
 }

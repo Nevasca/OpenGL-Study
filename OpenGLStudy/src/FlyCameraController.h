@@ -3,13 +3,13 @@
 #include <memory>
 #include <GLFW/glfw3.h>
 
-class Camera;
+class LegacyCamera;
 
 class FlyCameraController
 {
 public:
 
-    FlyCameraController(const std::shared_ptr<Camera>& Camera);
+    FlyCameraController(const std::shared_ptr<LegacyCamera>& Camera);
 
     void Setup(bool bEnable = true);
     void Shutdown();
@@ -19,7 +19,7 @@ public:
 
 private:
 
-    std::shared_ptr<Camera> m_Camera;
+    std::shared_ptr<LegacyCamera> m_Camera;
     bool m_NavigationEnabled{false};
     float m_BaseSpeed{2.5f};
     float m_Speed{2.5f};

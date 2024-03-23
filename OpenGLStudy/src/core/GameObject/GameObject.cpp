@@ -1,5 +1,9 @@
 #include "GameObject.h"
 
+GameObject::GameObject(World& world)
+    : m_World(world)
+{ }
+
 void GameObject::Initialize()
 { }
 

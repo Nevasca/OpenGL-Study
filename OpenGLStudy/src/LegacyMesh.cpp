@@ -1,4 +1,4 @@
-#include "Mesh.h"
+#include "LegacyMesh.h"
 
 #include "Renderer.h"
 #include "Shader.h"
@@ -7,12 +7,12 @@
 
 #include "VertexBufferLayout.h"
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned> indices, const std::vector<std::shared_ptr<Texture>>& textures)
+LegacyMesh::LegacyMesh(std::vector<LegacyVertex> vertices, std::vector<unsigned> indices, const std::vector<std::shared_ptr<Texture>>& textures)
     : m_Textures(textures)
 {
     m_VAO = std::make_unique<VertexArray>();
 
-    m_VBO = std::make_unique<VertexBuffer>(vertices.data(), vertices.size() * sizeof(Vertex));
+    m_VBO = std::make_unique<VertexBuffer>(vertices.data(), vertices.size() * sizeof(LegacyVertex));
 
     VertexBufferLayout layout{};
     layout.Push<float>(3);
@@ -23,7 +23,7 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned> indices, const st
     m_IBO = std::make_unique<IndexBuffer>(indices.data(), indices.size());
 }
 
-void Mesh::Draw(Shader& shader)
+void LegacyMesh::Draw(Shader& shader)
 {
     shader.Bind();
 

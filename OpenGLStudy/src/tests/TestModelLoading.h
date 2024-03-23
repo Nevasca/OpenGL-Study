@@ -8,7 +8,7 @@
 
 class Shader;
 class FlyCameraController;
-class Camera;
+class LegacyCamera;
 class Model;
 
 namespace tests
@@ -32,7 +32,7 @@ namespace tests
         std::unique_ptr<Shader> m_Shader;
         glm::mat4 m_MVP;
         glm::vec3 m_Scale{1.f};
-        std::shared_ptr<Camera> m_Camera;
+        std::shared_ptr<LegacyCamera> m_Camera;
         std::unique_ptr<FlyCameraController> m_CameraController;
 
         void LoadModel();        

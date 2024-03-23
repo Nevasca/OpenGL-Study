@@ -1,6 +1,6 @@
 #include "FlyCameraController.h"
 
-#include "Camera.h"
+#include "LegacyCamera.h"
 #include "GameTime.h"
 #include "core/Application.h"
 #include "core/Input.h"
@@ -20,7 +20,7 @@ namespace
     }
 }
 
-FlyCameraController::FlyCameraController(const std::shared_ptr<Camera>& Camera)
+FlyCameraController::FlyCameraController(const std::shared_ptr<LegacyCamera>& Camera)
     : m_Camera(Camera)
 { }
 

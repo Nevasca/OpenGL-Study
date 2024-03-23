@@ -7,6 +7,7 @@
 #include "GameTime.h"
 #include "core/Application.h"
 #include "core/Input.h"
+#include "core/Screen.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
@@ -37,6 +38,8 @@ void HandleWindowResized(GLFWwindow* Window, int Width, int Height)
     std::cout << "Window has been resized to (" << Width << ", " << Height << ")\n";
     
     // Update the Projection matrix here, or use glViewport(0, 0, Width, Height) if not using matrices
+    glViewport(0, 0, Width, Height);
+    Screen::SetSize(Width, Height);
 }
 
 void ProcessInput(GLFWwindow* Window)
@@ -79,8 +82,10 @@ int main(void)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+    constexpr int INITIAL_WIDTH = 960;
+    constexpr int INITIAL_HEIGHT = 540;
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(960, 540, "OpenGL Study", NULL, NULL);
+    window = glfwCreateWindow(INITIAL_WIDTH, INITIAL_HEIGHT, "OpenGL Study", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -91,6 +96,8 @@ int main(void)
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Synchronize with VSync
     Application::SetCurrentWindow(window);
+    glViewport(0, 0, INITIAL_WIDTH, INITIAL_HEIGHT);
+    Screen::SetSize(INITIAL_WIDTH, INITIAL_HEIGHT);
     
     glfwSetFramebufferSizeCallback(window, HandleWindowResized); // Add callback for window resized
 
