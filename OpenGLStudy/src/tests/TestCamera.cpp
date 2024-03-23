@@ -122,7 +122,7 @@ namespace tests
         }
 
         m_Camera = std::make_shared<LegacyCamera>(960.f, 540.f);
-        m_CameraController = std::make_unique<FlyCameraController>(m_Camera);
+        m_CameraController = std::make_unique<LegacyFlyCameraController>(m_Camera);
     }
 
     TestCamera::~TestCamera()

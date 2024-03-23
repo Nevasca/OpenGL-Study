@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "LegacyCamera.h"
-#include "FlyCameraController.h"
+#include "LegacyFlyCameraController.h"
 #include "Model.h"
 #include "Shader.h"
 #include "glm/ext/matrix_transform.hpp"
@@ -16,7 +16,7 @@ namespace tests
         m_Camera = std::make_shared<LegacyCamera>(960.f, 540.f);
         m_Camera->Position = {10.f, 10.f,15.f};
 
-        m_CameraController = std::make_unique<FlyCameraController>(m_Camera);
+        m_CameraController = std::make_unique<LegacyFlyCameraController>(m_Camera);
 
         m_Shader = std::make_unique<Shader>("res/shaders/BasicLitNoCustomColors.shader");
         m_Shader->Bind();

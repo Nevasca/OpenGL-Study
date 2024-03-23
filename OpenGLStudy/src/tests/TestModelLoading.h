@@ -7,7 +7,7 @@
 #include "glm/glm.hpp"
 
 class Shader;
-class FlyCameraController;
+class LegacyFlyCameraController;
 class LegacyCamera;
 class Model;
 
@@ -33,7 +33,7 @@ namespace tests
         glm::mat4 m_MVP;
         glm::vec3 m_Scale{1.f};
         std::shared_ptr<LegacyCamera> m_Camera;
-        std::unique_ptr<FlyCameraController> m_CameraController;
+        std::unique_ptr<LegacyFlyCameraController> m_CameraController;
 
         void LoadModel();        
     };

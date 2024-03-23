@@ -11,8 +11,11 @@ class CameraComponent : public Component
 public:
 
     void Initialize() override;
+
     glm::mat4 GetViewMatrix() const;
     glm::mat4 GetProjectionMatrix() const;
+    void SetFov(float fov);
+    float GetFov() const { return m_Fov; }
 
 private:
 

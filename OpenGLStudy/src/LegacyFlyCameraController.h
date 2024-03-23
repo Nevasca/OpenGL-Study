@@ -5,11 +5,11 @@
 
 class LegacyCamera;
 
-class FlyCameraController
+class LegacyFlyCameraController
 {
 public:
 
-    FlyCameraController(const std::shared_ptr<LegacyCamera>& Camera);
+    LegacyFlyCameraController(const std::shared_ptr<LegacyCamera>& Camera);
 
     void Setup(bool bEnable = true);
     void Shutdown();

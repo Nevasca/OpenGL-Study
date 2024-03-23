@@ -14,7 +14,10 @@ void GameObject::Update(float deltaTime)
 {
     for(const std::shared_ptr<Component>& component : m_Components)
     {
-        component->Update(deltaTime);
+        if(component->IsEnabled())
+        {
+            component->Update(deltaTime);
+        }
     }
 }
 
@@ -22,6 +25,7 @@ void GameObject::Destroy()
 {
     for(const std::shared_ptr<Component>& component : m_Components)
     {
+        component->Disable();
         component->Destroy();
     }
 

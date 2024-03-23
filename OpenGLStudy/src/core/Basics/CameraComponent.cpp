@@ -28,3 +28,8 @@ glm::mat4 CameraComponent::GetProjectionMatrix() const
     const float aspect = static_cast<float>(Screen::GetWidth()) / static_cast<float>(Screen::GetHeight());
     return glm::perspective(glm::radians(m_Fov), aspect, m_NearPlane, m_FarPlane);
 }
+
+void CameraComponent::SetFov(float fov)
+{
+    m_Fov = fov;
+}

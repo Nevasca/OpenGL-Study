@@ -4,7 +4,7 @@
 
 #include "LegacyCamera.h"
 #include "Core.h"
-#include "FlyCameraController.h"
+#include "LegacyFlyCameraController.h"
 #include "Model.h"
 #include "Shader.h"
 #include "imgui/imgui.h"
@@ -148,7 +148,7 @@ namespace tests
         m_Camera = std::make_shared<LegacyCamera>(960.f, 540.f);
         m_Camera->Position = {10.f, 10.f,15.f};
 
-        m_CameraController = std::make_unique<FlyCameraController>(m_Camera);
+        m_CameraController = std::make_unique<LegacyFlyCameraController>(m_Camera);
 
         m_ModelShader = std::make_unique<Shader>("res/shaders/BasicGray.glsl");
         m_ModelShader->Bind();

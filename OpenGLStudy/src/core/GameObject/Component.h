@@ -15,6 +15,7 @@
     void SetThis(const std::shared_ptr<ClassName>& InThis) { m_This = InThis; }\
     std::shared_ptr<ClassName> GetThis() { return m_This; }
 
+class Transform;
 class GameObject;
 
 class Component
@@ -29,18 +30,24 @@ public:
     virtual void Start();
     virtual void Update(float deltaTime);
     virtual void Destroy();
+    virtual void Enable();
+    virtual void Disable();
     void SetOwnerPosition(const glm::vec3& position) const;
     void SetOwnerRotation(const glm::vec3& eulerRotation) const;
     void SetOwnerScale(const glm::vec3& scale) const;
     glm::vec3 GetOwnerPosition() const;
     glm::vec3 GetOwnerRotation() const;
     glm::vec3 GetOwnerScale() const;
+    Transform& GetOwnerTransform() const;
     
     GameObject& GetOwner() const { return m_Owner; }
+    bool IsEnabled() const { return bIsEnabled; }
 
 protected:
 
     Component(GameObject& owner);
+
+    bool bIsEnabled{true};
 
 private:
 

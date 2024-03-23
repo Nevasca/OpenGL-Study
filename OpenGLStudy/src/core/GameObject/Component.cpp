@@ -18,6 +18,16 @@ void Component::Update(float deltaTime)
 void Component::Destroy()
 { }
 
+void Component::Enable()
+{
+    bIsEnabled = true;
+}
+
+void Component::Disable()
+{
+    bIsEnabled = false;
+}
+
 void Component::SetOwnerPosition(const glm::vec3& position) const
 {
     m_Owner.SetPosition(position);
@@ -46,4 +56,9 @@ glm::vec3 Component::GetOwnerRotation() const
 glm::vec3 Component::GetOwnerScale() const
 {
     return m_Owner.GetScale();
+}
+
+Transform& Component::GetOwnerTransform() const
+{
+    return m_Owner.GetTransform();
 }

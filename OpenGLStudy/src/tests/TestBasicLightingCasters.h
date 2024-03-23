@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "LegacyCamera.h"
-#include "FlyCameraController.h"
+#include "LegacyFlyCameraController.h"
 #include "Test.h"
 #include "glm/glm.hpp"
 
@@ -83,7 +83,7 @@ namespace tests
         glm::mat4 m_MVP;
 
         std::shared_ptr<LegacyCamera> m_Camera;
-        std::unique_ptr<FlyCameraController> m_CameraController;
+        std::unique_ptr<LegacyFlyCameraController> m_CameraController;
 
         void CreateCubes();
         void CreateLightSources();

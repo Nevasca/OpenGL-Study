@@ -1,4 +1,4 @@
-#include "FlyCameraController.h"
+#include "LegacyFlyCameraController.h"
 
 #include "LegacyCamera.h"
 #include "GameTime.h"
@@ -12,7 +12,7 @@ namespace
     // Using a global var instance of "this" so we can use the instance on required global function callback
     // for glfw scroll callback
     // This is a workaround, not sure what's the best approach on these cases...
-    FlyCameraController* g_CameraController;
+    LegacyFlyCameraController* g_CameraController;
 
     void ScrollCallbackWrapper(GLFWwindow* Window, double XOffset, double YOffset)
     {
@@ -20,11 +20,11 @@ namespace
     }
 }
 
-FlyCameraController::FlyCameraController(const std::shared_ptr<LegacyCamera>& Camera)
+LegacyFlyCameraController::LegacyFlyCameraController(const std::shared_ptr<LegacyCamera>& Camera)
     : m_Camera(Camera)
 { }
 
-void FlyCameraController::Setup(bool bEnabled)
+void LegacyFlyCameraController::Setup(bool bEnabled)
 {
     if(bEnabled)
     {
@@ -35,7 +35,7 @@ void FlyCameraController::Setup(bool bEnabled)
     glfwSetScrollCallback(Application::GetCurrentWindow(), ScrollCallbackWrapper);
 }
 
-void FlyCameraController::Shutdown()
+void LegacyFlyCameraController::Shutdown()
 {
     // Restore cursor default state
     glfwSetInputMode(Application::GetCurrentWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -44,7 +44,7 @@ void FlyCameraController::Shutdown()
     glfwSetScrollCallback(Application::GetCurrentWindow(), nullptr);
 }
 
-void FlyCameraController::Update()
+void LegacyFlyCameraController::Update()
 {
     if(m_NavigationEnabled && Input::GetKeyDown(GLFW_KEY_ESCAPE))
     {
@@ -75,7 +75,7 @@ void FlyCameraController::Update()
     UpdateCameraRotation();
 }
 
-void FlyCameraController::EnableNavigation()
+void LegacyFlyCameraController::EnableNavigation()
 {
     m_NavigationEnabled = true;
 
@@ -89,14 +89,14 @@ void FlyCameraController::EnableNavigation()
     m_CursorLastY = static_cast<float>(cursorY);
 }
 
-void FlyCameraController::DisableNavigation()
+void LegacyFlyCameraController::DisableNavigation()
 {
     m_NavigationEnabled = false;
 
     glfwSetInputMode(Application::GetCurrentWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 
-void FlyCameraController::UpdateCameraPosition()
+void LegacyFlyCameraController::UpdateCameraPosition()
 {
     float cameraSpeed = m_Speed * GameTime::DeltaTime;
 
@@ -131,7 +131,7 @@ void FlyCameraController::UpdateCameraPosition()
     }
 }
 
-void FlyCameraController::UpdateCameraRotation()
+void LegacyFlyCameraController::UpdateCameraRotation()
 {
     double cursorX, cursorY;
     glfwGetCursorPos(Application::GetCurrentWindow(), &cursorX, &cursorY);
@@ -151,7 +151,7 @@ void FlyCameraController::UpdateCameraRotation()
     m_Camera->SetRotation(eulerRotation);
 }
 
-void FlyCameraController::UpdateCameraZoom(double XScrollOffset, double YScrollOffset)
+void LegacyFlyCameraController::UpdateCameraZoom(double XScrollOffset, double YScrollOffset)
 {
     if(!m_NavigationEnabled)
     {
@@ -164,7 +164,7 @@ void FlyCameraController::UpdateCameraZoom(double XScrollOffset, double YScrollO
     m_Camera->SetFov(fov);
 }
 
-void FlyCameraController::OnImGuiRender()
+void LegacyFlyCameraController::OnImGuiRender()
 {
     ImGui::Begin("Camera");
     ImGui::Text("'Esc': exit fly mode");

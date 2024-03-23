@@ -18,6 +18,8 @@ public:
     glm::vec3 GetRotation() const { return m_Rotation; }
     glm::vec3 GetScale() const { return m_Scale; }
     glm::vec3 GetForwardVector() const;
+    glm::vec3 GetRightVector() const;
+    glm::vec3 GetUpVector() const;
     glm::mat4 GetMatrix() const;
 
 private:

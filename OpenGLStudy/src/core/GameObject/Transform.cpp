@@ -32,6 +32,21 @@ glm::vec3 Transform::GetForwardVector() const
     return forward;
 }
 
+glm::vec3 Transform::GetRightVector() const
+{
+    return glm::normalize(glm::cross(GetForwardVector(), GetUpVector()));
+}
+
+glm::vec3 Transform::GetUpVector() const
+{
+    glm::quat rotationQuat = glm::quat(glm::radians(m_Rotation));
+    glm::mat3 rotationMatrix = glm::mat3_cast(rotationQuat);
+    glm::vec3 worldUp{0.f, 1.f, 0.f};
+    glm::vec3 up = glm::normalize(rotationMatrix * worldUp);
+
+    return up;
+}
+
 glm::mat4 Transform::GetMatrix() const
 {
     glm::mat4 modelMatrix = glm::mat4(1.f);

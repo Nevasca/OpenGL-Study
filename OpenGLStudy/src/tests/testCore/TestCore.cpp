@@ -5,6 +5,7 @@
 #include "DummyComponent.h"
 #include "Shader.h"
 #include "core/Basics/CameraComponent.h"
+#include "core/Basics/FlyCamera.h"
 #include "core/Basics/MeshComponent.h"
 #include "core/Rendering/Primitive.h"
 
@@ -17,16 +18,15 @@ namespace tests
         m_DummyObjectA = m_World->Spawn<DummyGameObject>();
         m_DummyObjectB = m_World->Spawn<DummyGameObject>(glm::vec3{10.f, 1.f, 2.f});
 
-        std::shared_ptr<GameObject> camera = m_World->Spawn<GameObject>();
-        std::shared_ptr<CameraComponent> cameraComponent = camera->AddComponent<CameraComponent>();
-        camera->SetPosition(glm::vec3(0.f, 0.f, 5.f));
-        camera->SetRotation(glm::vec3(0.f, 180.f, 0.f));
+        glm::vec3 cameraInitialPosition(0.f, 0.f, 5.f);
+        glm::vec3 cameraInitialRotation(0.f, 180.f, 0.f);
+        std::shared_ptr<FlyCamera> camera = m_World->Spawn<FlyCamera>(cameraInitialPosition, cameraInitialRotation);
 
         std::shared_ptr<GameObject> cube = m_World->Spawn<GameObject>();
         std::shared_ptr<MeshComponent> meshComponent = cube->AddComponent<MeshComponent>();
         meshComponent->SetMesh(Primitive::CreateCube());
         meshComponent->SetShader(std::make_shared<Shader>("res/core/shaders/Default.glsl"));
-        cube->AddComponent<DummyComponent>();
+        // cube->AddComponent<DummyComponent>();
     }
 
     TestCore::~TestCore()

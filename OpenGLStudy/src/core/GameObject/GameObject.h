@@ -45,6 +45,7 @@ public:
 
         component->SetThis(component);
         component->Initialize();
+        component->Enable();
         component->Start();
 
         m_Components.push_back(component);
