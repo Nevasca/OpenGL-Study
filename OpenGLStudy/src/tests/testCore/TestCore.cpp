@@ -4,9 +4,8 @@
 
 #include "DummyComponent.h"
 #include "Shader.h"
-#include "core/Basics/CameraComponent.h"
-#include "core/Basics/FlyCamera.h"
-#include "core/Basics/MeshComponent.h"
+#include "core/Basics/Objects/FlyCamera.h"
+#include "core/Basics/Components/MeshComponent.h"
 #include "core/Rendering/Primitive.h"
 
 namespace tests

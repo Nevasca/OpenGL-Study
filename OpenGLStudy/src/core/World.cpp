@@ -4,8 +4,8 @@
 #include "Rendering/MeshRenderer.h"
 #include <glm/glm.hpp>
 
-#include "Basics/MeshComponent.h"
-#include "Basics/CameraComponent.h"
+#include "Basics/Components/MeshComponent.h"
+#include "Basics/Components/CameraComponent.h"
 
 void World::Initialize()
 {

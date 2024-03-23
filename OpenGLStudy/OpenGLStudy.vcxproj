@@ -168,11 +168,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\Basics\CameraComponent.cpp" />
-    <ClCompile Include="src\core\Basics\FlyCamera.cpp" />
-    <ClCompile Include="src\core\Basics\MeshComponent.cpp" />
-    <ClCompile Include="src\core\Basics\PilotCameraController.cpp" />
-    <ClCompile Include="src\core\Basics\PilotComponent.cpp" />
+    <ClCompile Include="src\core\Basics\Components\CameraComponent.cpp" />
+    <ClCompile Include="src\core\Basics\Components\MeshComponent.cpp" />
+    <ClCompile Include="src\core\Basics\Components\PilotCameraController.cpp" />
+    <ClCompile Include="src\core\Basics\Components\PilotComponent.cpp" />
+    <ClCompile Include="src\core\Basics\Objects\FlyCamera.cpp" />
     <ClCompile Include="src\core\Rendering\Primitive.cpp" />
     <ClCompile Include="src\LegacyCamera.cpp" />
     <ClCompile Include="src\Core.cpp" />
@@ -264,11 +264,11 @@
     <Content Include="src\vendor\glm\copying.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\Basics\CameraComponent.h" />
-    <ClInclude Include="src\core\Basics\FlyCamera.h" />
-    <ClInclude Include="src\core\Basics\MeshComponent.h" />
-    <ClInclude Include="src\core\Basics\PilotCameraController.h" />
-    <ClInclude Include="src\core\Basics\PilotComponent.h" />
+    <ClInclude Include="src\core\Basics\Components\CameraComponent.h" />
+    <ClInclude Include="src\core\Basics\Components\MeshComponent.h" />
+    <ClInclude Include="src\core\Basics\Components\PilotCameraController.h" />
+    <ClInclude Include="src\core\Basics\Components\PilotComponent.h" />
+    <ClInclude Include="src\core\Basics\Objects\FlyCamera.h" />
     <ClInclude Include="src\core\Rendering\Primitive.h" />
     <ClInclude Include="src\LegacyCamera.h" />
     <ClInclude Include="src\Core.h" />

@@ -1,8 +1,8 @@
 #include "FlyCamera.h"
 
-#include "CameraComponent.h"
-#include "PilotComponent.h"
-#include "PilotCameraController.h"
+#include "core/Basics/Components/CameraComponent.h"
+#include "core/Basics/Components/PilotComponent.h"
+#include "core/Basics/Components/PilotCameraController.h"
 
 class CameraComponent;
 
