@@ -4,7 +4,7 @@
 
 #include "DummyComponent.h"
 #include "Shader.h"
-#include "core/Basics/Objects/FlyCamera.h"
+#include "core/Basics/Objects/FlyingCamera.h"
 #include "core/Basics/Components/MeshComponent.h"
 #include "core/Rendering/Primitive.h"
 
@@ -19,7 +19,7 @@ namespace tests
 
         glm::vec3 cameraInitialPosition(0.f, 0.f, 5.f);
         glm::vec3 cameraInitialRotation(0.f, 180.f, 0.f);
-        std::shared_ptr<FlyCamera> camera = m_World->Spawn<FlyCamera>(cameraInitialPosition, cameraInitialRotation);
+        std::shared_ptr<FlyingCamera> camera = m_World->Spawn<FlyingCamera>(cameraInitialPosition, cameraInitialRotation);
 
         std::shared_ptr<GameObject> cube = m_World->Spawn<GameObject>();
         std::shared_ptr<MeshComponent> meshComponent = cube->AddComponent<MeshComponent>();

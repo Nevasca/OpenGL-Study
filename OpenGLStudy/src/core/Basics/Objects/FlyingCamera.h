@@ -1,9 +1,9 @@
 #pragma once
 #include "core/GameObject/GameObject.h"
 
-class FlyCamera : public GameObject
+class FlyingCamera : public GameObject
 {
-    GENERATE_OBJECT_BODY(FlyCamera)
+    GENERATE_OBJECT_BODY(FlyingCamera)
     
 public:
 

@@ -172,7 +172,7 @@
     <ClCompile Include="src\core\Basics\Components\MeshComponent.cpp" />
     <ClCompile Include="src\core\Basics\Components\PilotCameraController.cpp" />
     <ClCompile Include="src\core\Basics\Components\PilotComponent.cpp" />
-    <ClCompile Include="src\core\Basics\Objects\FlyCamera.cpp" />
+    <ClCompile Include="src\core\Basics\Objects\FlyingCamera.cpp" />
     <ClCompile Include="src\core\Rendering\Primitive.cpp" />
     <ClCompile Include="src\LegacyCamera.cpp" />
     <ClCompile Include="src\Core.cpp" />
@@ -268,7 +268,7 @@
     <ClInclude Include="src\core\Basics\Components\MeshComponent.h" />
     <ClInclude Include="src\core\Basics\Components\PilotCameraController.h" />
     <ClInclude Include="src\core\Basics\Components\PilotComponent.h" />
-    <ClInclude Include="src\core\Basics\Objects\FlyCamera.h" />
+    <ClInclude Include="src\core\Basics\Objects\FlyingCamera.h" />
     <ClInclude Include="src\core\Rendering\Primitive.h" />
     <ClInclude Include="src\LegacyCamera.h" />
     <ClInclude Include="src\Core.h" />

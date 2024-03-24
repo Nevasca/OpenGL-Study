@@ -1,4 +1,4 @@
-#include "FlyCamera.h"
+#include "FlyingCamera.h"
 
 #include "core/Basics/Components/CameraComponent.h"
 #include "core/Basics/Components/PilotComponent.h"
@@ -6,7 +6,7 @@
 
 class CameraComponent;
 
-void FlyCamera::Initialize()
+void FlyingCamera::Initialize()
 {
     GameObject::Initialize();
 
