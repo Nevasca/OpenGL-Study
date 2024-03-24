@@ -181,6 +181,12 @@ int main(void)
                 ImGui::End();
             }
 
+            {
+                ImGui::Begin("Statistics");
+                ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+                ImGui::End();
+            }
+
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
