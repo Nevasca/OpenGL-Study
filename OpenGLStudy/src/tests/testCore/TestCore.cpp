@@ -6,6 +6,7 @@
 #include "Shader.h"
 #include "core/Basics/Objects/FlyingCamera.h"
 #include "core/Basics/Components/MeshComponent.h"
+#include "core/Basics/Objects/Cube.h"
 #include "core/Rendering/Primitive.h"
 
 namespace tests
@@ -21,10 +22,14 @@ namespace tests
         glm::vec3 cameraInitialRotation(0.f, 180.f, 0.f);
         std::shared_ptr<FlyingCamera> camera = m_World->Spawn<FlyingCamera>(cameraInitialPosition, cameraInitialRotation);
 
-        std::shared_ptr<GameObject> cube = m_World->Spawn<GameObject>();
-        std::shared_ptr<MeshComponent> meshComponent = cube->AddComponent<MeshComponent>();
-        meshComponent->SetMesh(Primitive::CreateCube());
-        meshComponent->SetShader(std::make_shared<Shader>("res/core/shaders/Default.glsl"));
+        for(int x = 0; x < 100; x++)
+        {
+            for(int z = 0; z < 100; z++)
+            {
+                glm::vec3 position{static_cast<float>(x) * 2.f, 0.f, static_cast<float>(z) * 2.f};
+                m_World->Spawn<Cube>(position);
+            }
+        }
         // cube->AddComponent<DummyComponent>();
     }
 

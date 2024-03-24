@@ -1,5 +1,7 @@
 #include "TestMenu.h"
 
+#include <GLFW/glfw3.h>
+
 #include "imgui/imgui.h"
 
 namespace tests
@@ -14,8 +16,12 @@ namespace tests
         {
             if(Test.first == Name)
             {
+                double startLoadTime = glfwGetTime();
                 m_CurrentTest = Test.second();
                 m_CurrentTest->Setup(&m_CurrentWindow);
+                const double loadTimeInSeconds = glfwGetTime() - startLoadTime;
+
+                std::cout << "Test " << Name << "loaded in " << loadTimeInSeconds << "s";
 
                 return;
             }
@@ -30,8 +36,13 @@ namespace tests
         {
             if(ImGui::Button(Test.first.c_str()))
             {
+                double startLoadTime = glfwGetTime();
                 m_CurrentTest = Test.second();
                 m_CurrentTest->Setup(&m_CurrentWindow);
+
+                const double loadTimeInSeconds = glfwGetTime() - startLoadTime;
+
+                std::cout << "Test " << Test.first << " loaded in " << loadTimeInSeconds << "s";
             }
         }
     }

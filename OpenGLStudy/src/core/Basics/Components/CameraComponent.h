@@ -21,6 +21,6 @@ private:
 
     float m_Fov{45.f};
     float m_NearPlane{0.1f};
-    float m_FarPlane{100.f};
+    float m_FarPlane{1000.f};
     glm::vec3 m_Up{0.f, 1.f, 0.f};
 };
