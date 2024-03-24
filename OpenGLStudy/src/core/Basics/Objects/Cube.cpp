@@ -4,16 +4,13 @@
 
 #include "core/ResourceManager.h"
 #include "core/Basics/Components/MeshComponent.h"
-#include "core/Rendering/Primitive.h"
 
 void Cube::Initialize()
 {
     GameObject::Initialize();
 
-    //TODO: After creating resource manager, get already created cube mesh and default shader
-    //instead of creating a new one for every cube instance
     m_MeshComponent = AddComponent<MeshComponent>();
-    m_MeshComponent->SetMesh(Primitive::CreateCube());
+    m_MeshComponent->SetMesh(ResourceManager::GetMesh(ResourceManager::DEFAULT_MESH_CUBE_NAME));
     m_MeshComponent->SetShader(ResourceManager::GetShader(ResourceManager::DEFAULT_MATERIAL_NAME));
 }
 
