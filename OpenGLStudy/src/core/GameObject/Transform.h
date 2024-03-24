@@ -1,6 +1,5 @@
 #pragma once
-#include "glm/fwd.hpp"
-#include "glm/vec3.hpp"
+#include "glm/glm.hpp"
 
 class Transform
 {
@@ -27,4 +26,6 @@ private:
     glm::vec3 m_Position{0.f};
     glm::vec3 m_Rotation{0.f};
     glm::vec3 m_Scale{1.f};
+    mutable glm::mat4 m_CachedMatrix{};
+    mutable bool bIsDirty{true};
 };

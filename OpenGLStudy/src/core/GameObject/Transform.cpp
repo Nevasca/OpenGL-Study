@@ -1,6 +1,5 @@
 #include "Transform.h"
 
-#include "glm/fwd.hpp"
 #include "glm/gtc/quaternion.hpp"
 
 Transform::Transform(const glm::vec3& position, const glm::vec3& eulerRotation, const glm::vec3& scale)
@@ -10,16 +9,19 @@ Transform::Transform(const glm::vec3& position, const glm::vec3& eulerRotation, 
 void Transform::SetPosition(const glm::vec3& position)
 {
     m_Position = position;
+    bIsDirty = true;
 }
 
 void Transform::SetRotation(const glm::vec3& eulerRotation)
 {
     m_Rotation = eulerRotation;
+    bIsDirty = true;
 }
 
 void Transform::SetScale(const glm::vec3& scale)
 {
     m_Scale = scale;
+    bIsDirty = true;
 }
 
 glm::vec3 Transform::GetForwardVector() const
@@ -49,12 +51,19 @@ glm::vec3 Transform::GetUpVector() const
 
 glm::mat4 Transform::GetMatrix() const
 {
-    glm::mat4 modelMatrix = glm::mat4(1.f);
-    modelMatrix = glm::translate(modelMatrix, m_Position);
+    if(!bIsDirty)
+    {
+        return m_CachedMatrix;
+    }
+
+    m_CachedMatrix = glm::mat4(1.f);
+    m_CachedMatrix = glm::translate(m_CachedMatrix, m_Position);
     glm::quat rotationQuat = glm::quat(glm::radians(m_Rotation));
     glm::mat4 rotationMatrix = glm::mat4_cast(rotationQuat);
-    modelMatrix *= rotationMatrix;
-    modelMatrix = glm::scale(modelMatrix, m_Scale);
+    m_CachedMatrix *= rotationMatrix;
+    m_CachedMatrix = glm::scale(m_CachedMatrix, m_Scale);
 
-    return modelMatrix;
+    bIsDirty = false;
+
+    return m_CachedMatrix;
 }
