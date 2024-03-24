@@ -3,18 +3,20 @@
 #include <memory>
 
 #include "DummyComponent.h"
-#include "Shader.h"
+#include "LegacyShader.h"
+#include "core/ResourceManager.h"
 #include "core/Basics/Objects/FlyingCamera.h"
-#include "core/Basics/Components/MeshComponent.h"
 #include "core/Basics/Objects/Cube.h"
-#include "core/Rendering/Primitive.h"
 
 namespace tests
 {
     TestCore::TestCore()
     {
+        ResourceManager::LoadDefaultResources();
+
         m_World = std::make_unique<World>();
         m_World->Initialize();
+
         m_DummyObjectA = m_World->Spawn<DummyGameObject>();
         m_DummyObjectB = m_World->Spawn<DummyGameObject>(glm::vec3{10.f, 1.f, 2.f});
 
@@ -36,6 +38,7 @@ namespace tests
     TestCore::~TestCore()
     {
         m_World->Shutdown();
+        ResourceManager::UnloadAll();
     }
 
     void TestCore::OnUpdate(float DeltaTime)

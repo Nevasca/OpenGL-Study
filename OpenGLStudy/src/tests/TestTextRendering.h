@@ -8,7 +8,7 @@
 #include "glm/vec2.hpp"
 #include "glm/vec3.hpp"
 
-class Shader;
+class LegacyShader;
 class IndexBuffer;
 class VertexBuffer;
 class VertexArray;
@@ -39,12 +39,12 @@ namespace tests
         std::unique_ptr<VertexArray> m_VAO;
         std::unique_ptr<VertexBuffer> m_VBO;
         std::unique_ptr<IndexBuffer> m_IBO;
-        std::unique_ptr<Shader> m_Shader;
+        std::unique_ptr<LegacyShader> m_Shader;
         char m_Text[64] = "Hello World!";
         glm::vec2 m_Position{25.f, 25.f};
         float m_Scale{1.f};
         glm::vec3 m_Color{0.8f, 0.3f, 0.5f};
 
-        void RenderText(const Shader& Shader, const std::string& Text, float X, float Y, float Scale, const glm::vec3& Color);
+        void RenderText(const LegacyShader& Shader, const std::string& Text, float X, float Y, float Scale, const glm::vec3& Color);
     };
 }

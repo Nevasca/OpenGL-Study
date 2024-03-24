@@ -21,7 +21,7 @@ namespace tests
                 m_CurrentTest->Setup(&m_CurrentWindow);
                 const double loadTimeInSeconds = glfwGetTime() - startLoadTime;
 
-                std::cout << "Test " << Name << "loaded in " << loadTimeInSeconds << "s";
+                std::cout << "Test " << Name << "loaded in " << loadTimeInSeconds << "s\n";
 
                 return;
             }
@@ -42,7 +42,7 @@ namespace tests
 
                 const double loadTimeInSeconds = glfwGetTime() - startLoadTime;
 
-                std::cout << "Test " << Test.first << " loaded in " << loadTimeInSeconds << "s";
+                std::cout << "Test " << Test.first << " loaded in " << loadTimeInSeconds << "s\n";
             }
         }
     }

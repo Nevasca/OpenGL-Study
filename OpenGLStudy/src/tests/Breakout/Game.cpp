@@ -5,7 +5,7 @@
 
 #include "Ball.h"
 #include "ParticleGenerator.h"
-#include "Shader.h"
+#include "LegacyShader.h"
 #include "SpriteRenderer.h"
 #include "Texture.h"
 #include "glm/ext/matrix_clip_space.hpp"
@@ -25,7 +25,7 @@ namespace Breakout
 
     void Game::Init()
     {
-        m_SpriteShader = std::make_shared<Shader>("res/breakout/shaders/Sprite.shader");
+        m_SpriteShader = std::make_shared<LegacyShader>("res/breakout/shaders/Sprite.shader");
 
         m_SpriteShader->Bind();
         m_SpriteShader->SetUniform1i("u_Image", 0);
@@ -63,7 +63,7 @@ namespace Breakout
         
         m_Ball = std::make_unique<Ball>(ballStartPosition, BALL_RADIUS, BALL_INITIAL_VELOCITY, m_FaceTexture);
 
-        m_ParticleShader = std::make_unique<Shader>("res/breakout/shaders/Particle.shader");
+        m_ParticleShader = std::make_unique<LegacyShader>("res/breakout/shaders/Particle.shader");
         m_ParticleShader->Bind();
         m_ParticleShader->SetUniformMat4f("u_Projection", projection);
         m_ParticleShader->SetUniform1i("u_Sprite", 0);

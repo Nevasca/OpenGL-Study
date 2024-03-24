@@ -5,7 +5,7 @@
 #include "glm/glm.hpp"
 
 class Texture;
-class Shader;
+class LegacyShader;
 class IndexBuffer;
 class VertexBuffer;
 class VertexArray;
@@ -27,7 +27,7 @@ namespace tests
         std::unique_ptr<VertexArray> m_VAO;
         std::unique_ptr<VertexBuffer> m_VBO;
         std::unique_ptr<IndexBuffer> m_IBO;
-        std::unique_ptr<Shader> m_Shader;
+        std::unique_ptr<LegacyShader> m_Shader;
         std::unique_ptr<Texture> m_Texture;
 
         glm::vec3 m_Position{300.f, 300.f, 0.f};

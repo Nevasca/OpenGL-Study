@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "IndexBuffer.h"
-#include "Shader.h"
+#include "LegacyShader.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
@@ -105,7 +105,7 @@ namespace tests
         };
         m_IBO = std::make_unique<IndexBuffer>(indices, 6);
 
-        m_Shader = std::make_unique<Shader>("res/shaders/Text.shader");
+        m_Shader = std::make_unique<LegacyShader>("res/shaders/Text.shader");
         m_Shader->Bind();
         m_Shader->SetUniformMat4f("u_Projection", glm::ortho(0.f, 960.f, 0.f, 540.f));
         m_Shader->SetUniform1i("u_Text", 0);
@@ -125,7 +125,7 @@ namespace tests
         RenderText(*m_Shader, m_Text, m_Position.x, m_Position.y, m_Scale, m_Color);
     }
 
-    void TestTextRendering::RenderText(const Shader& Shader, const std::string& Text, float X, float Y, float Scale, const glm::vec3& Color)
+    void TestTextRendering::RenderText(const LegacyShader& Shader, const std::string& Text, float X, float Y, float Scale, const glm::vec3& Color)
     {
         m_VAO->Bind();
 

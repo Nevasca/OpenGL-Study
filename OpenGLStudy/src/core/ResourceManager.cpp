@@ -1,0 +1,35 @@
+#include "ResourceManager.h"
+
+#include "Resources/ShaderResource.h"
+
+std::unordered_map<std::string, std::shared_ptr<Shader>> ResourceManager::m_Shaders{};
+std::string ResourceManager::DEFAULT_MATERIAL_NAME = "Default";
+
+void ResourceManager::LoadDefaultResources()
+{
+    LoadShader("res/core/shaders/Default.glsl", DEFAULT_MATERIAL_NAME);
+}
+
+std::shared_ptr<Shader> ResourceManager::LoadShader(const std::string& vertexShaderPath, const std::string& fragShaderPath, const std::string& name)
+{
+    m_Shaders[name] = ShaderResource::LoadShaderFromFile(vertexShaderPath, fragShaderPath);
+    
+    return m_Shaders[name]; 
+}
+
+std::shared_ptr<Shader> ResourceManager::LoadShader(const std::string& singleFileShaderPath, const std::string& name)
+{
+    m_Shaders[name] = ShaderResource::LoadShaderFromFile(singleFileShaderPath);
+
+    return nullptr;
+}
+
+std::shared_ptr<Shader> ResourceManager::GetShader(const std::string& name)
+{
+    return m_Shaders[name];
+}
+
+void ResourceManager::UnloadAll()
+{
+    m_Shaders.clear();
+}

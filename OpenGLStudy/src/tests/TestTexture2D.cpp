@@ -46,7 +46,7 @@ namespace tests
 
         // Relative path from working directory. If running on a .exe, it will be the directory where it's running on.
         // For debugging mode on Rider, it will be whatever is set on Project Properties > Local Debugger (Debugging) > Working Directory (default set as ProjectDir)
-        m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader"); // Initialized on member initialization list
+        m_Shader = std::make_unique<LegacyShader>("res/shaders/Basic.shader"); // Initialized on member initialization list
 
         // We call only call uniform when the shader is bound (glUseProgram)
         m_Shader->Bind();

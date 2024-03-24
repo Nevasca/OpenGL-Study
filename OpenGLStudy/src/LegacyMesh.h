@@ -9,7 +9,7 @@
 #include "VertexBuffer.h"
 #include "VertexArray.h"
 class Renderer;
-class Shader;
+class LegacyShader;
 class Texture;
 
 struct LegacyVertex
@@ -24,7 +24,7 @@ class LegacyMesh
 public:
 
     LegacyMesh(std::vector<LegacyVertex> vertices, std::vector<unsigned int> indices, const std::vector<std::shared_ptr<Texture>>& textures);
-    void Draw(Shader& shader);
+    void Draw(LegacyShader& shader);
 
 private:
 

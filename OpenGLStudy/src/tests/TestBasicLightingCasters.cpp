@@ -8,7 +8,7 @@
 #include "GameTime.h"
 #include "IndexBuffer.h"
 #include "Renderer.h"
-#include "Shader.h"
+#include "LegacyShader.h"
 #include "Texture.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
@@ -108,7 +108,7 @@ namespace tests
 
         m_CubeIBO = std::make_unique<IndexBuffer>(indices, 6 * 6);
 
-        m_CubeShader = std::make_unique<Shader>("res/shaders/BasicLit.shader");
+        m_CubeShader = std::make_unique<LegacyShader>("res/shaders/BasicLit.shader");
         m_CubeShader->Bind();
         m_CubeShader->SetUniform1i("u_Material.diffuse", 0);
         m_CubeShader->SetUniform1i("u_Material.specular", 1);
@@ -218,7 +218,7 @@ namespace tests
 
         m_LightCubeIBO = std::make_unique<IndexBuffer>(indices, 6 + 4 * 3);
 
-        m_LightCubeShader = std::make_unique<Shader>("res/shaders/BasicLightCube.shader");
+        m_LightCubeShader = std::make_unique<LegacyShader>("res/shaders/BasicLightCube.shader");
 
         for(int i = 0; i < TOTAL_LIGHT_POINTS; i++)
         {

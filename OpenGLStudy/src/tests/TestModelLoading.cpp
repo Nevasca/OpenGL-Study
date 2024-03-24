@@ -5,7 +5,7 @@
 #include "LegacyCamera.h"
 #include "LegacyFlyCameraController.h"
 #include "Model.h"
-#include "Shader.h"
+#include "LegacyShader.h"
 #include "glm/ext/matrix_transform.hpp"
 #include "imgui/imgui.h"
 
@@ -18,7 +18,7 @@ namespace tests
 
         m_CameraController = std::make_unique<LegacyFlyCameraController>(m_Camera);
 
-        m_Shader = std::make_unique<Shader>("res/shaders/BasicLitNoCustomColors.shader");
+        m_Shader = std::make_unique<LegacyShader>("res/shaders/BasicLitNoCustomColors.shader");
         m_Shader->Bind();
 
         LoadModel();

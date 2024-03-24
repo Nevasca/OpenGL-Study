@@ -6,7 +6,7 @@
 
 namespace Breakout
 {
-    ParticleGenerator::ParticleGenerator(const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture, unsigned amount)
+    ParticleGenerator::ParticleGenerator(const std::shared_ptr<LegacyShader>& shader, const std::shared_ptr<Texture>& texture, unsigned amount)
         : m_Shader(shader), m_Texture(texture), m_Amount(amount)
     {
         Init();

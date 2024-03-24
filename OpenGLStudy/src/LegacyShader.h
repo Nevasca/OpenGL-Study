@@ -10,12 +10,12 @@ struct ShaderProgramSource
     std::string FragmentSource;
 };
 
-class Shader
+class LegacyShader
 {
 public:
 
-    Shader(const std::string& FilePath);
-    ~Shader();
+    LegacyShader(const std::string& FilePath);
+    ~LegacyShader();
 
     void Bind() const;
     void Unbind() const;

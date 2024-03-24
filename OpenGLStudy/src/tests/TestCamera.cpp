@@ -8,7 +8,7 @@
 #include "GameTime.h"
 #include "IndexBuffer.h"
 #include "Renderer.h"
-#include "Shader.h"
+#include "LegacyShader.h"
 #include "Texture.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
@@ -97,7 +97,7 @@ namespace tests
 
         m_IBO = std::make_unique<IndexBuffer>(indices, 6 * 6);
 
-        m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader");
+        m_Shader = std::make_unique<LegacyShader>("res/shaders/Basic.shader");
         m_Texture = std::make_unique<Texture>("res/textures/FancyPigeon.png");
         
         m_Shader->Bind();

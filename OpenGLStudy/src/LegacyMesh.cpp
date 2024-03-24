@@ -1,7 +1,7 @@
 #include "LegacyMesh.h"
 
 #include "Renderer.h"
-#include "Shader.h"
+#include "LegacyShader.h"
 #include "Texture.h"
 
 
@@ -23,7 +23,7 @@ LegacyMesh::LegacyMesh(std::vector<LegacyVertex> vertices, std::vector<unsigned>
     m_IBO = std::make_unique<IndexBuffer>(indices.data(), indices.size());
 }
 
-void LegacyMesh::Draw(Shader& shader)
+void LegacyMesh::Draw(LegacyShader& shader)
 {
     shader.Bind();
 

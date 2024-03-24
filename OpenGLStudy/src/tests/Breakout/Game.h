@@ -8,7 +8,7 @@
 #include <irrKlang.h>
 
 class Texture;
-class Shader;
+class LegacyShader;
 
 namespace Breakout
 {
@@ -54,7 +54,7 @@ namespace Breakout
         const glm::vec2 BALL_INITIAL_VELOCITY{100.f, -350.f};
         const float BALL_RADIUS{12.5f};
         
-        std::shared_ptr<Shader> m_SpriteShader;
+        std::shared_ptr<LegacyShader> m_SpriteShader;
         std::unique_ptr<SpriteRenderer> m_SpriteRenderer;
         std::unique_ptr<Texture> m_BackgroundTexture;
         std::shared_ptr<Texture> m_SolidBlockTexture;
@@ -66,7 +66,7 @@ namespace Breakout
         std::shared_ptr<Texture> m_FaceTexture;
 
         std::unique_ptr<ParticleGenerator> m_Particles;
-        std::shared_ptr<Shader> m_ParticleShader;
+        std::shared_ptr<LegacyShader> m_ParticleShader;
         std::shared_ptr<Texture> m_ParticleTexture;
 
         irrklang::ISoundEngine* m_SoundEngine;

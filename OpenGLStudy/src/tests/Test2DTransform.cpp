@@ -1,7 +1,7 @@
 #include "Test2DTransform.h"
 
 #include "IndexBuffer.h"
-#include "Shader.h"
+#include "LegacyShader.h"
 #include "Texture.h"
 #include "GameTime.h"
 #include "Renderer.h"
@@ -47,7 +47,7 @@ namespace tests
 
         m_IBO = std::make_unique<IndexBuffer>(indices, 6);
 
-        m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader");
+        m_Shader = std::make_unique<LegacyShader>("res/shaders/Basic.shader");
         m_Texture = std::make_unique<Texture>("res/textures/FancyPigeon.png");
         
         m_Shader->Bind();

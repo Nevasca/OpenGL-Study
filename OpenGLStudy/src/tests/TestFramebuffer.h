@@ -9,7 +9,7 @@
 class LegacyMesh;
 class LegacyFlyCameraController;
 class LegacyCamera;
-class Shader;
+class LegacyShader;
 class Model;
 
 namespace tests
@@ -36,11 +36,11 @@ namespace tests
 
         std::unique_ptr<Model> m_Model{};
         std::string m_ModelFilePath{"res/models/Bridge.fbx"};
-        std::unique_ptr<Shader> m_ModelShader;
+        std::unique_ptr<LegacyShader> m_ModelShader;
         glm::mat4 m_MVP;
         std::shared_ptr<LegacyCamera> m_Camera;
         std::unique_ptr<LegacyFlyCameraController> m_CameraController;
-        std::unique_ptr<Shader> m_PostProcessingShader;
+        std::unique_ptr<LegacyShader> m_PostProcessingShader;
         std::unique_ptr<LegacyMesh> m_ScreenQuad;
         bool bSharpenEnabled{false};
         bool bBlurEnabled{false};

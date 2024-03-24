@@ -11,7 +11,7 @@ Model::Model(const std::string& path)
     LoadModel(path);
 }
 
-void Model::Draw(Shader& shader)
+void Model::Draw(LegacyShader& shader)
 {
     for(const std::unique_ptr<LegacyMesh>& mesh : m_Meshes)
     {

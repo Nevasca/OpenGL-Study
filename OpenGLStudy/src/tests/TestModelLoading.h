@@ -6,7 +6,7 @@
 #include "Test.h"
 #include "glm/glm.hpp"
 
-class Shader;
+class LegacyShader;
 class LegacyFlyCameraController;
 class LegacyCamera;
 class Model;
@@ -29,7 +29,7 @@ namespace tests
 
         std::unique_ptr<Model> m_Model{};
         std::string m_ModelFilePath{"res/models/Bridge.fbx"};
-        std::unique_ptr<Shader> m_Shader;
+        std::unique_ptr<LegacyShader> m_Shader;
         glm::mat4 m_MVP;
         glm::vec3 m_Scale{1.f};
         std::shared_ptr<LegacyCamera> m_Camera;

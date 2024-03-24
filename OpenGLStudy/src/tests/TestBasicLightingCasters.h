@@ -8,7 +8,7 @@
 #include "glm/glm.hpp"
 
 class Texture;
-class Shader;
+class LegacyShader;
 class IndexBuffer;
 class VertexBuffer;
 class VertexArray;
@@ -32,7 +32,7 @@ namespace tests
         std::unique_ptr<VertexArray> m_CubeVAO;
         std::unique_ptr<VertexBuffer> m_CubeVBO;
         std::unique_ptr<IndexBuffer> m_CubeIBO;
-        std::unique_ptr<Shader> m_CubeShader;
+        std::unique_ptr<LegacyShader> m_CubeShader;
         std::unique_ptr<Texture> m_CubeTextureDiff;
         std::unique_ptr<Texture> m_CubeTextureSpec;
         std::unique_ptr<Texture> m_CubeTextureEmission;
@@ -40,7 +40,7 @@ namespace tests
         std::unique_ptr<VertexArray> m_LightCubeVAO;
         std::unique_ptr<VertexBuffer> m_LightCubeVBO;
         std::unique_ptr<IndexBuffer> m_LightCubeIBO;
-        std::unique_ptr<Shader> m_LightCubeShader;
+        std::unique_ptr<LegacyShader> m_LightCubeShader;
 
         static constexpr int TOTAL_CUBES = 5;
         glm::vec3 m_Positions[TOTAL_CUBES];

@@ -1,7 +1,7 @@
 #include "SpriteRenderer.h"
 
 #include "IndexBuffer.h"
-#include "Shader.h"
+#include "LegacyShader.h"
 #include "Texture.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
@@ -10,7 +10,7 @@
 
 namespace Breakout
 {
-    SpriteRenderer::SpriteRenderer(const std::shared_ptr<Shader>& inShader)
+    SpriteRenderer::SpriteRenderer(const std::shared_ptr<LegacyShader>& inShader)
         : m_Shader(inShader)
     {
         m_VAO = std::make_unique<VertexArray>();

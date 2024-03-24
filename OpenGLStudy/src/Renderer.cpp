@@ -1,7 +1,7 @@
 #include "Renderer.h"
 
 #include "IndexBuffer.h"
-#include "Shader.h"
+#include "LegacyShader.h"
 #include "VertexArray.h"
 
 void Renderer::Clear() const
@@ -12,7 +12,7 @@ void Renderer::Clear() const
 // In a more appropriate way, instead of having a shader here to set the uniform and pass a shader to the draw method
 // we would have a material. A material is basically a shader + a set of data (uniforms)
 // When we bind the material, the material would be responsible for setting all the uniforms it has
-void Renderer::Draw(const VertexArray& Va, const IndexBuffer& Ib, const Shader& Shader) const
+void Renderer::Draw(const VertexArray& Va, const IndexBuffer& Ib, const LegacyShader& Shader) const
 {
     Shader.Bind();
     Va.Bind();

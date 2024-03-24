@@ -1,4 +1,4 @@
-#include "Shader.h"
+#include "LegacyShader.h"
 
 #include "Core.h"
 
@@ -7,62 +7,62 @@
 #include <string>
 #include <sstream>
 
-Shader::Shader(const std::string& FilePath)
+LegacyShader::LegacyShader(const std::string& FilePath)
     : m_FilePath(FilePath), m_RendererID(0)
 {
     ShaderProgramSource Source = ParseShader(FilePath);
     m_RendererID = CreateShader(Source.VertexSource, Source.FragmentSource);
 }
 
-Shader::~Shader()
+LegacyShader::~LegacyShader()
 {
     // Clean shader after usage so we don't leak on VRAM
     GLCall(glDeleteProgram(m_RendererID));
 }
 
-void Shader::Bind() const
+void LegacyShader::Bind() const
 {
     GLCall(glUseProgram(m_RendererID));
 }
 
-void Shader::Unbind() const
+void LegacyShader::Unbind() const
 {
     GLCall(glUseProgram(0));
 }
 
-void Shader::SetUniform1i(const std::string& Name, int Value)
+void LegacyShader::SetUniform1i(const std::string& Name, int Value)
 {
     GLCall(glUniform1i(GetUniformLocation(Name), Value));
 }
 
-void Shader::SetUniform1iv(const std::string& Name, const int Count, const int* Value)
+void LegacyShader::SetUniform1iv(const std::string& Name, const int Count, const int* Value)
 {
     GLCall(glUniform1iv(GetUniformLocation(Name), Count, Value));
 }
 
-void Shader::SetUniform1f(const std::string& Name, float Value)
+void LegacyShader::SetUniform1f(const std::string& Name, float Value)
 {
     GLCall(glUniform1f(GetUniformLocation(Name), Value));
 }
 
-void Shader::SetUniform2f(const std::string& Name, const glm::vec2& Value)
+void LegacyShader::SetUniform2f(const std::string& Name, const glm::vec2& Value)
 {
     GLCall(glUniform2f(GetUniformLocation(Name), Value.x, Value.y));
 }
 
-void Shader::SetUniform3f(const std::string& Name, float V0, float V1, float V2)
+void LegacyShader::SetUniform3f(const std::string& Name, float V0, float V1, float V2)
 {
     GLCall(glUniform3f(GetUniformLocation(Name), V0, V1, V2));
 }
 
-void Shader::SetUniform3f(const std::string& Name, const glm::vec3& Value)
+void LegacyShader::SetUniform3f(const std::string& Name, const glm::vec3& Value)
 {
     SetUniform3f(Name, Value.x, Value.y, Value.z);
 }
 
 // In a more robust solution for a game engine, we would probably have a SetValue method with overloads for different value types
 // to call the proper uniform function 
-void Shader::SetUniform4f(const std::string& Name, float V0, float V1, float V2, float V3)
+void LegacyShader::SetUniform4f(const std::string& Name, float V0, float V1, float V2, float V3)
 {
     //glUniform4f is to set uniform that receives 4 floats. There are other Uniform functions for other params
     
@@ -70,12 +70,12 @@ void Shader::SetUniform4f(const std::string& Name, float V0, float V1, float V2,
     GLCall(glUniform4f(GetUniformLocation(Name), V0, V1, V2, V3));
 }
 
-void Shader::SetUniform4f(const std::string& Name, const glm::vec4& Value)
+void LegacyShader::SetUniform4f(const std::string& Name, const glm::vec4& Value)
 {
     GLCall(glUniform4f(GetUniformLocation(Name), Value.x, Value.y, Value.z, Value.w));
 }
 
-void Shader::SetUniformMat4f(const std::string& Name, const glm::mat4& mat)
+void LegacyShader::SetUniformMat4f(const std::string& Name, const glm::mat4& mat)
 {
     // location,
     // how many matrices we are providing, just 1
@@ -84,7 +84,7 @@ void Shader::SetUniformMat4f(const std::string& Name, const glm::mat4& mat)
     GLCall(glUniformMatrix4fv(GetUniformLocation(Name), 1, GL_FALSE, &mat[0][0]));
 }
 
-int Shader::GetUniformLocation(const std::string& Name) const
+int LegacyShader::GetUniformLocation(const std::string& Name) const
 {
     // Instead of calling glGetUniformLocation every single time we need to set a uniform,
     // we can increase performance by checking our location cache first
@@ -107,7 +107,7 @@ int Shader::GetUniformLocation(const std::string& Name) const
     return Location;
 }
 
-ShaderProgramSource Shader::ParseShader(const std::string& FilePath)
+ShaderProgramSource LegacyShader::ParseShader(const std::string& FilePath)
 {
     // This is the modern C++ approach of opening a file
     // In a serious game engine we should consider using the C approach, as it's faster than this
@@ -146,7 +146,7 @@ ShaderProgramSource Shader::ParseShader(const std::string& FilePath)
 }
 
 // Takes source code of each shader and compile into shaders
-unsigned int Shader::CreateShader(const std::string& VertexShader, const std::string& FragmentShader)
+unsigned int LegacyShader::CreateShader(const std::string& VertexShader, const std::string& FragmentShader)
 {
     // It's recommended to using the C++ type, like unsigned int, instead of the OpenGL defined
     // so when dealing with multiple APIs you don't need to include OpenGL on the header or so
@@ -183,7 +183,7 @@ unsigned int Shader::CreateShader(const std::string& VertexShader, const std::st
     return Program;
 }
 
-unsigned int Shader::CompileShader(unsigned int Type, const std::string& Source)
+unsigned int LegacyShader::CompileShader(unsigned int Type, const std::string& Source)
 {
     GLCall(unsigned int Id = glCreateShader(Type));
     const char* Src = Source.c_str();

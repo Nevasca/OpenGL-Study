@@ -6,7 +6,7 @@
 #include "Core.h"
 #include "LegacyFlyCameraController.h"
 #include "Model.h"
-#include "Shader.h"
+#include "LegacyShader.h"
 #include "imgui/imgui.h"
 
 namespace tests
@@ -150,7 +150,7 @@ namespace tests
 
         m_CameraController = std::make_unique<LegacyFlyCameraController>(m_Camera);
 
-        m_ModelShader = std::make_unique<Shader>("res/shaders/BasicGray.glsl");
+        m_ModelShader = std::make_unique<LegacyShader>("res/shaders/BasicGray.glsl");
         m_ModelShader->Bind();
 
         m_Model = std::make_unique<Model>(m_ModelFilePath);
@@ -170,7 +170,7 @@ namespace tests
         
         m_ScreenQuad = std::make_unique<LegacyMesh>(vertices, indices, std::vector<std::shared_ptr<Texture>>{});
 
-        m_PostProcessingShader = std::make_unique<Shader>("res/shaders/PostProcessing.glsl");
+        m_PostProcessingShader = std::make_unique<LegacyShader>("res/shaders/PostProcessing.glsl");
         m_PostProcessingShader->Bind();
         m_PostProcessingShader->SetUniform1i("u_ScreenTexture", 0);
     }

@@ -7,7 +7,7 @@
 #include <assimp/scene.h>
 
 
-class Shader;
+class LegacyShader;
 
 class Model
 {
@@ -15,7 +15,7 @@ public:
 
     Model(const std::string& path);
 
-    void Draw(Shader& shader);
+    void Draw(LegacyShader& shader);
 
 private:
 

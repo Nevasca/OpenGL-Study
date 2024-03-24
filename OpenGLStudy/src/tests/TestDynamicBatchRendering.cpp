@@ -4,7 +4,7 @@
 
 #include "IndexBuffer.h"
 #include "Renderer.h"
-#include "Shader.h"
+#include "LegacyShader.h"
 #include "Texture.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
@@ -66,7 +66,7 @@ namespace tests
 
         m_IndexBuffer = std::make_unique<IndexBuffer>(indexes, 12);
 
-        m_Shader = std::make_unique<Shader>("res/shaders/BasicBatch.shader");
+        m_Shader = std::make_unique<LegacyShader>("res/shaders/BasicBatch.shader");
         
         m_TextureA = std::make_unique<Texture>("res/textures/FancyPigeon.png");
         m_TextureB = std::make_unique<Texture>("res/textures/UnownJar.png");
