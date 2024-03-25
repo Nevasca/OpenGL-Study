@@ -10,7 +10,7 @@
 LegacyMesh::LegacyMesh(std::vector<LegacyVertex> vertices, std::vector<unsigned> indices, const std::vector<std::shared_ptr<Texture>>& textures)
     : m_Textures(textures)
 {
-    m_VAO = std::make_unique<VertexArray>();
+    m_VAO = std::make_unique<LegacyVertexArray>();
 
     m_VBO = std::make_unique<VertexBuffer>(vertices.data(), vertices.size() * sizeof(LegacyVertex));
 
@@ -20,7 +20,7 @@ LegacyMesh::LegacyMesh(std::vector<LegacyVertex> vertices, std::vector<unsigned>
     layout.Push<float>(2);
     m_VAO->AddBuffer(*m_VBO, layout);
 
-    m_IBO = std::make_unique<IndexBuffer>(indices.data(), indices.size());
+    m_IBO = std::make_unique<LegacyIndexBuffer>(indices.data(), indices.size());
 }
 
 void LegacyMesh::Draw(LegacyShader& shader)

@@ -1,10 +1,10 @@
 #include "Test3DTransform.h"
 
-#include "IndexBuffer.h"
+#include "LegacyIndexBuffer.h"
 #include "Renderer.h"
 #include "LegacyShader.h"
 #include "Texture.h"
-#include "VertexArray.h"
+#include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "glm/detail/type_quat.hpp"
@@ -18,7 +18,7 @@ namespace tests
 {
     Test3DTransform::Test3DTransform()
     {
-        m_VAO = std::make_unique<VertexArray>();
+        m_VAO = std::make_unique<LegacyVertexArray>();
 
         float vertices[]
         {
@@ -88,7 +88,7 @@ namespace tests
         layout.Push<float>(2);
         m_VAO->AddBuffer(*m_VBO, layout);
 
-        m_IBO = std::make_unique<IndexBuffer>(indices, 6 * 6);
+        m_IBO = std::make_unique<LegacyIndexBuffer>(indices, 6 * 6);
 
         m_Shader = std::make_unique<LegacyShader>("res/shaders/Basic.shader");
         m_Texture = std::make_unique<Texture>("res/textures/FancyPigeon.png");

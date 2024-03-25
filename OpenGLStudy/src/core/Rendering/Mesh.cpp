@@ -1,7 +1,5 @@
 #include "Mesh.h"
 
-#include "IndexBuffer.h"
-#include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 

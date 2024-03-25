@@ -14,7 +14,7 @@ namespace Breakout
 
     void ParticleGenerator::Init()
     {
-        m_VAO = std::make_unique<VertexArray>();
+        m_VAO = std::make_unique<LegacyVertexArray>();
         
         float vertices[] =
         {
@@ -38,7 +38,7 @@ namespace Breakout
             2, 3, 0
         };
 
-        m_IBO = std::make_unique<IndexBuffer>(indices, 6);
+        m_IBO = std::make_unique<LegacyIndexBuffer>(indices, 6);
 
         m_Particles.reserve(m_Amount);
         for(unsigned int i = 0; i < m_Amount; i++)

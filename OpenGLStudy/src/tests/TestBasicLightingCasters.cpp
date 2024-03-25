@@ -6,11 +6,11 @@
 #include <memory>
 
 #include "GameTime.h"
-#include "IndexBuffer.h"
+#include "LegacyIndexBuffer.h"
 #include "Renderer.h"
 #include "LegacyShader.h"
 #include "Texture.h"
-#include "VertexArray.h"
+#include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "glm/detail/type_quat.hpp"
@@ -35,7 +35,7 @@ namespace tests
 
     void TestBasicLightingCasters::CreateCubes()
     {
-        m_CubeVAO = std::make_unique<VertexArray>();
+        m_CubeVAO = std::make_unique<LegacyVertexArray>();
 
         float vertices[]
         {
@@ -106,7 +106,7 @@ namespace tests
         layout.Push<float>(2);
         m_CubeVAO->AddBuffer(*m_CubeVBO, layout);
 
-        m_CubeIBO = std::make_unique<IndexBuffer>(indices, 6 * 6);
+        m_CubeIBO = std::make_unique<LegacyIndexBuffer>(indices, 6 * 6);
 
         m_CubeShader = std::make_unique<LegacyShader>("res/shaders/BasicLit.shader");
         m_CubeShader->Bind();
@@ -144,7 +144,7 @@ namespace tests
     // it's just so we can understand where the light position is, the cube itself doesn't emit light 
     void TestBasicLightingCasters::CreateLightSources()
     {
-        m_LightCubeVAO = std::make_unique<VertexArray>();
+        m_LightCubeVAO = std::make_unique<LegacyVertexArray>();
 
         // float vertices[]
         // {
@@ -216,7 +216,7 @@ namespace tests
         layout.Push<float>(3);
         m_LightCubeVAO->AddBuffer(*m_LightCubeVBO, layout);
 
-        m_LightCubeIBO = std::make_unique<IndexBuffer>(indices, 6 + 4 * 3);
+        m_LightCubeIBO = std::make_unique<LegacyIndexBuffer>(indices, 6 + 4 * 3);
 
         m_LightCubeShader = std::make_unique<LegacyShader>("res/shaders/BasicLightCube.shader");
 

@@ -3,11 +3,11 @@
 class VertexBuffer;
 class VertexBufferLayout;
 
-class VertexArray
+class LegacyVertexArray
 {
 public:
-    VertexArray();
-    ~VertexArray();
+    LegacyVertexArray();
+    ~LegacyVertexArray();
 
     void AddBuffer(const VertexBuffer& Buffer, const VertexBufferLayout& Layout);
     void Bind() const;

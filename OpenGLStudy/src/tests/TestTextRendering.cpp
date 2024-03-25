@@ -5,9 +5,9 @@
 #include <ft2build.h>
 #include <iostream>
 
-#include "IndexBuffer.h"
+#include "LegacyIndexBuffer.h"
 #include "LegacyShader.h"
-#include "VertexArray.h"
+#include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "glm/ext/matrix_clip_space.hpp"
@@ -90,7 +90,7 @@ namespace tests
         FT_Done_Face(face);
         FT_Done_FreeType(freeType);
 
-        m_VAO = std::make_unique<VertexArray>();
+        m_VAO = std::make_unique<LegacyVertexArray>();
         
         m_VBO = std::make_unique<VertexBuffer>(nullptr, 4 * 4 * sizeof(float), true); // reserving for 4 vertices of 4 floats (a quad)
         VertexBufferLayout layout{};
@@ -103,7 +103,7 @@ namespace tests
             0, 1, 2,
             2, 3, 0
         };
-        m_IBO = std::make_unique<IndexBuffer>(indices, 6);
+        m_IBO = std::make_unique<LegacyIndexBuffer>(indices, 6);
 
         m_Shader = std::make_unique<LegacyShader>("res/shaders/Text.shader");
         m_Shader->Bind();

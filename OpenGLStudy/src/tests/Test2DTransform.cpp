@@ -1,11 +1,11 @@
 #include "Test2DTransform.h"
 
-#include "IndexBuffer.h"
+#include "LegacyIndexBuffer.h"
 #include "LegacyShader.h"
 #include "Texture.h"
 #include "GameTime.h"
 #include "Renderer.h"
-#include "VertexArray.h"
+#include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "glm/detail/type_quat.hpp"
@@ -19,7 +19,7 @@ namespace tests
 {
     Test2DTransform::Test2DTransform()
     {
-        m_VAO = std::make_unique<VertexArray>();
+        m_VAO = std::make_unique<LegacyVertexArray>();
 
         // Transforms will be applying using the origin of the object
         // if we want to rotate the quad from the center, it's origin needs to be the center as well
@@ -45,7 +45,7 @@ namespace tests
         layout.Push<float>(2);
         m_VAO->AddBuffer(*m_VBO, layout);
 
-        m_IBO = std::make_unique<IndexBuffer>(indices, 6);
+        m_IBO = std::make_unique<LegacyIndexBuffer>(indices, 6);
 
         m_Shader = std::make_unique<LegacyShader>("res/shaders/Basic.shader");
         m_Texture = std::make_unique<Texture>("res/textures/FancyPigeon.png");

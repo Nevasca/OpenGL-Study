@@ -9,9 +9,9 @@
 #include "glm/vec3.hpp"
 
 class LegacyShader;
-class IndexBuffer;
+class LegacyIndexBuffer;
 class VertexBuffer;
-class VertexArray;
+class LegacyVertexArray;
 
 namespace tests
 {
@@ -36,9 +36,9 @@ namespace tests
     private:
 
         std::map<char, Character> m_Characters;
-        std::unique_ptr<VertexArray> m_VAO;
+        std::unique_ptr<LegacyVertexArray> m_VAO;
         std::unique_ptr<VertexBuffer> m_VBO;
-        std::unique_ptr<IndexBuffer> m_IBO;
+        std::unique_ptr<LegacyIndexBuffer> m_IBO;
         std::unique_ptr<LegacyShader> m_Shader;
         char m_Text[64] = "Hello World!";
         glm::vec2 m_Position{25.f, 25.f};

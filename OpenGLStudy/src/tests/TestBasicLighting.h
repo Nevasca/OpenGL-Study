@@ -9,9 +9,9 @@
 
 class Texture;
 class LegacyShader;
-class IndexBuffer;
+class LegacyIndexBuffer;
 class VertexBuffer;
-class VertexArray;
+class LegacyVertexArray;
 
 namespace tests
 {
@@ -29,17 +29,17 @@ namespace tests
 
     private:
 
-        std::unique_ptr<VertexArray> m_CubeVAO;
+        std::unique_ptr<LegacyVertexArray> m_CubeVAO;
         std::unique_ptr<VertexBuffer> m_CubeVBO;
-        std::unique_ptr<IndexBuffer> m_CubeIBO;
+        std::unique_ptr<LegacyIndexBuffer> m_CubeIBO;
         std::unique_ptr<LegacyShader> m_CubeShader;
         std::unique_ptr<Texture> m_CubeTextureDiff;
         std::unique_ptr<Texture> m_CubeTextureSpec;
         std::unique_ptr<Texture> m_CubeTextureEmission;
 
-        std::unique_ptr<VertexArray> m_LightCubeVAO;
+        std::unique_ptr<LegacyVertexArray> m_LightCubeVAO;
         std::unique_ptr<VertexBuffer> m_LightCubeVBO;
-        std::unique_ptr<IndexBuffer> m_LightCubeIBO;
+        std::unique_ptr<LegacyIndexBuffer> m_LightCubeIBO;
         std::unique_ptr<LegacyShader> m_LightCubeShader;
 
         static constexpr int m_TotalCubes = 4;

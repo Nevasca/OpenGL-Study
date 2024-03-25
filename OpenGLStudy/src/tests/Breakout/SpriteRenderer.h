@@ -4,9 +4,9 @@
 #include "glm/vec2.hpp"
 #include "glm/vec3.hpp"
 
-class IndexBuffer;
+class LegacyIndexBuffer;
 class VertexBuffer;
-class VertexArray;
+class LegacyVertexArray;
 class Texture;
 class LegacyShader;
 
@@ -23,8 +23,8 @@ namespace Breakout
     private:
 
         std::shared_ptr<LegacyShader> m_Shader;
-        std::unique_ptr<VertexArray> m_VAO;
+        std::unique_ptr<LegacyVertexArray> m_VAO;
         std::unique_ptr<VertexBuffer> m_VBO;
-        std::unique_ptr<IndexBuffer> m_IBO;
+        std::unique_ptr<LegacyIndexBuffer> m_IBO;
     };
 }

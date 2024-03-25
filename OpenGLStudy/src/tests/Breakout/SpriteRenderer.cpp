@@ -1,9 +1,9 @@
 #include "SpriteRenderer.h"
 
-#include "IndexBuffer.h"
+#include "LegacyIndexBuffer.h"
 #include "LegacyShader.h"
 #include "Texture.h"
-#include "VertexArray.h"
+#include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "glm/ext/matrix_transform.hpp"
@@ -13,7 +13,7 @@ namespace Breakout
     SpriteRenderer::SpriteRenderer(const std::shared_ptr<LegacyShader>& inShader)
         : m_Shader(inShader)
     {
-        m_VAO = std::make_unique<VertexArray>();
+        m_VAO = std::make_unique<LegacyVertexArray>();
         
         float vertices[] =
         {
@@ -37,7 +37,7 @@ namespace Breakout
             2, 3, 0
         };
 
-        m_IBO = std::make_unique<IndexBuffer>(indices, 6);
+        m_IBO = std::make_unique<LegacyIndexBuffer>(indices, 6);
     }
 
     SpriteRenderer::~SpriteRenderer()

@@ -2,11 +2,11 @@
 
 #include <array>
 
-#include "IndexBuffer.h"
+#include "LegacyIndexBuffer.h"
 #include "Renderer.h"
 #include "LegacyShader.h"
 #include "Texture.h"
-#include "VertexArray.h"
+#include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "glm/ext/matrix_clip_space.hpp"
@@ -51,7 +51,7 @@ namespace tests
             6, 7, 4
         };
         
-        m_VertexArray = std::make_unique<VertexArray>();
+        m_VertexArray = std::make_unique<LegacyVertexArray>();
 
         // Passing the data as nullptr means we are not providing the data right now, we just want to allocate the required VRAM
         // Allocating VRAM for 1,000 vertices. We can't exceed the specified value, but we have no obligation of providing all the 1,000 later
@@ -64,7 +64,7 @@ namespace tests
         layout.Push<float>(1);
         m_VertexArray->AddBuffer(*m_VertexBuffer, layout);
 
-        m_IndexBuffer = std::make_unique<IndexBuffer>(indexes, 12);
+        m_IndexBuffer = std::make_unique<LegacyIndexBuffer>(indexes, 12);
 
         m_Shader = std::make_unique<LegacyShader>("res/shaders/BasicBatch.shader");
         

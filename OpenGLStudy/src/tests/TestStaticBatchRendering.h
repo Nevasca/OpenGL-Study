@@ -7,9 +7,9 @@
 
 class Texture;
 class LegacyShader;
-class IndexBuffer;
+class LegacyIndexBuffer;
 class VertexBuffer;
-class VertexArray;
+class LegacyVertexArray;
 
 namespace tests
 {
@@ -24,9 +24,9 @@ namespace tests
 
     private:
 
-        std::unique_ptr<VertexArray> m_VertexArray;
+        std::unique_ptr<LegacyVertexArray> m_VertexArray;
         std::unique_ptr<VertexBuffer> m_VertexBuffer;
-        std::unique_ptr<IndexBuffer> m_IndexBuffer;
+        std::unique_ptr<LegacyIndexBuffer> m_IndexBuffer;
         std::unique_ptr<LegacyShader> m_Shader;
         std::unique_ptr<Texture> m_TextureA;
         std::unique_ptr<Texture> m_TextureB;

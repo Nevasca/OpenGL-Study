@@ -2,15 +2,15 @@
 
 #include "Core.h"
 
-class IndexBuffer;
+class LegacyIndexBuffer;
 class LegacyShader;
 
-class VertexArray;
+class LegacyVertexArray;
 
 class Renderer
 {
 public:
 
     void Clear() const;
-    void Draw(const VertexArray& Va, const IndexBuffer& Ib, const LegacyShader& Shader) const;
+    void Draw(const LegacyVertexArray& Va, const LegacyIndexBuffer& Ib, const LegacyShader& Shader) const;
 };

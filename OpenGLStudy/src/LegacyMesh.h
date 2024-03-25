@@ -5,9 +5,9 @@
 #include "glm/vec2.hpp"
 #include "glm/vec3.hpp"
 
-#include "IndexBuffer.h"
+#include "LegacyIndexBuffer.h"
 #include "VertexBuffer.h"
-#include "VertexArray.h"
+#include "LegacyVertexArray.h"
 class Renderer;
 class LegacyShader;
 class Texture;
@@ -28,8 +28,8 @@ public:
 
 private:
 
-    std::unique_ptr<VertexArray> m_VAO;
+    std::unique_ptr<LegacyVertexArray> m_VAO;
     std::unique_ptr<VertexBuffer> m_VBO;
-    std::unique_ptr<IndexBuffer> m_IBO;
+    std::unique_ptr<LegacyIndexBuffer> m_IBO;
     std::vector<std::shared_ptr<Texture>> m_Textures;
 };

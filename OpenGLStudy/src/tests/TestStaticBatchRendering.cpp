@@ -1,10 +1,10 @@
 #include "TestStaticBatchRendering.h"
 
-#include "IndexBuffer.h"
+#include "LegacyIndexBuffer.h"
 #include "Renderer.h"
 #include "LegacyShader.h"
 #include "Texture.h"
-#include "VertexArray.h"
+#include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "glm/ext/matrix_clip_space.hpp"
@@ -36,7 +36,7 @@ namespace tests
             6, 7, 4
         };
         
-        m_VertexArray = std::make_unique<VertexArray>();
+        m_VertexArray = std::make_unique<LegacyVertexArray>();
 
         m_VertexBuffer = std::make_unique<VertexBuffer>(vertices, 8 * 9 * sizeof(float));
 
@@ -47,7 +47,7 @@ namespace tests
         layout.Push<float>(1);
         m_VertexArray->AddBuffer(*m_VertexBuffer, layout);
 
-        m_IndexBuffer = std::make_unique<IndexBuffer>(indexes, 12);
+        m_IndexBuffer = std::make_unique<LegacyIndexBuffer>(indexes, 12);
 
         m_Shader = std::make_unique<LegacyShader>("res/shaders/BasicBatch.shader");
         

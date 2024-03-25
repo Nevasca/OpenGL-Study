@@ -30,6 +30,7 @@ private:
 
     unsigned int m_RendererID{0};
     mutable std::unordered_map<std::string, int> m_UniformLocationCache{}; 
+    mutable bool bIsBound{false};
 
     unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader);
     unsigned int CompileShader(unsigned int type, const std::string& source);

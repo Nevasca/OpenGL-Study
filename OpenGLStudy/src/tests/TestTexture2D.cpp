@@ -27,7 +27,7 @@ namespace tests
             2, 3, 0
         };
 
-        m_VertexArray = std::make_unique<VertexArray>();
+        m_VertexArray = std::make_unique<LegacyVertexArray>();
 
         m_VertexBuffer = std::make_unique<VertexBuffer>(vertexData, 4 * 4 * sizeof(float));
         VertexBufferLayout layout{};
@@ -36,7 +36,7 @@ namespace tests
 
         m_VertexArray->AddBuffer(*m_VertexBuffer, layout);
 
-        m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 6);
+        m_IndexBuffer = std::make_unique<LegacyIndexBuffer>(indices, 6);
 
         // Tells how OpenGL should interpreted that data, it does not know yet they are vertex positions
 

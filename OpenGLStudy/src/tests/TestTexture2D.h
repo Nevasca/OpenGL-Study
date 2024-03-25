@@ -1,11 +1,11 @@
 #pragma once
 #include <memory>
 
-#include "IndexBuffer.h"
+#include "LegacyIndexBuffer.h"
 #include "LegacyShader.h"
 #include "Test.h"
 #include "Texture.h"
-#include "VertexArray.h"
+#include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -25,9 +25,9 @@ namespace tests
 
     private:
 
-        std::unique_ptr<VertexArray> m_VertexArray;
+        std::unique_ptr<LegacyVertexArray> m_VertexArray;
         std::unique_ptr<VertexBuffer> m_VertexBuffer;
-        std::unique_ptr<IndexBuffer> m_IndexBuffer;
+        std::unique_ptr<LegacyIndexBuffer> m_IndexBuffer;
         std::unique_ptr<LegacyShader> m_Shader;
         std::unique_ptr<Texture> m_Texture;
         

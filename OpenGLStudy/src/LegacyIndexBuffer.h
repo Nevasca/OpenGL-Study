@@ -1,12 +1,12 @@
 #pragma once
 
-class IndexBuffer
+class LegacyIndexBuffer
 {
 public:
     // Size = bytes
     // Count = elements count
-    IndexBuffer(const unsigned int* Data, unsigned int Count);
-    ~IndexBuffer();
+    LegacyIndexBuffer(const unsigned int* Data, unsigned int Count);
+    ~LegacyIndexBuffer();
 
     void Bind() const;
     void Unbind() const;
