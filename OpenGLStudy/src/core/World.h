@@ -1,10 +1,8 @@
 #pragma once
-#include <map>
-#include <memory>
 #include <memory>
 #include <vector>
 #include "glm/vec3.hpp"
-#include "Rendering/MeshRenderer.h"
+#include "Rendering/RenderSystem.h"
 
 class MeshComponent;
 class CameraComponent;
@@ -49,8 +47,6 @@ private:
     void InitializeGameObject(const std::shared_ptr<GameObject>& gameObject, const glm::vec3& position, const glm::vec3& eulerRotation, const glm::vec3& scale) const;
     
     std::vector<std::shared_ptr<GameObject>> m_GameObjects{};
-    std::vector<std::shared_ptr<MeshComponent>> m_MeshComponents{};
-    MeshRenderer m_MeshRenderer{};
+    std::unique_ptr<RenderSystem> m_RenderSystem{};
     std::shared_ptr<CameraComponent> m_ActiveCamera{};
-    std::map<unsigned int, std::shared_ptr<Shader>> m_UniqueActiveShaders{};
 };

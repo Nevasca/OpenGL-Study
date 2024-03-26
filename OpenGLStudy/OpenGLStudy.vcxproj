@@ -176,6 +176,7 @@
     <ClCompile Include="src\core\Basics\Objects\FlyingCamera.cpp" />
     <ClCompile Include="src\core\Rendering\IndexBuffer.cpp" />
     <ClCompile Include="src\core\Rendering\Primitive.cpp" />
+    <ClCompile Include="src\core\Rendering\RenderSystem.cpp" />
     <ClCompile Include="src\core\Rendering\Shader.cpp" />
     <ClCompile Include="src\core\Rendering\VertexArray.cpp" />
     <ClCompile Include="src\core\ResourceManager.cpp" />
@@ -279,6 +280,7 @@
     <ClInclude Include="src\core\Basics\Objects\FlyingCamera.h" />
     <ClInclude Include="src\core\Rendering\IndexBuffer.h" />
     <ClInclude Include="src\core\Rendering\Primitive.h" />
+    <ClInclude Include="src\core\Rendering\RenderSystem.h" />
     <ClInclude Include="src\core\Rendering\Shader.h" />
     <ClInclude Include="src\core\Rendering\VertexArray.h" />
     <ClInclude Include="src\core\ResourceManager.h" />
