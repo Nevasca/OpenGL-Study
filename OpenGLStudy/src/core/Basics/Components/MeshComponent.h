@@ -11,7 +11,6 @@ class MeshComponent : public Component
 
 public:
 
-    void Initialize() override;
     void SetMesh(const std::shared_ptr<Mesh>& mesh);
     void SetShader(const std::shared_ptr<Shader>& shader);
     
@@ -23,4 +22,7 @@ private:
 
     std::shared_ptr<Mesh> m_Mesh;
     std::shared_ptr<Shader> m_Shader;
+    bool bIsAddedToWorld{false};
+
+    void AddToWorld();
 };

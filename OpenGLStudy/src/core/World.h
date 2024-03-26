@@ -1,4 +1,5 @@
 #pragma once
+#include <map>
 #include <memory>
 #include <memory>
 #include <vector>
@@ -51,4 +52,5 @@ private:
     std::vector<std::shared_ptr<MeshComponent>> m_MeshComponents{};
     MeshRenderer m_MeshRenderer{};
     std::shared_ptr<CameraComponent> m_ActiveCamera{};
+    std::map<unsigned int, std::shared_ptr<Shader>> m_UniqueActiveShaders{};
 };

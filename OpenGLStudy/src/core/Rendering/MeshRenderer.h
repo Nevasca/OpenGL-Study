@@ -1,5 +1,4 @@
 #pragma once
-#include "glm/fwd.hpp"
 
 class CameraComponent;
 class Transform;
@@ -10,5 +9,5 @@ class MeshRenderer
 {
 public:
     
-    void Render(const Mesh& mesh, const Transform& transform, const glm::mat4& proj, const glm::mat4& view, Shader& shader) const;
+    void Render(const Mesh& mesh, const Transform& transform, Shader& shader) const;
 };

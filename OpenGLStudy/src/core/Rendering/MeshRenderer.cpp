@@ -8,11 +8,9 @@
 #include "VertexArray.h"
 #include "core/GameObject/Transform.h"
 
-void MeshRenderer::Render(const Mesh& mesh, const Transform& transform, const glm::mat4& proj, const glm::mat4& view, Shader& shader) const
+void MeshRenderer::Render(const Mesh& mesh, const Transform& transform, Shader& shader) const
 {
     shader.Bind();
-    shader.SetUniformMat4f("u_Proj", proj);
-    shader.SetUniformMat4f("u_View", view);
     shader.SetUniformMat4f("u_Model", transform.GetMatrix());
 
     mesh.GetVertexArray().Bind();

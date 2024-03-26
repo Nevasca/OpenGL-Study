@@ -6,6 +6,7 @@
 
 #include "Basics/Components/MeshComponent.h"
 #include "Basics/Components/CameraComponent.h"
+#include "Rendering/Shader.h"
 
 void World::Initialize()
 {
@@ -30,14 +31,19 @@ void World::Render()
     const glm::mat4 view = m_ActiveCamera->GetViewMatrix();
     const glm::mat4 proj = m_ActiveCamera->GetProjectionMatrix();
 
+    for(auto& activeShaderPair : m_UniqueActiveShaders)
+    {
+        Shader& activeShader = *activeShaderPair.second;
+        activeShader.Bind();
+        activeShader.SetUniformMat4f("u_Proj", proj);
+        activeShader.SetUniformMat4f("u_View", view);
+    }
+
     for(const std::shared_ptr<MeshComponent>& meshComponent : m_MeshComponents)
     {
-        if(!meshComponent->IsReadyToDraw())
-        {
-            continue;
-        }
+        assert(meshComponent->IsReadyToDraw());
 
-        m_MeshRenderer.Render(*meshComponent->GetMesh(), meshComponent->GetOwner().GetTransform(), proj, view, *meshComponent->GetShader());
+        m_MeshRenderer.Render(*meshComponent->GetMesh(), meshComponent->GetOwner().GetTransform(), *meshComponent->GetShader());
     }
 }
 
@@ -48,12 +54,21 @@ void World::Shutdown()
         gameObject->Destroy();
     }
 
+    m_MeshComponents.clear();
     m_GameObjects.clear();
+    m_UniqueActiveShaders.clear();
 }
 
 void World::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
 {
     m_MeshComponents.push_back(meshComponent);
+
+    std::shared_ptr<Shader> meshShader = meshComponent->GetShader();
+
+    if(meshShader && m_UniqueActiveShaders.find(meshShader->GetRendererID()) == m_UniqueActiveShaders.end())
+    {
+        m_UniqueActiveShaders[meshShader->GetRendererID()] = meshShader;
+    }
 }
 
 void World::SetActiveCamera(const std::shared_ptr<CameraComponent>& camera)
