@@ -20,3 +20,17 @@ void MeshRenderer::Render(const Mesh& mesh, const Transform& transform, Shader& 
 
     GLCall(glDrawElements(GL_TRIANGLES, ibo.GetCount(), GL_UNSIGNED_INT, nullptr));
 }
+
+void MeshRenderer::RenderInstanced(const Mesh& mesh, Shader& shader, int amount) const
+{
+    shader.Bind();
+
+    mesh.GetVertexArray().Bind();
+    const IndexBuffer& ibo = mesh.GetIndexBuffer();
+    ibo.Bind();
+
+    GLCall(glDrawElementsInstanced(GL_TRIANGLES, ibo.GetCount(), GL_UNSIGNED_INT, nullptr, amount));
+
+    ibo.Unbind();
+    mesh.GetVertexArray().Unbind();
+}
