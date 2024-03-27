@@ -74,6 +74,8 @@ void RenderSystem::Render(const CameraComponent& activeCamera)
 
             for(int i = 0; i < instancesToDraw; i++)
             {
+                assert(meshComponents[nextStartMeshIndex + i]->IsReadyToDraw());
+
                 modelMatrices.emplace_back(meshComponents[nextStartMeshIndex + i]->GetOwnerTransform().GetMatrix());
             }
 
