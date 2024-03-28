@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "MeshRenderer.h"
+#include "InstancedArray.h"
 
 class MeshComponent;
 class Shader;
@@ -29,7 +30,7 @@ private:
     //TODO: after implementing materials, we will need to change key for material id
     std::map<unsigned int, std::shared_ptr<Shader>> m_UniqueActiveShaders{}; // keyed by shader id TODO: organize by material and mesh
 
-    unsigned int m_InstancedBufferId{0};
+    std::unique_ptr<InstancedArray> m_InstancedArray{};
 
     void UpdateGlobalShaderUniforms(const CameraComponent& activeCamera) const;
     void CreateInstancedBuffer();

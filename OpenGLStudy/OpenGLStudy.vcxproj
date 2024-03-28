@@ -179,6 +179,7 @@
     <ClCompile Include="src\core\Basics\Objects\Cube.cpp" />
     <ClCompile Include="src\core\Basics\Objects\FlyingCamera.cpp" />
     <ClCompile Include="src\core\Rendering\IndexBuffer.cpp" />
+    <ClCompile Include="src\core\Rendering\InstancedArray.cpp" />
     <ClCompile Include="src\core\Rendering\Primitive.cpp" />
     <ClCompile Include="src\core\Rendering\RenderSystem.cpp" />
     <ClCompile Include="src\core\Rendering\Shader.cpp" />
@@ -283,6 +284,7 @@
     <ClInclude Include="src\core\Basics\Objects\Cube.h" />
     <ClInclude Include="src\core\Basics\Objects\FlyingCamera.h" />
     <ClInclude Include="src\core\Rendering\IndexBuffer.h" />
+    <ClInclude Include="src\core\Rendering\InstancedArray.h" />
     <ClInclude Include="src\core\Rendering\Primitive.h" />
     <ClInclude Include="src\core\Rendering\RenderSystem.h" />
     <ClInclude Include="src\core\Rendering\Shader.h" />
