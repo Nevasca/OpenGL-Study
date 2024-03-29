@@ -121,6 +121,11 @@ vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir
     float distance = length(light.position - fragPos);
     float attenuation = 1.f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
     
+    if(attenuation <= 0.f)
+    {
+        return vec3(0.f);
+    }
+    
     // Diffuse
     vec3 lightDir = normalize(light.position - fragPos);
     float diffuseValue = max(dot(normal, lightDir), 0.f);
