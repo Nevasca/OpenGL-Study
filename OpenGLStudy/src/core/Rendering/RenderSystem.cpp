@@ -50,6 +50,11 @@ void RenderSystem::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshCo
     m_MeshComponents[vaoID].push_back(meshComponent);
 }
 
+void RenderSystem::AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent)
+{
+    m_LightingSystem.AddDirectionalLight(directionalLightComponent);
+}
+
 void RenderSystem::Render(const CameraComponent& activeCamera)
 {
     UpdateGlobalShaderUniforms(activeCamera);
@@ -114,6 +119,8 @@ void RenderSystem::UpdateGlobalShaderUniforms(const CameraComponent& activeCamer
         activeShader.Bind();
         activeShader.SetUniformMat4f("u_Proj", proj);
         activeShader.SetUniformMat4f("u_View", view);
+
+        m_LightingSystem.SetLightsFor(activeShader, activeCamera);
     }
 }
 

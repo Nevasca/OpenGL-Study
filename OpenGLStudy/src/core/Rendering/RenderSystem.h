@@ -5,6 +5,8 @@
 
 #include "MeshRenderer.h"
 #include "InstancedArray.h"
+#include "LightingSystem.h"
+#include "core/Basics/Components/DirectionalLightComponent.h"
 
 class MeshComponent;
 class Shader;
@@ -18,6 +20,7 @@ public:
     void Shutdown();
 
     void AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
+    void AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent);
     void Render(const CameraComponent& activeCamera);
 
 private:
@@ -25,6 +28,7 @@ private:
     constexpr static int MAX_INSTANCED_AMOUNT_PER_CALL = 10000;
 
     MeshRenderer m_MeshRenderer{};
+    LightingSystem m_LightingSystem{};
 
     std::map<unsigned int, std::vector<std::shared_ptr<MeshComponent>>> m_MeshComponents{}; // keyed by VAO
     //TODO: after implementing materials, we will need to change key for material id

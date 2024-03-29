@@ -173,13 +173,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\core\Basics\Components\CameraComponent.cpp" />
+    <ClCompile Include="src\core\Basics\Components\DirectionalLightComponent.cpp" />
     <ClCompile Include="src\core\Basics\Components\MeshComponent.cpp" />
     <ClCompile Include="src\core\Basics\Components\PilotCameraController.cpp" />
     <ClCompile Include="src\core\Basics\Components\PilotComponent.cpp" />
     <ClCompile Include="src\core\Basics\Objects\Cube.cpp" />
+    <ClCompile Include="src\core\Basics\Objects\DirectionalLight.cpp" />
     <ClCompile Include="src\core\Basics\Objects\FlyingCamera.cpp" />
     <ClCompile Include="src\core\Rendering\IndexBuffer.cpp" />
     <ClCompile Include="src\core\Rendering\InstancedArray.cpp" />
+    <ClCompile Include="src\core\Rendering\LightingSystem.cpp" />
     <ClCompile Include="src\core\Rendering\Primitive.cpp" />
     <ClCompile Include="src\core\Rendering\RenderSystem.cpp" />
     <ClCompile Include="src\core\Rendering\Shader.cpp" />
@@ -258,6 +261,7 @@
     <Content Include="res\breakout\textures\paddle.png" />
     <Content Include="res\breakout\textures\particle.png" />
     <Content Include="res\core\shaders\Default.glsl" />
+    <Content Include="res\core\shaders\DefaultUnlit.glsl" />
     <Content Include="res\shaders\Basic.shader" />
     <Content Include="res\shaders\BasicBatch.shader" />
     <Content Include="res\shaders\BasicLit.shader" />
@@ -278,13 +282,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\Basics\Components\CameraComponent.h" />
+    <ClInclude Include="src\core\Basics\Components\DirectionalLightComponent.h" />
     <ClInclude Include="src\core\Basics\Components\MeshComponent.h" />
     <ClInclude Include="src\core\Basics\Components\PilotCameraController.h" />
     <ClInclude Include="src\core\Basics\Components\PilotComponent.h" />
     <ClInclude Include="src\core\Basics\Objects\Cube.h" />
+    <ClInclude Include="src\core\Basics\Objects\DirectionalLight.h" />
     <ClInclude Include="src\core\Basics\Objects\FlyingCamera.h" />
     <ClInclude Include="src\core\Rendering\IndexBuffer.h" />
     <ClInclude Include="src\core\Rendering\InstancedArray.h" />
+    <ClInclude Include="src\core\Rendering\LightingSystem.h" />
     <ClInclude Include="src\core\Rendering\Primitive.h" />
     <ClInclude Include="src\core\Rendering\RenderSystem.h" />
     <ClInclude Include="src\core\Rendering\Shader.h" />

@@ -94,7 +94,7 @@ int main(void)
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
-    glfwSwapInterval(1); // Synchronize with VSync
+    glfwSwapInterval(0); // Synchronize with VSync (0 - disabled, 1 - enabled)
     Application::SetCurrentWindow(window);
     glViewport(0, 0, INITIAL_WIDTH, INITIAL_HEIGHT);
     Screen::SetSize(INITIAL_WIDTH, INITIAL_HEIGHT);

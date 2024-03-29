@@ -7,6 +7,8 @@
 #include "core/ResourceManager.h"
 #include "core/Basics/Objects/FlyingCamera.h"
 #include "core/Basics/Objects/Cube.h"
+#include "core/Basics/Objects/DirectionalLight.h"
+#include "core/Basics/Components//DirectionalLightComponent.h"
 
 namespace tests
 {
@@ -32,6 +34,18 @@ namespace tests
                 m_World->Spawn<Cube>(position);
             }
         }
+
+        std::shared_ptr<DirectionalLight> mainDirectionalLight = m_World->Spawn<DirectionalLight>();
+        mainDirectionalLight->SetRotation(glm::vec3(45.f, 0.f, 0.f));
+        mainDirectionalLight->SetColor(glm::vec3(1.f, 0.82f, 0.635f));
+        mainDirectionalLight->SetIntensity(1.5f);
+
+        std::shared_ptr<DirectionalLight> secondaryDirectionalLight = m_World->Spawn<DirectionalLight>();
+        secondaryDirectionalLight->SetRotation(glm::vec3(-45.f, 45.f, 0.f));
+        std::shared_ptr<DirectionalLightComponent> testGetDirectionalLight = secondaryDirectionalLight->GetComponent<DirectionalLightComponent>();
+        testGetDirectionalLight->SetColor(glm::vec3(0.82f, 0.875f, 1.f));
+        testGetDirectionalLight->SetIntensity(0.5f);
+        
         // cube->AddComponent<DummyComponent>();
     }
 

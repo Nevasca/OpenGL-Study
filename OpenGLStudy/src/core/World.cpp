@@ -45,6 +45,11 @@ void World::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent
     m_RenderSystem->AddMeshComponent(meshComponent);
 }
 
+void World::AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent)
+{
+    m_RenderSystem->AddDirectionalLight(directionalLightComponent);
+}
+
 void World::SetActiveCamera(const std::shared_ptr<CameraComponent>& camera)
 {
     m_ActiveCamera = camera;
