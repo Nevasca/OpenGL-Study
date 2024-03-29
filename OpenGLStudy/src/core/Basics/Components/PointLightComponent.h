@@ -1,18 +1,12 @@
 #pragma once
 #include "core/GameObject/Component.h"
+#include "core/Rendering/Light.h"
 
 class PointLightComponent : public Component
 {
     GENERATE_COMPONENT_BODY(PointLightComponent)
     
 public:
-
-    struct Attenuation
-    {
-        float Constant{1.f};
-        float Linear{0.14f};
-        float Quadratic{0.07f};
-    };
 
     void Initialize() override;
 

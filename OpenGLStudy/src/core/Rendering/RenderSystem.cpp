@@ -20,6 +20,8 @@ void RenderSystem::Shutdown()
 {
     m_MeshComponents.clear();
     m_UniqueActiveShaders.clear();
+
+    m_LightingSystem.Shutdown();
 }
 
 void RenderSystem::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
@@ -58,6 +60,11 @@ void RenderSystem::AddDirectionalLight(const std::shared_ptr<DirectionalLightCom
 void RenderSystem::AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent)
 {
     m_LightingSystem.AddPointLight(pointLightComponent);
+}
+
+void RenderSystem::AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent)
+{
+    m_LightingSystem.AddSpotLight(spotLightComponent);
 }
 
 void RenderSystem::Render(const CameraComponent& activeCamera)

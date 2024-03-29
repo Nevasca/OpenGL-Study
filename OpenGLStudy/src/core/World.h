@@ -4,6 +4,7 @@
 #include "glm/vec3.hpp"
 #include "Rendering/RenderSystem.h"
 
+class SpotLightComponent;
 class PointLightComponent;
 class DirectionalLightComponent;
 class MeshComponent;
@@ -22,6 +23,7 @@ public:
     void SetActiveCamera(const std::shared_ptr<CameraComponent>& camera);
     void AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent);
     void AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent);
+    void AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent);
 
     template <typename TObjectType, typename = std::enable_if_t<std::is_base_of_v<GameObject, TObjectType>>>
     std::shared_ptr<TObjectType> Spawn()

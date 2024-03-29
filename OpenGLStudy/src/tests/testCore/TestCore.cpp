@@ -7,8 +7,9 @@
 #include "core/Basics/Objects/FlyingCamera.h"
 #include "core/Basics/Objects/Cube.h"
 #include "core/Basics/Objects/DirectionalLight.h"
-#include "core/Basics/Components//DirectionalLightComponent.h"
+#include "core/Basics/Components/DirectionalLightComponent.h"
 #include "core/Basics/Objects/PointLight.h"
+#include "core/Basics/Components/SpotLightComponent.h"
 
 namespace tests
 {
@@ -48,22 +49,20 @@ namespace tests
         std::shared_ptr<DirectionalLight> mainDirectionalLight = m_World->Spawn<DirectionalLight>();
         mainDirectionalLight->SetRotation(glm::vec3(45.f, 0.f, 0.f));
         mainDirectionalLight->SetColor(glm::vec3(1.f, 0.82f, 0.635f));
-        mainDirectionalLight->SetIntensity(1.5f);
+        mainDirectionalLight->SetIntensity(0.3f);
 
         std::shared_ptr<DirectionalLight> secondaryDirectionalLight = m_World->Spawn<DirectionalLight>();
         secondaryDirectionalLight->SetRotation(glm::vec3(-45.f, 45.f, 0.f));
         std::shared_ptr<DirectionalLightComponent> testGetDirectionalLight = secondaryDirectionalLight->GetComponent<DirectionalLightComponent>();
         testGetDirectionalLight->SetColor(glm::vec3(0.82f, 0.875f, 1.f));
-        testGetDirectionalLight->SetIntensity(0.5f);
+        testGetDirectionalLight->SetIntensity(0.2f);
 
         std::shared_ptr<PointLight> pointLight = m_World->Spawn<PointLight>(glm::vec3(0.f, 3.f, 0.f));
         pointLight->SetColor(glm::vec3(1.f, 0.f, 0.f));
         pointLight->SetRange(60.f);
 
-        auto pointLightComponent = camera->AddComponent<PointLightComponent>();
-        pointLightComponent->SetColor(glm::vec3(0.f, 0.f, 1.f));
-        pointLightComponent->SetIntensity(1.f);
-        pointLightComponent->SetRange(50.f);
+        auto spotLightComponent = camera->AddComponent<SpotLightComponent>();
+        spotLightComponent->SetRange(100.f);
     }
 
     TestCore::~TestCore()

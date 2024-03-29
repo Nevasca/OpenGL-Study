@@ -60,6 +60,11 @@ void World::AddPointLight(const std::shared_ptr<PointLightComponent>& pointLight
     m_RenderSystem->AddPointLight(pointLightComponent);
 }
 
+void World::AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent)
+{
+    m_RenderSystem->AddSpotLight(spotLightComponent);
+}
+
 void World::InitializeGameObject(const std::shared_ptr<GameObject>& gameObject) const
 {
     gameObject->Initialize();
