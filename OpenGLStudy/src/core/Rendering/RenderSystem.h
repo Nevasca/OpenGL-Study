@@ -8,6 +8,7 @@
 #include "LightingSystem.h"
 #include "core/Basics/Components/DirectionalLightComponent.h"
 
+class PointLightComponent;
 class MeshComponent;
 class Shader;
 class CameraComponent;
@@ -21,6 +22,7 @@ public:
 
     void AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
     void AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent);
+    void AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent);
     void Render(const CameraComponent& activeCamera);
 
 private:

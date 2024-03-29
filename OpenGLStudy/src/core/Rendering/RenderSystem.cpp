@@ -55,6 +55,11 @@ void RenderSystem::AddDirectionalLight(const std::shared_ptr<DirectionalLightCom
     m_LightingSystem.AddDirectionalLight(directionalLightComponent);
 }
 
+void RenderSystem::AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent)
+{
+    m_LightingSystem.AddPointLight(pointLightComponent);
+}
+
 void RenderSystem::Render(const CameraComponent& activeCamera)
 {
     UpdateGlobalShaderUniforms(activeCamera);

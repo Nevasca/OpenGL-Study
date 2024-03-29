@@ -36,6 +36,20 @@ struct DirectionalLight
     vec3 direction;
     vec3 diffuse;
     vec3 specular;
+    
+    float intensity;
+};
+
+struct PointLight
+{
+    vec3 position;
+    float constant;
+    float linear;
+    float quadratic;
+    
+    vec3 diffuse;
+    vec3 specular;
+    
     float intensity;
 };
 
@@ -50,15 +64,20 @@ in vec3 v_Normal;
 in vec3 v_FragPosition;
 
 #define MAX_DIRECTIONAL_LIGHTS 3
+#define MAX_POINT_LIGHTS 20
 
 uniform vec3 u_ViewPosition;
 uniform AmbientLight u_AmbientLight;
 uniform int u_TotalDirectionalLights;
 uniform DirectionalLight u_DirectionalLights[MAX_DIRECTIONAL_LIGHTS];
+uniform int u_TotalPointLights;
+uniform PointLight u_PointLights[MAX_POINT_LIGHTS];
 
 vec3 defaultColor = vec3(0.5f, 0.5f, 0.5f); // TODO: remove after material system
+int materialShininess = 32; // TODO: create material system
 
 vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir);
+vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 ComputeAmbientLight();
 
 void main()
@@ -73,6 +92,11 @@ void main()
         result += ComputeDirectionalLight(u_DirectionalLights[i], normal, viewDir);
     }
     
+    for(int i = 0; i < u_TotalPointLights; i++)
+    {
+        result += ComputePointLight(u_PointLights[i], normal, v_FragPosition, viewDir);
+    }
+    
     o_Color = vec4(result, 1.f);
 }
 
@@ -84,16 +108,32 @@ vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir)
     vec3 diffuse = light.diffuse * diffuseValue * defaultColor;
     
     // Specular
-    vec3 reflectDirection = reflect(light.direction, normal);
-    
-    // TODO: create material system /////////////////////////////
-    int materialShininess = 32;
-    
+    vec3 reflectDirection = reflect(light.direction, normal);    
     float specularValue = pow(max(dot(viewDir, reflectDirection), 0.f), materialShininess);
     vec3 specular = light.specular * specularValue * defaultColor;
     
+    return (diffuse + specular) * light.intensity;    
+}
+
+vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
+{
+    // Attenuation
+    float distance = length(light.position - fragPos);
+    float attenuation = 1.f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+    
+    // Diffuse
+    vec3 lightDir = normalize(light.position - fragPos);
+    float diffuseValue = max(dot(normal, lightDir), 0.f);
+    vec3 diffuse = light.diffuse * diffuseValue * defaultColor;
+    diffuse *= attenuation;
+    
+    // Specular
+    vec3 reflectDirection = reflect(-lightDir, normal);
+    float specularValue = pow(max(dot(reflectDirection, viewDir), 0), materialShininess);
+    vec3 specular = light.specular * specularValue * defaultColor;
+    specular *= attenuation;
+    
     return (diffuse + specular) * light.intensity;
-    //return diffuse;
 }
 
 vec3 ComputeAmbientLight()
