@@ -12,7 +12,7 @@
 #include "Texture.h"
 #include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
+#include "LegacyVertexBufferLayout.h"
 #include "glm/detail/type_quat.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/ext/quaternion_trigonometric.hpp"
@@ -100,7 +100,7 @@ namespace tests
 
         m_CubeVBO = std::make_unique<VertexBuffer>(vertices, sizeof(vertices), false);
 
-        VertexBufferLayout layout{};
+        LegacyVertexBufferLayout layout{};
         layout.Push<float>(3);
         layout.Push<float>(3);
         layout.Push<float>(2);
@@ -212,7 +212,7 @@ namespace tests
 
         m_LightCubeVBO = std::make_unique<VertexBuffer>(vertices, sizeof(vertices), false);
 
-        VertexBufferLayout layout{};
+        LegacyVertexBufferLayout layout{};
         layout.Push<float>(3);
         m_LightCubeVAO->AddBuffer(*m_LightCubeVBO, layout);
 

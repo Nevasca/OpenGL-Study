@@ -24,11 +24,11 @@ struct VertexBufferElement
     }
 };
 
-class VertexBufferLayout
+class LegacyVertexBufferLayout
 {
 public:
 
-    VertexBufferLayout()
+    LegacyVertexBufferLayout()
         : m_Stride(0)
     { }
 

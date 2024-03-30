@@ -138,7 +138,16 @@ void RenderSystem::UpdateGlobalShaderUniforms(const CameraComponent& activeCamer
 
 void RenderSystem::CreateInstancedBuffer()
 {
-    m_InstancedArray = std::make_unique<InstancedArray>(nullptr, MAX_INSTANCED_AMOUNT_PER_CALL * sizeof(glm::mat4), true);
+    VertexBufferLayout layout{};
+
+    //Instead of changing this attribute value on shader every new vertex (divisor 0)
+    //we want it to change every new instance (divisor 1)
+    layout.PushMat4(1);
+
+    m_InstancedArray = std::make_unique<InstancedArray>(nullptr,
+        MAX_INSTANCED_AMOUNT_PER_CALL * layout.GetStride(),
+        true,
+        std::move(layout));
 }
 
 void RenderSystem::SetupInstancedMesh(const Mesh& mesh)

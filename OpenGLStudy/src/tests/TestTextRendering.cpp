@@ -9,7 +9,7 @@
 #include "LegacyShader.h"
 #include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
+#include "LegacyVertexBufferLayout.h"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "imgui/imgui.h"
 
@@ -93,7 +93,7 @@ namespace tests
         m_VAO = std::make_unique<LegacyVertexArray>();
         
         m_VBO = std::make_unique<VertexBuffer>(nullptr, 4 * 4 * sizeof(float), true); // reserving for 4 vertices of 4 floats (a quad)
-        VertexBufferLayout layout{};
+        LegacyVertexBufferLayout layout{};
         layout.Push<float>(2);
         layout.Push<float>(2);
         m_VAO->AddBuffer(*m_VBO, layout);

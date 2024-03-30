@@ -69,9 +69,9 @@ std::shared_ptr<Mesh> Primitive::CreateCube()
     };
 
     VertexBufferLayout layout{};
-    layout.Push<float>(3);
-    layout.Push<float>(3);
-    layout.Push<float>(2);
+    layout.PushFloat(3);
+    layout.PushFloat(3);
+    layout.PushFloat(2);
 
    return std::make_shared<Mesh>(vertices, sizeof(vertices), layout, indices);
 }

@@ -5,7 +5,7 @@
 #include "Texture.h"
 
 
-#include "VertexBufferLayout.h"
+#include "LegacyVertexBufferLayout.h"
 
 LegacyMesh::LegacyMesh(std::vector<LegacyVertex> vertices, std::vector<unsigned> indices, const std::vector<std::shared_ptr<Texture>>& textures)
     : m_Textures(textures)
@@ -14,7 +14,7 @@ LegacyMesh::LegacyMesh(std::vector<LegacyVertex> vertices, std::vector<unsigned>
 
     m_VBO = std::make_unique<VertexBuffer>(vertices.data(), vertices.size() * sizeof(LegacyVertex));
 
-    VertexBufferLayout layout{};
+    LegacyVertexBufferLayout layout{};
     layout.Push<float>(3);
     layout.Push<float>(3);
     layout.Push<float>(2);

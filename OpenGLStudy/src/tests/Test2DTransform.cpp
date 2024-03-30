@@ -7,7 +7,7 @@
 #include "Renderer.h"
 #include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
+#include "LegacyVertexBufferLayout.h"
 #include "glm/detail/type_quat.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
@@ -40,7 +40,7 @@ namespace tests
 
         m_VBO = std::make_unique<VertexBuffer>(vertices, sizeof(vertices), false);
 
-        VertexBufferLayout layout{};
+        LegacyVertexBufferLayout layout{};
         layout.Push<float>(2);
         layout.Push<float>(2);
         m_VAO->AddBuffer(*m_VBO, layout);

@@ -10,9 +10,9 @@ Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned>& ind
     m_VBO = std::make_unique<VertexBuffer>(vertices.data(), static_cast<unsigned int>(vertices.size() * sizeof(Vertex)), false);
 
     VertexBufferLayout layout{};
-    layout.Push<float>(3);
-    layout.Push<float>(3);
-    layout.Push<float>(2);
+    layout.PushFloat(3);
+    layout.PushFloat(3);
+    layout.PushFloat(2);
 
     m_VAO->AddBuffer(*m_VBO, layout);
 

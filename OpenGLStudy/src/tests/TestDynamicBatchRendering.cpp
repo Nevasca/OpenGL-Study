@@ -8,7 +8,7 @@
 #include "Texture.h"
 #include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
+#include "LegacyVertexBufferLayout.h"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "imgui/imgui.h"
 
@@ -57,7 +57,7 @@ namespace tests
         // Allocating VRAM for 1,000 vertices. We can't exceed the specified value, but we have no obligation of providing all the 1,000 later
         m_VertexBuffer = std::make_unique<VertexBuffer>(nullptr, sizeof(Vertex) * 1000, true);
 
-        VertexBufferLayout layout{};
+        LegacyVertexBufferLayout layout{};
         layout.Push<float>(2);
         layout.Push<float>(4);
         layout.Push<float>(2);

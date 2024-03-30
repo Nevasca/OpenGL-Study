@@ -6,7 +6,7 @@
 #include "Texture.h"
 #include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
+#include "LegacyVertexBufferLayout.h"
 #include "glm/ext/matrix_clip_space.hpp"
 
 namespace tests
@@ -40,7 +40,7 @@ namespace tests
 
         m_VertexBuffer = std::make_unique<VertexBuffer>(vertices, 8 * 9 * sizeof(float));
 
-        VertexBufferLayout layout{};
+        LegacyVertexBufferLayout layout{};
         layout.Push<float>(2);
         layout.Push<float>(4);
         layout.Push<float>(2);

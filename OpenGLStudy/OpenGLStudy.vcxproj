@@ -192,6 +192,7 @@
     <ClCompile Include="src\core\Rendering\RenderSystem.cpp" />
     <ClCompile Include="src\core\Rendering\Shader.cpp" />
     <ClCompile Include="src\core\Rendering\VertexArray.cpp" />
+    <ClCompile Include="src\core\Rendering\VertexBufferLayout.cpp" />
     <ClCompile Include="src\core\ResourceManager.cpp" />
     <ClCompile Include="src\core\Resources\MeshResource.cpp" />
     <ClCompile Include="src\core\Resources\ShaderResource.cpp" />
@@ -250,7 +251,7 @@
     <ClCompile Include="src\vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\LegacyVertexArray.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
-    <ClCompile Include="src\VertexBufferLayout.cpp" />
+    <ClCompile Include="src\LegacyVertexBufferLayout.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="res\breakout\levels\01.lvl" />
@@ -306,6 +307,7 @@
     <ClInclude Include="src\core\Rendering\RenderSystem.h" />
     <ClInclude Include="src\core\Rendering\Shader.h" />
     <ClInclude Include="src\core\Rendering\VertexArray.h" />
+    <ClInclude Include="src\core\Rendering\VertexBufferLayout.h" />
     <ClInclude Include="src\core\ResourceManager.h" />
     <ClInclude Include="src\core\Resources\MeshResource.h" />
     <ClInclude Include="src\core\Resources\ShaderResource.h" />
@@ -790,7 +792,7 @@
     <ClInclude Include="src\vendor\stb_image\stb_image.h" />
     <ClInclude Include="src\LegacyVertexArray.h" />
     <ClInclude Include="src\VertexBuffer.h" />
-    <ClInclude Include="src\VertexBufferLayout.h" />
+    <ClInclude Include="src\LegacyVertexBufferLayout.h" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="res\breakout\audio\" />
