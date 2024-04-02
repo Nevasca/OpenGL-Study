@@ -23,7 +23,6 @@ void main()
     // Normal attribute is on local space, we need to convert it to world by using the model matrix
     // But since normal is a direction, it doesn't make sense to translate it, so we cut it by casting to a mat3
     // We also need to take care of non-uniform scale so it doesn't mess with the actual direction, hence the transpose of inverse    
-    // Inversing matrices is a costly operation for shaders, a better approach would be calculating it on CPU side and send as uniform, instead of calculating it for each vertex
     v_Normal = mat3(transpose(inverse(a_InstanceModelMatrix))) * a_Normal;
     v_FragPosition = vec3(a_InstanceModelMatrix * a_Position);
 }
@@ -76,6 +75,7 @@ struct AmbientLight
 
 layout(location = 0) out vec4 o_Color;
 
+in vec2 v_TexCoord;
 in vec3 v_Normal;
 in vec3 v_FragPosition;
 
@@ -83,6 +83,7 @@ in vec3 v_FragPosition;
 #define MAX_POINT_LIGHTS 20
 #define MAX_SPOT_LIGHTS 20
 
+// Lighting
 uniform vec3 u_ViewPosition;
 uniform AmbientLight u_AmbientLight;
 uniform int u_TotalDirectionalLights;
@@ -92,7 +93,11 @@ uniform PointLight u_PointLights[MAX_POINT_LIGHTS];
 uniform int u_TotalSpotLights;
 uniform SpotLight u_SpotLights[MAX_SPOT_LIGHTS];
 
-vec3 defaultColor = vec3(0.5f, 0.5f, 0.5f); // TODO: remove after material system
+// Material
+uniform vec4 u_Color;
+uniform sampler2D u_Diffuse;
+uniform sampler2D u_Specular;
+
 int materialShininess = 32; // TODO: create material system
 
 vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir);
@@ -130,12 +135,12 @@ vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir)
     // Diffuse
     vec3 lightDir = normalize(-light.direction);
     float diffuseValue = max(dot(normal, lightDir), 0.f);
-    vec3 diffuse = light.diffuse * diffuseValue * defaultColor;
+    vec3 diffuse = light.diffuse * diffuseValue * (vec3(texture(u_Diffuse, v_TexCoord)) + u_Color.rgb);
     
     // Specular
     vec3 reflectDirection = reflect(light.direction, normal);    
     float specularValue = pow(max(dot(viewDir, reflectDirection), 0.f), materialShininess);
-    vec3 specular = light.specular * specularValue * defaultColor;
+    vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, v_TexCoord));
     
     return (diffuse + specular) * light.intensity;    
 }
@@ -154,13 +159,13 @@ vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir
     // Diffuse
     vec3 lightDir = normalize(light.position - fragPos);
     float diffuseValue = max(dot(normal, lightDir), 0.f);
-    vec3 diffuse = light.diffuse * diffuseValue * defaultColor;
+    vec3 diffuse = light.diffuse * diffuseValue * (vec3(texture(u_Diffuse, v_TexCoord)) + u_Color.rgb);
     diffuse *= attenuation;
     
     // Specular
     vec3 reflectDirection = reflect(-lightDir, normal);
     float specularValue = pow(max(dot(reflectDirection, viewDir), 0), materialShininess);
-    vec3 specular = light.specular * specularValue * defaultColor;
+    vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, v_TexCoord));
     specular *= attenuation;
     
     return (diffuse + specular) * light.intensity;
@@ -187,13 +192,13 @@ vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     
     // Diffuse
     float diffuseValue = max(dot(normal, lightDir), 0.f);
-    vec3 diffuse = light.diffuse * diffuseValue * defaultColor;
+    vec3 diffuse = light.diffuse * diffuseValue * (vec3(texture(u_Diffuse, v_TexCoord)) + u_Color.rgb);
     diffuse *= intensity;
     
     // Specular
     vec3 reflectDirection = reflect(light.direction, normal);
     float specularValue = pow(max(dot(viewDir, reflectDirection), 0.f), materialShininess);
-    vec3 specular = light.specular * specularValue * defaultColor;
+    vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, v_TexCoord));
     specular *= intensity;
     
     return (diffuse + specular) * light.intensity;
@@ -201,5 +206,5 @@ vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 
 vec3 ComputeAmbientLight()
 {
-    return defaultColor * u_AmbientLight.color;
+    return (vec3(texture(u_Diffuse, v_TexCoord)) + u_Color.rgb) * u_AmbientLight.color;
 }

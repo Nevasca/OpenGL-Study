@@ -2,7 +2,7 @@
 
 #include "core/GameObject/Component.h"
 
-class Shader;
+class Material;
 class Mesh;
 
 class MeshComponent : public Component
@@ -12,16 +12,16 @@ class MeshComponent : public Component
 public:
 
     void SetMesh(const std::shared_ptr<Mesh>& mesh);
-    void SetShader(const std::shared_ptr<Shader>& shader);
+    void SetMaterial(const std::shared_ptr<Material>& material);
     
-    bool IsReadyToDraw() const { return m_Mesh != nullptr && m_Shader != nullptr; }
+    bool IsReadyToDraw() const { return m_Mesh != nullptr && m_Material != nullptr; }
     const std::shared_ptr<Mesh>& GetMesh() const { return m_Mesh; }
-    const std::shared_ptr<Shader>& GetShader() const { return m_Shader; }
+    const std::shared_ptr<Material>& GetMaterial() const { return m_Material; }
 
 private:
 
     std::shared_ptr<Mesh> m_Mesh;
-    std::shared_ptr<Shader> m_Shader;
+    std::shared_ptr<Material> m_Material;
     bool bIsAddedToWorld{false};
 
     void AddToWorld();

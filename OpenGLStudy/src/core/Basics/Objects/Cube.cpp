@@ -11,7 +11,7 @@ void Cube::Initialize()
 
     m_MeshComponent = AddComponent<MeshComponent>();
     m_MeshComponent->SetMesh(ResourceManager::GetMesh(ResourceManager::DEFAULT_MESH_CUBE_NAME));
-    m_MeshComponent->SetShader(ResourceManager::GetShader(ResourceManager::DEFAULT_MATERIAL_NAME));
+    m_MeshComponent->SetMaterial(ResourceManager::GetMaterial(ResourceManager::DEFAULT_MATERIAL_NAME));
 }
 
 void Cube::Destroy()
@@ -21,7 +21,7 @@ void Cube::Destroy()
     m_MeshComponent.reset();
 }
 
-void Cube::SetShader(const std::shared_ptr<Shader>& shader) const
+void Cube::SetMaterial(const std::shared_ptr<Material>& material) const
 {
-    m_MeshComponent->SetShader(shader);
+    m_MeshComponent->SetMaterial(material);
 }

@@ -3,15 +3,15 @@
 #include "Core.h"
 
 #include "IndexBuffer.h"
+#include "Material.h"
 #include "Mesh.h"
-#include "Shader.h"
 #include "VertexArray.h"
 #include "core/GameObject/Transform.h"
 
-void MeshRenderer::Render(const Mesh& mesh, const Transform& transform, Shader& shader) const
+void MeshRenderer::Render(const Mesh& mesh, const Transform& transform, const Material& material) const
 {
-    shader.Bind();
-    shader.SetUniformMat4f("u_Model", transform.GetMatrix());
+    material.Bind();
+    material.SetMat4("u_Model", transform.GetMatrix());
 
     mesh.GetVertexArray().Bind();
 
@@ -21,9 +21,9 @@ void MeshRenderer::Render(const Mesh& mesh, const Transform& transform, Shader& 
     GLCall(glDrawElements(GL_TRIANGLES, ibo.GetCount(), GL_UNSIGNED_INT, nullptr));
 }
 
-void MeshRenderer::RenderInstanced(const Mesh& mesh, Shader& shader, int amount) const
+void MeshRenderer::RenderInstanced(const Mesh& mesh, const Material& material, int amount) const
 {
-    shader.Bind();
+    material.Bind();
 
     mesh.GetVertexArray().Bind();
     const IndexBuffer& ibo = mesh.GetIndexBuffer();

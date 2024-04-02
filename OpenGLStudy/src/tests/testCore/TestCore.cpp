@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "LegacyShader.h"
+#include "Texture.h"
 #include "core/ResourceManager.h"
 #include "core/Basics/Objects/FlyingCamera.h"
 #include "core/Basics/Objects/Cube.h"
@@ -10,6 +11,7 @@
 #include "core/Basics/Components/DirectionalLightComponent.h"
 #include "core/Basics/Objects/PointLight.h"
 #include "core/Basics/Components/SpotLightComponent.h"
+#include "core/Rendering/Material.h"
 
 namespace tests
 {
@@ -35,6 +37,13 @@ namespace tests
                 m_World->Spawn<Cube>(position);
             }
         }
+
+        std::shared_ptr<Material> defaultMaterial = ResourceManager::GetMaterial(ResourceManager::DEFAULT_MATERIAL_NAME);
+        // TODO: refactor texture to use ResourceManager
+        defaultMaterial->SetTexture("u_Diffuse", std::make_shared<Texture>("res/textures/Container_Diff.png"), 0);
+        defaultMaterial->SetTexture("u_Specular", std::make_shared<Texture>("res/textures/Container_Spec.png"), 1);
+        
+        defaultMaterial->SetColor("u_Color", glm::vec4(0.f)); // When using a texture, we need to set default color to black
 
         for(int x = 0; x < 4; x++)
         {

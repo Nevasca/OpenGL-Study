@@ -2,7 +2,7 @@
 #include "core/GameObject/GameObject.h"
 
 
-class Shader;
+class Material;
 class MeshComponent;
 
 class Cube : public GameObject
@@ -14,7 +14,7 @@ public:
     void Initialize() override;
     void Destroy() override;
     
-    void SetShader(const std::shared_ptr<Shader>& shader) const;
+    void SetMaterial(const std::shared_ptr<Material>& material) const;
 
 private:
 

@@ -1,6 +1,7 @@
 #include "RenderSystem.h"
 #include <glm/glm.hpp>
 
+#include "Material.h"
 #include "Mesh.h"
 #include "Shader.h"
 #include "core/Basics/Components/CameraComponent.h"
@@ -28,9 +29,12 @@ void RenderSystem::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshCo
 {
     assert(meshComponent->IsReadyToDraw());
 
-    std::shared_ptr<Shader> meshShader = meshComponent->GetShader();
-
+    const std::shared_ptr<Material>& meshMaterial = meshComponent->GetMaterial();
+    const unsigned int materialId = meshMaterial->GetId();
+    
+    const std::shared_ptr<Shader>& meshShader = meshMaterial->GetShader();
     const unsigned int shaderId = meshShader->GetRendererID();
+
     if(m_UniqueActiveShaders.find(shaderId) == m_UniqueActiveShaders.end())
     {
         m_UniqueActiveShaders[shaderId] = meshShader;
@@ -49,7 +53,12 @@ void RenderSystem::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshCo
 #endif
     }
 
-    m_MeshComponents[vaoID].push_back(meshComponent);
+    if(m_MeshComponents[vaoID].find(materialId) == m_MeshComponents[vaoID].end())
+    {
+        m_MeshComponents[vaoID][materialId] = {};
+    }
+
+    m_MeshComponents[vaoID][materialId].push_back(meshComponent);
 }
 
 void RenderSystem::AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent)
@@ -74,33 +83,36 @@ void RenderSystem::Render(const CameraComponent& activeCamera)
 #if INSTANCED_DRAW_ENABLED
     m_InstancedArray->Bind();
 
-    // TODO: instead of render instanced by mesh, render by material and mesh
-    // so we can have different shader uniforms applied for same mesh with different material
-    for(auto& meshComponentPair : m_MeshComponents)
+    // Foreach unique VAO
+    for(auto& meshMappingPair : m_MeshComponents)
     {
-        const std::vector<std::shared_ptr<MeshComponent>>& meshComponents = meshComponentPair.second;
-        int remainingInstancesToDraw = static_cast<int>(meshComponents.size());
-        int nextStartMeshIndex = 0;
-
-        while(remainingInstancesToDraw > 0)
+        // Foreach material
+        for(auto& meshComponentPair : meshMappingPair.second)
         {
-            const int instancesToDraw = glm::min(remainingInstancesToDraw, MAX_INSTANCED_AMOUNT_PER_CALL);
-            std::vector<glm::mat4> modelMatrices{};
-            modelMatrices.reserve(instancesToDraw);
+            const std::vector<std::shared_ptr<MeshComponent>>& meshComponents = meshComponentPair.second;
+            int remainingInstancesToDraw = static_cast<int>(meshComponents.size());
+            int nextStartMeshIndex = 0;
 
-            for(int i = 0; i < instancesToDraw; i++)
+            while(remainingInstancesToDraw > 0)
             {
-                assert(meshComponents[nextStartMeshIndex + i]->IsReadyToDraw());
+                const int instancesToDraw = glm::min(remainingInstancesToDraw, MAX_INSTANCED_AMOUNT_PER_CALL);
+                std::vector<glm::mat4> modelMatrices{};
+                modelMatrices.reserve(instancesToDraw);
 
-                modelMatrices.emplace_back(meshComponents[nextStartMeshIndex + i]->GetOwnerTransform().GetMatrix());
+                for(int i = 0; i < instancesToDraw; i++)
+                {
+                    assert(meshComponents[nextStartMeshIndex + i]->IsReadyToDraw());
+
+                    modelMatrices.emplace_back(meshComponents[nextStartMeshIndex + i]->GetOwnerTransform().GetMatrix());
+                }
+
+                m_InstancedArray->SetSubData(modelMatrices.data(), instancesToDraw * sizeof(glm::mat4));
+                
+                m_MeshRenderer.RenderInstanced(*meshComponents[nextStartMeshIndex]->GetMesh(), *meshComponents[nextStartMeshIndex]->GetMaterial(), instancesToDraw);
+                
+                remainingInstancesToDraw -= instancesToDraw;
+                nextStartMeshIndex += instancesToDraw;
             }
-
-            m_InstancedArray->SetSubData(modelMatrices.data(), instancesToDraw * sizeof(glm::mat4));
-            
-            m_MeshRenderer.RenderInstanced(*meshComponents[nextStartMeshIndex]->GetMesh(), *meshComponents[nextStartMeshIndex]->GetShader(), instancesToDraw);
-            
-            remainingInstancesToDraw -= instancesToDraw;
-            nextStartMeshIndex += instancesToDraw;
         }
     }
 

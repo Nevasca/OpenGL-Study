@@ -34,8 +34,7 @@ private:
     MeshRenderer m_MeshRenderer{};
     LightingSystem m_LightingSystem{};
 
-    std::map<unsigned int, std::vector<std::shared_ptr<MeshComponent>>> m_MeshComponents{}; // keyed by VAO
-    //TODO: after implementing materials, we will need to change key for material id
+    std::map<unsigned int, std::map<unsigned int, std::vector<std::shared_ptr<MeshComponent>>>> m_MeshComponents{}; // keyed by VAO and material ID
     std::map<unsigned int, std::shared_ptr<Shader>> m_UniqueActiveShaders{}; // keyed by shader id TODO: organize by material and mesh
 
     std::unique_ptr<InstancedArray> m_InstancedArray{};

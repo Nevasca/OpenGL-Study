@@ -13,9 +13,9 @@ void MeshComponent::SetMesh(const std::shared_ptr<Mesh>& mesh)
     }
 }
 
-void MeshComponent::SetShader(const std::shared_ptr<Shader>& shader)
+void MeshComponent::SetMaterial(const std::shared_ptr<Material>& material)
 {
-    m_Shader = shader;
+    m_Material = material;
 
     if(IsReadyToDraw())
     {
