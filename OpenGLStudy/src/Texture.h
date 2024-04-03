@@ -14,7 +14,7 @@ public:
     // On mobile, we may have only 8
     // But it all depends on the current GPU. We have a function that we can call to check how many slots we have for the current GPU
     void Bind(unsigned int Slot = 0) const;
-    void Unbind() const;
+    void Unbind(unsigned int Slot = 0) const;
     void SetType(const std::string& Type);
     void SetPath(const std::string& Path);
 

@@ -74,8 +74,10 @@ void Texture::Bind(unsigned int Slot) const
     //glBindTextureUnit(Slot, m_RendererID);
 }
 
-void Texture::Unbind() const
+void Texture::Unbind(unsigned int Slot) const
 {
+    // to proper unbind a texture, we also need to set it active and then bind that active slot to 0
+    GLCall(glActiveTexture(GL_TEXTURE0 + Slot));  
     GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 }
 
