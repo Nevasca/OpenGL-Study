@@ -2,6 +2,8 @@
 
 #include "Core.h"
 
+unsigned int IndexBuffer::m_LastBoundIndexBufferId = 0;
+
 IndexBuffer::IndexBuffer(const unsigned int* Data, unsigned int Count)
     : m_Count(Count)
 {
@@ -21,15 +23,15 @@ IndexBuffer::~IndexBuffer()
 
 void IndexBuffer::Bind() const
 {
-    if(!bIsBound)
+    if(m_LastBoundIndexBufferId != m_RendererID)
     {
         GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
-        bIsBound = true;
+        m_LastBoundIndexBufferId = m_RendererID;
     }
 }
 
 void IndexBuffer::Unbind() const
 {
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
-    bIsBound = false;
+    m_LastBoundIndexBufferId = 0;
 }

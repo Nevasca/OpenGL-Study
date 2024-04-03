@@ -5,6 +5,8 @@
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 
+unsigned int VertexArray::m_LastBoundVertexArrayId = 0;
+
 VertexArray::VertexArray()
 {
     GLCall(glGenVertexArrays(1, &m_RendererID));
@@ -25,15 +27,15 @@ void VertexArray::AddBuffer(const VertexBuffer& buffer, const VertexBufferLayout
 
 void VertexArray::Bind() const
 {
-    if(!bIsBound)
+    if(m_LastBoundVertexArrayId != m_RendererID)
     {
         GLCall(glBindVertexArray(m_RendererID));
-        bIsBound = true;
+        m_LastBoundVertexArrayId = m_RendererID;
     }
 }
 
 void VertexArray::Unbind() const
 {
     GLCall(glBindVertexArray(0));
-    bIsBound = false;
+    m_LastBoundVertexArrayId = 0;
 }

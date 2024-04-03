@@ -19,7 +19,8 @@ public:
 
 private:
 
+    static unsigned int m_LastBoundVertexArrayId;
+
     unsigned int m_RendererID;
-    mutable bool bIsBound{false};
     unsigned int m_NextAttributeLocation{0};
 };

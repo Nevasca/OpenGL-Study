@@ -6,6 +6,8 @@
 #include <fstream>
 #include <string>
 
+unsigned int Shader::m_LastBoundShaderId = 0;
+
 Shader::Shader(const std::string& vertexShaderSource, const std::string& fragmentShaderSource)
 {
     m_RendererID = CreateShader(vertexShaderSource, fragmentShaderSource);
@@ -18,17 +20,17 @@ Shader::~Shader()
 
 void Shader::Bind() const
 {
-    if(!bIsBound)
+    if(m_LastBoundShaderId != m_RendererID)
     {
         GLCall(glUseProgram(m_RendererID));
-        bIsBound = true;
+        m_LastBoundShaderId = m_RendererID;
     }
 }
 
 void Shader::Unbind() const
 {
     GLCall(glUseProgram(0));
-    bIsBound = false;
+    m_LastBoundShaderId = 0;
 }
 
 void Shader::SetUniform1i(const std::string& name, int value)

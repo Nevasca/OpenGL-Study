@@ -14,7 +14,8 @@ public:
 
 private:
 
+    static unsigned int m_LastBoundIndexBufferId;
+    
     unsigned int m_RendererID{0};
     unsigned int m_Count;
-    mutable bool bIsBound{false};
 };
