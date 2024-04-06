@@ -5,7 +5,7 @@
 #include "Test.h"
 #include "glm/glm.hpp"
 
-class Texture;
+class LegacyTexture;
 class LegacyShader;
 class LegacyIndexBuffer;
 class VertexBuffer;
@@ -28,8 +28,8 @@ namespace tests
         std::unique_ptr<VertexBuffer> m_VertexBuffer;
         std::unique_ptr<LegacyIndexBuffer> m_IndexBuffer;
         std::unique_ptr<LegacyShader> m_Shader;
-        std::unique_ptr<Texture> m_TextureA;
-        std::unique_ptr<Texture> m_TextureB;
+        std::unique_ptr<LegacyTexture> m_TextureA;
+        std::unique_ptr<LegacyTexture> m_TextureB;
         glm::mat4 m_Proj;
         glm::mat4 m_View;
 

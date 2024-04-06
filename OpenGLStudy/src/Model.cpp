@@ -4,7 +4,7 @@
 #include <memory>
 #include <assimp/postprocess.h>
 
-#include "Texture.h"
+#include "LegacyTexture.h"
 
 Model::Model(const std::string& path)
 {
@@ -69,7 +69,7 @@ std::unique_ptr<LegacyMesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scen
 {
     std::vector<LegacyVertex> vertices{};
     std::vector<unsigned int> indices{};
-    std::vector<std::shared_ptr<Texture>> textures{};
+    std::vector<std::shared_ptr<LegacyTexture>> textures{};
 
     for(unsigned int i = 0; i < mesh->mNumVertices; i++)
     {
@@ -121,19 +121,19 @@ std::unique_ptr<LegacyMesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scen
     {
         aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
-        std::vector<std::shared_ptr<Texture>> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+        std::vector<std::shared_ptr<LegacyTexture>> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
-        std::vector<std::shared_ptr<Texture>> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+        std::vector<std::shared_ptr<LegacyTexture>> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     }
 
     return std::make_unique<LegacyMesh>(vertices, indices, textures);
 }
 
-std::vector<std::shared_ptr<Texture>> Model::LoadMaterialTextures(aiMaterial* material, aiTextureType type, const std::string& typeName)
+std::vector<std::shared_ptr<LegacyTexture>> Model::LoadMaterialTextures(aiMaterial* material, aiTextureType type, const std::string& typeName)
 {
-    std::vector<std::shared_ptr<Texture>> textures;
+    std::vector<std::shared_ptr<LegacyTexture>> textures;
     
     for(unsigned int i = 0; i < material->GetTextureCount(type); i++)
     {
@@ -161,7 +161,7 @@ std::vector<std::shared_ptr<Texture>> Model::LoadMaterialTextures(aiMaterial* ma
         // Assuming textures are stored in same folder of the model
         std::string texturePath = m_Directory + "/" + str.C_Str();
         
-        std::shared_ptr<Texture> texture = std::make_shared<Texture>(texturePath, true, true);
+        std::shared_ptr<LegacyTexture> texture = std::make_shared<LegacyTexture>(texturePath, true, true);
         texture->SetType(typeName);
         texture->SetPath(str.C_Str());
 

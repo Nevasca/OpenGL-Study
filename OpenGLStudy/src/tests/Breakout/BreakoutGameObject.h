@@ -4,7 +4,7 @@
 #include "glm/vec2.hpp"
 #include "glm/vec3.hpp"
 
-class Texture;
+class LegacyTexture;
 
 namespace Breakout
 {
@@ -21,10 +21,10 @@ namespace Breakout
         bool IsSolid{false};
         bool Destroyed{false};
 
-        std::shared_ptr<Texture> Sprite{};
+        std::shared_ptr<LegacyTexture> Sprite{};
 
         BreakoutGameObject();
-        BreakoutGameObject(glm::vec2 position, glm::vec2 size, const std::shared_ptr<Texture>& sprite, glm::vec3 color = glm::vec3(1.0f), glm::vec2 velocity = glm::vec2(0.0f, 0.0f));
+        BreakoutGameObject(glm::vec2 position, glm::vec2 size, const std::shared_ptr<LegacyTexture>& sprite, glm::vec3 color = glm::vec3(1.0f), glm::vec2 velocity = glm::vec2(0.0f, 0.0f));
         void Draw(const SpriteRenderer& Renderer) const;
     };
 }

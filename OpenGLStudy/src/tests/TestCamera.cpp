@@ -9,7 +9,7 @@
 #include "LegacyIndexBuffer.h"
 #include "Renderer.h"
 #include "LegacyShader.h"
-#include "Texture.h"
+#include "LegacyTexture.h"
 #include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
 #include "LegacyVertexBufferLayout.h"
@@ -98,7 +98,7 @@ namespace tests
         m_IBO = std::make_unique<LegacyIndexBuffer>(indices, 6 * 6);
 
         m_Shader = std::make_unique<LegacyShader>("res/shaders/Basic.shader");
-        m_Texture = std::make_unique<Texture>("res/textures/FancyPigeon.png");
+        m_Texture = std::make_unique<LegacyTexture>("res/textures/FancyPigeon.png");
         
         m_Shader->Bind();
         m_Texture->Bind(0);

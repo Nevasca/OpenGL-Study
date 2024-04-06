@@ -4,7 +4,7 @@
 #include "LegacyIndexBuffer.h"
 #include "LegacyShader.h"
 #include "Test.h"
-#include "Texture.h"
+#include "LegacyTexture.h"
 #include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
 #include "glm/glm.hpp"
@@ -29,7 +29,7 @@ namespace tests
         std::unique_ptr<VertexBuffer> m_VertexBuffer;
         std::unique_ptr<LegacyIndexBuffer> m_IndexBuffer;
         std::unique_ptr<LegacyShader> m_Shader;
-        std::unique_ptr<Texture> m_Texture;
+        std::unique_ptr<LegacyTexture> m_Texture;
         
         glm::mat4 m_Proj;
         glm::mat4 m_View;

@@ -7,7 +7,7 @@
 #include "ParticleGenerator.h"
 #include "LegacyShader.h"
 #include "SpriteRenderer.h"
-#include "Texture.h"
+#include "LegacyTexture.h"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/scalar_common.hpp"
 
@@ -35,10 +35,10 @@ namespace Breakout
 
         m_SpriteRenderer = std::make_unique<SpriteRenderer>(m_SpriteShader);
         
-        m_FaceTexture = std::make_shared<Texture>("res/breakout/textures/awesomeface.png", true, false);
-        m_BackgroundTexture = std::make_unique<Texture>("res/breakout/textures/background.jpg", false, false);
-        m_SolidBlockTexture = std::make_shared<Texture>("res/breakout/textures/block_solid.png", false, false);
-        m_BlockTexture = std::make_shared<Texture>("res/breakout/textures/block.png", false, false);
+        m_FaceTexture = std::make_shared<LegacyTexture>("res/breakout/textures/awesomeface.png", true, false);
+        m_BackgroundTexture = std::make_unique<LegacyTexture>("res/breakout/textures/background.jpg", false, false);
+        m_SolidBlockTexture = std::make_shared<LegacyTexture>("res/breakout/textures/block_solid.png", false, false);
+        m_BlockTexture = std::make_shared<LegacyTexture>("res/breakout/textures/block.png", false, false);
 
         GameLevel one{m_SolidBlockTexture, m_BlockTexture};
         one.Load("res/breakout/levels/01.lvl", Width, Height / 2);
@@ -55,7 +55,7 @@ namespace Breakout
         Levels.emplace_back(std::move(three));        
         Levels.emplace_back(std::move(four));
 
-        m_PaddleTexture = std::make_unique<Texture>("res/breakout/textures/paddle.png", true, false);
+        m_PaddleTexture = std::make_unique<LegacyTexture>("res/breakout/textures/paddle.png", true, false);
         glm::vec2 playerStartPosition = GetPlayerStartPosition();
         m_Player = std::make_unique<BreakoutGameObject>(playerStartPosition, PLAYER_SIZE, m_PaddleTexture);
 
@@ -68,7 +68,7 @@ namespace Breakout
         m_ParticleShader->SetUniformMat4f("u_Projection", projection);
         m_ParticleShader->SetUniform1i("u_Sprite", 0);
 
-        m_ParticleTexture = std::make_unique<Texture>("res/breakout/textures/particle.png", true, false);
+        m_ParticleTexture = std::make_unique<LegacyTexture>("res/breakout/textures/particle.png", true, false);
 
         m_Particles = std::make_unique<ParticleGenerator>(m_ParticleShader, m_ParticleTexture, 500);
         

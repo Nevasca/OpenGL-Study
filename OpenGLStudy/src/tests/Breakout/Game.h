@@ -7,7 +7,7 @@
 #include "GameLevel.h"
 #include <irrKlang.h>
 
-class Texture;
+class LegacyTexture;
 class LegacyShader;
 
 namespace Breakout
@@ -36,7 +36,7 @@ namespace Breakout
 
         std::vector<GameLevel> Levels;
         unsigned int Level{0};
-        std::shared_ptr<Texture> m_BlockTexture;
+        std::shared_ptr<LegacyTexture> m_BlockTexture;
 
         Game(unsigned width, unsigned height);
         ~Game();
@@ -56,18 +56,18 @@ namespace Breakout
         
         std::shared_ptr<LegacyShader> m_SpriteShader;
         std::unique_ptr<SpriteRenderer> m_SpriteRenderer;
-        std::unique_ptr<Texture> m_BackgroundTexture;
-        std::shared_ptr<Texture> m_SolidBlockTexture;
+        std::unique_ptr<LegacyTexture> m_BackgroundTexture;
+        std::shared_ptr<LegacyTexture> m_SolidBlockTexture;
 
         std::unique_ptr<BreakoutGameObject> m_Player;
-        std::shared_ptr<Texture> m_PaddleTexture;
+        std::shared_ptr<LegacyTexture> m_PaddleTexture;
 
         std::unique_ptr<Ball> m_Ball;
-        std::shared_ptr<Texture> m_FaceTexture;
+        std::shared_ptr<LegacyTexture> m_FaceTexture;
 
         std::unique_ptr<ParticleGenerator> m_Particles;
         std::shared_ptr<LegacyShader> m_ParticleShader;
-        std::shared_ptr<Texture> m_ParticleTexture;
+        std::shared_ptr<LegacyTexture> m_ParticleTexture;
 
         irrklang::ISoundEngine* m_SoundEngine;
         

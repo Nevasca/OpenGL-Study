@@ -10,7 +10,7 @@
 #include "LegacyVertexArray.h"
 class Renderer;
 class LegacyShader;
-class Texture;
+class LegacyTexture;
 
 struct LegacyVertex
 {
@@ -23,7 +23,7 @@ class LegacyMesh
 {
 public:
 
-    LegacyMesh(std::vector<LegacyVertex> vertices, std::vector<unsigned int> indices, const std::vector<std::shared_ptr<Texture>>& textures);
+    LegacyMesh(std::vector<LegacyVertex> vertices, std::vector<unsigned int> indices, const std::vector<std::shared_ptr<LegacyTexture>>& textures);
     void Draw(LegacyShader& shader);
 
 private:
@@ -31,5 +31,5 @@ private:
     std::unique_ptr<LegacyVertexArray> m_VAO;
     std::unique_ptr<VertexBuffer> m_VBO;
     std::unique_ptr<LegacyIndexBuffer> m_IBO;
-    std::vector<std::shared_ptr<Texture>> m_Textures;
+    std::vector<std::shared_ptr<LegacyTexture>> m_Textures;
 };

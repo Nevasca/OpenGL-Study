@@ -9,7 +9,7 @@
 #include "LegacyIndexBuffer.h"
 #include "Renderer.h"
 #include "LegacyShader.h"
-#include "Texture.h"
+#include "LegacyTexture.h"
 #include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
 #include "LegacyVertexBufferLayout.h"
@@ -114,9 +114,9 @@ namespace tests
         m_CubeShader->SetUniform1i("u_Material.specular", 1);
         m_CubeShader->SetUniform1i("u_Material.emission", 2);
 
-        m_CubeTextureDiff = std::make_unique<Texture>("res/textures/Container_Diff.png");
-        m_CubeTextureSpec = std::make_unique<Texture>("res/textures/Container_Spec.png");
-        m_CubeTextureEmission = std::make_unique<Texture>("res/textures/Container_Emission.png");
+        m_CubeTextureDiff = std::make_unique<LegacyTexture>("res/textures/Container_Diff.png");
+        m_CubeTextureSpec = std::make_unique<LegacyTexture>("res/textures/Container_Spec.png");
+        m_CubeTextureEmission = std::make_unique<LegacyTexture>("res/textures/Container_Emission.png");
         m_CubeTextureDiff->Bind(0);
         m_CubeTextureSpec->Bind(1);
         m_CubeTextureEmission->Bind(2);

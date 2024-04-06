@@ -6,11 +6,11 @@
 #include <sstream>
 #include <string>
 
-#include "Texture.h"
+#include "LegacyTexture.h"
 
 namespace Breakout
 {
-    GameLevel::GameLevel(const std::shared_ptr<Texture>& solidBlockTexture, const std::shared_ptr<Texture>& blockTexture)
+    GameLevel::GameLevel(const std::shared_ptr<LegacyTexture>& solidBlockTexture, const std::shared_ptr<LegacyTexture>& blockTexture)
         : m_SolidBlockTexture(solidBlockTexture), m_BlockTexture(blockTexture)
     {
     }

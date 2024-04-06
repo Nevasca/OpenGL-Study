@@ -7,7 +7,7 @@
 
 #include "LegacyIndexBuffer.h"
 #include "LegacyShader.h"
-#include "Texture.h"
+#include "LegacyTexture.h"
 #include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
 
@@ -27,7 +27,7 @@ namespace Breakout
     {
     public:
 
-        ParticleGenerator(const std::shared_ptr<LegacyShader>& shader, const std::shared_ptr<Texture>& texture, unsigned int amount);
+        ParticleGenerator(const std::shared_ptr<LegacyShader>& shader, const std::shared_ptr<LegacyTexture>& texture, unsigned int amount);
 
         void Update(float deltaTime, BreakoutGameObject& objectAttached, unsigned int newParticles, glm::vec2 offset = glm::vec2{0.f});
         void Draw() const;
@@ -38,7 +38,7 @@ namespace Breakout
         std::unique_ptr<VertexBuffer> m_VBO;
         std::unique_ptr<LegacyIndexBuffer> m_IBO;
         std::shared_ptr<LegacyShader> m_Shader;
-        std::shared_ptr<Texture> m_Texture;
+        std::shared_ptr<LegacyTexture> m_Texture;
 
         std::vector<Particle> m_Particles{};
         unsigned int m_Amount{0};

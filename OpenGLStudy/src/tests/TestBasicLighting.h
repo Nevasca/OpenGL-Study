@@ -7,7 +7,7 @@
 #include "Test.h"
 #include "glm/glm.hpp"
 
-class Texture;
+class LegacyTexture;
 class LegacyShader;
 class LegacyIndexBuffer;
 class VertexBuffer;
@@ -33,9 +33,9 @@ namespace tests
         std::unique_ptr<VertexBuffer> m_CubeVBO;
         std::unique_ptr<LegacyIndexBuffer> m_CubeIBO;
         std::unique_ptr<LegacyShader> m_CubeShader;
-        std::unique_ptr<Texture> m_CubeTextureDiff;
-        std::unique_ptr<Texture> m_CubeTextureSpec;
-        std::unique_ptr<Texture> m_CubeTextureEmission;
+        std::unique_ptr<LegacyTexture> m_CubeTextureDiff;
+        std::unique_ptr<LegacyTexture> m_CubeTextureSpec;
+        std::unique_ptr<LegacyTexture> m_CubeTextureEmission;
 
         std::unique_ptr<LegacyVertexArray> m_LightCubeVAO;
         std::unique_ptr<VertexBuffer> m_LightCubeVBO;

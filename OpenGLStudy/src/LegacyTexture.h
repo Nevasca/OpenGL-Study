@@ -2,12 +2,12 @@
 
 #include <string>
 
-class Texture
+class LegacyTexture
 {
 public:
 
-    Texture(const std::string& FilePath, bool bUseAlpha = true, bool bFlipVertically = true);
-    ~Texture();
+    LegacyTexture(const std::string& FilePath, bool bUseAlpha = true, bool bFlipVertically = true);
+    ~LegacyTexture();
 
     // In OpenGL we have slots to bind texture, we can bind more than one texture at once
     // On Windows, on modern GPUs we generally have 32 slots

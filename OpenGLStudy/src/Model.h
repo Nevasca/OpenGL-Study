@@ -21,10 +21,10 @@ private:
 
     std::vector<std::unique_ptr<LegacyMesh>> m_Meshes{};
     std::string m_Directory; // Used for loading textures
-    std::vector<std::shared_ptr<Texture>> m_LoadedTextures{};
+    std::vector<std::shared_ptr<LegacyTexture>> m_LoadedTextures{};
 
     void LoadModel(const std::string& path);
     void ProcessNode(aiNode* node, const aiScene* scene);
     std::unique_ptr<LegacyMesh> ProcessMesh(aiMesh* mesh, const aiScene* scene);
-    std::vector<std::shared_ptr<Texture>> LoadMaterialTextures(aiMaterial* material, aiTextureType type, const std::string& typeName);
+    std::vector<std::shared_ptr<LegacyTexture>> LoadMaterialTextures(aiMaterial* material, aiTextureType type, const std::string& typeName);
 };

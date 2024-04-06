@@ -1,9 +1,9 @@
-#include "Texture.h"
+#include "LegacyTexture.h"
 
 #include "Core.h"
 #include "stb_image/stb_image.h"
 
-Texture::Texture(const std::string& FilePath, bool bUseAlpha, bool bFlipVertically)
+LegacyTexture::LegacyTexture(const std::string& FilePath, bool bUseAlpha, bool bFlipVertically)
     : m_FilePath(FilePath)
 {
     // Makes the image upside down
@@ -60,12 +60,12 @@ Texture::Texture(const std::string& FilePath, bool bUseAlpha, bool bFlipVertical
     }
 }
 
-Texture::~Texture()
+LegacyTexture::~LegacyTexture()
 {
     GLCall(glDeleteTextures(1, &m_RendererID));
 }
 
-void Texture::Bind(unsigned int Slot) const
+void LegacyTexture::Bind(unsigned int Slot) const
 {
     GLCall(glActiveTexture(GL_TEXTURE0 + Slot)); // Set slot X as active texture slot
     GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
@@ -74,19 +74,19 @@ void Texture::Bind(unsigned int Slot) const
     //glBindTextureUnit(Slot, m_RendererID);
 }
 
-void Texture::Unbind(unsigned int Slot) const
+void LegacyTexture::Unbind(unsigned int Slot) const
 {
     // to proper unbind a texture, we also need to set it active and then bind that active slot to 0
     GLCall(glActiveTexture(GL_TEXTURE0 + Slot));  
     GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 }
 
-void Texture::SetType(const std::string& Type)
+void LegacyTexture::SetType(const std::string& Type)
 {
     m_Type = Type;
 }
 
-void Texture::SetPath(const std::string& Path)
+void LegacyTexture::SetPath(const std::string& Path)
 {
     m_Path = Path;
 }

@@ -7,7 +7,7 @@ namespace Breakout
     BreakoutGameObject::BreakoutGameObject()
     { }
 
-    BreakoutGameObject::BreakoutGameObject(glm::vec2 position, glm::vec2 size, const std::shared_ptr<Texture>& sprite, glm::vec3 color, glm::vec2 velocity)
+    BreakoutGameObject::BreakoutGameObject(glm::vec2 position, glm::vec2 size, const std::shared_ptr<LegacyTexture>& sprite, glm::vec3 color, glm::vec2 velocity)
         : Position(position), Size(size), Velocity(velocity), Color(color), Sprite(sprite) 
     {
     }

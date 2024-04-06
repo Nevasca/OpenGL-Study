@@ -2,12 +2,12 @@
 
 #include "Renderer.h"
 #include "LegacyShader.h"
-#include "Texture.h"
+#include "LegacyTexture.h"
 
 
 #include "LegacyVertexBufferLayout.h"
 
-LegacyMesh::LegacyMesh(std::vector<LegacyVertex> vertices, std::vector<unsigned> indices, const std::vector<std::shared_ptr<Texture>>& textures)
+LegacyMesh::LegacyMesh(std::vector<LegacyVertex> vertices, std::vector<unsigned> indices, const std::vector<std::shared_ptr<LegacyTexture>>& textures)
     : m_Textures(textures)
 {
     m_VAO = std::make_unique<LegacyVertexArray>();

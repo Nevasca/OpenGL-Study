@@ -7,7 +7,7 @@
 class LegacyIndexBuffer;
 class VertexBuffer;
 class LegacyVertexArray;
-class Texture;
+class LegacyTexture;
 class LegacyShader;
 
 namespace Breakout
@@ -18,7 +18,7 @@ namespace Breakout
         SpriteRenderer(const std::shared_ptr<LegacyShader>& inShader);
         ~SpriteRenderer();
 
-        void Draw(Texture& texture, glm::vec2 position, glm::vec2 size = glm::vec2{10.f, 10.f}, float rotate = 0.f, glm::vec3 color = glm::vec3{1.f}) const;
+        void Draw(LegacyTexture& texture, glm::vec2 position, glm::vec2 size = glm::vec2{10.f, 10.f}, float rotate = 0.f, glm::vec3 color = glm::vec3{1.f}) const;
 
     private:
 

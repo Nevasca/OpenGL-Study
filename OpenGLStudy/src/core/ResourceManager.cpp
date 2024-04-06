@@ -5,10 +5,13 @@
 #include "Rendering/Material.h"
 #include "Resources/MeshResource.h"
 #include "Resources/ShaderResource.h"
+#include "Resources/TextureResource.h"
 
 std::unordered_map<std::string, std::shared_ptr<Shader>> ResourceManager::m_Shaders{};
 std::unordered_map<std::string, std::shared_ptr<Mesh>> ResourceManager::m_Meshes{};
 std::unordered_map<std::string, std::shared_ptr<Material>> ResourceManager::m_Materials{};
+std::unordered_map<std::string, std::shared_ptr<Texture>> ResourceManager::m_Textures{};
+
 unsigned int ResourceManager::m_LastMaterialID = 0;
 std::string ResourceManager::DEFAULT_SHADER_NAME = "Default";
 std::string ResourceManager::DEFAULT_MATERIAL_NAME = "Default";
@@ -69,6 +72,18 @@ std::shared_ptr<Material> ResourceManager::GetMaterial(const std::string& name)
     return m_Materials[name];
 }
 
+std::shared_ptr<Texture> ResourceManager::LoadTexture(const std::string& filePath, const std::string& name, bool bUseAlpha, bool bFlipVertically)
+{
+    m_Textures[name] = TextureResource::LoadTextureFromFile(filePath, bUseAlpha, bFlipVertically);
+
+    return m_Textures[name];
+}
+
+std::shared_ptr<Texture> ResourceManager::GetTexture(const std::string& name)
+{
+    return m_Textures[name];
+}
+
 std::shared_ptr<Mesh> ResourceManager::GetMesh(const std::string& name)
 {
     return m_Meshes[name];
@@ -79,5 +94,7 @@ void ResourceManager::UnloadAll()
     m_Shaders.clear();
     m_Meshes.clear();
     m_Materials.clear();
+    m_Textures.clear();
+
     m_LastMaterialID = 0;
 }

@@ -168,7 +168,7 @@ namespace tests
 
         std::vector<unsigned int> indices = {0, 1, 2, 2, 3, 0};
         
-        m_ScreenQuad = std::make_unique<LegacyMesh>(vertices, indices, std::vector<std::shared_ptr<Texture>>{});
+        m_ScreenQuad = std::make_unique<LegacyMesh>(vertices, indices, std::vector<std::shared_ptr<LegacyTexture>>{});
 
         m_PostProcessingShader = std::make_unique<LegacyShader>("res/shaders/PostProcessing.glsl");
         m_PostProcessingShader->Bind();

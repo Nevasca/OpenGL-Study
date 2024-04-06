@@ -10,7 +10,7 @@ namespace Breakout
     public:
         std::vector<BreakoutGameObject> Bricks;
 
-        GameLevel(const std::shared_ptr<Texture>& solidBlockTexture, const std::shared_ptr<Texture>& blockTexture);
+        GameLevel(const std::shared_ptr<LegacyTexture>& solidBlockTexture, const std::shared_ptr<LegacyTexture>& blockTexture);
         void Load(const char* filePath, unsigned int levelWidth, unsigned int levelHeight);
         void Draw(const SpriteRenderer& renderer);
         bool IsCompleted() const;
@@ -18,8 +18,8 @@ namespace Breakout
 
     private:
 
-        std::shared_ptr<Texture> m_SolidBlockTexture;
-        std::shared_ptr<Texture> m_BlockTexture;
+        std::shared_ptr<LegacyTexture> m_SolidBlockTexture;
+        std::shared_ptr<LegacyTexture> m_BlockTexture;
         
         void Init(std::vector<std::vector<unsigned int>> tileData, unsigned int levelWidth, unsigned int levelHeight);
     };

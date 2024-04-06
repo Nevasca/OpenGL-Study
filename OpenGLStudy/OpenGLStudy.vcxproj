@@ -192,11 +192,13 @@
     <ClCompile Include="src\core\Rendering\Primitive.cpp" />
     <ClCompile Include="src\core\Rendering\RenderSystem.cpp" />
     <ClCompile Include="src\core\Rendering\Shader.cpp" />
+    <ClCompile Include="src\core\Rendering\Texture.cpp" />
     <ClCompile Include="src\core\Rendering\VertexArray.cpp" />
     <ClCompile Include="src\core\Rendering\VertexBufferLayout.cpp" />
     <ClCompile Include="src\core\ResourceManager.cpp" />
     <ClCompile Include="src\core\Resources\MeshResource.cpp" />
     <ClCompile Include="src\core\Resources\ShaderResource.cpp" />
+    <ClCompile Include="src\core\Resources\TextureResource.cpp" />
     <ClCompile Include="src\LegacyCamera.cpp" />
     <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\core\Application.cpp" />
@@ -239,7 +241,7 @@
     <ClCompile Include="src\tests\TestTextRendering.cpp" />
     <ClCompile Include="src\tests\TestTexture2D.cpp" />
     <ClCompile Include="src\tests\Test2DTransform.cpp" />
-    <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="src\LegacyTexture.cpp" />
     <ClCompile Include="src\GameTime.cpp" />
     <ClCompile Include="src\vendor\glm\detail\glm.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui.cpp" />
@@ -308,11 +310,13 @@
     <ClInclude Include="src\core\Rendering\Primitive.h" />
     <ClInclude Include="src\core\Rendering\RenderSystem.h" />
     <ClInclude Include="src\core\Rendering\Shader.h" />
+    <ClInclude Include="src\core\Rendering\Texture.h" />
     <ClInclude Include="src\core\Rendering\VertexArray.h" />
     <ClInclude Include="src\core\Rendering\VertexBufferLayout.h" />
     <ClInclude Include="src\core\ResourceManager.h" />
     <ClInclude Include="src\core\Resources\MeshResource.h" />
     <ClInclude Include="src\core\Resources\ShaderResource.h" />
+    <ClInclude Include="src\core\Resources\TextureResource.h" />
     <ClInclude Include="src\LegacyCamera.h" />
     <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\core\Application.h" />
@@ -355,7 +359,7 @@
     <ClInclude Include="src\tests\TestTextRendering.h" />
     <ClInclude Include="src\tests\TestTexture2D.h" />
     <ClInclude Include="src\tests\Test2DTransform.h" />
-    <ClInclude Include="src\Texture.h" />
+    <ClInclude Include="src\LegacyTexture.h" />
     <ClInclude Include="src\GameTime.h" />
     <ClInclude Include="src\vendor\glm\common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_common.hpp" />

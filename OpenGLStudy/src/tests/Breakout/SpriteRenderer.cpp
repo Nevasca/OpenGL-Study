@@ -2,7 +2,7 @@
 
 #include "LegacyIndexBuffer.h"
 #include "LegacyShader.h"
-#include "Texture.h"
+#include "LegacyTexture.h"
 #include "LegacyVertexArray.h"
 #include "VertexBuffer.h"
 #include "LegacyVertexBufferLayout.h"
@@ -43,7 +43,7 @@ namespace Breakout
     SpriteRenderer::~SpriteRenderer()
     { }
 
-    void SpriteRenderer::Draw(Texture& texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color) const
+    void SpriteRenderer::Draw(LegacyTexture& texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color) const
     {
         m_Shader->Bind();
 

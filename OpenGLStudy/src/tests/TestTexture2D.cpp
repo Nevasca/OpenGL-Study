@@ -53,7 +53,7 @@ namespace tests
         // const std::string ColorUniformName = "u_Color";
         // shader.SetUniform4f(ColorUniformName, 0.5f, 0.0f, 0.5f, 1.0f);
 
-        m_Texture = std::make_unique<Texture>("res/textures/FancyPigeon.png");
+        m_Texture = std::make_unique<LegacyTexture>("res/textures/FancyPigeon.png");
         m_Texture->Bind();
         // Set the uniform with the slot our texture sampler is
         // The value needs to be the same slot we bound the texture to, if we had texture.Bind(2), this would be 2

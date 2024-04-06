@@ -4,7 +4,7 @@
 #include "Test.h"
 #include "glm/glm.hpp"
 
-class Texture;
+class LegacyTexture;
 class LegacyShader;
 class LegacyIndexBuffer;
 class VertexBuffer;
@@ -28,7 +28,7 @@ namespace tests
         std::unique_ptr<VertexBuffer> m_VBO;
         std::unique_ptr<LegacyIndexBuffer> m_IBO;
         std::unique_ptr<LegacyShader> m_Shader;
-        std::unique_ptr<Texture> m_Texture;
+        std::unique_ptr<LegacyTexture> m_Texture;
 
         static constexpr int m_TotalCubes = 5;
         glm::vec3 m_Positions[m_TotalCubes];
