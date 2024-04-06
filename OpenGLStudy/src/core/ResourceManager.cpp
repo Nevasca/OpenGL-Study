@@ -11,6 +11,7 @@ std::unordered_map<std::string, std::shared_ptr<Shader>> ResourceManager::m_Shad
 std::unordered_map<std::string, std::shared_ptr<Mesh>> ResourceManager::m_Meshes{};
 std::unordered_map<std::string, std::shared_ptr<Material>> ResourceManager::m_Materials{};
 std::unordered_map<std::string, std::shared_ptr<Texture>> ResourceManager::m_Textures{};
+std::unordered_map<std::string, std::shared_ptr<ModelData>> ResourceManager::m_Models{};
 
 unsigned int ResourceManager::m_LastMaterialID = 0;
 std::string ResourceManager::DEFAULT_SHADER_NAME = "Default";
@@ -89,12 +90,25 @@ std::shared_ptr<Mesh> ResourceManager::GetMesh(const std::string& name)
     return m_Meshes[name];
 }
 
+std::shared_ptr<ModelData> ResourceManager::LoadModel(const std::string& filePath, const std::string& name)
+{
+    m_Models[name] = MeshResource::LoadModelFromFile(filePath);
+
+    return m_Models[name];
+}
+
+std::shared_ptr<ModelData> ResourceManager::GetModel(const std::string& name)
+{
+    return m_Models[name];
+}
+
 void ResourceManager::UnloadAll()
 {
     m_Shaders.clear();
     m_Meshes.clear();
     m_Materials.clear();
     m_Textures.clear();
+    m_Models.clear();
 
     m_LastMaterialID = 0;
 }

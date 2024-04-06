@@ -9,11 +9,11 @@
 
 class LegacyShader;
 
-class Model
+class LegacyModel
 {
 public:
 
-    Model(const std::string& path);
+    LegacyModel(const std::string& path);
 
     void Draw(LegacyShader& shader);
 

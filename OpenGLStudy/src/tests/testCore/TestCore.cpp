@@ -10,6 +10,7 @@
 #include "core/Basics/Components/DirectionalLightComponent.h"
 #include "core/Basics/Objects/PointLight.h"
 #include "core/Basics/Components/SpotLightComponent.h"
+#include "core/Basics/Objects/Model.h"
 #include "core/Rendering/Material.h"
 
 namespace tests
@@ -39,8 +40,8 @@ namespace tests
 
         std::shared_ptr<Material> defaultMaterial = ResourceManager::GetMaterial(ResourceManager::DEFAULT_MATERIAL_NAME);
         defaultMaterial->SetColor("u_Color", glm::vec4(0.f)); // When using a texture, we need to set default color to black
-        defaultMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Container_Diff.png", "Container_Diffuse", false), 0);
-        defaultMaterial->SetTexture("u_Specular", ResourceManager::LoadTexture("res/textures/Container_Spec.png", "Container_Specular", false), 1);
+        defaultMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Container_Diff.png", "Container_Diffuse", false, true), 0);
+        defaultMaterial->SetTexture("u_Specular", ResourceManager::LoadTexture("res/textures/Container_Spec.png", "Container_Specular", false, true), 1);
 
         auto cube = m_World->Spawn<Cube>(glm::vec3(0.f, 5.f, 0.f));
         auto anotherMaterial = ResourceManager::CreateMaterial("AnotherMaterial", ResourceManager::DEFAULT_SHADER_NAME);
@@ -48,6 +49,19 @@ namespace tests
         anotherMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/FancyPigeon.png", "Pigeon", false, true), 0);
         cube->SetMaterial(anotherMaterial);
 
+        auto bridgeMaterial = ResourceManager::CreateMaterial("M_Bridge", ResourceManager::DEFAULT_SHADER_NAME);
+        bridgeMaterial->SetColor("u_Color", glm::vec4(0.f));
+        bridgeMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Atlas04_Diff.png", "T_Bridge_Diffuse", false), 0);
+        auto bridgeModel = ResourceManager::LoadModel("res/models/Bridge.fbx", "Bridge");
+
+        auto bridge = m_World->Spawn<Model>(glm::vec3(0.f, 0.f, -20.f));
+        bridge->Setup(bridgeModel, bridgeMaterial);
+
+        SpawnLights(*camera);
+    }
+
+    void TestCore::SpawnLights(GameObject& camera)
+    {
         for(int x = 0; x < 4; x++)
         {
             for(int z = 0; z < 4; z++)
@@ -73,7 +87,7 @@ namespace tests
         pointLight->SetColor(glm::vec3(1.f, 0.f, 0.f));
         pointLight->SetRange(60.f);
 
-        auto spotLightComponent = camera->AddComponent<SpotLightComponent>();
+        auto spotLightComponent = camera.AddComponent<SpotLightComponent>();
         spotLightComponent->SetRange(100.f);
     }
 

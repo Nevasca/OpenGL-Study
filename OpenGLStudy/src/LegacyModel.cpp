@@ -1,4 +1,4 @@
-#include "Model.h"
+#include "LegacyModel.h"
 
 #include <iostream>
 #include <memory>
@@ -6,12 +6,12 @@
 
 #include "LegacyTexture.h"
 
-Model::Model(const std::string& path)
+LegacyModel::LegacyModel(const std::string& path)
 {
     LoadModel(path);
 }
 
-void Model::Draw(LegacyShader& shader)
+void LegacyModel::Draw(LegacyShader& shader)
 {
     for(const std::unique_ptr<LegacyMesh>& mesh : m_Meshes)
     {
@@ -21,7 +21,7 @@ void Model::Draw(LegacyShader& shader)
 
 // Note that some versions of Assimp tend to load models quite slow on debug mode
 // try setting as release to proper testing
-void Model::LoadModel(const std::string& path)
+void LegacyModel::LoadModel(const std::string& path)
 {
     Assimp::Importer importer;
 
@@ -44,7 +44,7 @@ void Model::LoadModel(const std::string& path)
 }
 
 // Recursively process node and children nodes
-void Model::ProcessNode(aiNode* node, const aiScene* scene)
+void LegacyModel::ProcessNode(aiNode* node, const aiScene* scene)
 {
     // Process all the node's meshes if any
     for(unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -65,7 +65,7 @@ void Model::ProcessNode(aiNode* node, const aiScene* scene)
     // this example doesn't use this, but it's nice to keep this approach for that
 }
 
-std::unique_ptr<LegacyMesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+std::unique_ptr<LegacyMesh> LegacyModel::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 {
     std::vector<LegacyVertex> vertices{};
     std::vector<unsigned int> indices{};
@@ -131,7 +131,7 @@ std::unique_ptr<LegacyMesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scen
     return std::make_unique<LegacyMesh>(vertices, indices, textures);
 }
 
-std::vector<std::shared_ptr<LegacyTexture>> Model::LoadMaterialTextures(aiMaterial* material, aiTextureType type, const std::string& typeName)
+std::vector<std::shared_ptr<LegacyTexture>> LegacyModel::LoadMaterialTextures(aiMaterial* material, aiTextureType type, const std::string& typeName)
 {
     std::vector<std::shared_ptr<LegacyTexture>> textures;
     

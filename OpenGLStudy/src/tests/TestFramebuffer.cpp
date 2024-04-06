@@ -5,7 +5,7 @@
 #include "LegacyCamera.h"
 #include "Core.h"
 #include "LegacyFlyCameraController.h"
-#include "Model.h"
+#include "LegacyModel.h"
 #include "LegacyShader.h"
 #include "imgui/imgui.h"
 
@@ -153,7 +153,7 @@ namespace tests
         m_ModelShader = std::make_unique<LegacyShader>("res/shaders/BasicGray.glsl");
         m_ModelShader->Bind();
 
-        m_Model = std::make_unique<Model>(m_ModelFilePath);
+        m_Model = std::make_unique<LegacyModel>(m_ModelFilePath);
     }
 
     void TestFramebuffer::CreateScreenQuad()

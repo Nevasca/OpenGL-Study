@@ -9,7 +9,7 @@
 class LegacyShader;
 class LegacyFlyCameraController;
 class LegacyCamera;
-class Model;
+class LegacyModel;
 
 namespace tests
 {
@@ -27,7 +27,7 @@ namespace tests
 
     private:
 
-        std::unique_ptr<Model> m_Model{};
+        std::unique_ptr<LegacyModel> m_Model{};
         std::string m_ModelFilePath{"res/models/Bridge.fbx"};
         std::unique_ptr<LegacyShader> m_Shader;
         glm::mat4 m_MVP;

@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 
+class ModelData;
 class Texture;
 class Material;
 class Mesh;
@@ -28,6 +29,8 @@ public:
 
     //TODO: implement loading custom mesh/model
     static std::shared_ptr<Mesh> GetMesh(const std::string& name);
+    static std::shared_ptr<ModelData> LoadModel(const std::string& filePath, const std::string& name);
+    static std::shared_ptr<ModelData> GetModel(const std::string& name);
     
     static void UnloadAll();
 
@@ -37,6 +40,8 @@ private:
     static std::unordered_map<std::string, std::shared_ptr<Mesh>> m_Meshes;
     static std::unordered_map<std::string, std::shared_ptr<Material>> m_Materials;
     static std::unordered_map<std::string, std::shared_ptr<Texture>> m_Textures;
+    static std::unordered_map<std::string, std::shared_ptr<ModelData>> m_Models;
+    
     static unsigned int m_LastMaterialID;
 
     ResourceManager() = default;

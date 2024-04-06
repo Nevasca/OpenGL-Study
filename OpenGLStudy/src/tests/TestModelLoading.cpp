@@ -4,7 +4,7 @@
 
 #include "LegacyCamera.h"
 #include "LegacyFlyCameraController.h"
-#include "Model.h"
+#include "LegacyModel.h"
 #include "LegacyShader.h"
 #include "glm/ext/matrix_transform.hpp"
 #include "imgui/imgui.h"
@@ -73,6 +73,6 @@ namespace tests
     void TestModelLoading::LoadModel()
     {
         m_Model.reset();
-        m_Model = std::make_unique<Model>(m_ModelFilePath);
+        m_Model = std::make_unique<LegacyModel>(m_ModelFilePath);
     }
 }

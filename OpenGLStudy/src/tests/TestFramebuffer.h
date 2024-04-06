@@ -10,7 +10,7 @@ class LegacyMesh;
 class LegacyFlyCameraController;
 class LegacyCamera;
 class LegacyShader;
-class Model;
+class LegacyModel;
 
 namespace tests
 {
@@ -34,7 +34,7 @@ namespace tests
         unsigned int m_TextureColorBuffer; // texture object
         unsigned int m_RBO; // renderbuffer object
 
-        std::unique_ptr<Model> m_Model{};
+        std::unique_ptr<LegacyModel> m_Model{};
         std::string m_ModelFilePath{"res/models/Bridge.fbx"};
         std::unique_ptr<LegacyShader> m_ModelShader;
         glm::mat4 m_MVP;
