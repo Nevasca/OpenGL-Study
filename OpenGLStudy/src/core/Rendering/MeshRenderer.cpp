@@ -19,6 +19,8 @@ void MeshRenderer::Render(const Mesh& mesh, const Transform& transform, const Ma
     ibo.Bind();
 
     GLCall(glDrawElements(GL_TRIANGLES, ibo.GetCount(), GL_UNSIGNED_INT, nullptr));
+
+    material.Unbind();
 }
 
 void MeshRenderer::RenderInstanced(const Mesh& mesh, const Material& material, int amount) const
@@ -33,4 +35,6 @@ void MeshRenderer::RenderInstanced(const Mesh& mesh, const Material& material, i
 
     ibo.Unbind();
     mesh.GetVertexArray().Unbind();
+
+    material.Unbind();
 }

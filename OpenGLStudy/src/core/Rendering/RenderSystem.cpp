@@ -37,8 +37,13 @@ void RenderSystem::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshCo
 
     if(m_UniqueActiveShaders.find(shaderId) == m_UniqueActiveShaders.end())
     {
-        m_UniqueActiveShaders[shaderId] = meshShader;
+        ActiveShader activeShader{};
+        activeShader.Shader = meshShader;
+        
+        m_UniqueActiveShaders[shaderId] = activeShader;
     }
+
+    m_UniqueActiveShaders[shaderId].UsageCount++;
 
     const std::shared_ptr<Mesh>& mesh = meshComponent->GetMesh();
     VertexArray& vao = mesh->GetVertexArray();
@@ -59,6 +64,31 @@ void RenderSystem::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshCo
     }
 
     m_MeshComponents[vaoID][materialId].push_back(meshComponent);
+}
+
+void RenderSystem::RemoveMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
+{
+    assert(meshComponent->IsReadyToDraw());
+
+    const std::shared_ptr<Material>& meshMaterial = meshComponent->GetMaterial();
+    const unsigned int materialId = meshMaterial->GetId();
+    
+    const std::shared_ptr<Shader>& meshShader = meshMaterial->GetShader();
+    const unsigned int shaderId = meshShader->GetRendererID();
+
+    m_UniqueActiveShaders[shaderId].UsageCount--;
+
+    if(m_UniqueActiveShaders[shaderId].UsageCount <= 0)
+    {
+        m_UniqueActiveShaders.erase(shaderId);
+    }
+
+    const std::shared_ptr<Mesh>& mesh = meshComponent->GetMesh();
+    VertexArray& vao = mesh->GetVertexArray();
+    const unsigned int vaoID = vao.GetRendererID();
+
+    std::vector<std::shared_ptr<MeshComponent>>& components = m_MeshComponents[vaoID][materialId];
+    components.erase(std::remove(components.begin(), components.end(), meshComponent), components.end());
 }
 
 void RenderSystem::AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent)
@@ -138,7 +168,7 @@ void RenderSystem::UpdateGlobalShaderUniforms(const CameraComponent& activeCamer
 
     for(auto& activeShaderPair : m_UniqueActiveShaders)
     {
-        Shader& activeShader = *activeShaderPair.second;
+        Shader& activeShader = *activeShaderPair.second.Shader;
 
         activeShader.Bind();
         activeShader.SetUniformMat4f("u_Proj", proj);

@@ -44,6 +44,17 @@ std::shared_ptr<Shader> ResourceManager::GetShader(const std::string& name)
     return m_Shaders[name];
 }
 
+std::shared_ptr<Material> ResourceManager::CreateMaterial(const std::string& name, const std::string& shaderName)
+{
+    std::shared_ptr<Material> material = std::make_shared<Material>();
+    material->SetId(m_LastMaterialID++);
+    material->SetShader(m_Shaders[shaderName]);
+
+    m_Materials[name] = material;
+
+    return m_Materials[name];
+}
+
 std::shared_ptr<Material> ResourceManager::LoadMaterial(const std::string& name)
 {
     // TODO: implement loading from file

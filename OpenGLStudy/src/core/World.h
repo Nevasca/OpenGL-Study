@@ -20,10 +20,13 @@ public:
     void Render();
     void Shutdown();
     void AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
+    void RemoveMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
     void SetActiveCamera(const std::shared_ptr<CameraComponent>& camera);
     void AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent);
     void AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent);
     void AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent);
+
+    unsigned int GenerateUniqueId() { return m_LastUsedId++; }
 
     template <typename TObjectType, typename = std::enable_if_t<std::is_base_of_v<GameObject, TObjectType>>>
     std::shared_ptr<TObjectType> Spawn()
@@ -55,4 +58,5 @@ private:
     std::vector<std::shared_ptr<GameObject>> m_GameObjects{};
     std::unique_ptr<RenderSystem> m_RenderSystem{};
     std::shared_ptr<CameraComponent> m_ActiveCamera{};
+    unsigned int m_LastUsedId{0};
 };

@@ -5,6 +5,11 @@
 
 void MeshComponent::SetMesh(const std::shared_ptr<Mesh>& mesh)
 {
+    if(bIsAddedToWorld)
+    {
+        RemoveFromWorld();
+    }
+
     m_Mesh = mesh;
 
     if(IsReadyToDraw())
@@ -15,6 +20,11 @@ void MeshComponent::SetMesh(const std::shared_ptr<Mesh>& mesh)
 
 void MeshComponent::SetMaterial(const std::shared_ptr<Material>& material)
 {
+    if(bIsAddedToWorld)
+    {
+        RemoveFromWorld();
+    }
+
     m_Material = material;
 
     if(IsReadyToDraw())
@@ -34,4 +44,12 @@ void MeshComponent::AddToWorld()
     world.AddMeshComponent(GetThis());
 
     bIsAddedToWorld = true;
+}
+
+void MeshComponent::RemoveFromWorld()
+{
+    World& world = GetOwner().GetWorld();
+    world.RemoveMeshComponent(GetThis());
+
+    bIsAddedToWorld = false;
 }

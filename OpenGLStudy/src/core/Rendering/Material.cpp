@@ -45,5 +45,11 @@ void Material::Bind() const
 
 void Material::Unbind() const
 {
+    for(const auto& propertyPair : m_TextureProperties)
+    {
+        const MaterialTextureProperty& textureProperty = propertyPair.second;
+        textureProperty.Texture->Unbind(textureProperty.Slot);
+    }
+
     m_Shader->Unbind();
 }

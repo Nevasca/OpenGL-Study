@@ -1,10 +1,13 @@
 #include "Component.h"
 
 #include "GameObject.h"
+#include "core/World.h"
 
 Component::Component(GameObject& owner)
     : m_Owner(owner)
-{ }
+{
+    m_Id = m_Owner.GetWorld().GenerateUniqueId();
+}
 
 void Component::Initialize()
 { }

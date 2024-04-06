@@ -14,6 +14,12 @@ class MeshComponent;
 class Shader;
 class CameraComponent;
 
+struct ActiveShader
+{
+    std::shared_ptr<Shader> Shader{};
+    unsigned int UsageCount{0};
+};
+
 class RenderSystem
 {
 public:
@@ -22,6 +28,7 @@ public:
     void Shutdown();
 
     void AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
+    void RemoveMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
     void AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent);
     void AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent);
     void AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent);
@@ -35,7 +42,7 @@ private:
     LightingSystem m_LightingSystem{};
 
     std::map<unsigned int, std::map<unsigned int, std::vector<std::shared_ptr<MeshComponent>>>> m_MeshComponents{}; // keyed by VAO and material ID
-    std::map<unsigned int, std::shared_ptr<Shader>> m_UniqueActiveShaders{}; // keyed by shader id TODO: organize by material and mesh
+    std::map<unsigned int, ActiveShader> m_UniqueActiveShaders{}; // Keyed by shader id
 
     std::unique_ptr<InstancedArray> m_InstancedArray{};
 

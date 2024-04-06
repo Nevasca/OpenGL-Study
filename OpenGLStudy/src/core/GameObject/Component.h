@@ -42,6 +42,7 @@ public:
     
     GameObject& GetOwner() const { return m_Owner; }
     bool IsEnabled() const { return bIsEnabled; }
+    unsigned int GetId() const { return m_Id; }
 
 protected:
 
@@ -52,4 +53,5 @@ protected:
 private:
 
     GameObject& m_Owner;
+    unsigned int m_Id{0};
 };

@@ -40,10 +40,14 @@ namespace tests
 
         std::shared_ptr<Material> defaultMaterial = ResourceManager::GetMaterial(ResourceManager::DEFAULT_MATERIAL_NAME);
         // TODO: refactor texture to use ResourceManager
+        defaultMaterial->SetColor("u_Color", glm::vec4(0.f)); // When using a texture, we need to set default color to black
         defaultMaterial->SetTexture("u_Diffuse", std::make_shared<Texture>("res/textures/Container_Diff.png"), 0);
         defaultMaterial->SetTexture("u_Specular", std::make_shared<Texture>("res/textures/Container_Spec.png"), 1);
-        
-        defaultMaterial->SetColor("u_Color", glm::vec4(0.f)); // When using a texture, we need to set default color to black
+
+        auto cube = m_World->Spawn<Cube>(glm::vec3(0.f, 5.f, 0.f));
+        auto anotherMaterial = ResourceManager::CreateMaterial("AnotherMaterial", ResourceManager::DEFAULT_SHADER_NAME);
+        anotherMaterial->SetColor("u_Color", glm::vec4(0.3f));
+        cube->SetMaterial(anotherMaterial);
 
         for(int x = 0; x < 4; x++)
         {

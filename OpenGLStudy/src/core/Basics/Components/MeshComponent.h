@@ -25,4 +25,5 @@ private:
     bool bIsAddedToWorld{false};
 
     void AddToWorld();
+    void RemoveFromWorld();
 };

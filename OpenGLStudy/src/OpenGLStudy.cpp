@@ -82,10 +82,15 @@ int main(void)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    constexpr int INITIAL_WIDTH = 960;
-    constexpr int INITIAL_HEIGHT = 540;
+    constexpr int INITIAL_WIDTH = 1280;
+    constexpr int INITIAL_HEIGHT = 720;
+
+    // const GLFWvidmode* vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor()); 
+    // const int INITIAL_WIDTH = vidMode->width;
+    // const int INITIAL_HEIGHT = vidMode->height;
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(INITIAL_WIDTH, INITIAL_HEIGHT, "OpenGL Study", NULL, NULL);
+    // window = glfwCreateWindow(INITIAL_WIDTH, INITIAL_HEIGHT, "OpenGL Study", glfwGetPrimaryMonitor(), NULL); // if we want to create fullscreen
     if (!window)
     {
         glfwTerminate();

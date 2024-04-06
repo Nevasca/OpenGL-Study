@@ -45,6 +45,11 @@ void World::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent
     m_RenderSystem->AddMeshComponent(meshComponent);
 }
 
+void World::RemoveMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
+{
+    m_RenderSystem->RemoveMeshComponent(meshComponent);
+}
+
 void World::SetActiveCamera(const std::shared_ptr<CameraComponent>& camera)
 {
     m_ActiveCamera = camera;
