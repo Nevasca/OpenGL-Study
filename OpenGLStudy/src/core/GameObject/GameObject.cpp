@@ -1,11 +1,15 @@
 #include "GameObject.h"
 
+#include "core/World.h"
+
 GameObject::GameObject(World& world)
     : m_World(world)
 { }
 
 void GameObject::Initialize()
-{ }
+{
+    m_Id = m_World.GenerateUniqueId();
+}
 
 void GameObject::Start()
 { }

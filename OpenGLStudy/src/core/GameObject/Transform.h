@@ -13,6 +13,8 @@ public:
     void SetPosition(const glm::vec3& position);
     void SetRotation(const glm::vec3& eulerRotation);
     void SetScale(const glm::vec3& scale);
+    void SetPositionRotationScale(const glm::vec3& position, const glm::vec3& eulerRotation, const glm::vec3& scale);
+
     glm::vec3 GetPosition() const { return m_Position; }
     glm::vec3 GetRotation() const { return m_Rotation; }
     glm::vec3 GetScale() const { return m_Scale; }

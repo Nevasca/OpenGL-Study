@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "Transform.h"
@@ -27,13 +28,16 @@ public:
     void SetRotation(const glm::vec3& eulerRotation);
     void SetScale(const glm::vec3& scale);
 
+    std::string GetName() const { return m_Name; }
+    void SetName(const std::string& name) { m_Name = name; }
+    unsigned int GetId() const { return m_Id; }
+
     glm::vec3 GetPosition() const { return m_Transform.GetPosition(); }
     glm::vec3 GetRotation() const { return m_Transform.GetRotation(); }
     glm::vec3 GetScale() const { return m_Transform.GetScale(); }
     Transform& GetTransform() { return m_Transform; }
 
     bool IsPendingDestroy() const { return b_IsPendingDestroy; }
-
     World& GetWorld() const { return m_World; }
 
     // Only accepts components based on the Component class
@@ -79,4 +83,6 @@ private:
 
     bool b_IsPendingDestroy{false};
     World& m_World;
+    std::string m_Name{};
+    unsigned int m_Id{0};
 };

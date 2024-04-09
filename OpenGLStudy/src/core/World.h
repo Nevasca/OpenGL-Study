@@ -27,6 +27,8 @@ public:
     void AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent);
 
     unsigned int GenerateUniqueId() { return m_LastUsedId++; }
+    std::vector<std::shared_ptr<GameObject>>& GetAllGameObjects() { return m_GameObjects; }
+    std::shared_ptr<GameObject> GetGameObjectAt(const int index) const { return m_GameObjects[index]; }
 
     template <typename TObjectType, typename = std::enable_if_t<std::is_base_of_v<GameObject, TObjectType>>>
     std::shared_ptr<TObjectType> Spawn()

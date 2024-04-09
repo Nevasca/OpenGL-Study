@@ -24,6 +24,15 @@ void Transform::SetScale(const glm::vec3& scale)
     bIsDirty = true;
 }
 
+void Transform::SetPositionRotationScale(const glm::vec3& position, const glm::vec3& eulerRotation, const glm::vec3& scale)
+{
+    m_Position = position;
+    m_Rotation = eulerRotation;
+    m_Scale = scale;
+
+    bIsDirty = true;
+}
+
 glm::vec3 Transform::GetForwardVector() const
 {
     glm::quat rotationQuat = glm::quat(glm::radians(m_Rotation));

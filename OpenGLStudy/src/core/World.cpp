@@ -73,6 +73,7 @@ void World::AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightCom
 void World::InitializeGameObject(const std::shared_ptr<GameObject>& gameObject) const
 {
     gameObject->Initialize();
+    gameObject->SetName("GameObject" + std::to_string(gameObject->GetId()));
     gameObject->Start();
 }
 
@@ -83,5 +84,6 @@ void World::InitializeGameObject(const std::shared_ptr<GameObject>& gameObject, 
     gameObject->SetScale(scale);
 
     gameObject->Initialize();
+    gameObject->SetName("GameObject" + std::to_string(gameObject->GetId()));
     gameObject->Start();
 }
