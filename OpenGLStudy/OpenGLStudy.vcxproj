@@ -203,6 +203,7 @@
     <ClCompile Include="src\core\Resources\TextureResource.cpp" />
     <ClCompile Include="src\editor\EngineEditor.cpp" />
     <ClCompile Include="src\editor\GameObjectInspector.cpp" />
+    <ClCompile Include="src\editor\inspectors\DirectionalLightComponentInspector.cpp" />
     <ClCompile Include="src\editor\WorldHierarchy.cpp" />
     <ClCompile Include="src\LegacyCamera.cpp" />
     <ClCompile Include="src\Core.cpp" />
@@ -324,8 +325,10 @@
     <ClInclude Include="src\core\Resources\MeshResource.h" />
     <ClInclude Include="src\core\Resources\ShaderResource.h" />
     <ClInclude Include="src\core\Resources\TextureResource.h" />
+    <ClInclude Include="src\editor\IComponentInspector.h" />
     <ClInclude Include="src\editor\EngineEditor.h" />
     <ClInclude Include="src\editor\GameObjectInspector.h" />
+    <ClInclude Include="src\editor\inspectors\DirectionalLightComponentInspector.h" />
     <ClInclude Include="src\editor\WorldHierarchy.h" />
     <ClInclude Include="src\LegacyCamera.h" />
     <ClInclude Include="src\Core.h" />

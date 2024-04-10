@@ -2,14 +2,28 @@
 
 #include "core/GameObject/GameObject.h"
 #include "core/GameObject/Transform.h"
+#include "core/GameObject/Component.h"
 #include <imgui/imgui.h>
+
+#include "inspectors/DirectionalLightComponentInspector.h"
 
 namespace Editor
 {
+    GameObjectInspector::GameObjectInspector()
+    {
+        RegisterComponentInspectors();
+    }
+
     void GameObjectInspector::RenderGUI(GameObject& gameObject)
     {
-        ImGui::Text("%s", gameObject.GetName().c_str());
+        ImGui::SeparatorText(gameObject.GetName().c_str());
 
+        RenderTransformGUI(gameObject);
+        RenderComponentsGUI(gameObject);
+    }
+
+    void GameObjectInspector::RenderTransformGUI(GameObject& gameObject)
+    {
         Transform& transform = gameObject.GetTransform();
 
         glm::vec3 position = transform.GetPosition();
@@ -21,5 +35,36 @@ namespace Editor
         ImGui::DragFloat3("Scale", &scale.x);
 
         transform.SetPositionRotationScale(position, rotation, scale);
+    }
+
+    void GameObjectInspector::RenderComponentsGUI(GameObject& gameObject)
+    {
+        ImGui::SeparatorText("Components");
+
+        std::vector<std::shared_ptr<Component>> components = gameObject.GetComponents();
+
+        for(int i = 0; i < static_cast<int>(components.size()); i++)
+        {
+            std::string componentLabel = components[i]->GetName() + std::to_string(i);
+
+            if(!ImGui::CollapsingHeader(componentLabel.c_str()))
+            {
+                continue;
+            }
+
+            int componentHash = components[i]->GetHash();
+
+            if(m_ComponentInspectorMapping.find(componentHash) != m_ComponentInspectorMapping.end())
+            {
+                m_ComponentInspectorMapping[componentHash]->RenderGUI(components[i]);
+            }
+        }
+    }
+
+    void GameObjectInspector::RegisterComponentInspectors()
+    {
+        using namespace Inspector;
+
+        m_ComponentInspectorMapping[DirectionalLightComponentInspector::GetComponentHash()] = std::make_unique<DirectionalLightComponentInspector>();
     }
 }
