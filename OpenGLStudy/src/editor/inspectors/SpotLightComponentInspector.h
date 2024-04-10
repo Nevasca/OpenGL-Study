@@ -5,9 +5,10 @@ namespace Editor
 {
     namespace Inspector
     {
-        class DirectionalLightComponentInspector : public IComponentInspector
+        class SpotLightComponentInspector : public IComponentInspector
         {
         public:
+
             void RenderGUI(const std::shared_ptr<Component>& component) override;
 
             static int GetComponentHash();

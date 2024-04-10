@@ -6,6 +6,8 @@
 #include <imgui/imgui.h>
 
 #include "inspectors/DirectionalLightComponentInspector.h"
+#include "inspectors/PointLightComponentInspector.h"
+#include "inspectors/SpotLightComponentInspector.h"
 
 namespace Editor
 {
@@ -66,5 +68,7 @@ namespace Editor
         using namespace Inspector;
 
         m_ComponentInspectorMapping[DirectionalLightComponentInspector::GetComponentHash()] = std::make_unique<DirectionalLightComponentInspector>();
+        m_ComponentInspectorMapping[PointLightComponentInspector::GetComponentHash()] = std::make_unique<PointLightComponentInspector>();
+        m_ComponentInspectorMapping[SpotLightComponentInspector::GetComponentHash()] = std::make_unique<SpotLightComponentInspector>();
     }
 }

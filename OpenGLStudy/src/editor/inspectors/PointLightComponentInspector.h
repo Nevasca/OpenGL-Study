@@ -1,11 +1,12 @@
 #pragma once
+
 #include "editor/IComponentInspector.h"
 
 namespace Editor
 {
     namespace Inspector
     {
-        class DirectionalLightComponentInspector : public IComponentInspector
+        class PointLightComponentInspector : public IComponentInspector
         {
         public:
             void RenderGUI(const std::shared_ptr<Component>& component) override;

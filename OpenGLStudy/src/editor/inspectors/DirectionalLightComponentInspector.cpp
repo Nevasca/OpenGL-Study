@@ -2,7 +2,8 @@
 
 #include <cassert>
 
-#include "imgui/imgui.h"
+#include "core/Basics/Components/DirectionalLightComponent.h"
+#include <imgui/imgui.h>
 
 namespace Editor
 {
@@ -22,6 +23,11 @@ namespace Editor
             
             directionalLight->SetColor(color);
             directionalLight->SetIntensity(intensity);
+        }
+
+        int DirectionalLightComponentInspector::GetComponentHash()
+        {
+            return DirectionalLightComponent::GetClassHash();
         }
     }
 }

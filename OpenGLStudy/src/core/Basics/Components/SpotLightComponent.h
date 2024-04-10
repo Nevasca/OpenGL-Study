@@ -13,6 +13,7 @@ public:
     glm::vec3 GetPosition() const;
     void SetRange(float range);
 
+    float GetRange() const { return m_Range; }
     void SetColor(const glm::vec3& color) { m_Color = color; }
     glm::vec3 GetColor() const { return m_Color; }
     void SetIntensity(float intensity) { m_Intensity = intensity; }
