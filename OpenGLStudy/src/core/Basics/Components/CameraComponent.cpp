@@ -29,7 +29,7 @@ glm::mat4 CameraComponent::GetProjectionMatrix() const
     return glm::perspective(glm::radians(m_Fov), aspect, m_NearPlane, m_FarPlane);
 }
 
-void CameraComponent::SetFov(float fov)
+void CameraComponent::SetFov(const float fov)
 {
     m_Fov = fov;
 }

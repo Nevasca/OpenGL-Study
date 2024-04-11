@@ -14,8 +14,12 @@ public:
 
     glm::mat4 GetViewMatrix() const;
     glm::mat4 GetProjectionMatrix() const;
-    void SetFov(float fov);
+    void SetFov(const float fov);
     float GetFov() const { return m_Fov; }
+    void SetNearPlane(const float nearPlane) { m_NearPlane = nearPlane; }
+    float GetNearPlane() const { return m_NearPlane; }
+    void SetFarPlane(const float farPlane) { m_FarPlane = farPlane; }
+    float GetFarPlane() const { return m_FarPlane; }
 
 private:
 

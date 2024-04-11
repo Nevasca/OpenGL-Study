@@ -5,7 +5,9 @@
 #include "core/GameObject/Component.h"
 #include <imgui/imgui.h>
 
+#include "inspectors/CameraComponentInspector.h"
 #include "inspectors/DirectionalLightComponentInspector.h"
+#include "inspectors/PilotComponentInspector.h"
 #include "inspectors/PointLightComponentInspector.h"
 #include "inspectors/SpotLightComponentInspector.h"
 
@@ -49,7 +51,7 @@ namespace Editor
         {
             std::string componentLabel = components[i]->GetName() + std::to_string(i);
 
-            if(!ImGui::CollapsingHeader(componentLabel.c_str()))
+            if(!ImGui::CollapsingHeader(componentLabel.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
             {
                 continue;
             }
@@ -70,5 +72,7 @@ namespace Editor
         m_ComponentInspectorMapping[DirectionalLightComponentInspector::GetComponentHash()] = std::make_unique<DirectionalLightComponentInspector>();
         m_ComponentInspectorMapping[PointLightComponentInspector::GetComponentHash()] = std::make_unique<PointLightComponentInspector>();
         m_ComponentInspectorMapping[SpotLightComponentInspector::GetComponentHash()] = std::make_unique<SpotLightComponentInspector>();
+        m_ComponentInspectorMapping[CameraComponentInspector::GetComponentHash()] = std::make_unique<CameraComponentInspector>();
+        m_ComponentInspectorMapping[PilotComponentInspector::GetComponentHash()] = std::make_unique<PilotComponentInspector>();
     }
 }

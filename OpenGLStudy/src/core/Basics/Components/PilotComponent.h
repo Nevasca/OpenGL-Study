@@ -14,6 +14,12 @@ public:
 
     void SetClampPitchEnabled(const bool bEnabled) { m_ClampPitchEnabled = bEnabled; }
     void SetClampYawEnabled(const bool bEnabled) { m_ClampYawEnabled = bEnabled; }
+    void SetBaseSpeed(const float baseSpeed) { m_BaseSpeed = baseSpeed; }
+    float GetBaseSpeed() const { return m_BaseSpeed; }
+    void SetFastSpeedMultiplier(const float multiplier) { m_FastSpeedMultiplier = multiplier; }
+    float GetFastSpeedMultiplier() const { return m_FastSpeedMultiplier; }
+    void SetBaseSensitivity(const float baseSensitivity) { m_BaseSensitivity = baseSensitivity; }
+    float GetBaseSensitivity() const { return m_BaseSensitivity; }
 
 private:
 
