@@ -10,8 +10,6 @@ namespace Editor
 {
     void WorldHierarchy::RenderGUI(World& world)
     {
-        ImGui::Begin("Hierarchy");
-
         std::vector<std::shared_ptr<GameObject>>& gameObjects = world.GetAllGameObjects();
 
         for(int i = 0; i < static_cast<int>(gameObjects.size()); i++)
@@ -30,7 +28,5 @@ namespace Editor
                 m_SelectedIndex = i;
             }
         }
-        
-        ImGui::End();
     }
 }

@@ -17,5 +17,9 @@ namespace Editor
 
         WorldHierarchy m_Hierarchy{};
         GameObjectInspector m_GameObjectInspector{};
+        float m_MainPanelWidth{350.f};
+
+        void RenderHierarchyTabItem(World& world);
+        void RenderInspectorTabItem(World& world);
     };
 }
