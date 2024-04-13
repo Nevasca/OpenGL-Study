@@ -87,15 +87,16 @@ int main(void)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
-    constexpr int INITIAL_WIDTH = 1280;
-    constexpr int INITIAL_HEIGHT = 720;
+    int windowWidth = 1280;
+    int windowHeight = 720;
 
     // const GLFWvidmode* vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor()); 
     // const int INITIAL_WIDTH = vidMode->width;
     // const int INITIAL_HEIGHT = vidMode->height;
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(INITIAL_WIDTH, INITIAL_HEIGHT, "OpenGL Study", NULL, NULL);
+    window = glfwCreateWindow(windowWidth, windowHeight, "OpenGL Study", NULL, NULL);
     // window = glfwCreateWindow(INITIAL_WIDTH, INITIAL_HEIGHT, "OpenGL Study", glfwGetPrimaryMonitor(), NULL); // if we want to create fullscreen
     if (!window)
     {
@@ -107,8 +108,10 @@ int main(void)
     glfwMakeContextCurrent(window);
     glfwSwapInterval(0); // Synchronize with VSync (0 - disabled, 1 - enabled)
     Application::SetCurrentWindow(window);
-    glViewport(0, 0, INITIAL_WIDTH, INITIAL_HEIGHT);
-    Screen::SetSize(INITIAL_WIDTH, INITIAL_HEIGHT);
+
+    glfwGetWindowSize(window, &windowWidth, &windowHeight);
+    glViewport(0, 0, windowWidth, windowHeight);
+    Screen::SetSize(windowWidth, windowHeight);
     
     glfwSetFramebufferSizeCallback(window, HandleWindowResized); // Add callback for window resized
 
@@ -152,7 +155,7 @@ int main(void)
 
         CreateTests();
 
-        // testMenu->OpenTest("Breakout Game");
+        testMenu->OpenTest("Core");
 
         float lastFrameTime = 0.f;
         
