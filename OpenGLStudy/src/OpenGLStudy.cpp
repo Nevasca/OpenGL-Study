@@ -36,8 +36,14 @@ namespace
 void HandleWindowResized(GLFWwindow* Window, int Width, int Height)
 {
     std::cout << "Window has been resized to (" << Width << ", " << Height << ")\n";
+
+    // Don't update viewport size if window has been minimized
+    // it causes an assert on glm perspective matrix calculation
+    if(Width == 0 || Height == 0)
+    {
+        return;
+    }
     
-    // Update the Projection matrix here, or use glViewport(0, 0, Width, Height) if not using matrices
     glViewport(0, 0, Width, Height);
     Screen::SetSize(Width, Height);
 }
