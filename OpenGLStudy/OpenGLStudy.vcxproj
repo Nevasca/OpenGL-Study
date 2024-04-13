@@ -205,6 +205,7 @@
     <ClCompile Include="src\editor\GameObjectInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\CameraComponentInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\DirectionalLightComponentInspector.cpp" />
+    <ClCompile Include="src\editor\inspectors\MeshComponentInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\PilotComponentInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\PointLightComponentInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\SpotLightComponentInspector.cpp" />
@@ -334,6 +335,7 @@
     <ClInclude Include="src\editor\GameObjectInspector.h" />
     <ClInclude Include="src\editor\inspectors\CameraComponentInspector.h" />
     <ClInclude Include="src\editor\inspectors\DirectionalLightComponentInspector.h" />
+    <ClInclude Include="src\editor\inspectors\MeshComponentInspector.h" />
     <ClInclude Include="src\editor\inspectors\PilotComponentInspector.h" />
     <ClInclude Include="src\editor\inspectors\PointLightComponentInspector.h" />
     <ClInclude Include="src\editor\inspectors\SpotLightComponentInspector.h" />

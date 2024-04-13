@@ -49,7 +49,10 @@ void MeshResource::ProcessNode(aiNode* node, const aiScene* scene, ModelData& ou
     {
         // Nodes contains just an index of the mesh, scene is the one that holds the meshes data
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-        outModel.AddMesh(ProcessMesh(mesh, scene));
+        
+        std::shared_ptr<Mesh> processedMesh = ProcessMesh(mesh, scene);
+        processedMesh->SetName(node->mName.C_Str());
+        outModel.AddMesh(std::move(processedMesh));
     }
 
     // Then do the same for each of its children

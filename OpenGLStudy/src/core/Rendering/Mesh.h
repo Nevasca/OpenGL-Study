@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "glm/vec2.hpp"
@@ -26,10 +27,13 @@ public:
 
     VertexArray& GetVertexArray() const { return *m_VAO; }
     IndexBuffer& GetIndexBuffer() const { return *m_IBO; }
+    void SetName(const std::string& name) { m_Name = name; }
+    std::string GetName() const { return m_Name; }
 
 private:
 
     std::unique_ptr<VertexArray> m_VAO{};
     std::unique_ptr<VertexBuffer> m_VBO{};
     std::unique_ptr<IndexBuffer> m_IBO{};
+    std::string m_Name{};
 };

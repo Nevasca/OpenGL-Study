@@ -22,8 +22,7 @@ void ResourceManager::LoadDefaultResources()
 {
     std::shared_ptr<Shader> defaultShader = LoadShader("res/core/shaders/Default.glsl", DEFAULT_SHADER_NAME);
 
-    std::shared_ptr<Material> defaultMaterial = LoadMaterial(DEFAULT_MATERIAL_NAME);
-    defaultMaterial->SetShader(defaultShader);
+    std::shared_ptr<Material> defaultMaterial = CreateMaterial(DEFAULT_MATERIAL_NAME, DEFAULT_SHADER_NAME);
     defaultMaterial->SetColor("u_Color", glm::vec4(0.5f, 0.5f, 0.5f, 1.f));
 
     m_Meshes[DEFAULT_MESH_CUBE_NAME] = MeshResource::LoadCube();
@@ -53,17 +52,9 @@ std::shared_ptr<Material> ResourceManager::CreateMaterial(const std::string& nam
     std::shared_ptr<Material> material = std::make_shared<Material>();
     material->SetId(m_LastMaterialID++);
     material->SetShader(m_Shaders[shaderName]);
+    material->SetName(name);
 
     m_Materials[name] = material;
-
-    return m_Materials[name];
-}
-
-std::shared_ptr<Material> ResourceManager::LoadMaterial(const std::string& name)
-{
-    // TODO: implement loading from file
-    m_Materials[name] = std::make_shared<Material>();
-    m_Materials[name]->SetId(m_LastMaterialID++);
 
     return m_Materials[name];
 }

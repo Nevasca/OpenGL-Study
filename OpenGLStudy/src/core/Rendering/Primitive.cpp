@@ -73,5 +73,8 @@ std::shared_ptr<Mesh> Primitive::CreateCube()
     layout.PushFloat(3);
     layout.PushFloat(2);
 
-   return std::make_shared<Mesh>(vertices, sizeof(vertices), layout, indices);
+   std::shared_ptr<Mesh> cube = std::make_shared<Mesh>(vertices, sizeof(vertices), layout, indices);
+   cube->SetName("Cube");
+
+   return cube;
 }

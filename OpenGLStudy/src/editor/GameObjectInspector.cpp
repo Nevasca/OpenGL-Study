@@ -7,6 +7,7 @@
 
 #include "inspectors/CameraComponentInspector.h"
 #include "inspectors/DirectionalLightComponentInspector.h"
+#include "inspectors/MeshComponentInspector.h"
 #include "inspectors/PilotComponentInspector.h"
 #include "inspectors/PointLightComponentInspector.h"
 #include "inspectors/SpotLightComponentInspector.h"
@@ -74,5 +75,6 @@ namespace Editor
         m_ComponentInspectorMapping[SpotLightComponentInspector::GetComponentHash()] = std::make_unique<SpotLightComponentInspector>();
         m_ComponentInspectorMapping[CameraComponentInspector::GetComponentHash()] = std::make_unique<CameraComponentInspector>();
         m_ComponentInspectorMapping[PilotComponentInspector::GetComponentHash()] = std::make_unique<PilotComponentInspector>();
+        m_ComponentInspectorMapping[MeshComponentInspector::GetComponentHash()] = std::make_unique<MeshComponentInspector>();
     }
 }

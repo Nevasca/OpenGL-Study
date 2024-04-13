@@ -29,6 +29,8 @@ public:
     const std::shared_ptr<Shader>& GetShader() const { return m_Shader; }
     void SetId(unsigned int id) { m_Id = id; }
     unsigned int GetId() const { return m_Id; }
+    void SetName(const std::string& name) { m_Name = name; }
+    std::string GetName() const { return m_Name; }
 
 private:
 
@@ -36,4 +38,5 @@ private:
     std::map<std::string, glm::vec4> m_ColorProperties{};
     std::map<std::string, MaterialTextureProperty> m_TextureProperties{};
     unsigned int m_Id{0};
+    std::string m_Name{};
 };
