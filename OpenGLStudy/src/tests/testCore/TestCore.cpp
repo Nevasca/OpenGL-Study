@@ -30,8 +30,8 @@ namespace tests
         m_DummyObjectB = m_World->Spawn<DummyGameObject>(glm::vec3{10.f, 1.f, 2.f});
         m_DummyObjectB->SetName("DummyB");
 
-        glm::vec3 cameraInitialPosition(0.f, 0.f, 5.f);
-        glm::vec3 cameraInitialRotation(0.f, 180.f, 0.f);
+        glm::vec3 cameraInitialPosition(-12.f, 11.f, 12.f);
+        glm::vec3 cameraInitialRotation(29.f, 133.f, 0.f);
         std::shared_ptr<FlyingCamera> camera = m_World->Spawn<FlyingCamera>(cameraInitialPosition, cameraInitialRotation);
         camera->SetName("Camera");
 

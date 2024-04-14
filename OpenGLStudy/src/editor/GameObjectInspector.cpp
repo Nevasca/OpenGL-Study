@@ -5,12 +5,12 @@
 #include "core/GameObject/Component.h"
 #include <imgui/imgui.h>
 
-#include "inspectors/CameraComponentInspector.h"
-#include "inspectors/DirectionalLightComponentInspector.h"
-#include "inspectors/MeshComponentInspector.h"
-#include "inspectors/PilotComponentInspector.h"
-#include "inspectors/PointLightComponentInspector.h"
-#include "inspectors/SpotLightComponentInspector.h"
+#include "inspectors/components/CameraComponentInspector.h"
+#include "inspectors/components/DirectionalLightComponentInspector.h"
+#include "inspectors/components/MeshComponentInspector.h"
+#include "inspectors/components/PilotComponentInspector.h"
+#include "inspectors/components/PointLightComponentInspector.h"
+#include "inspectors/components/SpotLightComponentInspector.h"
 
 namespace Editor
 {

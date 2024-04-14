@@ -3,6 +3,8 @@
 #include <memory>
 
 #include "Rendering/Material.h"
+#include "Rendering/Shader.h"
+#include "Rendering/Texture.h"
 #include "Resources/MeshResource.h"
 #include "Resources/ShaderResource.h"
 #include "Resources/TextureResource.h"
@@ -37,9 +39,11 @@ std::shared_ptr<Shader> ResourceManager::LoadShader(const std::string& vertexSha
 
 std::shared_ptr<Shader> ResourceManager::LoadShader(const std::string& singleFileShaderPath, const std::string& name)
 {
-    m_Shaders[name] = ShaderResource::LoadShaderFromFile(singleFileShaderPath);
+    const std::shared_ptr<Shader> shader = ShaderResource::LoadShaderFromFile(singleFileShaderPath);
+    shader->SetName(name);
+    m_Shaders[name] = shader;
 
-    return m_Shaders[name];
+    return shader;
 }
 
 std::shared_ptr<Shader> ResourceManager::GetShader(const std::string& name)
@@ -56,7 +60,7 @@ std::shared_ptr<Material> ResourceManager::CreateMaterial(const std::string& nam
 
     m_Materials[name] = material;
 
-    return m_Materials[name];
+    return material;
 }
 
 std::shared_ptr<Material> ResourceManager::GetMaterial(const std::string& name)
@@ -64,11 +68,19 @@ std::shared_ptr<Material> ResourceManager::GetMaterial(const std::string& name)
     return m_Materials[name];
 }
 
+const std::unordered_map<std::string, std::shared_ptr<Material>>& ResourceManager::GetAllMaterials()
+{
+    return m_Materials;
+}
+
 std::shared_ptr<Texture> ResourceManager::LoadTexture(const std::string& filePath, const std::string& name, bool bUseAlpha, bool bFlipVertically)
 {
-    m_Textures[name] = TextureResource::LoadTextureFromFile(filePath, bUseAlpha, bFlipVertically);
+    std::shared_ptr<Texture> texture = TextureResource::LoadTextureFromFile(filePath, bUseAlpha, bFlipVertically);
+    texture->SetName(name);
+    
+    m_Textures[name] = texture; 
 
-    return m_Textures[name];
+    return texture;
 }
 
 std::shared_ptr<Texture> ResourceManager::GetTexture(const std::string& name)

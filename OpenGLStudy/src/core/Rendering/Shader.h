@@ -25,6 +25,8 @@ public:
     void SetUniformMat4f(const std::string& name, const glm::mat4& mat);
 
     unsigned int GetRendererID() const { return m_RendererID; }
+    void SetName(const std::string& name) { m_Name = name; }
+    std::string GetName() const { return m_Name; }
 
 private:
 
@@ -32,6 +34,7 @@ private:
     
     unsigned int m_RendererID{0};
     mutable std::unordered_map<std::string, int> m_UniformLocationCache{};
+    std::string m_Name{};
 
     unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader);
     unsigned int CompileShader(unsigned int type, const std::string& source);

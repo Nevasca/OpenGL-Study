@@ -16,6 +16,7 @@ std::shared_ptr<Texture> TextureResource::LoadTextureFromFile(const std::string&
     unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &channels, desiredChannels);
 
     std::shared_ptr<Texture> texture = std::make_shared<Texture>(data, width, height, bUseAlpha);
+    texture->SetIsFlippedOnLoad(bFlipVertically);
     
     if(data)
     {

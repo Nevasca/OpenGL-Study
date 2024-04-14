@@ -31,6 +31,8 @@ public:
     unsigned int GetId() const { return m_Id; }
     void SetName(const std::string& name) { m_Name = name; }
     std::string GetName() const { return m_Name; }
+    const std::map<std::string, glm::vec4>& GetAllColorProperties() const { return m_ColorProperties; }
+    const std::map<std::string, MaterialTextureProperty>& GetAllTextureProperties() const { return m_TextureProperties; }
 
 private:
 
