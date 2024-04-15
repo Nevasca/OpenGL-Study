@@ -3,7 +3,7 @@
 #include "legacy/LegacyIndexBuffer.h"
 #include "legacy/LegacyShader.h"
 #include "legacy/LegacyTexture.h"
-#include "GameTime.h"
+#include "core/GameTime.h"
 #include "legacy/Renderer.h"
 #include "legacy/LegacyVertexArray.h"
 #include "legacy/LegacyVertexBuffer.h"

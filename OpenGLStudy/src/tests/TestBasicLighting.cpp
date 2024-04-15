@@ -5,7 +5,7 @@
 
 #include <memory>
 
-#include "GameTime.h"
+#include "core/GameTime.h"
 #include "legacy/LegacyIndexBuffer.h"
 #include "legacy/Renderer.h"
 #include "legacy/LegacyShader.h"

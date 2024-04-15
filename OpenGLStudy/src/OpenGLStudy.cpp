@@ -4,7 +4,7 @@
 #include <fstream>
 
 #include "legacy/Renderer.h"
-#include "GameTime.h"
+#include "core/GameTime.h"
 #include "core/Application.h"
 #include "core/Input.h"
 #include "core/Screen.h"

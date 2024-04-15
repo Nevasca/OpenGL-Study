@@ -3,7 +3,7 @@
 
 #include "TestGameBreakout.h"
 
-#include "GameTime.h"
+#include "core/GameTime.h"
 
 namespace tests
 {

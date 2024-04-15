@@ -185,6 +185,7 @@
     <ClCompile Include="src\core\Basics\Objects\Model.cpp" />
     <ClCompile Include="src\core\Basics\Objects\PointLight.cpp" />
     <ClCompile Include="src\core\Basics\Objects\SpotLight.cpp" />
+    <ClCompile Include="src\core\GameTime.cpp" />
     <ClCompile Include="src\core\Rendering\IndexBuffer.cpp" />
     <ClCompile Include="src\core\Rendering\InstancedArray.cpp" />
     <ClCompile Include="src\core\Rendering\Light.cpp" />
@@ -259,7 +260,6 @@
     <ClCompile Include="src\tests\TestTextRendering.cpp" />
     <ClCompile Include="src\tests\TestTexture2D.cpp" />
     <ClCompile Include="src\tests\Test2DTransform.cpp" />
-    <ClCompile Include="src\GameTime.cpp" />
     <ClCompile Include="src\vendor\glm\detail\glm.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_demo.cpp" />
@@ -317,6 +317,7 @@
     <ClInclude Include="src\core\Basics\Objects\Model.h" />
     <ClInclude Include="src\core\Basics\Objects\PointLight.h" />
     <ClInclude Include="src\core\Basics\Objects\SpotLight.h" />
+    <ClInclude Include="src\core\GameTime.h" />
     <ClInclude Include="src\core\Rendering\IndexBuffer.h" />
     <ClInclude Include="src\core\Rendering\InstancedArray.h" />
     <ClInclude Include="src\core\Rendering\Light.h" />
@@ -392,7 +393,6 @@
     <ClInclude Include="src\tests\TestTextRendering.h" />
     <ClInclude Include="src\tests\TestTexture2D.h" />
     <ClInclude Include="src\tests\Test2DTransform.h" />
-    <ClInclude Include="src\GameTime.h" />
     <ClInclude Include="src\vendor\glm\common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_vector_relational.hpp" />
