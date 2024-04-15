@@ -1,4 +1,4 @@
-#include "Core.h"
+#include "OpenGLCore.h"
 #include <GLFW/glfw3.h>
 
 #include "TestGameBreakout.h"

@@ -1,6 +1,6 @@
 #include "VertexArray.h"
 
-#include "Core.h"
+#include "OpenGLCore.h"
 
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"

@@ -1,4 +1,4 @@
-#include "Core.h"
+#include "OpenGLCore.h"
 
 #include <iostream>
 

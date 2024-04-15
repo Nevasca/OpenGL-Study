@@ -1,6 +1,6 @@
 #include "VertexBufferLayout.h"
 
-#include "Core.h"
+#include "OpenGLCore.h"
 
 namespace Rendering
 {

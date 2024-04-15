@@ -1,6 +1,6 @@
 #include "LegacyIndexBuffer.h"
 
-#include "Core.h"
+#include "OpenGLCore.h"
 
 LegacyIndexBuffer::LegacyIndexBuffer(const unsigned int* Data, unsigned int Count)
     : m_Count(Count)

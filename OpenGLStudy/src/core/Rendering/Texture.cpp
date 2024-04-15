@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-#include "Core.h"
+#include "OpenGLCore.h"
 
 Texture::Texture(unsigned char* data, unsigned int width, unsigned int height, bool bUseAlpha)
     : m_Width(width), m_Height(height)

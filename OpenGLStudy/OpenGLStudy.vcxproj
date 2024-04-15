@@ -214,7 +214,7 @@
     <ClCompile Include="src\editor\inspectors\resources\MaterialInspector.cpp" />
     <ClCompile Include="src\editor\ResourceCollection.cpp" />
     <ClCompile Include="src\editor\WorldHierarchy.cpp" />
-    <ClCompile Include="src\Core.cpp" />
+    <ClCompile Include="src\OpenGLCore.cpp" />
     <ClCompile Include="src\core\Application.cpp" />
     <ClCompile Include="src\core\GameObject\Component.cpp" />
     <ClCompile Include="src\core\GameObject\GameObject.cpp" />
@@ -347,7 +347,7 @@
     <ClInclude Include="src\editor\inspectors\resources\MaterialInspector.h" />
     <ClInclude Include="src\editor\ResourceCollection.h" />
     <ClInclude Include="src\editor\WorldHierarchy.h" />
-    <ClInclude Include="src\Core.h" />
+    <ClInclude Include="src\OpenGLCore.h" />
     <ClInclude Include="src\core\Application.h" />
     <ClInclude Include="src\core\GameObject\Component.h" />
     <ClInclude Include="src\core\GameObject\GameObject.h" />

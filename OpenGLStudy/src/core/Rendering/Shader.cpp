@@ -1,6 +1,6 @@
 #include "Shader.h"
 
-#include "Core.h"
+#include "OpenGLCore.h"
 
 #include <iostream>
 #include <fstream>

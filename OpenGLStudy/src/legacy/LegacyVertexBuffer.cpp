@@ -1,6 +1,6 @@
 #include "LegacyVertexBuffer.h"
 
-#include "Core.h"
+#include "OpenGLCore.h"
 
 
 LegacyVertexBuffer::LegacyVertexBuffer(const void* Data, unsigned int Size, bool bIsDynamic)

@@ -1,6 +1,6 @@
 #include "MeshRenderer.h"
 
-#include "Core.h"
+#include "OpenGLCore.h"
 
 #include "IndexBuffer.h"
 #include "Material.h"

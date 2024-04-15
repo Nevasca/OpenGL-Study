@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "legacy/LegacyCamera.h"
-#include "Core.h"
+#include "OpenGLCore.h"
 #include "legacy/LegacyFlyCameraController.h"
 #include "legacy/LegacyModel.h"
 #include "legacy/LegacyShader.h"

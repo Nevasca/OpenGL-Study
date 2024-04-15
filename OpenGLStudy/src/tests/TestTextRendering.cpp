@@ -1,6 +1,6 @@
 #include "TestTextRendering.h"
 
-#include "Core.h"
+#include "OpenGLCore.h"
 
 #include <ft2build.h>
 #include <iostream>

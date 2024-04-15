@@ -1,6 +1,6 @@
 #include "LegacyTexture.h"
 
-#include "Core.h"
+#include "OpenGLCore.h"
 #include "stb_image/stb_image.h"
 
 LegacyTexture::LegacyTexture(const std::string& FilePath, bool bUseAlpha, bool bFlipVertically)
