@@ -196,6 +196,7 @@
     <ClCompile Include="src\core\Rendering\Shader.cpp" />
     <ClCompile Include="src\core\Rendering\Texture.cpp" />
     <ClCompile Include="src\core\Rendering\VertexArray.cpp" />
+    <ClCompile Include="src\core\Rendering\VertexBuffer.cpp" />
     <ClCompile Include="src\core\Rendering\VertexBufferLayout.cpp" />
     <ClCompile Include="src\core\ResourceManager.cpp" />
     <ClCompile Include="src\core\Resources\MeshResource.cpp" />
@@ -266,7 +267,7 @@
     <ClCompile Include="src\vendor\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\LegacyVertexArray.cpp" />
-    <ClCompile Include="src\VertexBuffer.cpp" />
+    <ClCompile Include="src\LegacyVertexBuffer.cpp" />
     <ClCompile Include="src\LegacyVertexBufferLayout.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -327,6 +328,7 @@
     <ClInclude Include="src\core\Rendering\Shader.h" />
     <ClInclude Include="src\core\Rendering\Texture.h" />
     <ClInclude Include="src\core\Rendering\VertexArray.h" />
+    <ClInclude Include="src\core\Rendering\VertexBuffer.h" />
     <ClInclude Include="src\core\Rendering\VertexBufferLayout.h" />
     <ClInclude Include="src\core\ResourceManager.h" />
     <ClInclude Include="src\core\Resources\MeshResource.h" />
@@ -824,7 +826,7 @@
     <ClInclude Include="src\vendor\imgui\imstb_truetype.h" />
     <ClInclude Include="src\vendor\stb_image\stb_image.h" />
     <ClInclude Include="src\LegacyVertexArray.h" />
-    <ClInclude Include="src\VertexBuffer.h" />
+    <ClInclude Include="src\LegacyVertexBuffer.h" />
     <ClInclude Include="src\LegacyVertexBufferLayout.h" />
   </ItemGroup>
   <ItemGroup>

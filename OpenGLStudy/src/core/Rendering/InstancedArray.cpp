@@ -1,8 +1,6 @@
 #include "InstancedArray.h"
 
-#include "Core.h"
 #include "VertexArray.h"
-#include <glm/glm.hpp>
 
 InstancedArray::InstancedArray(const void* data, unsigned size, bool bIsDynamic, VertexBufferLayout&& layout)
 {

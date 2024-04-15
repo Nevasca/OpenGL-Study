@@ -4,7 +4,7 @@
 #include "LegacyShader.h"
 #include "LegacyTexture.h"
 #include "LegacyVertexArray.h"
-#include "VertexBuffer.h"
+#include "LegacyVertexBuffer.h"
 #include "LegacyVertexBufferLayout.h"
 #include "glm/ext/matrix_transform.hpp"
 
@@ -24,7 +24,7 @@ namespace Breakout
             0.f, 0.f,  0.f, 0.f
         };
 
-        m_VBO = std::make_unique<VertexBuffer>(vertices, sizeof(vertices));
+        m_VBO = std::make_unique<LegacyVertexBuffer>(vertices, sizeof(vertices));
 
         LegacyVertexBufferLayout layout{};
         layout.Push<float>(2);

@@ -10,7 +10,7 @@
 class LegacyTexture;
 class LegacyShader;
 class LegacyIndexBuffer;
-class VertexBuffer;
+class LegacyVertexBuffer;
 class LegacyVertexArray;
 
 namespace tests
@@ -30,7 +30,7 @@ namespace tests
     private:
 
         std::unique_ptr<LegacyVertexArray> m_CubeVAO;
-        std::unique_ptr<VertexBuffer> m_CubeVBO;
+        std::unique_ptr<LegacyVertexBuffer> m_CubeVBO;
         std::unique_ptr<LegacyIndexBuffer> m_CubeIBO;
         std::unique_ptr<LegacyShader> m_CubeShader;
         std::unique_ptr<LegacyTexture> m_CubeTextureDiff;
@@ -38,7 +38,7 @@ namespace tests
         std::unique_ptr<LegacyTexture> m_CubeTextureEmission;
 
         std::unique_ptr<LegacyVertexArray> m_LightCubeVAO;
-        std::unique_ptr<VertexBuffer> m_LightCubeVBO;
+        std::unique_ptr<LegacyVertexBuffer> m_LightCubeVBO;
         std::unique_ptr<LegacyIndexBuffer> m_LightCubeIBO;
         std::unique_ptr<LegacyShader> m_LightCubeShader;
 

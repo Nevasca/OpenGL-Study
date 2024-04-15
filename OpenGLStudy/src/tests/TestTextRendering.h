@@ -10,7 +10,7 @@
 
 class LegacyShader;
 class LegacyIndexBuffer;
-class VertexBuffer;
+class LegacyVertexBuffer;
 class LegacyVertexArray;
 
 namespace tests
@@ -37,7 +37,7 @@ namespace tests
 
         std::map<char, Character> m_Characters;
         std::unique_ptr<LegacyVertexArray> m_VAO;
-        std::unique_ptr<VertexBuffer> m_VBO;
+        std::unique_ptr<LegacyVertexBuffer> m_VBO;
         std::unique_ptr<LegacyIndexBuffer> m_IBO;
         std::unique_ptr<LegacyShader> m_Shader;
         char m_Text[64] = "Hello World!";

@@ -1,6 +1,6 @@
 #include "LegacyVertexArray.h"
 
-#include "VertexBuffer.h"
+#include "LegacyVertexBuffer.h"
 #include "LegacyVertexBufferLayout.h"
 
 LegacyVertexArray::LegacyVertexArray()
@@ -13,7 +13,7 @@ LegacyVertexArray::~LegacyVertexArray()
     GLCall(glDeleteVertexArrays(1, &m_RendererID)); // Deletes the vertex array
 }
 
-void LegacyVertexArray::AddBuffer(const VertexBuffer& Buffer, const LegacyVertexBufferLayout& Layout)
+void LegacyVertexArray::AddBuffer(const LegacyVertexBuffer& Buffer, const LegacyVertexBufferLayout& Layout)
 {
     Bind();
     Buffer.Bind();

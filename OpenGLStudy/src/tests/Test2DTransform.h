@@ -7,7 +7,7 @@
 class LegacyTexture;
 class LegacyShader;
 class LegacyIndexBuffer;
-class VertexBuffer;
+class LegacyVertexBuffer;
 class LegacyVertexArray;
 
 namespace tests
@@ -25,7 +25,7 @@ namespace tests
     private:
 
         std::unique_ptr<LegacyVertexArray> m_VAO;
-        std::unique_ptr<VertexBuffer> m_VBO;
+        std::unique_ptr<LegacyVertexBuffer> m_VBO;
         std::unique_ptr<LegacyIndexBuffer> m_IBO;
         std::unique_ptr<LegacyShader> m_Shader;
         std::unique_ptr<LegacyTexture> m_Texture;

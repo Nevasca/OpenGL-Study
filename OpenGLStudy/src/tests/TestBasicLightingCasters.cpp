@@ -11,7 +11,7 @@
 #include "LegacyShader.h"
 #include "LegacyTexture.h"
 #include "LegacyVertexArray.h"
-#include "VertexBuffer.h"
+#include "LegacyVertexBuffer.h"
 #include "LegacyVertexBufferLayout.h"
 #include "glm/detail/type_quat.hpp"
 #include "glm/ext/matrix_transform.hpp"
@@ -98,7 +98,7 @@ namespace tests
             22, 23, 20
         };
 
-        m_CubeVBO = std::make_unique<VertexBuffer>(vertices, sizeof(vertices), false);
+        m_CubeVBO = std::make_unique<LegacyVertexBuffer>(vertices, sizeof(vertices), false);
 
         LegacyVertexBufferLayout layout{};
         layout.Push<float>(3);
@@ -210,7 +210,7 @@ namespace tests
             3, 0, 4
         };
 
-        m_LightCubeVBO = std::make_unique<VertexBuffer>(vertices, sizeof(vertices), false);
+        m_LightCubeVBO = std::make_unique<LegacyVertexBuffer>(vertices, sizeof(vertices), false);
 
         LegacyVertexBufferLayout layout{};
         layout.Push<float>(3);

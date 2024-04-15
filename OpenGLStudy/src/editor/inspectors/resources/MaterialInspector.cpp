@@ -35,9 +35,9 @@ namespace Editor
                 ImGui::ColorEdit3(colorName.c_str(), &inspectorColorProperties[colorName].r);
             }
 
-            for (const auto& editedColorPropertyPair : inspectorColorProperties)
+            for (const auto& inspectorColorPropertyPair : inspectorColorProperties)
             {
-                material.SetColor(editedColorPropertyPair.first, editedColorPropertyPair.second);
+                material.SetColor(inspectorColorPropertyPair.first, inspectorColorPropertyPair.second);
             }
         }
 

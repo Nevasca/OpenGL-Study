@@ -4,11 +4,11 @@
 /// with functions to bind it as current, unbind
 /// It also deletes the buffer when instance is destroyed
 
-class VertexBuffer
+class LegacyVertexBuffer
 {
 public:
-    VertexBuffer(const void* Data, unsigned int Size, bool bIsDynamic = false);
-    ~VertexBuffer();
+    LegacyVertexBuffer(const void* Data, unsigned int Size, bool bIsDynamic = false);
+    ~LegacyVertexBuffer();
 
     void Bind() const;
     void Unbind() const;

@@ -29,7 +29,7 @@ namespace tests
 
         m_VertexArray = std::make_unique<LegacyVertexArray>();
 
-        m_VertexBuffer = std::make_unique<VertexBuffer>(vertexData, 4 * 4 * sizeof(float));
+        m_VertexBuffer = std::make_unique<LegacyVertexBuffer>(vertexData, 4 * 4 * sizeof(float));
         LegacyVertexBufferLayout layout{};
         layout.Push<float>(2); // First 2 floats are positions
         layout.Push<float>(2); // Next 2 floats are UV (texture coordinates)

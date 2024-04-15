@@ -12,7 +12,7 @@ LegacyMesh::LegacyMesh(std::vector<LegacyVertex> vertices, std::vector<unsigned>
 {
     m_VAO = std::make_unique<LegacyVertexArray>();
 
-    m_VBO = std::make_unique<VertexBuffer>(vertices.data(), vertices.size() * sizeof(LegacyVertex));
+    m_VBO = std::make_unique<LegacyVertexBuffer>(vertices.data(), vertices.size() * sizeof(LegacyVertex));
 
     LegacyVertexBufferLayout layout{};
     layout.Push<float>(3);

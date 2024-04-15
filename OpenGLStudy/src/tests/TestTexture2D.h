@@ -6,7 +6,7 @@
 #include "Test.h"
 #include "LegacyTexture.h"
 #include "LegacyVertexArray.h"
-#include "VertexBuffer.h"
+#include "LegacyVertexBuffer.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
@@ -26,7 +26,7 @@ namespace tests
     private:
 
         std::unique_ptr<LegacyVertexArray> m_VertexArray;
-        std::unique_ptr<VertexBuffer> m_VertexBuffer;
+        std::unique_ptr<LegacyVertexBuffer> m_VertexBuffer;
         std::unique_ptr<LegacyIndexBuffer> m_IndexBuffer;
         std::unique_ptr<LegacyShader> m_Shader;
         std::unique_ptr<LegacyTexture> m_Texture;

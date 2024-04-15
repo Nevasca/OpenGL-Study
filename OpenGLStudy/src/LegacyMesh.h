@@ -6,7 +6,7 @@
 #include "glm/vec3.hpp"
 
 #include "LegacyIndexBuffer.h"
-#include "VertexBuffer.h"
+#include "LegacyVertexBuffer.h"
 #include "LegacyVertexArray.h"
 class Renderer;
 class LegacyShader;
@@ -29,7 +29,7 @@ public:
 private:
 
     std::unique_ptr<LegacyVertexArray> m_VAO;
-    std::unique_ptr<VertexBuffer> m_VBO;
+    std::unique_ptr<LegacyVertexBuffer> m_VBO;
     std::unique_ptr<LegacyIndexBuffer> m_IBO;
     std::vector<std::shared_ptr<LegacyTexture>> m_Textures;
 };

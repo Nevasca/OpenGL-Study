@@ -1,6 +1,6 @@
 #pragma once
 
-class VertexBuffer;
+class LegacyVertexBuffer;
 class LegacyVertexBufferLayout;
 
 class LegacyVertexArray
@@ -9,7 +9,7 @@ public:
     LegacyVertexArray();
     ~LegacyVertexArray();
 
-    void AddBuffer(const VertexBuffer& Buffer, const LegacyVertexBufferLayout& Layout);
+    void AddBuffer(const LegacyVertexBuffer& Buffer, const LegacyVertexBufferLayout& Layout);
     void Bind() const;
     void Unbind() const;
 

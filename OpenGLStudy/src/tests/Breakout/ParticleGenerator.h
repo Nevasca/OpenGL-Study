@@ -9,7 +9,7 @@
 #include "LegacyShader.h"
 #include "LegacyTexture.h"
 #include "LegacyVertexArray.h"
-#include "VertexBuffer.h"
+#include "LegacyVertexBuffer.h"
 
 namespace Breakout
 {
@@ -35,7 +35,7 @@ namespace Breakout
     private:
 
         std::unique_ptr<LegacyVertexArray> m_VAO;
-        std::unique_ptr<VertexBuffer> m_VBO;
+        std::unique_ptr<LegacyVertexBuffer> m_VBO;
         std::unique_ptr<LegacyIndexBuffer> m_IBO;
         std::shared_ptr<LegacyShader> m_Shader;
         std::shared_ptr<LegacyTexture> m_Texture;

@@ -1,9 +1,9 @@
-#include "VertexBuffer.h"
+#include "LegacyVertexBuffer.h"
 
 #include "Core.h"
 
 
-VertexBuffer::VertexBuffer(const void* Data, unsigned int Size, bool bIsDynamic)
+LegacyVertexBuffer::LegacyVertexBuffer(const void* Data, unsigned int Size, bool bIsDynamic)
 {
     GLCall(glGenBuffers(1, &m_RendererID)); // How many buffers to generate (1) and pointer to set the generated buffer id (&buffer)
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_RendererID)); // Select the buffer to use with how it`s going to be used
@@ -13,22 +13,22 @@ VertexBuffer::VertexBuffer(const void* Data, unsigned int Size, bool bIsDynamic)
     GLCall(glBufferData(GL_ARRAY_BUFFER, Size, Data, bIsDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW));
 }
 
-VertexBuffer::~VertexBuffer()
+LegacyVertexBuffer::~LegacyVertexBuffer()
 {
     GLCall(glDeleteBuffers(1, &m_RendererID)); // Deletes the buffer
 }
 
-void VertexBuffer::Bind() const
+void LegacyVertexBuffer::Bind() const
 {
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_RendererID)); // Select the buffer to use with how it`s going to be used
 }
 
-void VertexBuffer::Unbind() const
+void LegacyVertexBuffer::Unbind() const
 {
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0)); // Unbind by binding it to 0
 }
 
-void VertexBuffer::SetSubData(const void* Data, unsigned int Size) const
+void LegacyVertexBuffer::SetSubData(const void* Data, unsigned int Size) const
 {
     GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, Size, Data));
 }

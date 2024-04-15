@@ -11,7 +11,7 @@
 #include "LegacyShader.h"
 #include "LegacyTexture.h"
 #include "LegacyVertexArray.h"
-#include "VertexBuffer.h"
+#include "LegacyVertexBuffer.h"
 #include "LegacyVertexBufferLayout.h"
 #include "glm/detail/type_quat.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
@@ -88,7 +88,7 @@ namespace tests
             22, 23, 20
         };
 
-        m_VBO = std::make_unique<VertexBuffer>(vertices, sizeof(vertices), false);
+        m_VBO = std::make_unique<LegacyVertexBuffer>(vertices, sizeof(vertices), false);
 
         LegacyVertexBufferLayout layout{};
         layout.Push<float>(3);

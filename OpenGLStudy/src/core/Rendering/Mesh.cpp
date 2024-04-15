@@ -1,6 +1,5 @@
 #include "Mesh.h"
 
-#include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 
 Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned>& indices)
