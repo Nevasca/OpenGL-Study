@@ -2,7 +2,7 @@
 
 #include "BreakoutGameObject.h"
 
-#include "LegacyVertexBufferLayout.h"
+#include "legacy/LegacyVertexBufferLayout.h"
 
 namespace Breakout
 {

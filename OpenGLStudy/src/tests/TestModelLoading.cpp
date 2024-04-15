@@ -2,10 +2,10 @@
 
 #include <memory>
 
-#include "LegacyCamera.h"
-#include "LegacyFlyCameraController.h"
-#include "LegacyModel.h"
-#include "LegacyShader.h"
+#include "legacy/LegacyCamera.h"
+#include "legacy/LegacyFlyCameraController.h"
+#include "legacy/LegacyModel.h"
+#include "legacy/LegacyShader.h"
 #include "glm/ext/matrix_transform.hpp"
 #include "imgui/imgui.h"
 

@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <fstream>
 
-#include "Renderer.h"
+#include "legacy/Renderer.h"
 #include "GameTime.h"
 #include "core/Application.h"
 #include "core/Input.h"

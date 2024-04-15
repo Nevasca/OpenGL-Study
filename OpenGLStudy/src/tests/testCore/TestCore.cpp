@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "LegacyShader.h"
+#include "legacy/LegacyShader.h"
 #include "core/ResourceManager.h"
 #include "core/Basics/Objects/FlyingCamera.h"
 #include "core/Basics/Objects/Cube.h"

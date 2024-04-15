@@ -1,8 +1,8 @@
 #pragma once
 #include <memory>
 
-#include "LegacyCamera.h"
-#include "LegacyFlyCameraController.h"
+#include "legacy/LegacyCamera.h"
+#include "legacy/LegacyFlyCameraController.h"
 #include "Test.h"
 #include "glm/glm.hpp"
 

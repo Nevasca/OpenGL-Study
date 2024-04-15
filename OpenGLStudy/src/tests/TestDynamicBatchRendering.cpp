@@ -2,13 +2,13 @@
 
 #include <array>
 
-#include "LegacyIndexBuffer.h"
-#include "Renderer.h"
-#include "LegacyShader.h"
-#include "LegacyTexture.h"
-#include "LegacyVertexArray.h"
-#include "LegacyVertexBuffer.h"
-#include "LegacyVertexBufferLayout.h"
+#include "legacy/LegacyIndexBuffer.h"
+#include "legacy/Renderer.h"
+#include "legacy/LegacyShader.h"
+#include "legacy/LegacyTexture.h"
+#include "legacy/LegacyVertexArray.h"
+#include "legacy/LegacyVertexBuffer.h"
+#include "legacy/LegacyVertexBufferLayout.h"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "imgui/imgui.h"
 

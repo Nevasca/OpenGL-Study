@@ -2,11 +2,11 @@
 
 #include <iostream>
 
-#include "LegacyCamera.h"
+#include "legacy/LegacyCamera.h"
 #include "Core.h"
-#include "LegacyFlyCameraController.h"
-#include "LegacyModel.h"
-#include "LegacyShader.h"
+#include "legacy/LegacyFlyCameraController.h"
+#include "legacy/LegacyModel.h"
+#include "legacy/LegacyShader.h"
 #include "imgui/imgui.h"
 
 namespace tests

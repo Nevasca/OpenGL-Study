@@ -6,7 +6,7 @@
 #include <sstream>
 #include <string>
 
-#include "LegacyTexture.h"
+#include "legacy/LegacyTexture.h"
 
 namespace Breakout
 {

@@ -1,12 +1,12 @@
 #pragma once
 #include <memory>
 
-#include "LegacyIndexBuffer.h"
-#include "LegacyShader.h"
+#include "legacy/LegacyIndexBuffer.h"
+#include "legacy/LegacyShader.h"
 #include "Test.h"
-#include "LegacyTexture.h"
-#include "LegacyVertexArray.h"
-#include "LegacyVertexBuffer.h"
+#include "legacy/LegacyTexture.h"
+#include "legacy/LegacyVertexArray.h"
+#include "legacy/LegacyVertexBuffer.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 

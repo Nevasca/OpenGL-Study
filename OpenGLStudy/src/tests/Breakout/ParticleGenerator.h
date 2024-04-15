@@ -5,11 +5,11 @@
 #include "glm/vec2.hpp"
 #include "glm/vec4.hpp"
 
-#include "LegacyIndexBuffer.h"
-#include "LegacyShader.h"
-#include "LegacyTexture.h"
-#include "LegacyVertexArray.h"
-#include "LegacyVertexBuffer.h"
+#include "legacy/LegacyIndexBuffer.h"
+#include "legacy/LegacyShader.h"
+#include "legacy/LegacyTexture.h"
+#include "legacy/LegacyVertexArray.h"
+#include "legacy/LegacyVertexBuffer.h"
 
 namespace Breakout
 {

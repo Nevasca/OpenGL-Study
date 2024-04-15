@@ -1,7 +1,7 @@
 #include "TestTexture2D.h"
 
-#include "Renderer.h"
-#include "LegacyVertexBufferLayout.h"
+#include "legacy/Renderer.h"
+#include "legacy/LegacyVertexBufferLayout.h"
 #include "imgui/imgui.h"
 
 namespace tests

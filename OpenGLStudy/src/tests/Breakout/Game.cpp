@@ -5,9 +5,9 @@
 
 #include "Ball.h"
 #include "ParticleGenerator.h"
-#include "LegacyShader.h"
+#include "legacy/LegacyShader.h"
 #include "SpriteRenderer.h"
-#include "LegacyTexture.h"
+#include "legacy/LegacyTexture.h"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/scalar_common.hpp"
 
