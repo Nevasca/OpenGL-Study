@@ -11,6 +11,7 @@
 #include "core/Basics/Objects/PointLight.h"
 #include "core/Basics/Components/SpotLightComponent.h"
 #include "core/Basics/Objects/Model.h"
+#include "core/Basics/Objects/Quad.h"
 #include "core/Rendering/Material.h"
 
 namespace tests
@@ -68,6 +69,10 @@ namespace tests
         auto bridge = m_World->Spawn<Model>(glm::vec3(0.f, 0.f, -20.f));
         bridge->Setup(bridgeModel, bridgeMaterial);
         bridge->SetName("Bridge");
+
+        auto quad = m_World->Spawn<Quad>(glm::vec3(0.f, 0.f, -2.f), glm::vec3{0.f, -90.f, 0.f});
+        quad->SetName("Quad");
+        quad->SetMaterial(anotherMaterial);
 
         SpawnLights(*camera);
     }

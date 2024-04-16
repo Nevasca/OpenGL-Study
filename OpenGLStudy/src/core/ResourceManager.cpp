@@ -19,6 +19,7 @@ unsigned int ResourceManager::m_LastMaterialID = 0;
 std::string ResourceManager::DEFAULT_SHADER_NAME = "Default";
 std::string ResourceManager::DEFAULT_MATERIAL_NAME = "Default";
 std::string ResourceManager::DEFAULT_MESH_CUBE_NAME = "Cube";
+std::string ResourceManager::DEFAULT_MESH_QUAD_NAME = "Quad";
 
 void ResourceManager::LoadDefaultResources()
 {
@@ -28,6 +29,7 @@ void ResourceManager::LoadDefaultResources()
     defaultMaterial->SetColor("u_Color", glm::vec4(0.5f, 0.5f, 0.5f, 1.f));
 
     m_Meshes[DEFAULT_MESH_CUBE_NAME] = MeshResource::LoadCube();
+    m_Meshes[DEFAULT_MESH_QUAD_NAME] = MeshResource::LoadQuad();
 }
 
 std::shared_ptr<Shader> ResourceManager::LoadShader(const std::string& vertexShaderPath, const std::string& fragShaderPath, const std::string& name)

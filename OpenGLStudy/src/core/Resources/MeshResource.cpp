@@ -13,6 +13,11 @@ std::shared_ptr<Mesh> MeshResource::LoadCube()
     return Primitive::CreateCube();
 }
 
+std::shared_ptr<Mesh> MeshResource::LoadQuad()
+{
+    return Primitive::CreateQuad();
+}
+
 std::shared_ptr<ModelData> MeshResource::LoadModelFromFile(const std::string& filePath)
 {
     Assimp::Importer importer;

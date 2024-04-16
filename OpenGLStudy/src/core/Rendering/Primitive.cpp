@@ -78,3 +78,30 @@ std::shared_ptr<Mesh> Primitive::CreateCube()
 
    return cube;
 }
+
+std::shared_ptr<Mesh> Primitive::CreateQuad()
+{
+    float vertices[]
+    {
+        -0.5f, -0.5f,  0.0f,    0.f, 0.f, 1.f,    0.f, 0.f,
+         0.5f, -0.5f,  0.0f,    0.f, 0.f, 1.f,    1.f, 0.f,
+         0.5f,  0.5f,  0.0f,    0.f, 0.f, 1.f,    1.f, 1.f,
+        -0.5f,  0.5f,  0.0f,    0.f, 0.f, 1.f,    0.f, 1.f,
+    };
+
+    std::vector<unsigned int> indices
+    {
+        0, 1, 2,
+        2, 3, 0
+    };
+
+    VertexBufferLayout layout{};
+    layout.PushFloat(3);
+    layout.PushFloat(3);
+    layout.PushFloat(2);
+
+    std::shared_ptr<Mesh> quad = std::make_shared<Mesh>(vertices, sizeof(vertices), layout, indices);
+    quad->SetName("Quad");
+
+    return quad;
+}
