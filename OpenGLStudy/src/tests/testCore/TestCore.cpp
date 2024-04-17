@@ -50,19 +50,19 @@ namespace tests
             }
         }
 
-        std::shared_ptr<Material> defaultMaterial = ResourceManager::GetMaterial(ResourceManager::DEFAULT_MATERIAL_NAME);
+        std::shared_ptr<Material> defaultMaterial = ResourceManager::GetDefaultMaterial();
         defaultMaterial->SetColor("u_Color", glm::vec4(0.f)); // When using a texture, we need to set default color to black
         defaultMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Container_Diff.png", "Container_Diffuse", false, true), 0);
         defaultMaterial->SetTexture("u_Specular", ResourceManager::LoadTexture("res/textures/Container_Spec.png", "Container_Specular", false, true), 1);
 
         auto cube = m_World->Spawn<Cube>(glm::vec3(0.f, 5.f, 0.f));
         cube->SetName("CubePigeon");
-        auto anotherMaterial = ResourceManager::CreateMaterial("AnotherMaterial", ResourceManager::DEFAULT_SHADER_NAME);
+        auto anotherMaterial = ResourceManager::CreateMaterial("AnotherMaterial");
         anotherMaterial->SetColor("u_Color", glm::vec4(0.f));
         anotherMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/FancyPigeon.png", "Pigeon", false, true), 0);
         cube->SetMaterial(anotherMaterial);
 
-        auto bridgeMaterial = ResourceManager::CreateMaterial("M_Bridge", ResourceManager::DEFAULT_SHADER_NAME);
+        auto bridgeMaterial = ResourceManager::CreateMaterial("M_Bridge");
         bridgeMaterial->SetColor("u_Color", glm::vec4(0.f));
         bridgeMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Atlas04_Diff.png", "T_Bridge_Diffuse", false), 0);
         auto bridgeModel = ResourceManager::LoadModel("res/models/Bridge.fbx", "Bridge");

@@ -10,8 +10,8 @@ void Cube::Initialize()
     GameObject::Initialize();
 
     m_MeshComponent = AddComponent<MeshComponent>();
-    m_MeshComponent->SetMesh(ResourceManager::GetMesh(ResourceManager::DEFAULT_MESH_CUBE_NAME));
-    m_MeshComponent->SetMaterial(ResourceManager::GetMaterial(ResourceManager::DEFAULT_MATERIAL_NAME));
+    m_MeshComponent->SetMesh(ResourceManager::GetDefaultCube());
+    m_MeshComponent->SetMaterial(ResourceManager::GetDefaultMaterial());
 }
 
 void Cube::Destroy()

@@ -34,6 +34,31 @@ void ResourceManager::LoadDefaultResources()
     m_Meshes[DEFAULT_MESH_SPHERE_NAME] = MeshResource::LoadSphere();
 }
 
+std::shared_ptr<Material> ResourceManager::GetDefaultMaterial()
+{
+    return m_Materials[DEFAULT_MATERIAL_NAME];
+}
+
+std::shared_ptr<Shader> ResourceManager::GetDefaultShader()
+{
+    return m_Shaders[DEFAULT_SHADER_NAME];
+}
+
+std::shared_ptr<Mesh> ResourceManager::GetDefaultCube()
+{
+    return m_Meshes[DEFAULT_MESH_CUBE_NAME];
+}
+
+std::shared_ptr<Mesh> ResourceManager::GetDefaultQuad()
+{
+    return m_Meshes[DEFAULT_MESH_QUAD_NAME];
+}
+
+std::shared_ptr<Mesh> ResourceManager::GetDefaultSphere()
+{
+    return m_Meshes[DEFAULT_MESH_SPHERE_NAME];
+}
+
 std::shared_ptr<Shader> ResourceManager::LoadShader(const std::string& vertexShaderPath, const std::string& fragShaderPath, const std::string& name)
 {
     m_Shaders[name] = ShaderResource::LoadShaderFromFile(vertexShaderPath, fragShaderPath);
@@ -53,6 +78,11 @@ std::shared_ptr<Shader> ResourceManager::LoadShader(const std::string& singleFil
 std::shared_ptr<Shader> ResourceManager::GetShader(const std::string& name)
 {
     return m_Shaders[name];
+}
+
+std::shared_ptr<Material> ResourceManager::CreateMaterial(const std::string& name)
+{
+    return CreateMaterial(name, DEFAULT_SHADER_NAME);
 }
 
 std::shared_ptr<Material> ResourceManager::CreateMaterial(const std::string& name, const std::string& shaderName)

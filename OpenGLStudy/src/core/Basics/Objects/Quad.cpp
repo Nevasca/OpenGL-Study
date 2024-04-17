@@ -8,8 +8,8 @@ void Quad::Initialize()
     GameObject::Initialize();
 
     m_MeshComponent = AddComponent<MeshComponent>();
-    m_MeshComponent->SetMesh(ResourceManager::GetMesh(ResourceManager::DEFAULT_MESH_QUAD_NAME));
-    m_MeshComponent->SetMaterial(ResourceManager::GetMaterial(ResourceManager::DEFAULT_MATERIAL_NAME));
+    m_MeshComponent->SetMesh(ResourceManager::GetDefaultQuad());
+    m_MeshComponent->SetMaterial(ResourceManager::GetDefaultMaterial());
 }
 
 void Quad::Destroy()
