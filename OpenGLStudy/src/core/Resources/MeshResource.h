@@ -13,6 +13,7 @@ public:
 
     static std::shared_ptr<Mesh> LoadCube();
     static std::shared_ptr<Mesh> LoadQuad();
+    static std::shared_ptr<Mesh> LoadSphere();
     static std::shared_ptr<ModelData> LoadModelFromFile(const std::string& filePath);
 
 private:

@@ -12,6 +12,7 @@
 #include "core/Basics/Components/SpotLightComponent.h"
 #include "core/Basics/Objects/Model.h"
 #include "core/Basics/Objects/Quad.h"
+#include "core/Basics/Objects/Sphere.h"
 #include "core/Rendering/Material.h"
 
 namespace tests
@@ -73,6 +74,9 @@ namespace tests
         auto quad = m_World->Spawn<Quad>(glm::vec3(0.f, 0.f, -2.f), glm::vec3{0.f, -90.f, 0.f});
         quad->SetName("Quad");
         quad->SetMaterial(anotherMaterial);
+
+        auto sphere = m_World->Spawn<Sphere>(glm::vec3(-4.f, 0.f, 0.f));
+        sphere->SetName("Sphere");
 
         SpawnLights(*camera);
     }

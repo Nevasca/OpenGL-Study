@@ -16,6 +16,7 @@ public:
     static std::string DEFAULT_MATERIAL_NAME;
     static std::string DEFAULT_MESH_CUBE_NAME;
     static std::string DEFAULT_MESH_QUAD_NAME;
+    static std::string DEFAULT_MESH_SPHERE_NAME;
     
     static void LoadDefaultResources();
 

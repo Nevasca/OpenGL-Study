@@ -20,6 +20,7 @@ std::string ResourceManager::DEFAULT_SHADER_NAME = "Default";
 std::string ResourceManager::DEFAULT_MATERIAL_NAME = "Default";
 std::string ResourceManager::DEFAULT_MESH_CUBE_NAME = "Cube";
 std::string ResourceManager::DEFAULT_MESH_QUAD_NAME = "Quad";
+std::string ResourceManager::DEFAULT_MESH_SPHERE_NAME = "Sphere";
 
 void ResourceManager::LoadDefaultResources()
 {
@@ -30,6 +31,7 @@ void ResourceManager::LoadDefaultResources()
 
     m_Meshes[DEFAULT_MESH_CUBE_NAME] = MeshResource::LoadCube();
     m_Meshes[DEFAULT_MESH_QUAD_NAME] = MeshResource::LoadQuad();
+    m_Meshes[DEFAULT_MESH_SPHERE_NAME] = MeshResource::LoadSphere();
 }
 
 std::shared_ptr<Shader> ResourceManager::LoadShader(const std::string& vertexShaderPath, const std::string& fragShaderPath, const std::string& name)
