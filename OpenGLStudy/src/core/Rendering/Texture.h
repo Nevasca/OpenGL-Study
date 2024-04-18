@@ -1,11 +1,25 @@
 #pragma once
 #include <string>
+#include "OpenGLCore.h"
+
+struct TextureSettings
+{
+    unsigned int InternalFormat{GL_RGB};
+    unsigned int Format{GL_RGB};
+    unsigned int Type{GL_UNSIGNED_BYTE};
+    unsigned int MinFilter{GL_LINEAR};
+    unsigned int MagFilter{GL_LINEAR};
+    unsigned int WrapS{GL_CLAMP_TO_EDGE};
+    unsigned int WrapT{GL_CLAMP_TO_EDGE};
+    bool GenerateMipmap{false};
+};
 
 class Texture
 {
 public:
 
     Texture(unsigned char* data, unsigned int width, unsigned int height, bool bUseAlpha);
+    Texture(unsigned char* data, unsigned int width, unsigned int height, const TextureSettings& settings);
     ~Texture();
 
     void Bind(unsigned int slot = 0) const;
@@ -20,6 +34,8 @@ public:
     bool IsFlippedOnLoad() const { return bIsFlippedOnLoad; }
 
 private:
+
+    void Create(unsigned char* data, const TextureSettings& settings);
 
     unsigned int m_RendererID{0};
     unsigned int m_Width{0};
