@@ -188,6 +188,7 @@
     <ClCompile Include="src\core\Basics\Objects\Sphere.cpp" />
     <ClCompile Include="src\core\Basics\Objects\SpotLight.cpp" />
     <ClCompile Include="src\core\GameTime.cpp" />
+    <ClCompile Include="src\core\Rendering\FrameBuffer.cpp" />
     <ClCompile Include="src\core\Rendering\IndexBuffer.cpp" />
     <ClCompile Include="src\core\Rendering\InstancedArray.cpp" />
     <ClCompile Include="src\core\Rendering\Light.cpp" />
@@ -322,6 +323,7 @@
     <ClInclude Include="src\core\Basics\Objects\Sphere.h" />
     <ClInclude Include="src\core\Basics\Objects\SpotLight.h" />
     <ClInclude Include="src\core\GameTime.h" />
+    <ClInclude Include="src\core\Rendering\FrameBuffer.h" />
     <ClInclude Include="src\core\Rendering\IndexBuffer.h" />
     <ClInclude Include="src\core\Rendering\InstancedArray.h" />
     <ClInclude Include="src\core\Rendering\Light.h" />
