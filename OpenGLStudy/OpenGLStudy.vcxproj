@@ -219,7 +219,9 @@
     <ClCompile Include="src\editor\inspectors\components\PostProcessingComponentInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\components\SpotLightComponentInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\resources\MaterialInspector.cpp" />
+    <ClCompile Include="src\editor\MainPanel.cpp" />
     <ClCompile Include="src\editor\ResourceCollection.cpp" />
+    <ClCompile Include="src\editor\ResourcesPanel.cpp" />
     <ClCompile Include="src\editor\WorldHierarchy.cpp" />
     <ClCompile Include="src\OpenGLCore.cpp" />
     <ClCompile Include="src\core\Application.cpp" />
@@ -360,7 +362,9 @@
     <ClInclude Include="src\editor\inspectors\components\PostProcessingComponentInspector.h" />
     <ClInclude Include="src\editor\inspectors\components\SpotLightComponentInspector.h" />
     <ClInclude Include="src\editor\inspectors\resources\MaterialInspector.h" />
+    <ClInclude Include="src\editor\MainPanel.h" />
     <ClInclude Include="src\editor\ResourceCollection.h" />
+    <ClInclude Include="src\editor\ResourcesPanel.h" />
     <ClInclude Include="src\editor\WorldHierarchy.h" />
     <ClInclude Include="src\OpenGLCore.h" />
     <ClInclude Include="src\core\Application.h" />

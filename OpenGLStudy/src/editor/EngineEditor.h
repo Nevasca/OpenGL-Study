@@ -1,8 +1,6 @@
 #pragma once
-#include "GameObjectInspector.h"
-#include "ResourceCollection.h"
-#include "WorldHierarchy.h"
-#include "inspectors/resources/MaterialInspector.h"
+#include "MainPanel.h"
+#include "ResourcesPanel.h"
 
 class World;
 
@@ -17,18 +15,7 @@ namespace Editor
 
     private:
 
-        WorldHierarchy m_Hierarchy{};
-        GameObjectInspector m_GameObjectInspector{};
-        ResourceCollection m_ResourceCollection{};
-        Inspector::MaterialInspector m_MaterialInspector{};
-        float m_MainPanelWidth{350.f};
-        float m_ResourcesPanelWidth{350.f};
-
-        void RenderMainPanel(World& world);
-        void RenderHierarchyTabItem(World& world);
-        void RenderInspectorTabItem(World& world);
-        void RenderResourcesPanel();
-        void RenderMaterialsTabItem();
-        void RenderResourceInspectorTabItem();
+        MainPanel m_MainPanel{};
+        ResourcesPanel m_ResourcesPanel{};
     };
 }
