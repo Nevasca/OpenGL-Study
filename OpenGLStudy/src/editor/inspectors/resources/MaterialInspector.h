@@ -14,6 +14,7 @@ namespace Editor
         private:
             void RenderColorProperties(Material& material);
             void RenderTextureProperties(Material& material);
+            void RenderBoolProperties(Material& material);
         };
     }
 }

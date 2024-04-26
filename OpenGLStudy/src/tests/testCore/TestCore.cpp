@@ -11,6 +11,7 @@
 #include "core/Basics/Objects/PointLight.h"
 #include "core/Basics/Components/SpotLightComponent.h"
 #include "core/Basics/Objects/Model.h"
+#include "core/Basics/Objects/PostProcessing.h"
 #include "core/Basics/Objects/Quad.h"
 #include "core/Basics/Objects/Sphere.h"
 #include "core/Rendering/Material.h"
@@ -79,6 +80,9 @@ namespace tests
         sphere->SetName("Sphere");
 
         SpawnLights(*camera);
+
+        auto postProcessing = m_World->Spawn<PostProcessing>();
+        postProcessing->SetName("PostProcessing");
     }
 
     void TestCore::SpawnLights(GameObject& camera)
@@ -122,6 +126,8 @@ namespace tests
     TestCore::~TestCore()
     {
         m_World->Shutdown();
+        m_World.reset();
+
         ResourceManager::UnloadAll();
     }
 

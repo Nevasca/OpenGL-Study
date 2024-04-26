@@ -27,6 +27,11 @@ void Material::SetMat4(const std::string& name, const glm::mat4& matrix) const
     m_Shader->SetUniformMat4f(name, matrix);
 }
 
+void Material::SetBool(const std::string& name, const bool value)
+{
+    m_BoolProperties[name] = value;
+}
+
 void Material::Bind() const
 {
     m_Shader->Bind();
@@ -40,6 +45,11 @@ void Material::Bind() const
     {
         const MaterialTextureProperty& textureProperty = propertyPair.second;
         textureProperty.Texture->Bind(textureProperty.Slot);
+    }
+
+    for(const auto& propertyPair : m_BoolProperties)
+    {
+        m_Shader->SetUniform1i(propertyPair.first, propertyPair.second);
     }
 }
 

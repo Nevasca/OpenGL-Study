@@ -6,8 +6,11 @@
 #include "MeshRenderer.h"
 #include "InstancedArray.h"
 #include "LightingSystem.h"
+#include "PostProcessingSystem.h"
 #include "core/Basics/Components/DirectionalLightComponent.h"
+#include "FrameBuffer.h"
 
+class PostProcessingComponent;
 class SpotLightComponent;
 class PointLightComponent;
 class MeshComponent;
@@ -32,6 +35,8 @@ public:
     void AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent);
     void AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent);
     void AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent);
+    void SetPostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent);
+    void RemovePostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent);
     void Render(const CameraComponent& activeCamera);
 
 private:
@@ -40,13 +45,16 @@ private:
 
     MeshRenderer m_MeshRenderer{};
     LightingSystem m_LightingSystem{};
+    PostProcessingSystem m_PostProcessingSystem{};
 
     std::map<unsigned int, std::map<unsigned int, std::vector<std::shared_ptr<MeshComponent>>>> m_MeshComponents{}; // keyed by VAO and material ID
     std::map<unsigned int, ActiveShader> m_UniqueActiveShaders{}; // Keyed by shader id
 
     std::unique_ptr<InstancedArray> m_InstancedArray{};
+    std::unique_ptr<Framebuffer> m_Framebuffer{};
 
     void UpdateGlobalShaderUniforms(const CameraComponent& activeCamera) const;
+    void RenderWorldObjects();
     void CreateInstancedBuffer();
     void SetupInstancedMesh(const Mesh& mesh);
 };

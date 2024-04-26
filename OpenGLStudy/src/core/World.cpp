@@ -70,6 +70,16 @@ void World::AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightCom
     m_RenderSystem->AddSpotLight(spotLightComponent);
 }
 
+void World::SetPostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent)
+{
+    m_RenderSystem->SetPostProcessingComponent(postProcessingComponent);
+}
+
+void World::RemovePostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent)
+{
+    m_RenderSystem->RemovePostProcessingComponent(postProcessingComponent);
+}
+
 void World::InitializeGameObject(const std::shared_ptr<GameObject>& gameObject) const
 {
     gameObject->Initialize();

@@ -23,6 +23,20 @@ void MeshRenderer::Render(const Mesh& mesh, const Transform& transform, const Ma
     material.Unbind();
 }
 
+void MeshRenderer::Render(const Mesh& mesh, const Material& material) const
+{
+    material.Bind();
+
+    mesh.GetVertexArray().Bind();
+
+    const IndexBuffer& ibo = mesh.GetIndexBuffer();
+    ibo.Bind();
+
+    GLCall(glDrawElements(GL_TRIANGLES, ibo.GetCount(), GL_UNSIGNED_INT, nullptr));
+
+    material.Unbind();
+}
+
 void MeshRenderer::RenderInstanced(const Mesh& mesh, const Material& material, int amount) const
 {
     material.Bind();

@@ -41,5 +41,5 @@ private:
     unsigned int m_Width{0};
     unsigned int m_Height{0};
     std::string m_Name{};
-    bool bIsFlippedOnLoad{false};
+    bool bIsFlippedOnLoad{true};
 };

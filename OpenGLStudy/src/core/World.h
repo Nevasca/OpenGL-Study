@@ -4,6 +4,7 @@
 #include "glm/vec3.hpp"
 #include "Rendering/RenderSystem.h"
 
+class PostProcessingComponent;
 class SpotLightComponent;
 class PointLightComponent;
 class DirectionalLightComponent;
@@ -25,6 +26,8 @@ public:
     void AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent);
     void AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent);
     void AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent);
+    void SetPostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent);
+    void RemovePostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent);
 
     unsigned int GenerateUniqueId() { return m_LastUsedId++; }
     std::vector<std::shared_ptr<GameObject>>& GetAllGameObjects() { return m_GameObjects; }

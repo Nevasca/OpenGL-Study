@@ -4,17 +4,17 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "Shader.h"
+#include "core/Screen.h"
 #include "core/Basics/Components/CameraComponent.h"
 #include "core/Basics/Components/MeshComponent.h"
 #include "core/GameObject/GameObject.h"
 
-#define INSTANCED_DRAW_ENABLED 1;
-
 RenderSystem::RenderSystem()
 {
-#if INSTANCED_DRAW_ENABLED
     CreateInstancedBuffer();
-#endif
+
+    m_Framebuffer = std::make_unique<Framebuffer>(Screen::GetWidth(), Screen::GetHeight(), true, std::vector<TextureSettings>{});
+    m_PostProcessingSystem.SetFramebuffer(*m_Framebuffer);
 }
 
 void RenderSystem::Shutdown()
@@ -53,9 +53,7 @@ void RenderSystem::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshCo
     {
         m_MeshComponents[vaoID] = {};
 
-#if INSTANCED_DRAW_ENABLED
         SetupInstancedMesh(*mesh);
-#endif
     }
 
     if(m_MeshComponents[vaoID].find(materialId) == m_MeshComponents[vaoID].end())
@@ -106,11 +104,46 @@ void RenderSystem::AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotL
     m_LightingSystem.AddSpotLight(spotLightComponent);
 }
 
+void RenderSystem::SetPostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent)
+{
+    m_PostProcessingSystem.SetPostProcessingComponent(postProcessingComponent);
+}
+
+void RenderSystem::RemovePostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent)
+{
+    m_PostProcessingSystem.RemovePostProcessingComponent(postProcessingComponent);
+}
+
 void RenderSystem::Render(const CameraComponent& activeCamera)
 {
     UpdateGlobalShaderUniforms(activeCamera);
 
-#if INSTANCED_DRAW_ENABLED
+    m_Framebuffer->BindAndClear();
+    RenderWorldObjects();
+    m_Framebuffer->Unbind();
+
+    m_PostProcessingSystem.RenderToScreen();
+}
+
+void RenderSystem::UpdateGlobalShaderUniforms(const CameraComponent& activeCamera) const
+{
+    const glm::mat4 view = activeCamera.GetViewMatrix();
+    const glm::mat4 proj = activeCamera.GetProjectionMatrix();
+
+    for(auto& activeShaderPair : m_UniqueActiveShaders)
+    {
+        Shader& activeShader = *activeShaderPair.second.Shader;
+
+        activeShader.Bind();
+        activeShader.SetUniformMat4f("u_Proj", proj);
+        activeShader.SetUniformMat4f("u_View", view);
+
+        m_LightingSystem.SetLightsFor(activeShader, activeCamera);
+    }
+}
+
+void RenderSystem::RenderWorldObjects()
+{
     m_InstancedArray->Bind();
 
     // Foreach unique VAO
@@ -147,35 +180,6 @@ void RenderSystem::Render(const CameraComponent& activeCamera)
     }
 
     m_InstancedArray->Unbind();
-
-#else
-    for(auto& meshComponentPair : m_MeshComponents)
-    {
-        for(const auto& meshComponent : meshComponentPair.second)
-        {
-            assert(meshComponent->IsReadyToDraw());
-
-            m_MeshRenderer.Render(*meshComponent->GetMesh(), meshComponent->GetOwner().GetTransform(), *meshComponent->GetShader());
-        }
-    }
-#endif
-}
-
-void RenderSystem::UpdateGlobalShaderUniforms(const CameraComponent& activeCamera) const
-{
-    const glm::mat4 view = activeCamera.GetViewMatrix();
-    const glm::mat4 proj = activeCamera.GetProjectionMatrix();
-
-    for(auto& activeShaderPair : m_UniqueActiveShaders)
-    {
-        Shader& activeShader = *activeShaderPair.second.Shader;
-
-        activeShader.Bind();
-        activeShader.SetUniformMat4f("u_Proj", proj);
-        activeShader.SetUniformMat4f("u_View", view);
-
-        m_LightingSystem.SetLightsFor(activeShader, activeCamera);
-    }
 }
 
 void RenderSystem::CreateInstancedBuffer()

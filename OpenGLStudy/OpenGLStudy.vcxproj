@@ -178,12 +178,14 @@
     <ClCompile Include="src\core\Basics\Components\PilotCameraController.cpp" />
     <ClCompile Include="src\core\Basics\Components\PilotComponent.cpp" />
     <ClCompile Include="src\core\Basics\Components\PointLightComponent.cpp" />
+    <ClCompile Include="src\core\Basics\Components\PostProcessingComponent.cpp" />
     <ClCompile Include="src\core\Basics\Components\SpotLightComponent.cpp" />
     <ClCompile Include="src\core\Basics\Objects\Cube.cpp" />
     <ClCompile Include="src\core\Basics\Objects\DirectionalLight.cpp" />
     <ClCompile Include="src\core\Basics\Objects\FlyingCamera.cpp" />
     <ClCompile Include="src\core\Basics\Objects\Model.cpp" />
     <ClCompile Include="src\core\Basics\Objects\PointLight.cpp" />
+    <ClCompile Include="src\core\Basics\Objects\PostProcessing.cpp" />
     <ClCompile Include="src\core\Basics\Objects\Quad.cpp" />
     <ClCompile Include="src\core\Basics\Objects\Sphere.cpp" />
     <ClCompile Include="src\core\Basics\Objects\SpotLight.cpp" />
@@ -195,6 +197,7 @@
     <ClCompile Include="src\core\Rendering\LightingSystem.cpp" />
     <ClCompile Include="src\core\Rendering\Material.cpp" />
     <ClCompile Include="src\core\Rendering\ModelData.cpp" />
+    <ClCompile Include="src\core\Rendering\PostProcessingSystem.cpp" />
     <ClCompile Include="src\core\Rendering\Primitive.cpp" />
     <ClCompile Include="src\core\Rendering\RenderSystem.cpp" />
     <ClCompile Include="src\core\Rendering\Shader.cpp" />
@@ -213,6 +216,7 @@
     <ClCompile Include="src\editor\inspectors\components\MeshComponentInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\components\PilotComponentInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\components\PointLightComponentInspector.cpp" />
+    <ClCompile Include="src\editor\inspectors\components\PostProcessingComponentInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\components\SpotLightComponentInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\resources\MaterialInspector.cpp" />
     <ClCompile Include="src\editor\ResourceCollection.cpp" />
@@ -288,6 +292,7 @@
     <Content Include="res\breakout\textures\particle.png" />
     <Content Include="res\core\shaders\Default.glsl" />
     <Content Include="res\core\shaders\DefaultUnlit.glsl" />
+    <Content Include="res\core\shaders\PostProcessing.glsl" />
     <Content Include="res\shaders\Basic.shader" />
     <Content Include="res\shaders\BasicBatch.shader" />
     <Content Include="res\shaders\BasicLit.shader" />
@@ -313,12 +318,14 @@
     <ClInclude Include="src\core\Basics\Components\PilotCameraController.h" />
     <ClInclude Include="src\core\Basics\Components\PilotComponent.h" />
     <ClInclude Include="src\core\Basics\Components\PointLightComponent.h" />
+    <ClInclude Include="src\core\Basics\Components\PostProcessingComponent.h" />
     <ClInclude Include="src\core\Basics\Components\SpotLightComponent.h" />
     <ClInclude Include="src\core\Basics\Objects\Cube.h" />
     <ClInclude Include="src\core\Basics\Objects\DirectionalLight.h" />
     <ClInclude Include="src\core\Basics\Objects\FlyingCamera.h" />
     <ClInclude Include="src\core\Basics\Objects\Model.h" />
     <ClInclude Include="src\core\Basics\Objects\PointLight.h" />
+    <ClInclude Include="src\core\Basics\Objects\PostProcessing.h" />
     <ClInclude Include="src\core\Basics\Objects\Quad.h" />
     <ClInclude Include="src\core\Basics\Objects\Sphere.h" />
     <ClInclude Include="src\core\Basics\Objects\SpotLight.h" />
@@ -330,6 +337,7 @@
     <ClInclude Include="src\core\Rendering\LightingSystem.h" />
     <ClInclude Include="src\core\Rendering\Material.h" />
     <ClInclude Include="src\core\Rendering\ModelData.h" />
+    <ClInclude Include="src\core\Rendering\PostProcessingSystem.h" />
     <ClInclude Include="src\core\Rendering\Primitive.h" />
     <ClInclude Include="src\core\Rendering\RenderSystem.h" />
     <ClInclude Include="src\core\Rendering\Shader.h" />
@@ -349,6 +357,7 @@
     <ClInclude Include="src\editor\inspectors\components\MeshComponentInspector.h" />
     <ClInclude Include="src\editor\inspectors\components\PilotComponentInspector.h" />
     <ClInclude Include="src\editor\inspectors\components\PointLightComponentInspector.h" />
+    <ClInclude Include="src\editor\inspectors\components\PostProcessingComponentInspector.h" />
     <ClInclude Include="src\editor\inspectors\components\SpotLightComponentInspector.h" />
     <ClInclude Include="src\editor\inspectors\resources\MaterialInspector.h" />
     <ClInclude Include="src\editor\ResourceCollection.h" />

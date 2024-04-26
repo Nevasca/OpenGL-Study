@@ -105,3 +105,30 @@ std::shared_ptr<Mesh> Primitive::CreateQuad()
 
     return quad;
 }
+
+std::shared_ptr<Mesh> Primitive::CreateScreenQuad()
+{
+    float vertices[]
+    {
+        // Device position      UV
+        -1.f, -1.f,  0.0f,   0.f, 0.f,
+         1.f, -1.f,  0.0f,   1.f, 0.f,
+         1.f,  1.f,  0.0f,   1.f, 1.f,
+        -1.f,  1.f,  0.0f,   0.f, 1.f,
+    };
+
+    std::vector<unsigned int> indices
+    {
+        0, 1, 2,
+        2, 3, 0
+    };
+
+    VertexBufferLayout layout{};
+    layout.PushFloat(3);
+    layout.PushFloat(2);
+
+    std::shared_ptr<Mesh> screenQuad = std::make_shared<Mesh>(vertices, sizeof(vertices), layout, indices);
+    screenQuad->SetName("ScreenQuad");
+
+    return screenQuad;
+}

@@ -4,7 +4,7 @@
 
 #include "OpenGLCore.h"
 
-Framebuffer::Framebuffer(unsigned int width, unsigned int height, const std::vector<TextureSettings>& additionalColorAttachments)
+Framebuffer::Framebuffer(unsigned int width, unsigned int height, bool bIsDepthTestEnabled, const std::vector<TextureSettings>& additionalColorAttachments)
 {
     GLCall(glGenFramebuffers(1, &m_FBO));
     GLCall(glBindFramebuffer(GL_FRAMEBUFFER, m_FBO));
@@ -14,10 +14,18 @@ Framebuffer::Framebuffer(unsigned int width, unsigned int height, const std::vec
     mainColorTextureSettings.Format = GL_RGB;
 
     m_MainColorBufferTexture = std::make_shared<Texture>(nullptr, width, height, mainColorTextureSettings);
+
     GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_MainColorBufferTexture->GetRendererID(), 0));
 
     CreateAdditionalColorAttachments(width, height, additionalColorAttachments);
     EnableAdditionalColorAttachments(static_cast<unsigned int>(additionalColorAttachments.size()));
+
+    // TODO: allow a setting for using a depth texture attachment instead of using RenderBuffer 
+    // if we intend on using it for some effect
+    if(bIsDepthTestEnabled)
+    {
+        CreateRenderBuffer(width, height);
+    }
     
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     {
@@ -59,11 +67,29 @@ void Framebuffer::EnableAdditionalColorAttachments(unsigned int totalAdditionalC
     GLCall(glDrawBuffers(1 + totalAdditionalColorAttachments, drawBuffers.data()));
 }
 
+void Framebuffer::CreateRenderBuffer(unsigned int width, unsigned int height)
+{
+    // Render buffer for depth and stencil test
+    // Render buffer does not allow easy access, if we intend on using depth buffer for some effect
+    // we need to create a depth buffer attachment
+    GLCall(glGenRenderbuffers(1, &m_RBO));
+    GLCall(glBindRenderbuffer(GL_RENDERBUFFER, m_RBO));
+    GLCall(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height));
+    GLCall(glBindRenderbuffer(GL_RENDERBUFFER, 0));
+
+    GLCall(glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_RBO));
+}
+
 Framebuffer::~Framebuffer()
 {
     Unbind();
 
     GLCall(glDeleteFramebuffers(1, &m_FBO));
+
+    if(m_RBO > 0)
+    {
+        GLCall(glDeleteRenderbuffers(1, &m_RBO));
+    }
 
     m_MainColorBufferTexture.reset();
     m_AdditionalColorTextures.clear();

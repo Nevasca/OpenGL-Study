@@ -8,7 +8,7 @@
 class Framebuffer
 {
 public:
-    Framebuffer(unsigned int width, unsigned int height, const std::vector<TextureSettings>& additionalColorAttachments);
+    Framebuffer(unsigned int width, unsigned int height, bool bIsDepthTestEnabled, const std::vector<TextureSettings>& additionalColorAttachments);
     ~Framebuffer();
 
     void Bind() const;
@@ -22,11 +22,13 @@ public:
 
 private:
     
-    unsigned int m_FBO;
+    unsigned int m_FBO{0};
+    unsigned int m_RBO{0};
     std::shared_ptr<Texture> m_MainColorBufferTexture{};
     std::vector<std::shared_ptr<Texture>> m_AdditionalColorTextures{};
     glm::vec4 m_ClearColor{0.f, 0.f, 0.f, 1.f};
 
     void CreateAdditionalColorAttachments(unsigned int width, unsigned int height, const std::vector<TextureSettings>& additionalColorAttachments);
     void EnableAdditionalColorAttachments(unsigned int totalAdditionalColorAttachments);
+    void CreateRenderBuffer(unsigned int width, unsigned int height);
 };

@@ -20,6 +20,7 @@ namespace Editor
 
             RenderColorProperties(material);
             RenderTextureProperties(material);
+            RenderBoolProperties(material);
         }
 
         void MaterialInspector::RenderColorProperties(Material& material)
@@ -62,6 +63,25 @@ namespace Editor
                 }
 
                 ImGui::Image((ImTextureID)textureProperty.Texture->GetRendererID(), ImVec2(100.f, 100.f), uv0, uv1);
+            }
+        }
+
+        void MaterialInspector::RenderBoolProperties(Material& material)
+        {
+            const auto& materialBoolProperties = material.GetAllBoolProperties();
+            std::map<std::string, bool> inspectorBoolProperties{};
+
+            for (const auto& boolPropertyPair : materialBoolProperties)
+            {
+                std::string boolName = boolPropertyPair.first;
+                
+                inspectorBoolProperties[boolName] = boolPropertyPair.second;
+                ImGui::Checkbox(boolName.c_str(), &inspectorBoolProperties[boolName]);
+            }
+
+            for (const auto& inspectorBoolPropertyPair : inspectorBoolProperties)
+            {
+                material.SetBool(inspectorBoolPropertyPair.first, inspectorBoolPropertyPair.second);
             }
         }
     }
