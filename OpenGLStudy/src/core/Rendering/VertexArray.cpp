@@ -15,6 +15,11 @@ VertexArray::VertexArray()
 VertexArray::~VertexArray()
 {
     GLCall(glDeleteVertexArrays(1, &m_RendererID));
+
+    // If next vertex array created uses the same id as the one destroyed and previously bound
+    // it will think it's already bound and cause a OpenGL crash,
+    // so it's safer to set last bound to none now (0)
+    m_LastBoundVertexArrayId = 0;
 }
 
 void VertexArray::AddBuffer(const VertexBuffer& buffer, const VertexBufferLayout& layout)

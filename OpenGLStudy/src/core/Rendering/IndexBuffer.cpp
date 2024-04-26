@@ -19,6 +19,11 @@ IndexBuffer::IndexBuffer(const unsigned int* Data, unsigned int Count)
 IndexBuffer::~IndexBuffer()
 {
     GLCall(glDeleteBuffers(1, &m_RendererID));
+
+    // If next index buffer created uses the same id as the one destroyed and previously bound
+    // it will think it's already bound and cause a OpenGL crash,
+    // so it's safer to set last bound to none now (0)
+    m_LastBoundIndexBufferId = 0;
 }
 
 void IndexBuffer::Bind() const
