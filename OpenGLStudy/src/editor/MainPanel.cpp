@@ -31,6 +31,7 @@ namespace Editor
             if(ImGui::BeginTabBar("DetailsTabs"))
             {
                 RenderInspectorTabItem(world);
+                RenderWorldSettingsTabItem(world);
 
                 ImGui::EndTabBar();
             }
@@ -61,6 +62,16 @@ namespace Editor
 
                 m_GameObjectInspector.RenderGUI(*selectedObject);
             }
+
+            ImGui::EndTabItem();
+        }
+    }
+
+    void MainPanel::RenderWorldSettingsTabItem(World& world)
+    {
+        if(ImGui::BeginTabItem("World Settings"))
+        {
+            m_WorldInspector.RenderGUI(world);
 
             ImGui::EndTabItem();
         }

@@ -22,6 +22,7 @@ public:
     void SetLightsFor(Shader& boundShader, const CameraComponent& activeCamera) const;
 
     void SetAmbientLightColor(const glm::vec3& ambientLightColor) { m_AmbientLightColor = ambientLightColor; }
+    glm::vec3 GetAmbientLightColor() const { return m_AmbientLightColor; }
 
 private:
 

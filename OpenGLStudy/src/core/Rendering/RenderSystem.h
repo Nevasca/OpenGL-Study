@@ -39,6 +39,11 @@ public:
     void RemovePostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent);
     void Render(const CameraComponent& activeCamera);
 
+    void SetAmbientLightColor(const glm::vec3& ambientLightColor) { m_LightingSystem.SetAmbientLightColor(ambientLightColor); }
+    glm::vec3 GetAmbientLightColor() const { return m_LightingSystem.GetAmbientLightColor(); }
+    void SetClearColor(const glm::vec4& clearColor) const { m_Framebuffer->SetClearColor(clearColor); }
+    glm::vec4 GetClearColor() const { return m_Framebuffer->GetClearColor(); }
+
 private:
 
     constexpr static int MAX_INSTANCED_AMOUNT_PER_CALL = 10000;
