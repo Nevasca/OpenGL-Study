@@ -25,7 +25,14 @@ void main()
 
 layout(location = 0) out vec4 o_Color;
 
+in vec2 v_TexCoord;
+
+// Material
+uniform vec4 u_Color;
+uniform sampler2D u_Diffuse;
+
 void main()
 {          
-    o_Color = vec4(0.5f, 0.5f, 0.5f, 1.f);
+    //o_Color = vec4(0.5f, 0.5f, 0.5f, 1.f);
+    o_Color = texture(u_Diffuse, v_TexCoord) + u_Color;
 }
