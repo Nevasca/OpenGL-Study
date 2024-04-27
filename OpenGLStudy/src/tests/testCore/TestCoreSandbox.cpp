@@ -1,4 +1,4 @@
-#include "TestCore.h"
+#include "TestCoreSandbox.h"
 
 #include <memory>
 
@@ -18,7 +18,7 @@
 
 namespace tests
 {
-    TestCore::TestCore()
+    TestCoreSandbox::TestCoreSandbox()
     {
         ResourceManager::LoadDefaultResources();
 
@@ -85,7 +85,7 @@ namespace tests
         postProcessing->SetName("PostProcessing");
     }
 
-    void TestCore::SpawnLights(GameObject& camera)
+    void TestCoreSandbox::SpawnLights(GameObject& camera)
     {
         int lightIndex = 0;
         for(int x = 0; x < 4; x++)
@@ -123,7 +123,7 @@ namespace tests
         spotLightComponent->SetRange(100.f);
     }
 
-    TestCore::~TestCore()
+    TestCoreSandbox::~TestCoreSandbox()
     {
         m_World->Shutdown();
         m_World.reset();
@@ -131,17 +131,17 @@ namespace tests
         ResourceManager::UnloadAll();
     }
 
-    void TestCore::OnUpdate(float DeltaTime)
+    void TestCoreSandbox::OnUpdate(float DeltaTime)
     {
         m_World->Update(DeltaTime);
     }
 
-    void TestCore::OnRender()
+    void TestCoreSandbox::OnRender()
     {
         m_World->Render();
     }
 
-    void TestCore::OnImGuiRender()
+    void TestCoreSandbox::OnImGuiRender()
     {
         m_Editor->RenderGUI(*m_World);
     }

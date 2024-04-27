@@ -12,7 +12,17 @@ void FlyingCamera::Initialize()
 
     std::shared_ptr<CameraComponent> cameraComponent = AddComponent<CameraComponent>();
     std::shared_ptr<PilotComponent> pilotComponent = AddComponent<PilotComponent>();
-    std::shared_ptr<PilotCameraController> cameraController = AddComponent<PilotCameraController>();
-    
-    cameraController->Setup(cameraComponent, pilotComponent);
+
+    m_CameraController = AddComponent<PilotCameraController>();
+    m_CameraController->Setup(cameraComponent, pilotComponent);
+}
+
+void FlyingCamera::EnablePilotMode()
+{
+    m_CameraController->EnablePilotMode();
+}
+
+void FlyingCamera::DisablePilotMode()
+{
+    m_CameraController->DisablePilotMode();
 }

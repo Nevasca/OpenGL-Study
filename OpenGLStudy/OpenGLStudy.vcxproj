@@ -214,6 +214,7 @@
     <ClCompile Include="src\editor\inspectors\components\CameraComponentInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\components\DirectionalLightComponentInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\components\MeshComponentInspector.cpp" />
+    <ClCompile Include="src\editor\inspectors\components\PilotCameraControllerInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\components\PilotComponentInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\components\PointLightComponentInspector.cpp" />
     <ClCompile Include="src\editor\inspectors\components\PostProcessingComponentInspector.cpp" />
@@ -252,6 +253,7 @@
     <ClCompile Include="src\tests\Breakout\BreakoutGameObject.cpp" />
     <ClCompile Include="src\tests\Breakout\ParticleGenerator.cpp" />
     <ClCompile Include="src\tests\Breakout\SpriteRenderer.cpp" />
+    <ClCompile Include="src\tests\TestCore.cpp" />
     <ClCompile Include="src\tests\testCore\DummyComponent.cpp" />
     <ClCompile Include="src\tests\testCore\DummyGameObject.cpp" />
     <ClCompile Include="src\tests\Test.cpp" />
@@ -259,7 +261,7 @@
     <ClCompile Include="src\tests\TestBasicLightingCasters.cpp" />
     <ClCompile Include="src\tests\TestCamera.cpp" />
     <ClCompile Include="src\tests\TestBasicLighting.cpp" />
-    <ClCompile Include="src\tests\testCore\TestCore.cpp" />
+    <ClCompile Include="src\tests\testCore\TestCoreSandbox.cpp" />
     <ClCompile Include="src\tests\TestDynamicBatchRendering.cpp" />
     <ClCompile Include="src\tests\TestFramebuffer.cpp" />
     <ClCompile Include="src\tests\TestGameBreakout.cpp" />
@@ -358,6 +360,7 @@
     <ClInclude Include="src\editor\inspectors\components\CameraComponentInspector.h" />
     <ClInclude Include="src\editor\inspectors\components\DirectionalLightComponentInspector.h" />
     <ClInclude Include="src\editor\inspectors\components\MeshComponentInspector.h" />
+    <ClInclude Include="src\editor\inspectors\components\PilotCameraControllerInspector.h" />
     <ClInclude Include="src\editor\inspectors\components\PilotComponentInspector.h" />
     <ClInclude Include="src\editor\inspectors\components\PointLightComponentInspector.h" />
     <ClInclude Include="src\editor\inspectors\components\PostProcessingComponentInspector.h" />
@@ -396,9 +399,10 @@
     <ClInclude Include="src\tests\Breakout\BreakoutGameObject.h" />
     <ClInclude Include="src\tests\Breakout\ParticleGenerator.h" />
     <ClInclude Include="src\tests\Breakout\SpriteRenderer.h" />
+    <ClInclude Include="src\tests\TestCore.h" />
     <ClInclude Include="src\tests\testCore\DummyComponent.h" />
     <ClInclude Include="src\tests\testCore\DummyGameObject.h" />
-    <ClInclude Include="src\tests\testCore\TestCore.h" />
+    <ClInclude Include="src\tests\testCore\TestCoreSandbox.h" />
     <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\Test3DTransform.h" />
     <ClInclude Include="src\tests\TestBasicLightingCasters.h" />

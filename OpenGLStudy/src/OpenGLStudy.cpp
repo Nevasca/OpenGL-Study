@@ -21,7 +21,8 @@
 #include "tests/TestCamera.h"
 #include "tests/TestBasicLighting.h"
 #include "tests/TestBasicLightingCasters.h"
-#include "tests/testCore/TestCore.h"
+#include "tests/TestCore.h"
+#include "tests/testCore/TestCoreSandbox.h"
 #include "tests/TestFramebuffer.h"
 #include "tests/TestGameBreakout.h"
 #include "tests/TestModelLoading.h"
@@ -72,6 +73,7 @@ void CreateTests()
     testMenu->RegisterTest<tests::TestModelLoading>("Model Loading");
     testMenu->RegisterTest<tests::TestFramebuffer>("Framebuffer");
     testMenu->RegisterTest<tests::TestGameBreakout>("Breakout Game");
+    testMenu->RegisterTest<tests::TestCoreSandbox>("CoreSandbox");
     testMenu->RegisterTest<tests::TestCore>("Core");
 }
 

@@ -1,8 +1,9 @@
 #pragma once
 
-#include "tests/Test.h"
+#include <memory>
+
+#include "Test.h"
 #include "core/World.h"
-#include "DummyGameObject.h"
 #include "editor/EngineEditor.h"
 
 namespace tests
@@ -10,21 +11,22 @@ namespace tests
     class TestCore : public Test
     {
     public:
-    
-        TestCore();
-        ~TestCore() override;
 
-        void OnUpdate(float DeltaTime) override;
+        TestCore();
+        virtual ~TestCore() override;
+
+        void OnUpdate(float deltaTime) override;
         void OnRender() override;
         void OnImGuiRender() override;
 
-    private:
+    protected:
 
         std::unique_ptr<World> m_World{};
         std::unique_ptr<Editor::EngineEditor> m_Editor{};
-        std::shared_ptr<DummyGameObject> m_DummyObjectA;
-        std::shared_ptr<DummyGameObject> m_DummyObjectB;
 
-        void SpawnLights(GameObject& camera);
+    private:
+
+        void SpawnDefaultWorld();
+        void SetDefaultWorldSettings();
     };
 }
