@@ -37,9 +37,16 @@ void MeshRenderer::Render(const Mesh& mesh, const Material& material) const
     material.Unbind();
 }
 
-void MeshRenderer::RenderInstanced(const Mesh& mesh, const Material& material, int amount) const
+void MeshRenderer::RenderInstanced(const Mesh& mesh, const Material& material, int amount, const std::shared_ptr<Shader>& overrideShader) const
 {
-    material.Bind();
+    if(overrideShader)
+    {
+        material.Bind(*overrideShader);
+    }
+    else
+    {
+        material.Bind();
+    }
 
     mesh.GetVertexArray().Bind();
     const IndexBuffer& ibo = mesh.GetIndexBuffer();
@@ -50,5 +57,12 @@ void MeshRenderer::RenderInstanced(const Mesh& mesh, const Material& material, i
     ibo.Unbind();
     mesh.GetVertexArray().Unbind();
 
-    material.Unbind();
+    if(overrideShader)
+    {
+        material.Unbind(*overrideShader);
+    }
+    else
+    {
+        material.Unbind();
+    }
 }

@@ -135,6 +135,7 @@ int main(void)
 
         // Enables depth test so OpenGL can proper decide to draw or not a pixel on top of existing one when using perspective
         GLCall(glEnable(GL_DEPTH_TEST));
+        //GLCall(glDepthFunc(GL_LESS)); // By default, the depth func is set to GL_LESS
 
         Renderer renderer{};
         

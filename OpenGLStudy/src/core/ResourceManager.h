@@ -21,6 +21,7 @@ public:
 
     static std::shared_ptr<Shader> LoadShader(const std::string& vertexShaderPath, const std::string& fragShaderPath, const std::string& name);
     static std::shared_ptr<Shader> LoadShader(const std::string& singleFileShaderPath, const std::string& name);
+    static std::shared_ptr<Shader> GetOrLoadShader(const std::string& singleFileShaderPath, const std::string& name);
     static std::shared_ptr<Shader> GetShader(const std::string& name);
     static std::shared_ptr<Material> CreateMaterial(const std::string& name);
     static std::shared_ptr<Material> CreateMaterial(const std::string& name, const std::string& shaderName);

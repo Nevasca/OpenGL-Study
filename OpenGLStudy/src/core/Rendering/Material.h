@@ -24,7 +24,9 @@ public:
     void SetMat4(const std::string& name, const glm::mat4& matrix) const;
     void SetBool(const std::string& name, const bool value);
     void Bind() const;
+    void Bind(Shader& shader) const;
     void Unbind() const;
+    void Unbind(const Shader& shader) const;
 
     void SetShader(const std::shared_ptr<Shader>& shader) { m_Shader = shader; }
     const std::shared_ptr<Shader>& GetShader() const { return m_Shader; }

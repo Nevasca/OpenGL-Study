@@ -110,7 +110,7 @@ std::shared_ptr<Mesh> Primitive::CreateScreenQuad()
 {
     float vertices[]
     {
-        // Device position      UV
+        // Normalized Device position      UV
         -1.f, -1.f,  0.0f,   0.f, 0.f,
          1.f, -1.f,  0.0f,   1.f, 0.f,
          1.f,  1.f,  0.0f,   1.f, 1.f,

@@ -130,6 +130,21 @@ void RenderSystem::UpdateGlobalShaderUniforms(const CameraComponent& activeCamer
     const glm::mat4 view = activeCamera.GetViewMatrix();
     const glm::mat4 proj = activeCamera.GetProjectionMatrix();
 
+    // If we have a override shader to use for all objects
+    // just update it and ignore world active shaders
+    if(m_WorldOverrideShader)
+    {
+        m_WorldOverrideShader->Bind();
+        m_WorldOverrideShader->SetUniformMat4f("u_Proj", proj);
+        m_WorldOverrideShader->SetUniformMat4f("u_View", view);
+        m_WorldOverrideShader->SetUniform1f("u_NearPlane", activeCamera.GetNearPlane());
+        m_WorldOverrideShader->SetUniform1f("u_FarPlane", activeCamera.GetFarPlane());
+
+        m_LightingSystem.SetLightsFor(*m_WorldOverrideShader, activeCamera);
+
+        return;    
+    }
+    
     for(auto& activeShaderPair : m_UniqueActiveShaders)
     {
         Shader& activeShader = *activeShaderPair.second.Shader;
@@ -137,6 +152,8 @@ void RenderSystem::UpdateGlobalShaderUniforms(const CameraComponent& activeCamer
         activeShader.Bind();
         activeShader.SetUniformMat4f("u_Proj", proj);
         activeShader.SetUniformMat4f("u_View", view);
+        activeShader.SetUniform1f("u_NearPlane", activeCamera.GetNearPlane());
+        activeShader.SetUniform1f("u_FarPlane", activeCamera.GetFarPlane());
 
         m_LightingSystem.SetLightsFor(activeShader, activeCamera);
     }
@@ -171,7 +188,11 @@ void RenderSystem::RenderWorldObjects()
 
                 m_InstancedArray->SetSubData(modelMatrices.data(), instancesToDraw * sizeof(glm::mat4));
                 
-                m_MeshRenderer.RenderInstanced(*meshComponents[nextStartMeshIndex]->GetMesh(), *meshComponents[nextStartMeshIndex]->GetMaterial(), instancesToDraw);
+                m_MeshRenderer.RenderInstanced(
+                    *meshComponents[nextStartMeshIndex]->GetMesh(),
+                    *meshComponents[nextStartMeshIndex]->GetMaterial(),
+                    instancesToDraw,
+                    m_WorldOverrideShader);
                 
                 remainingInstancesToDraw -= instancesToDraw;
                 nextStartMeshIndex += instancesToDraw;

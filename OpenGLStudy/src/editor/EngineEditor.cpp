@@ -7,6 +7,8 @@ namespace Editor
 
     void EngineEditor::RenderGUI(World& world)
     {
+        m_MainMenuBar.RenderGUI(world);
+
         m_MainPanel.RenderGUI(world);
         m_ResourcesPanel.RenderGUI();
     }

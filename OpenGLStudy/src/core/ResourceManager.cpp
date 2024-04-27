@@ -75,6 +75,16 @@ std::shared_ptr<Shader> ResourceManager::LoadShader(const std::string& singleFil
     return shader;
 }
 
+std::shared_ptr<Shader> ResourceManager::GetOrLoadShader(const std::string& singleFileShaderPath, const std::string& name)
+{
+    if(m_Shaders.find(name) == m_Shaders.end())
+    {
+        return LoadShader(singleFileShaderPath, name);
+    }
+
+    return m_Shaders[name]; 
+}
+
 std::shared_ptr<Shader> ResourceManager::GetShader(const std::string& name)
 {
     return m_Shaders[name];

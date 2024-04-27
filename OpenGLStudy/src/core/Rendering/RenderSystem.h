@@ -43,6 +43,7 @@ public:
     glm::vec3 GetAmbientLightColor() const { return m_LightingSystem.GetAmbientLightColor(); }
     void SetClearColor(const glm::vec4& clearColor) const { m_Framebuffer->SetClearColor(clearColor); }
     glm::vec4 GetClearColor() const { return m_Framebuffer->GetClearColor(); }
+    void SetOverrideShader(const std::shared_ptr<Shader>& overrideShader) { m_WorldOverrideShader = overrideShader; }
 
 private:
 
@@ -54,6 +55,7 @@ private:
 
     std::map<unsigned int, std::map<unsigned int, std::vector<std::shared_ptr<MeshComponent>>>> m_MeshComponents{}; // keyed by VAO and material ID
     std::map<unsigned int, ActiveShader> m_UniqueActiveShaders{}; // Keyed by shader id
+    std::shared_ptr<Shader> m_WorldOverrideShader{}; // if set, render world using only this shader
 
     std::unique_ptr<InstancedArray> m_InstancedArray{};
     std::unique_ptr<Framebuffer> m_Framebuffer{};

@@ -1,4 +1,5 @@
 #pragma once
+#include "MainMenuBar.h"
 #include "MainPanel.h"
 #include "ResourcesPanel.h"
 
@@ -15,6 +16,7 @@ namespace Editor
 
     private:
 
+        MainMenuBar m_MainMenuBar{};
         MainPanel m_MainPanel{};
         ResourcesPanel m_ResourcesPanel{};
     };

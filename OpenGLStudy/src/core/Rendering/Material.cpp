@@ -34,11 +34,16 @@ void Material::SetBool(const std::string& name, const bool value)
 
 void Material::Bind() const
 {
-    m_Shader->Bind();
+    Bind(*m_Shader);
+}
+
+void Material::Bind(Shader& shader) const
+{
+    shader.Bind();
 
     for(const auto& propertyPair : m_ColorProperties)
     {
-        m_Shader->SetUniform4f(propertyPair.first, propertyPair.second);
+        shader.SetUniform4f(propertyPair.first, propertyPair.second);
     }
 
     for(const auto& propertyPair : m_TextureProperties)
@@ -49,11 +54,16 @@ void Material::Bind() const
 
     for(const auto& propertyPair : m_BoolProperties)
     {
-        m_Shader->SetUniform1i(propertyPair.first, propertyPair.second);
+        shader.SetUniform1i(propertyPair.first, propertyPair.second);
     }
 }
 
 void Material::Unbind() const
+{
+    Unbind(*m_Shader);
+}
+
+void Material::Unbind(const Shader& shader) const
 {
     for(const auto& propertyPair : m_TextureProperties)
     {
@@ -61,5 +71,5 @@ void Material::Unbind() const
         textureProperty.Texture->Unbind(textureProperty.Slot);
     }
 
-    m_Shader->Unbind();
+    shader.Unbind();
 }
