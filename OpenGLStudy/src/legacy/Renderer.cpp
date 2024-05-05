@@ -6,7 +6,8 @@
 
 void Renderer::Clear() const
 {
-    GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+    // Clear color, depth and stencil buffers
+    GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT));
 }
 
 // In a more appropriate way, instead of having a shader here to set the uniform and pass a shader to the draw method

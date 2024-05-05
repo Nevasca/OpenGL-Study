@@ -24,6 +24,11 @@ namespace Editor
             const std::string materialName = material ? material->GetName() : "None";
 
             ImGui::Text("Material: %s", materialName.c_str());
+
+            bool bIsOutlined = meshComponent->IsOutlined();
+            ImGui::Checkbox("Outlined", &bIsOutlined);
+
+            meshComponent->SetIsOutlined(bIsOutlined);
         }
 
         int MeshComponentInspector::GetComponentHash()

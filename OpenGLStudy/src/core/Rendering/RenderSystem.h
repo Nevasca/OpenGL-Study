@@ -1,14 +1,15 @@
 #pragma once
-#include <map>
 #include <memory>
-#include <vector>
 
+#include "Device.h"
 #include "MeshRenderer.h"
 #include "InstancedArray.h"
 #include "LightingSystem.h"
 #include "PostProcessingSystem.h"
 #include "core/Basics/Components/DirectionalLightComponent.h"
 #include "FrameBuffer.h"
+#include "MeshComponentRenderSet.h"
+#include "ShaderRenderSet.h"
 
 class PostProcessingComponent;
 class SpotLightComponent;
@@ -16,12 +17,6 @@ class PointLightComponent;
 class MeshComponent;
 class Shader;
 class CameraComponent;
-
-struct ActiveShader
-{
-    std::shared_ptr<Shader> Shader{};
-    unsigned int UsageCount{0};
-};
 
 class RenderSystem
 {
@@ -32,6 +27,8 @@ public:
 
     void AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
     void RemoveMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
+    void AddOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
+    void RemoveOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
     void AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent);
     void AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent);
     void AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent);
@@ -52,16 +49,22 @@ private:
     MeshRenderer m_MeshRenderer{};
     LightingSystem m_LightingSystem{};
     PostProcessingSystem m_PostProcessingSystem{};
+    Rendering::Device m_Device{};
 
-    std::map<unsigned int, std::map<unsigned int, std::vector<std::shared_ptr<MeshComponent>>>> m_MeshComponents{}; // keyed by VAO and material ID
-    std::map<unsigned int, ActiveShader> m_UniqueActiveShaders{}; // Keyed by shader id
+    Rendering::MeshComponentRenderSet m_MeshComponentSet{};
+    Rendering::MeshComponentRenderSet m_OutlinedMeshComponentSet{};
+    Rendering::ShaderRenderSet m_UniqueActiveShaderSet{};
     std::shared_ptr<Shader> m_WorldOverrideShader{}; // if set, render world using only this shader
 
     std::unique_ptr<InstancedArray> m_InstancedArray{};
     std::unique_ptr<Framebuffer> m_Framebuffer{};
+    std::shared_ptr<Shader> m_OutlineShader{};
 
-    void UpdateGlobalShaderUniforms(const CameraComponent& activeCamera) const;
-    void RenderWorldObjects();
+    void UpdateGlobalShaderUniforms(const CameraComponent& activeCamera);
+    void RenderObjects(const Rendering::MeshComponentRenderSet& meshComponentSet);
+    void RenderWorldObjects(const CameraComponent& activeCamera);
+    void RenderOutlinedObjects(const CameraComponent& activeCamera);
     void CreateInstancedBuffer();
     void SetupInstancedMesh(const Mesh& mesh);
+    void SetupOutlineRendering();
 };

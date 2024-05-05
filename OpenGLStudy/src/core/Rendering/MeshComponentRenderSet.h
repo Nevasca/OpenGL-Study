@@ -1,0 +1,36 @@
+#pragma once
+#include <map>
+#include <memory>
+#include <vector>
+
+#include "glm/vec3.hpp"
+
+class InstancedArray;
+
+namespace Rendering
+{
+    class ShaderRenderSet;
+}
+
+class MeshComponent;
+
+namespace Rendering
+{
+    class MeshComponentRenderSet
+    {
+    public:
+
+        void Add(const std::shared_ptr<MeshComponent>& meshComponent, ShaderRenderSet& uniqueShadersSet, InstancedArray& instancedArray);
+        void Remove(const std::shared_ptr<MeshComponent>& meshComponent, ShaderRenderSet& uniqueShadersSet);
+        void OverrideAllObjectsScale(const glm::vec3& scaleToAdd);
+        void Clear();
+
+        const std::map<unsigned int, std::map<unsigned int, std::vector<std::shared_ptr<MeshComponent>>>>& GetMeshComponents() const { return m_MeshComponents; }
+        bool IsEmpty() const { return m_TotalMeshComponents == 0; }
+
+    private:
+
+        std::map<unsigned int, std::map<unsigned int, std::vector<std::shared_ptr<MeshComponent>>>> m_MeshComponents{}; // keyed by VAO and material ID
+        unsigned int m_TotalMeshComponents{0};
+    };
+}

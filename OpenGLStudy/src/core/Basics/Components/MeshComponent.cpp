@@ -33,6 +33,26 @@ void MeshComponent::SetMaterial(const std::shared_ptr<Material>& material)
     }
 }
 
+void MeshComponent::SetIsOutlined(const bool bOutlined)
+{
+    if(bIsOutlined == bOutlined)
+    {
+        return;
+    }
+
+    if(bIsAddedToWorld)
+    {
+        RemoveFromWorld();
+    }
+
+    bIsOutlined = bOutlined;
+
+    if(IsReadyToDraw())
+    {
+        AddToWorld();
+    }
+}
+
 void MeshComponent::AddToWorld()
 {
     if(bIsAddedToWorld)
@@ -41,7 +61,15 @@ void MeshComponent::AddToWorld()
     }
 
     World& world = GetOwner().GetWorld();
-    world.AddMeshComponent(GetThis());
+
+    if(bIsOutlined)
+    {
+        world.AddOutlinedMeshComponent(GetThis());
+    }
+    else
+    {
+        world.AddMeshComponent(GetThis());
+    }
 
     bIsAddedToWorld = true;
 }
@@ -49,7 +77,15 @@ void MeshComponent::AddToWorld()
 void MeshComponent::RemoveFromWorld()
 {
     World& world = GetOwner().GetWorld();
-    world.RemoveMeshComponent(GetThis());
+
+    if(bIsOutlined)
+    {
+        world.RemoveOutlinedMeshComponent(GetThis());
+    }
+    else
+    {
+        world.RemoveMeshComponent(GetThis());
+    }
 
     bIsAddedToWorld = false;
 }
