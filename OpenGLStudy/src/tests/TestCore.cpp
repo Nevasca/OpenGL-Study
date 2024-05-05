@@ -36,6 +36,7 @@ namespace tests
         Test::OnUpdate(deltaTime);
 
         m_World->Update(deltaTime);
+        m_Editor->Update(deltaTime, *m_World);
     }
 
     void TestCore::OnRender()

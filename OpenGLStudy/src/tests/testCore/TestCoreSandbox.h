@@ -14,7 +14,7 @@ namespace tests
         TestCoreSandbox();
         ~TestCoreSandbox() override;
 
-        void OnUpdate(float DeltaTime) override;
+        void OnUpdate(float deltaTime) override;
         void OnRender() override;
         void OnImGuiRender() override;
 

@@ -10,6 +10,8 @@ namespace Editor
 {
     void WorldHierarchy::RenderGUI(World& world)
     {
+        TryDeselectingNode();
+
         std::vector<std::shared_ptr<GameObject>>& gameObjects = world.GetAllGameObjects();
 
         for(int i = 0; i < static_cast<int>(gameObjects.size()); i++)
@@ -27,6 +29,19 @@ namespace Editor
             {
                 m_SelectedIndex = i;
             }
+        }
+    }
+
+    void WorldHierarchy::TryDeselectingNode()
+    {
+        if(m_SelectedIndex == -1)
+        {
+            return;
+        }
+
+        if(ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsWindowHovered(ImGuiHoveredFlags_RootAndChildWindows))
+        {
+            m_SelectedIndex = -1;
         }
     }
 }

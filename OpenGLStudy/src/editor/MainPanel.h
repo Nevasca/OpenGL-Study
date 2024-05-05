@@ -12,6 +12,8 @@ namespace Editor
     public:
 
         void RenderGUI(World& world);
+        bool HasAnyGameObjectSelected() const { return m_Hierarchy.HasAnyGameObjectSelected(); }
+        int GetCurrentSelectedGameObjectIndex() const { return m_Hierarchy.GetCurrentSelectedGameObjectIndex(); } 
 
     private:
 

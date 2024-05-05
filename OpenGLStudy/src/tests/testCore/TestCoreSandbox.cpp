@@ -131,9 +131,10 @@ namespace tests
         ResourceManager::UnloadAll();
     }
 
-    void TestCoreSandbox::OnUpdate(float DeltaTime)
+    void TestCoreSandbox::OnUpdate(float deltaTime)
     {
-        m_World->Update(DeltaTime);
+        m_World->Update(deltaTime);
+        m_Editor->Update(deltaTime, *m_World);
     }
 
     void TestCoreSandbox::OnRender()

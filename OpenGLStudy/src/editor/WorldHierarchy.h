@@ -14,5 +14,7 @@ namespace Editor
 
     private:
         int m_SelectedIndex{-1};
+
+        void TryDeselectingNode();
     };
 }
