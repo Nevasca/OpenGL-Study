@@ -198,13 +198,15 @@ void RenderSystem::RenderOutlinedObjects(const CameraComponent& activeCamera)
 
     constexpr glm::vec3 outlineThickness{0.06f};
     m_OutlinedMeshComponentSet.OverrideAllObjectsScale(outlineThickness);
+
+    std::shared_ptr<Shader> currentOverrideShader = m_WorldOverrideShader;
     SetOverrideShader(m_OutlineShader);
     UpdateGlobalShaderUniforms(activeCamera);
 
     RenderObjects(m_OutlinedMeshComponentSet);
 
     m_OutlinedMeshComponentSet.OverrideAllObjectsScale(-outlineThickness);
-    SetOverrideShader(nullptr);
+    SetOverrideShader(currentOverrideShader);
 
     m_Device.EnableStencilWrite();
     m_Device.SetStencilFunction(GL_ALWAYS, 1.f, 0xFF);
