@@ -70,6 +70,5 @@ private:
     void RenderWorldObjects(const CameraComponent& activeCamera);
     void RenderOutlinedObjects(const CameraComponent& activeCamera);
     void CreateInstancedBuffer();
-    void SetupInstancedMesh(const Mesh& mesh);
     void SetupOutlineRendering();
 };

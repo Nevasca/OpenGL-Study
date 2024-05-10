@@ -10,11 +10,18 @@ InstancedArray::InstancedArray(const void* data, unsigned size, bool bIsDynamic,
 
 void InstancedArray::SetupInstancedAttributesFor(VertexArray& vertexArray)
 {
+    // Prevent setting vertex attributes for instanced again, eventually crashing by passing max attributes per vertex (16)
+    if(vertexArray.IsInstancedRenderingConfigured())
+    {
+        return;
+    }
+
     Bind();
     vertexArray.Bind();
 
     const unsigned int nextAttributeLocation = m_Layout.CreateAttributes(vertexArray.GetNextAttributeLocation());
     vertexArray.SetNextAttributeLocation(nextAttributeLocation);
+    vertexArray.SetIsInstancedRenderingConfigured(true);
 
     vertexArray.Unbind();
     Unbind();

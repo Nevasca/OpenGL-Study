@@ -15,7 +15,9 @@ public:
 
     unsigned int GetRendererID() const { return m_RendererID; }
     unsigned int GetNextAttributeLocation() const { return m_NextAttributeLocation; }
-    void SetNextAttributeLocation(unsigned int nextAttributeLocation) { m_NextAttributeLocation = nextAttributeLocation; } 
+    void SetNextAttributeLocation(unsigned int nextAttributeLocation) { m_NextAttributeLocation = nextAttributeLocation; }
+    void SetIsInstancedRenderingConfigured(bool bIsPrepared) { bIsInstancedRenderingConfigured = bIsPrepared; }
+    bool IsInstancedRenderingConfigured() const { return bIsInstancedRenderingConfigured; }
 
 private:
 
@@ -23,4 +25,5 @@ private:
 
     unsigned int m_RendererID;
     unsigned int m_NextAttributeLocation{0};
+    bool bIsInstancedRenderingConfigured{false};
 };

@@ -334,11 +334,6 @@ void RenderSystem::CreateInstancedBuffer()
         std::move(layout));
 }
 
-void RenderSystem::SetupInstancedMesh(const Mesh& mesh)
-{
-    m_InstancedArray->SetupInstancedAttributesFor(mesh.GetVertexArray());
-}
-
 void RenderSystem::SetupOutlineRendering()
 {
     m_Device.EnableStencilTest();
