@@ -16,6 +16,13 @@ class MeshComponent;
 
 namespace Rendering
 {
+    struct MeshComponentRenderElement
+    {
+        unsigned int VaoId;
+        unsigned int MaterialId;
+        std::shared_ptr<MeshComponent> MeshComponent;
+    };
+    
     class MeshComponentRenderSet
     {
     public:
@@ -23,6 +30,7 @@ namespace Rendering
         void Add(const std::shared_ptr<MeshComponent>& meshComponent, ShaderRenderSet& uniqueShadersSet, InstancedArray& instancedArray);
         void Remove(const std::shared_ptr<MeshComponent>& meshComponent, ShaderRenderSet& uniqueShadersSet);
         void OverrideAllObjectsScale(const glm::vec3& scaleToAdd);
+        std::multimap<float, MeshComponentRenderElement> GetMeshComponentsSortedByDistance(const glm::vec3& cameraPosition) const;
         void Clear();
 
         const std::map<unsigned int, std::map<unsigned int, std::vector<std::shared_ptr<MeshComponent>>>>& GetMeshComponents() const { return m_MeshComponents; }

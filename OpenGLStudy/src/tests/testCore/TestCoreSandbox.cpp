@@ -72,9 +72,7 @@ namespace tests
         bridge->Setup(bridgeModel, bridgeMaterial);
         bridge->SetName("Bridge");
 
-        auto quad = m_World->Spawn<Quad>(glm::vec3(0.f, 0.f, -2.f), glm::vec3{0.f, -90.f, 0.f});
-        quad->SetName("Quad");
-        quad->SetMaterial(anotherMaterial);
+        SpawnTransparentObjects();
 
         auto sphere = m_World->Spawn<Sphere>(glm::vec3(-4.f, 0.f, 0.f));
         sphere->SetName("Sphere");
@@ -83,6 +81,33 @@ namespace tests
 
         auto postProcessing = m_World->Spawn<PostProcessing>();
         postProcessing->SetName("PostProcessing");
+    }
+
+    void TestCoreSandbox::SpawnTransparentObjects()
+    {
+        auto flowerMaterial = ResourceManager::CreateMaterial("M_Flower");
+        flowerMaterial->SetColor("u_Color", glm::vec4(0.f));
+        flowerMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Flower.png", "T_Flower", true, true), 0);
+        
+        auto flowerQuad = m_World->Spawn<Quad>(glm::vec3(-2.f, 0.f, -2.f), glm::vec3{0.f, -90.f, 0.f});
+        flowerQuad->SetName("Flower");
+        flowerQuad->SetMaterial(flowerMaterial);
+
+        auto windowMaterial = ResourceManager::CreateMaterial("M_Window");
+        windowMaterial->SetColor("u_Color", glm::vec4(0.f));
+        windowMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/TransparentWindow.png", "T_Window", true, true), 0);
+        windowMaterial->SetRenderingMode(MaterialRenderingMode::Transparent);
+
+        glm::vec3 windowRotation{0.f, -90.f, 0.f};
+
+        for(int i = 0; i < 5; i++)
+        {
+            glm::vec3 windowPosition(static_cast<float>(i) * 2.f, 0.f, -2.f);
+
+            auto windowQuad = m_World->Spawn<Quad>(windowPosition, windowRotation);
+            windowQuad->SetName("Window" + std::to_string(i));
+            windowQuad->SetMaterial(windowMaterial);
+        }
     }
 
     void TestCoreSandbox::SpawnLights(GameObject& camera)

@@ -51,8 +51,10 @@ private:
     PostProcessingSystem m_PostProcessingSystem{};
     Rendering::Device m_Device{};
 
-    Rendering::MeshComponentRenderSet m_MeshComponentSet{};
-    Rendering::MeshComponentRenderSet m_OutlinedMeshComponentSet{};
+    Rendering::MeshComponentRenderSet m_OpaqueMeshComponentSet{};
+    Rendering::MeshComponentRenderSet m_TransparentMeshComponentSet{};
+    Rendering::MeshComponentRenderSet m_OpaqueOutlinedMeshComponentSet{};
+    Rendering::MeshComponentRenderSet m_TransparentOutlinedMeshComponentSet{};
     Rendering::ShaderRenderSet m_UniqueActiveShaderSet{};
     std::shared_ptr<Shader> m_WorldOverrideShader{}; // if set, render world using only this shader
 
@@ -60,8 +62,11 @@ private:
     std::unique_ptr<Framebuffer> m_Framebuffer{};
     std::shared_ptr<Shader> m_OutlineShader{};
 
+    Rendering::MeshComponentRenderSet& GetComponentRenderSetFor(const std::shared_ptr<MeshComponent>& meshComponent);
+    Rendering::MeshComponentRenderSet& GetOutlinedComponentRenderSetFor(const std::shared_ptr<MeshComponent>& meshComponent);
     void UpdateGlobalShaderUniforms(const CameraComponent& activeCamera);
     void RenderObjects(const Rendering::MeshComponentRenderSet& meshComponentSet);
+    void RenderObjectsSortedByDistance(const Rendering::MeshComponentRenderSet& meshComponentSet, const glm::vec3& cameraPosition);
     void RenderWorldObjects(const CameraComponent& activeCamera);
     void RenderOutlinedObjects(const CameraComponent& activeCamera);
     void CreateInstancedBuffer();

@@ -57,6 +57,16 @@ namespace Rendering
         std::vector<std::shared_ptr<MeshComponent>>& components = m_MeshComponents[vaoID][materialId];
         components.erase(std::remove(components.begin(), components.end(), meshComponent), components.end());
 
+        if(components.empty())
+        {
+            m_MeshComponents[vaoID].erase(materialId);
+
+            if(m_MeshComponents[vaoID].empty())
+            {
+                m_MeshComponents.erase(vaoID);
+            }
+        }
+
         m_TotalMeshComponents--;
     }
 
@@ -73,6 +83,28 @@ namespace Rendering
                 }
             }
         }
+    }
+
+    // Using multimap to avoid two objects with same distance from camera override each other on single map entry
+    std::multimap<float, MeshComponentRenderElement> MeshComponentRenderSet::GetMeshComponentsSortedByDistance(const glm::vec3& cameraPosition) const
+    {
+        std::multimap<float, MeshComponentRenderElement> sortedElements;
+
+        for(const auto& meshMappingPair : m_MeshComponents)
+        {
+            for(const auto& meshComponentPair : meshMappingPair.second)
+            {
+                for(const auto& meshComponent : meshComponentPair.second)
+                {
+                    float distanceFromCamera = glm::length(cameraPosition - meshComponent->GetOwnerPosition());
+
+                    MeshComponentRenderElement element{meshMappingPair.first, meshComponentPair.first, meshComponent};
+                    sortedElements.insert(std::pair<float, MeshComponentRenderElement>(distanceFromCamera, element));
+                }
+            }
+        }
+
+        return sortedElements;
     }
 
     void MeshComponentRenderSet::Clear()

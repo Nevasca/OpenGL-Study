@@ -17,12 +17,19 @@ RenderSystem::RenderSystem()
     m_Framebuffer = std::make_unique<Framebuffer>(Screen::GetWidth(), Screen::GetHeight(), true, std::vector<TextureSettings>{});
     m_PostProcessingSystem.SetFramebuffer(*m_Framebuffer);
 
+    constexpr glm::vec4 defaultClearColor{0.2f, 0.2f, 0.2f, 1.f};
+    SetClearColor(defaultClearColor);
+
     SetupOutlineRendering();
 }
 
 void RenderSystem::Shutdown()
 {
-    m_MeshComponentSet.Clear();
+    m_OpaqueMeshComponentSet.Clear();
+    m_TransparentMeshComponentSet.Clear();
+    m_OpaqueOutlinedMeshComponentSet.Clear();
+    m_TransparentOutlinedMeshComponentSet.Clear();
+
     m_UniqueActiveShaderSet.Clear();
 
     m_LightingSystem.Shutdown();
@@ -31,25 +38,57 @@ void RenderSystem::Shutdown()
 void RenderSystem::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
 {
     assert(meshComponent->IsReadyToDraw());
-    m_MeshComponentSet.Add(meshComponent, m_UniqueActiveShaderSet, *m_InstancedArray);
+
+    Rendering::MeshComponentRenderSet& meshComponentSet = GetComponentRenderSetFor(meshComponent);
+    meshComponentSet.Add(meshComponent, m_UniqueActiveShaderSet, *m_InstancedArray);
 }
 
 void RenderSystem::RemoveMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
 {
     assert(meshComponent->IsReadyToDraw());
-    m_MeshComponentSet.Remove(meshComponent, m_UniqueActiveShaderSet);
+    
+    Rendering::MeshComponentRenderSet& meshComponentSet = GetComponentRenderSetFor(meshComponent);
+    meshComponentSet.Remove(meshComponent, m_UniqueActiveShaderSet);
 }
 
 void RenderSystem::AddOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
 {
     assert(meshComponent->IsReadyToDraw());
-    m_OutlinedMeshComponentSet.Add(meshComponent, m_UniqueActiveShaderSet, *m_InstancedArray);
+
+    Rendering::MeshComponentRenderSet& meshComponentSet = GetOutlinedComponentRenderSetFor(meshComponent);
+    meshComponentSet.Add(meshComponent, m_UniqueActiveShaderSet, *m_InstancedArray);
 }
 
 void RenderSystem::RemoveOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
 {
     assert(meshComponent->IsReadyToDraw());
-    m_OutlinedMeshComponentSet.Remove(meshComponent, m_UniqueActiveShaderSet);
+
+    Rendering::MeshComponentRenderSet& meshComponentSet = GetOutlinedComponentRenderSetFor(meshComponent);
+    meshComponentSet.Remove(meshComponent, m_UniqueActiveShaderSet);
+}
+
+Rendering::MeshComponentRenderSet& RenderSystem::GetComponentRenderSetFor(const std::shared_ptr<MeshComponent>& meshComponent)
+{
+    const std::shared_ptr<Material>& material = meshComponent->GetMaterial();
+
+    if(material->GetRenderingMode() == MaterialRenderingMode::Transparent)
+    {
+        return m_TransparentMeshComponentSet;
+    }
+
+    return m_OpaqueMeshComponentSet;
+}
+
+Rendering::MeshComponentRenderSet& RenderSystem::GetOutlinedComponentRenderSetFor(const std::shared_ptr<MeshComponent>& meshComponent)
+{
+    const std::shared_ptr<Material>& material = meshComponent->GetMaterial();
+
+    if(material->GetRenderingMode() == MaterialRenderingMode::Transparent)
+    {
+        return m_TransparentOutlinedMeshComponentSet;
+    }
+
+    return m_OpaqueOutlinedMeshComponentSet;
 }
 
 void RenderSystem::AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent)
@@ -167,17 +206,81 @@ void RenderSystem::RenderObjects(const Rendering::MeshComponentRenderSet& meshCo
     m_InstancedArray->Unbind();
 }
 
+// Render distant objects first, used to render transparent objects
+// best case scenario we have few different mesh/material with transparency, and we take advantage of instanced rendering
+// worst case scenario we have lots of different mesh/material and their distance/placement make rendering almost as not using instanced rendering
+void RenderSystem::RenderObjectsSortedByDistance(const Rendering::MeshComponentRenderSet& meshComponentSet, const glm::vec3& cameraPosition)
+{
+    if(meshComponentSet.IsEmpty())
+    {
+        return;
+    }
+
+    m_InstancedArray->Bind();
+
+    std::multimap<float, Rendering::MeshComponentRenderElement> sortedObjects = meshComponentSet.GetMeshComponentsSortedByDistance(cameraPosition);
+
+    auto& previousElement = sortedObjects.rbegin()->second;
+
+    int totalPendingMeshesToRender = 0;
+    std::vector<glm::mat4> modelMatrices{};
+    
+    for(auto it = sortedObjects.rbegin(); it != sortedObjects.rend(); ++it)
+    {
+        auto& renderElement = it->second;
+
+        // If we reached max instanced amount per call or this is a different mesh/material
+        // commit the render call with what was pending to render
+        if(totalPendingMeshesToRender > MAX_INSTANCED_AMOUNT_PER_CALL
+            || renderElement.VaoId != previousElement.VaoId
+            || renderElement.MaterialId != previousElement.MaterialId)
+        {
+            m_InstancedArray->SetSubData(modelMatrices.data(), totalPendingMeshesToRender * sizeof(glm::mat4));
+            
+            m_MeshRenderer.RenderInstanced(
+                *previousElement.MeshComponent->GetMesh(),
+                *previousElement.MeshComponent->GetMaterial(),
+                totalPendingMeshesToRender,
+                m_WorldOverrideShader);
+
+            totalPendingMeshesToRender = 0;
+            modelMatrices.clear();
+        }
+
+        assert(renderElement.MeshComponent->IsReadyToDraw());
+        modelMatrices.emplace_back(renderElement.MeshComponent->GetOwnerTransform().GetMatrix());
+        
+        previousElement = renderElement;
+        totalPendingMeshesToRender++;
+    }
+
+    // Make sure to render pending meshes when we get out of loop
+    if(totalPendingMeshesToRender > 0)
+    {
+        m_InstancedArray->SetSubData(modelMatrices.data(), totalPendingMeshesToRender * sizeof(glm::mat4));
+            
+        m_MeshRenderer.RenderInstanced(
+            *previousElement.MeshComponent->GetMesh(),
+            *previousElement.MeshComponent->GetMaterial(),
+            totalPendingMeshesToRender,
+            m_WorldOverrideShader);
+    }
+
+    m_InstancedArray->Unbind();
+}
+
 void RenderSystem::RenderWorldObjects(const CameraComponent& activeCamera)
 {
     m_Device.DisableStencilWrite();
     UpdateGlobalShaderUniforms(activeCamera);
 
-    RenderObjects(m_MeshComponentSet);
+    RenderObjects(m_OpaqueMeshComponentSet);
+    RenderObjectsSortedByDistance(m_TransparentMeshComponentSet, activeCamera.GetOwnerPosition());
 }
 
 void RenderSystem::RenderOutlinedObjects(const CameraComponent& activeCamera)
 {
-    if(m_OutlinedMeshComponentSet.IsEmpty())
+    if(m_OpaqueOutlinedMeshComponentSet.IsEmpty() && m_TransparentOutlinedMeshComponentSet.IsEmpty())
     {
         return;        
     }
@@ -185,7 +288,8 @@ void RenderSystem::RenderOutlinedObjects(const CameraComponent& activeCamera)
     m_Device.SetStencilFunction(GL_ALWAYS, 1.f, 0xFF);
     m_Device.EnableStencilWrite();
 
-    RenderObjects(m_OutlinedMeshComponentSet);
+    RenderObjects(m_OpaqueOutlinedMeshComponentSet);
+    RenderObjectsSortedByDistance(m_TransparentOutlinedMeshComponentSet, activeCamera.GetOwnerPosition());
 
     m_Device.SetStencilFunction(GL_NOTEQUAL, 1.f, 0xFF);
     m_Device.DisableStencilWrite();
@@ -197,15 +301,18 @@ void RenderSystem::RenderOutlinedObjects(const CameraComponent& activeCamera)
     // m_Device.DisableDepthTest();
 
     constexpr glm::vec3 outlineThickness{0.06f};
-    m_OutlinedMeshComponentSet.OverrideAllObjectsScale(outlineThickness);
+    m_OpaqueOutlinedMeshComponentSet.OverrideAllObjectsScale(outlineThickness);
+    m_TransparentOutlinedMeshComponentSet.OverrideAllObjectsScale(outlineThickness);
 
     std::shared_ptr<Shader> currentOverrideShader = m_WorldOverrideShader;
     SetOverrideShader(m_OutlineShader);
     UpdateGlobalShaderUniforms(activeCamera);
 
-    RenderObjects(m_OutlinedMeshComponentSet);
+    RenderObjects(m_OpaqueOutlinedMeshComponentSet);
+    RenderObjects(m_TransparentOutlinedMeshComponentSet);
 
-    m_OutlinedMeshComponentSet.OverrideAllObjectsScale(-outlineThickness);
+    m_OpaqueOutlinedMeshComponentSet.OverrideAllObjectsScale(-outlineThickness);
+    m_TransparentOutlinedMeshComponentSet.OverrideAllObjectsScale(-outlineThickness);
     SetOverrideShader(currentOverrideShader);
 
     m_Device.EnableStencilWrite();

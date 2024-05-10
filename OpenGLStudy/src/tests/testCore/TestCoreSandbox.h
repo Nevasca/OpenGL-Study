@@ -25,6 +25,7 @@ namespace tests
         std::shared_ptr<DummyGameObject> m_DummyObjectA;
         std::shared_ptr<DummyGameObject> m_DummyObjectB;
 
+        void SpawnTransparentObjects();
         void SpawnLights(GameObject& camera);
     };
 }

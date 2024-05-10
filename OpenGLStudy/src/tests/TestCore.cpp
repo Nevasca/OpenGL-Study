@@ -20,7 +20,6 @@ namespace tests
         m_Editor->Initialize();
 
         SpawnDefaultWorld();
-        SetDefaultWorldSettings();
     }
 
     TestCore::~TestCore()
@@ -79,11 +78,5 @@ namespace tests
         glm::vec3 floorScale{10.f, 0.25f, 10.f};
         std::shared_ptr<Cube> floor = m_World->Spawn<Cube>(floorPosition, floorRotation, floorScale);
         floor->SetName("Floor");
-    }
-
-    void TestCore::SetDefaultWorldSettings()
-    {
-        RenderSystem& renderSystem = m_World->GetRenderSystem();
-        renderSystem.SetClearColor(glm::vec4{0.2f, 0.2f, 0.2f, 1.f});
     }
 }

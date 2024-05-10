@@ -27,6 +27,5 @@ namespace tests
     private:
 
         void SpawnDefaultWorld();
-        void SetDefaultWorldSettings();
     };
 }

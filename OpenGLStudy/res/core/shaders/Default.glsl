@@ -107,6 +107,13 @@ vec3 ComputeAmbientLight();
 
 void main()
 {
+    vec4 diffuseTextureColor = texture(u_Diffuse, v_TexCoord); 
+    // TODO: have alpha cotout enabled and threshold coming from uniforms
+    if(diffuseTextureColor.a < 0.1f)
+    {
+        discard;
+    }
+
     vec3 normal = normalize(v_Normal);
     vec3 viewDir = normalize(u_ViewPosition - v_FragPosition);
     
@@ -127,7 +134,7 @@ void main()
         result += ComputeSpotLight(u_SpotLights[i], normal, v_FragPosition, viewDir);
     }
     
-    o_Color = vec4(result, 1.f);
+    o_Color = vec4(result, diffuseTextureColor.a);
 }
 
 vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir)

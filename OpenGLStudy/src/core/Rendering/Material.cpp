@@ -32,6 +32,11 @@ void Material::SetBool(const std::string& name, const bool value)
     m_BoolProperties[name] = value;
 }
 
+void Material::SetRenderingMode(MaterialRenderingMode renderingMode)
+{
+    m_RenderingMode = renderingMode;
+}
+
 void Material::Bind() const
 {
     Bind(*m_Shader);
@@ -56,6 +61,8 @@ void Material::Bind(Shader& shader) const
     {
         shader.SetUniform1i(propertyPair.first, propertyPair.second);
     }
+
+    shader.SetUniform1i("u_RenderingMode", static_cast<int>(m_RenderingMode));
 }
 
 void Material::Unbind() const

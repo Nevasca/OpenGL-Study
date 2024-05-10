@@ -14,5 +14,8 @@ namespace Rendering
         void DisableStencilWrite() const;
         void SetStencilFunction(const unsigned int function, const int reference, const unsigned int mask) const;
         void SetStencilOperation(const unsigned int fail, const unsigned int zFail, const unsigned int zPass) const;
+        void EnableBlend() const;
+        void DisableBlend() const;
+        void SetBlendFunction(const unsigned int sourceFactor, const unsigned int destinationFactor) const;
     };
 }

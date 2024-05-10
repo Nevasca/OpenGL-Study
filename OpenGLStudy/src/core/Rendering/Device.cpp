@@ -45,4 +45,19 @@ namespace Rendering
     {
         GLCall(glStencilOp(fail, zFail, zPass));
     }
+
+    void Device::EnableBlend() const
+    {
+        GLCall(glEnable(GL_BLEND));
+    }
+
+    void Device::DisableBlend() const
+    {
+        GLCall(glDisable(GL_BLEND));
+    }
+
+    void Device::SetBlendFunction(const unsigned int sourceFactor, const unsigned int destinationFactor) const
+    {
+        GLCall(glBlendFunc(sourceFactor, destinationFactor));
+    }
 }
