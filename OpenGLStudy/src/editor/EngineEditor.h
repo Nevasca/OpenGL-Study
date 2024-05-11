@@ -21,9 +21,11 @@ namespace Editor
         MainPanel m_MainPanel{};
         ResourcesPanel m_ResourcesPanel{};
         int m_SelectedGameObjectIndex{-1};
+        bool bShowPanelsEnabled{true};
 
         void UpdateSelectedGameObject(const World& world);
         void SelectGameObject(int index, const World& world);
         void DeselectGameObject(int index, const World& world);
+        void UpdateShortcuts();
     };
 }

@@ -1,5 +1,9 @@
 #include "EngineEditor.h"
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
+#include "core/Input.h"
 #include "core/World.h"
 #include "core/GameObject/GameObject.h"
 #include "core/Basics/Components/MeshComponent.h"
@@ -12,11 +16,17 @@ namespace Editor
     void EngineEditor::Update(float deltaTime, World& world)
     {
         UpdateSelectedGameObject(world);
+        UpdateShortcuts();
     }
 
     void EngineEditor::RenderGUI(World& world)
     {
         m_MainMenuBar.RenderGUI(world);
+
+        if(!bShowPanelsEnabled)
+        {
+            return;
+        }
 
         m_MainPanel.RenderGUI(world);
         m_ResourcesPanel.RenderGUI();
@@ -62,6 +72,14 @@ namespace Editor
         if(meshComponent)
         {
             meshComponent->SetIsOutlined(false);
+        }
+    }
+
+    void EngineEditor::UpdateShortcuts()
+    {
+        if(Input::GetKey(GLFW_KEY_LEFT_CONTROL) && Input::GetKey(GLFW_KEY_LEFT_SHIFT) && Input::GetKeyDown(GLFW_KEY_SPACE))
+        {
+            bShowPanelsEnabled = !bShowPanelsEnabled;
         }
     }
 }
