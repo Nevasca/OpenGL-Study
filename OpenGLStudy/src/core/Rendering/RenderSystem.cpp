@@ -19,6 +19,7 @@ RenderSystem::RenderSystem()
 
     constexpr glm::vec4 defaultClearColor{0.2f, 0.2f, 0.2f, 1.f};
     SetClearColor(defaultClearColor);
+    m_Device.EnableFaceCulling();
 
     SetupOutlineRendering();
 }

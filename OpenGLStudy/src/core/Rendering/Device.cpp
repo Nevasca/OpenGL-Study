@@ -60,4 +60,34 @@ namespace Rendering
     {
         GLCall(glBlendFunc(sourceFactor, destinationFactor));
     }
+
+    void Device::EnableFaceCulling() const
+    {
+        GLCall(glEnable(GL_CULL_FACE));
+    }
+
+    void Device::DisableFaceCulling() const
+    {
+        GLCall(glDisable(GL_CULL_FACE));
+    }
+
+    // If you decide to cull front faces and you are using post processing
+    // remember to set it back to back face before rendering the screen quad or you'll get a black screen
+    // same when setting clockwise winding order
+    void Device::SetCullingFaceFront() const
+    {
+        GLCall(glCullFace(GL_FRONT));
+    }
+
+    // OpenGL culls back faces by default
+    // Call this method only if you have called SetCullingFaceFront() at some point
+    void Device::SetCullingFaceBack() const
+    {
+        GLCall(glCullFace(GL_BACK));
+    }
+
+    void Device::SetCullingWindingOrder(bool bIsCounterClockwise) const
+    {
+        GLCall(glFrontFace(bIsCounterClockwise ? GL_CCW : GL_CW));
+    }
 }

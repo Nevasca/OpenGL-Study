@@ -17,5 +17,10 @@ namespace Rendering
         void EnableBlend() const;
         void DisableBlend() const;
         void SetBlendFunction(const unsigned int sourceFactor, const unsigned int destinationFactor) const;
+        void EnableFaceCulling() const;
+        void DisableFaceCulling() const;
+        void SetCullingFaceFront() const;
+        void SetCullingFaceBack() const;
+        void SetCullingWindingOrder(bool bIsCounterClockwise) const;
     };
 }
