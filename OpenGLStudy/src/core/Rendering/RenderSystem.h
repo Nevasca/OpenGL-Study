@@ -41,6 +41,7 @@ public:
     void SetClearColor(const glm::vec4& clearColor) const { m_Framebuffer->SetClearColor(clearColor); }
     glm::vec4 GetClearColor() const { return m_Framebuffer->GetClearColor(); }
     void SetOverrideShader(const std::shared_ptr<Shader>& overrideShader) { m_WorldOverrideShader = overrideShader; }
+    Rendering::Device& GetDevice() { return m_Device; }
 
 private:
 

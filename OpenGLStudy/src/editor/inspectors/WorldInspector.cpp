@@ -39,6 +39,23 @@ namespace Editor
             ImGui::ColorEdit4("Clear Color", &clearColor.r);
 
             renderSystem.SetClearColor(clearColor);
+
+            Rendering::Device& device = renderSystem.GetDevice();
+
+            bool bIsFaceCullingEnabled = device.IsFaceCullingEnabled();
+            ImGui::Checkbox("Face culling", &bIsFaceCullingEnabled);
+
+            if(bIsFaceCullingEnabled != device.IsFaceCullingEnabled())
+            {
+                if(bIsFaceCullingEnabled)
+                {
+                    device.EnableFaceCulling();
+                }
+                else
+                {
+                    device.DisableFaceCulling();
+                }
+            }
         }
     }
 }

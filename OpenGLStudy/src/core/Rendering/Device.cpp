@@ -64,11 +64,13 @@ namespace Rendering
     void Device::EnableFaceCulling() const
     {
         GLCall(glEnable(GL_CULL_FACE));
+        bIsFaceCullingEnabled = true;
     }
 
     void Device::DisableFaceCulling() const
     {
         GLCall(glDisable(GL_CULL_FACE));
+        bIsFaceCullingEnabled = false;
     }
 
     // If you decide to cull front faces and you are using post processing

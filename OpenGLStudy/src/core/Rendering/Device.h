@@ -22,5 +22,11 @@ namespace Rendering
         void SetCullingFaceFront() const;
         void SetCullingFaceBack() const;
         void SetCullingWindingOrder(bool bIsCounterClockwise) const;
+
+        bool IsFaceCullingEnabled() const { return bIsFaceCullingEnabled; }
+
+    private:
+
+        mutable bool bIsFaceCullingEnabled{false};
     };
 }
