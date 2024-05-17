@@ -77,7 +77,7 @@ namespace Editor
 
     void EngineEditor::UpdateShortcuts()
     {
-        if(Input::GetKey(GLFW_KEY_LEFT_CONTROL) && Input::GetKey(GLFW_KEY_LEFT_SHIFT) && Input::GetKeyDown(GLFW_KEY_SPACE))
+        if(Input::GetKey(GLFW_KEY_LEFT_CONTROL) && Input::GetKeyDown(GLFW_KEY_SPACE))
         {
             bShowPanelsEnabled = !bShowPanelsEnabled;
         }
