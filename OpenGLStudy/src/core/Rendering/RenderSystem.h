@@ -62,14 +62,18 @@ private:
     std::unique_ptr<InstancedArray> m_InstancedArray{};
     std::unique_ptr<Framebuffer> m_Framebuffer{};
     std::shared_ptr<Shader> m_OutlineShader{};
+    std::shared_ptr<Mesh> m_SkyboxCube{};
+    std::shared_ptr<Material> m_SkyboxMaterial{};
 
     Rendering::MeshComponentRenderSet& GetComponentRenderSetFor(const std::shared_ptr<MeshComponent>& meshComponent);
     Rendering::MeshComponentRenderSet& GetOutlinedComponentRenderSetFor(const std::shared_ptr<MeshComponent>& meshComponent);
     void UpdateGlobalShaderUniforms(const CameraComponent& activeCamera);
     void RenderObjects(const Rendering::MeshComponentRenderSet& meshComponentSet);
     void RenderObjectsSortedByDistance(const Rendering::MeshComponentRenderSet& meshComponentSet, const glm::vec3& cameraPosition);
+    void RenderSkybox(const CameraComponent& activeCamera);
     void RenderWorldObjects(const CameraComponent& activeCamera);
     void RenderOutlinedObjects(const CameraComponent& activeCamera);
     void CreateInstancedBuffer();
     void SetupOutlineRendering();
+    void SetupSkybox();
 };

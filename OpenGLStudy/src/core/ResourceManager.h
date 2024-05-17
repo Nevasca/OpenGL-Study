@@ -3,6 +3,12 @@
 #include <string>
 #include <unordered_map>
 
+namespace Rendering
+{
+    struct CubemapLoadSettings;
+    class Cubemap;
+}
+
 class ModelData;
 class Texture;
 class Material;
@@ -30,6 +36,8 @@ public:
 
     static std::shared_ptr<Texture> LoadTexture(const std::string& filePath, const std::string& name, bool bUseAlpha, bool bFlipVertically = false);
     static std::shared_ptr<Texture> GetTexture(const std::string& name);
+    static std::shared_ptr<Rendering::Cubemap> LoadCubemap(const Rendering::CubemapLoadSettings& loadSettings, const std::string& name);
+    static std::shared_ptr<Rendering::Cubemap> GetCubemap(const std::string& name);
 
     static std::shared_ptr<Mesh> GetMesh(const std::string& name);
     static std::shared_ptr<ModelData> LoadModel(const std::string& filePath, const std::string& name);
@@ -50,6 +58,7 @@ private:
     static std::unordered_map<std::string, std::shared_ptr<Material>> m_Materials;
     static std::unordered_map<std::string, std::shared_ptr<Texture>> m_Textures;
     static std::unordered_map<std::string, std::shared_ptr<ModelData>> m_Models;
+    static std::unordered_map<std::string, std::shared_ptr<Rendering::Cubemap>> m_Cubemaps;
     
     static unsigned int m_LastMaterialID;
 

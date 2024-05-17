@@ -132,3 +132,77 @@ std::shared_ptr<Mesh> Primitive::CreateScreenQuad()
 
     return screenQuad;
 }
+
+std::shared_ptr<Mesh> Primitive::CreateSkyCube()
+{
+    // For skybox usage, we don't need UV (we use the position itself as direction for sampling)
+    // neither normal information
+    float vertices[]
+    {
+        // Position
+        // Front face
+        -1.f, -1.f,  1.f,
+         1.f, -1.f,  1.f,
+         1.f,  1.f,  1.f,
+        -1.f,  1.f,  1.f,
+
+        // Back face
+         1.f, -1.f, -1.f,
+        -1.f, -1.f, -1.f,
+        -1.f,  1.f, -1.f,
+         1.f,  1.f, -1.f,
+
+        // Right face
+         1.f, -1.f,  1.f,
+         1.f, -1.f, -1.f,
+         1.f,  1.f, -1.f,
+         1.f,  1.f,  1.f,
+
+        // Left face
+        -1.f, -1.f, -1.f,
+        -1.f, -1.f,  1.f,
+        -1.f,  1.f,  1.f,
+        -1.f,  1.f, -1.f,
+
+        // Top face
+        -1.f,  1.f,  1.f,
+         1.f,  1.f,  1.f,
+         1.f,  1.f, -1.f,
+        -1.f,  1.f, -1.f,
+
+        // Bottom face
+        -1.f,  -1.f, -1.f,
+         1.f,  -1.f, -1.f,
+         1.f,  -1.f,  1.f,
+        -1.f,  -1.f,  1.f,
+   };
+
+   std::vector<unsigned int> indices
+   {
+       0, 1, 2,
+       2, 3, 0,
+
+       4, 5, 6,
+       6, 7, 4,
+
+       8, 9, 10,
+       10, 11, 8,
+
+       12, 13, 14,
+       14, 15, 12,
+
+       16, 17, 18,
+       18, 19, 16,
+
+       20, 21, 22,
+       22, 23, 20
+   };
+
+   VertexBufferLayout layout{};
+   layout.PushFloat(3);
+
+   std::shared_ptr<Mesh> skyCube = std::make_shared<Mesh>(vertices, sizeof(vertices), layout, indices);
+   skyCube->SetName("SkyCube");
+
+   return skyCube;
+}

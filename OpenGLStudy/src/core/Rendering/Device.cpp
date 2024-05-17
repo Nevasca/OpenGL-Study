@@ -13,6 +13,16 @@ namespace Rendering
         GLCall(glDisable(GL_DEPTH_TEST));
     }
 
+    void Device::EnableDepthWrite() const
+    {
+        GLCall(glDepthMask(GL_TRUE));
+    }
+
+    void Device::DisableDepthWrite() const
+    {
+        GLCall(glDepthMask(GL_FALSE));
+    }
+
     void Device::EnableStencilTest() const
     {
         GLCall(glEnable(GL_STENCIL_TEST));

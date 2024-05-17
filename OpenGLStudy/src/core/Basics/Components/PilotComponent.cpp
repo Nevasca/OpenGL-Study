@@ -84,7 +84,6 @@ void PilotComponent::UpdateRotation()
 
     float xOffset = m_CursorLastX - static_cast<float>(cursorX);
     float yOffset = m_CursorLastY - static_cast<float>(cursorY); 
-    yOffset *= -1.f; // Reversed since y-coord ranges from bottom to top
     m_CursorLastX = static_cast<float>(cursorX);
     m_CursorLastY = static_cast<float>(cursorY);
 

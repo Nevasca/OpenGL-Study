@@ -1,8 +1,10 @@
 #include "RenderSystem.h"
 #include <glm/glm.hpp>
 
+#include "Cubemap.h"
 #include "Material.h"
 #include "Mesh.h"
+#include "Primitive.h"
 #include "Shader.h"
 #include "core/ResourceManager.h"
 #include "core/Screen.h"
@@ -22,6 +24,7 @@ RenderSystem::RenderSystem()
     m_Device.EnableFaceCulling();
 
     SetupOutlineRendering();
+    SetupSkybox();
 }
 
 void RenderSystem::Shutdown()
@@ -121,6 +124,7 @@ void RenderSystem::Render(const CameraComponent& activeCamera)
 {
     m_Framebuffer->BindAndClear();
 
+    RenderSkybox(activeCamera);
     RenderWorldObjects(activeCamera);
     RenderOutlinedObjects(activeCamera);
     
@@ -270,6 +274,25 @@ void RenderSystem::RenderObjectsSortedByDistance(const Rendering::MeshComponentR
     m_InstancedArray->Unbind();
 }
 
+void RenderSystem::RenderSkybox(const CameraComponent& activeCamera)
+{
+    // Disable depth write so we draw skybox as background of all other objects
+    // Also need to render back faces, since we are inside the sky cube
+    m_Device.DisableDepthWrite();
+    m_Device.SetCullingFaceFront();
+
+    m_SkyboxMaterial->Bind();
+    m_SkyboxMaterial->SetMat4("u_Proj", activeCamera.GetProjectionMatrix());
+
+    // We use a view matrix with no translation so viewer can get move away from the skybox
+    m_SkyboxMaterial->SetMat4("u_View", activeCamera.GetViewNoTranslationMatrix());
+
+    m_MeshRenderer.Render(*m_SkyboxCube, *m_SkyboxMaterial);
+    
+    m_Device.EnableDepthWrite();
+    m_Device.SetCullingFaceBack();
+}
+
 void RenderSystem::RenderWorldObjects(const CameraComponent& activeCamera)
 {
     m_Device.DisableStencilWrite();
@@ -347,4 +370,24 @@ void RenderSystem::SetupOutlineRendering()
     m_OutlineShader->Bind();
     m_OutlineShader->SetUniform4f("u_OutlineColor", OUTLINE_COLOR);
     m_OutlineShader->Unbind();
+}
+
+void RenderSystem::SetupSkybox()
+{
+    Rendering::CubemapLoadSettings skyCubemapSettings{
+        "res/textures/skybox/right.jpg",
+        "res/textures/skybox/left.jpg",
+        "res/textures/skybox/top.jpg",
+        "res/textures/skybox/bottom.jpg",
+        "res/textures/skybox/back.jpg",
+        "res/textures/skybox/front.jpg"
+    };
+    std::shared_ptr<Rendering::Cubemap> skyCubemap = ResourceManager::LoadCubemap(skyCubemapSettings, "C_Sky");
+
+    const std::string SKYBOX_SHADER_NAME = "S_Skybox";
+    ResourceManager::LoadShader("res/core/shaders/Skybox.glsl", SKYBOX_SHADER_NAME);
+    m_SkyboxMaterial = ResourceManager::CreateMaterial("M_Skybox", SKYBOX_SHADER_NAME);
+    m_SkyboxCube = Primitive::CreateSkyCube();
+
+    m_SkyboxMaterial->SetCubemap("u_Skybox", skyCubemap, 0);
 }

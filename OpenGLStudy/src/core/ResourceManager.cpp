@@ -2,6 +2,7 @@
 
 #include <memory>
 
+#include "Rendering/Cubemap.h"
 #include "Rendering/Material.h"
 #include "Rendering/Shader.h"
 #include "Rendering/Texture.h"
@@ -14,6 +15,7 @@ std::unordered_map<std::string, std::shared_ptr<Mesh>> ResourceManager::m_Meshes
 std::unordered_map<std::string, std::shared_ptr<Material>> ResourceManager::m_Materials{};
 std::unordered_map<std::string, std::shared_ptr<Texture>> ResourceManager::m_Textures{};
 std::unordered_map<std::string, std::shared_ptr<ModelData>> ResourceManager::m_Models{};
+std::unordered_map<std::string, std::shared_ptr<Rendering::Cubemap>> ResourceManager::m_Cubemaps{};
 
 unsigned int ResourceManager::m_LastMaterialID = 0;
 std::string ResourceManager::DEFAULT_SHADER_NAME = "Default";
@@ -132,6 +134,21 @@ std::shared_ptr<Texture> ResourceManager::GetTexture(const std::string& name)
     return m_Textures[name];
 }
 
+std::shared_ptr<Rendering::Cubemap> ResourceManager::LoadCubemap(const Rendering::CubemapLoadSettings& loadSettings, const std::string& name)
+{
+    std::shared_ptr<Rendering::Cubemap> cubemap = TextureResource::LoadCubemapFromFile(loadSettings);
+    cubemap->SetName(name);
+
+    m_Cubemaps[name] = cubemap;
+
+    return cubemap;
+}
+
+std::shared_ptr<Rendering::Cubemap> ResourceManager::GetCubemap(const std::string& name)
+{
+    return m_Cubemaps[name];
+}
+
 std::shared_ptr<Mesh> ResourceManager::GetMesh(const std::string& name)
 {
     return m_Meshes[name];
@@ -156,6 +173,7 @@ void ResourceManager::UnloadAll()
     m_Materials.clear();
     m_Textures.clear();
     m_Models.clear();
+    m_Cubemaps.clear();
 
     m_LastMaterialID = 0;
 }

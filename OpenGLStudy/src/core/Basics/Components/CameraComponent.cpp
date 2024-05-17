@@ -23,6 +23,12 @@ glm::mat4 CameraComponent::GetViewMatrix() const
     return glm::lookAt(OwnerTransform.GetPosition(), OwnerTransform.GetPosition() + OwnerTransform.GetForwardVector(), m_Up);
 }
 
+glm::mat4 CameraComponent::GetViewNoTranslationMatrix() const
+{
+    // We remove translation by converting to a 3x3 matrix and converting it back to a 4x4 matrix
+    return glm::mat4(glm::mat3(GetViewMatrix()));
+}
+
 glm::mat4 CameraComponent::GetProjectionMatrix() const
 {
     const float aspect = static_cast<float>(Screen::GetWidth()) / static_cast<float>(Screen::GetHeight());

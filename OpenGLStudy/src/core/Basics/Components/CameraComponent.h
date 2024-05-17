@@ -13,6 +13,7 @@ public:
     void Initialize() override;
 
     glm::mat4 GetViewMatrix() const;
+    glm::mat4 GetViewNoTranslationMatrix() const;
     glm::mat4 GetProjectionMatrix() const;
     void SetFov(const float fov);
     float GetFov() const { return m_Fov; }

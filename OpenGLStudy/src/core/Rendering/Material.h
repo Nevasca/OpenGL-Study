@@ -6,12 +6,23 @@
 #include "glm/fwd.hpp"
 #include "glm/vec4.hpp"
 
+namespace Rendering
+{
+    class Cubemap;
+}
+
 class Texture;
 class Shader;
 
 struct MaterialTextureProperty
 {
     std::shared_ptr<Texture> Texture{};
+    unsigned int Slot{0};
+};
+
+struct MaterialCubemapProperty
+{
+    std::shared_ptr<Rendering::Cubemap> Cubemap{};
     unsigned int Slot{0};
 };
 
@@ -28,6 +39,7 @@ public:
     
     void SetColor(const std::string& name, const glm::vec4& color);
     void SetTexture(const std::string& name, const std::shared_ptr<Texture>& texture, unsigned int slot);
+    void SetCubemap(const std::string& name, const std::shared_ptr<Rendering::Cubemap>& cubemap, unsigned int slot);
     void SetMat4(const std::string& name, const glm::mat4& matrix) const;
     void SetBool(const std::string& name, const bool value);
     void SetRenderingMode(MaterialRenderingMode renderingMode);
@@ -54,6 +66,8 @@ private:
     std::map<std::string, glm::vec4> m_ColorProperties{};
     std::map<std::string, MaterialTextureProperty> m_TextureProperties{};
     std::map<std::string, bool> m_BoolProperties{};
+    std::map<std::string, MaterialCubemapProperty> m_CubemapProperties{};
+    
     MaterialRenderingMode m_RenderingMode{MaterialRenderingMode::Opaque};
     std::string m_Name{};
 };

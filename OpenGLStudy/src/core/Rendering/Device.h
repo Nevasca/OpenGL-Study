@@ -8,6 +8,8 @@ namespace Rendering
 
         void EnableDepthTest() const;
         void DisableDepthTest() const;
+        void EnableDepthWrite() const;
+        void DisableDepthWrite() const;
         void EnableStencilTest() const;
         void DisableStencilTest() const;
         void EnableStencilWrite() const;

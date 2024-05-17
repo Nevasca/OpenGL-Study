@@ -1,5 +1,6 @@
 #include "Material.h"
 
+#include "Cubemap.h"
 #include "Shader.h"
 #include "Texture.h"
 
@@ -17,6 +18,20 @@ void Material::SetTexture(const std::string& name, const std::shared_ptr<Texture
 
     m_TextureProperties[name].Texture = texture;
     m_TextureProperties[name].Slot = slot;
+
+    m_Shader->Bind();
+    m_Shader->SetUniform1i(name, static_cast<int>(slot));
+}
+
+void Material::SetCubemap(const std::string& name, const std::shared_ptr<Rendering::Cubemap>& cubemap, unsigned int slot)
+{
+    if(m_CubemapProperties.find(name) == m_CubemapProperties.end())
+    {
+        m_CubemapProperties[name] = MaterialCubemapProperty{};
+    }
+
+    m_CubemapProperties[name].Cubemap = cubemap;
+    m_CubemapProperties[name].Slot = slot;
 
     m_Shader->Bind();
     m_Shader->SetUniform1i(name, static_cast<int>(slot));
@@ -57,6 +72,12 @@ void Material::Bind(Shader& shader) const
         textureProperty.Texture->Bind(textureProperty.Slot);
     }
 
+    for(const auto& propertyPair : m_CubemapProperties)
+    {
+        const MaterialCubemapProperty& cubemapProperty = propertyPair.second;
+        cubemapProperty.Cubemap->Bind(cubemapProperty.Slot);
+    }
+
     for(const auto& propertyPair : m_BoolProperties)
     {
         shader.SetUniform1i(propertyPair.first, propertyPair.second);
@@ -76,6 +97,12 @@ void Material::Unbind(const Shader& shader) const
     {
         const MaterialTextureProperty& textureProperty = propertyPair.second;
         textureProperty.Texture->Unbind(textureProperty.Slot);
+    }
+
+    for(const auto& propertyPair : m_CubemapProperties)
+    {
+        const MaterialCubemapProperty& cubemapProperty = propertyPair.second;
+        cubemapProperty.Cubemap->Unbind(cubemapProperty.Slot);
     }
 
     shader.Unbind();

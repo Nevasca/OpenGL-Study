@@ -37,7 +37,7 @@ glm::vec3 Transform::GetForwardVector() const
 {
     glm::quat rotationQuat = glm::quat(glm::radians(m_Rotation));
     glm::mat3 rotationMatrix = glm::mat3_cast(rotationQuat);
-    glm::vec3 worldForward{0.f, 0.f, 1.f};
+    glm::vec3 worldForward{0.f, 0.f, -1.f};
     glm::vec3 forward = glm::normalize(rotationMatrix * worldForward);
 
     return forward;

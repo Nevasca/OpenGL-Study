@@ -190,6 +190,7 @@
     <ClCompile Include="src\core\Basics\Objects\Sphere.cpp" />
     <ClCompile Include="src\core\Basics\Objects\SpotLight.cpp" />
     <ClCompile Include="src\core\GameTime.cpp" />
+    <ClCompile Include="src\core\Rendering\Cubemap.cpp" />
     <ClCompile Include="src\core\Rendering\Device.cpp" />
     <ClCompile Include="src\core\Rendering\FrameBuffer.cpp" />
     <ClCompile Include="src\core\Rendering\IndexBuffer.cpp" />
@@ -303,6 +304,7 @@
     <Content Include="res\core\shaders\DefaultUnlit.glsl" />
     <Content Include="res\core\shaders\Outline.glsl" />
     <Content Include="res\core\shaders\PostProcessing.glsl" />
+    <Content Include="res\core\shaders\Skybox.glsl" />
     <Content Include="res\shaders\Basic.shader" />
     <Content Include="res\shaders\BasicBatch.shader" />
     <Content Include="res\shaders\BasicLit.shader" />
@@ -340,6 +342,7 @@
     <ClInclude Include="src\core\Basics\Objects\Sphere.h" />
     <ClInclude Include="src\core\Basics\Objects\SpotLight.h" />
     <ClInclude Include="src\core\GameTime.h" />
+    <ClInclude Include="src\core\Rendering\Cubemap.h" />
     <ClInclude Include="src\core\Rendering\Device.h" />
     <ClInclude Include="src\core\Rendering\FrameBuffer.h" />
     <ClInclude Include="src\core\Rendering\IndexBuffer.h" />
@@ -866,6 +869,7 @@
   <ItemGroup>
     <Folder Include="res\breakout\audio\" />
     <Folder Include="res\breakout\fonts\" />
+    <Folder Include="res\textures\skybox\" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
