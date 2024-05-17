@@ -124,8 +124,7 @@ void RenderSystem::Render(const CameraComponent& activeCamera)
 {
     m_Framebuffer->BindAndClear();
 
-    RenderSkybox(activeCamera);
-    RenderWorldObjects(activeCamera);
+    RenderWorld(activeCamera);
     RenderOutlinedObjects(activeCamera);
     
     m_Framebuffer->Unbind();
@@ -274,11 +273,22 @@ void RenderSystem::RenderObjectsSortedByDistance(const Rendering::MeshComponentR
     m_InstancedArray->Unbind();
 }
 
+void RenderSystem::RenderWorld(const CameraComponent& activeCamera)
+{
+    m_Device.DisableStencilWrite();
+    UpdateGlobalShaderUniforms(activeCamera);
+
+    RenderObjects(m_OpaqueMeshComponentSet);
+    RenderSkybox(activeCamera);
+    RenderObjectsSortedByDistance(m_TransparentMeshComponentSet, activeCamera.GetOwnerPosition());
+}
+
 void RenderSystem::RenderSkybox(const CameraComponent& activeCamera)
 {
     // Disable depth write so we draw skybox as background of all other objects
     // Also need to render back faces, since we are inside the sky cube
-    m_Device.DisableDepthWrite();
+    //m_Device.DisableDepthWrite(); // Only when we render skybox first
+    m_Device.SetDepthFunction(GL_LEQUAL); // Only when we render it last
     m_Device.SetCullingFaceFront();
 
     m_SkyboxMaterial->Bind();
@@ -289,17 +299,9 @@ void RenderSystem::RenderSkybox(const CameraComponent& activeCamera)
 
     m_MeshRenderer.Render(*m_SkyboxCube, *m_SkyboxMaterial);
     
-    m_Device.EnableDepthWrite();
+    // m_Device.EnableDepthWrite();
+    m_Device.SetDepthFunction(GL_LESS);
     m_Device.SetCullingFaceBack();
-}
-
-void RenderSystem::RenderWorldObjects(const CameraComponent& activeCamera)
-{
-    m_Device.DisableStencilWrite();
-    UpdateGlobalShaderUniforms(activeCamera);
-
-    RenderObjects(m_OpaqueMeshComponentSet);
-    RenderObjectsSortedByDistance(m_TransparentMeshComponentSet, activeCamera.GetOwnerPosition());
 }
 
 void RenderSystem::RenderOutlinedObjects(const CameraComponent& activeCamera)

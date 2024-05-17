@@ -10,6 +10,7 @@ namespace Rendering
         void DisableDepthTest() const;
         void EnableDepthWrite() const;
         void DisableDepthWrite() const;
+        void SetDepthFunction(const unsigned int function) const;
         void EnableStencilTest() const;
         void DisableStencilTest() const;
         void EnableStencilWrite() const;

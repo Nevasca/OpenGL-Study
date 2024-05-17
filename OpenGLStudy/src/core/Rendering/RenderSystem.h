@@ -71,7 +71,7 @@ private:
     void RenderObjects(const Rendering::MeshComponentRenderSet& meshComponentSet);
     void RenderObjectsSortedByDistance(const Rendering::MeshComponentRenderSet& meshComponentSet, const glm::vec3& cameraPosition);
     void RenderSkybox(const CameraComponent& activeCamera);
-    void RenderWorldObjects(const CameraComponent& activeCamera);
+    void RenderWorld(const CameraComponent& activeCamera);
     void RenderOutlinedObjects(const CameraComponent& activeCamera);
     void CreateInstancedBuffer();
     void SetupOutlineRendering();

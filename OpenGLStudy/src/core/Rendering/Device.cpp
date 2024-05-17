@@ -23,6 +23,11 @@ namespace Rendering
         GLCall(glDepthMask(GL_FALSE));
     }
 
+    void Device::SetDepthFunction(const unsigned int function) const
+    {
+        GLCall(glDepthFunc(function));
+    }
+
     void Device::EnableStencilTest() const
     {
         GLCall(glEnable(GL_STENCIL_TEST));

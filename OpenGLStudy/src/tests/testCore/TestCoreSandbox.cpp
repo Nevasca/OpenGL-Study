@@ -128,7 +128,7 @@ namespace tests
 
         std::shared_ptr<DirectionalLight> mainDirectionalLight = m_World->Spawn<DirectionalLight>();
         mainDirectionalLight->SetName("MainDirectionalLight");
-        mainDirectionalLight->SetRotation(glm::vec3(45.f, 0.f, 0.f));
+        mainDirectionalLight->SetRotation(glm::vec3(-45.f, 0.f, 0.f));
         mainDirectionalLight->SetColor(glm::vec3(1.f, 0.82f, 0.635f));
         mainDirectionalLight->SetIntensity(0.3f);
 

@@ -10,7 +10,8 @@ out vec3 v_TexCoord;
 
 void main()
 {
-    gl_Position = u_Proj * u_View * vec4(a_Position, 1.f);
+    vec4 position = u_Proj * u_View * vec4(a_Position, 1.f);
+    gl_Position = position.xyww; // Making the frag z position equals 1 so the depth value also equals 1, rendering it behind everything
 
     v_TexCoord = a_Position;
 }
