@@ -11,6 +11,11 @@
 #include "MeshComponentRenderSet.h"
 #include "ShaderRenderSet.h"
 
+namespace Rendering
+{
+    class Cubemap;
+}
+
 class PostProcessingComponent;
 class SpotLightComponent;
 class PointLightComponent;
@@ -46,6 +51,7 @@ public:
 private:
 
     constexpr static int MAX_INSTANCED_AMOUNT_PER_CALL = 10000;
+    constexpr static int SKYBOX_CUBEMAP_SLOT = 0;
 
     MeshRenderer m_MeshRenderer{};
     LightingSystem m_LightingSystem{};
@@ -62,6 +68,7 @@ private:
     std::unique_ptr<InstancedArray> m_InstancedArray{};
     std::unique_ptr<Framebuffer> m_Framebuffer{};
     std::shared_ptr<Shader> m_OutlineShader{};
+    std::shared_ptr<Rendering::Cubemap> m_SkyCubemap{};
     std::shared_ptr<Mesh> m_SkyboxCube{};
     std::shared_ptr<Material> m_SkyboxMaterial{};
 

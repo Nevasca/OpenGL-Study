@@ -51,21 +51,26 @@ namespace tests
             }
         }
 
+        const std::string reflectionUniformName = "u_ReflectionValue";
+
         std::shared_ptr<Material> defaultMaterial = ResourceManager::GetDefaultMaterial();
         defaultMaterial->SetColor("u_Color", glm::vec4(0.f)); // When using a texture, we need to set default color to black
-        defaultMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Container_Diff.png", "Container_Diffuse", false, true), 0);
-        defaultMaterial->SetTexture("u_Specular", ResourceManager::LoadTexture("res/textures/Container_Spec.png", "Container_Specular", false, true), 1);
+        defaultMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Container_Diff.png", "Container_Diffuse", false, true), 1);
+        defaultMaterial->SetTexture("u_Specular", ResourceManager::LoadTexture("res/textures/Container_Spec.png", "Container_Specular", false, true), 2);
+        defaultMaterial->SetFloat(reflectionUniformName, 0.f);
 
         auto cube = m_World->Spawn<Cube>(glm::vec3(0.f, 5.f, 0.f));
         cube->SetName("CubePigeon");
         auto anotherMaterial = ResourceManager::CreateMaterial("AnotherMaterial");
         anotherMaterial->SetColor("u_Color", glm::vec4(0.f));
-        anotherMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/FancyPigeon.png", "Pigeon", false, true), 0);
+        anotherMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/FancyPigeon.png", "Pigeon", false, true), 1);
+        anotherMaterial->SetFloat(reflectionUniformName, 0.f);
         cube->SetMaterial(anotherMaterial);
 
         auto bridgeMaterial = ResourceManager::CreateMaterial("M_Bridge");
         bridgeMaterial->SetColor("u_Color", glm::vec4(0.f));
-        bridgeMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Atlas04_Diff.png", "T_Bridge_Diffuse", false), 0);
+        bridgeMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Atlas04_Diff.png", "T_Bridge_Diffuse", false), 1);
+        bridgeMaterial->SetFloat(reflectionUniformName, 0.f);
         auto bridgeModel = ResourceManager::LoadModel("res/models/Bridge.fbx", "Bridge");
 
         auto bridge = m_World->Spawn<Model>(glm::vec3(0.f, 0.f, -20.f));
@@ -75,7 +80,11 @@ namespace tests
         SpawnTransparentObjects();
 
         auto sphere = m_World->Spawn<Sphere>(glm::vec3(-4.f, 0.f, 0.f));
+        auto sphereMaterial = ResourceManager::CreateMaterial("M_Sphere");
+        sphereMaterial->SetFloat(reflectionUniformName, 1.f);
+        sphereMaterial->SetColor("u_Color", glm::vec4{0.f});
         sphere->SetName("Sphere");
+        sphere->SetMaterial(sphereMaterial);
 
         SpawnLights(*camera);
 
@@ -85,9 +94,12 @@ namespace tests
 
     void TestCoreSandbox::SpawnTransparentObjects()
     {
+        const std::string reflectionUniformName = "u_ReflectionValue";
+        
         auto flowerMaterial = ResourceManager::CreateMaterial("M_Flower");
         flowerMaterial->SetColor("u_Color", glm::vec4(0.f));
-        flowerMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Flower.png", "T_Flower", true, true), 0);
+        flowerMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Flower.png", "T_Flower", true, true), 1);
+        flowerMaterial->SetFloat(reflectionUniformName, 0.f);
         
         auto flowerQuad = m_World->Spawn<Quad>(glm::vec3(-2.f, 0.f, -2.f), glm::vec3{0.f, -90.f, 0.f});
         flowerQuad->SetName("Flower");
@@ -95,7 +107,8 @@ namespace tests
 
         auto windowMaterial = ResourceManager::CreateMaterial("M_Window");
         windowMaterial->SetColor("u_Color", glm::vec4(0.f));
-        windowMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/TransparentWindow.png", "T_Window", true, true), 0);
+        windowMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/TransparentWindow.png", "T_Window", true, true), 1);
+        windowMaterial->SetFloat(reflectionUniformName, 0.f);
         windowMaterial->SetRenderingMode(MaterialRenderingMode::Transparent);
 
         glm::vec3 windowRotation{0.f, -90.f, 0.f};

@@ -37,6 +37,8 @@ void RenderSystem::Shutdown()
     m_UniqueActiveShaderSet.Clear();
 
     m_LightingSystem.Shutdown();
+
+    m_SkyCubemap->Unbind(SKYBOX_CUBEMAP_SLOT);
 }
 
 void RenderSystem::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
@@ -146,6 +148,7 @@ void RenderSystem::UpdateGlobalShaderUniforms(const CameraComponent& activeCamer
         m_WorldOverrideShader->SetUniformMat4f("u_View", view);
         m_WorldOverrideShader->SetUniform1f("u_NearPlane", activeCamera.GetNearPlane());
         m_WorldOverrideShader->SetUniform1f("u_FarPlane", activeCamera.GetFarPlane());
+        m_WorldOverrideShader->SetUniform1i("u_Skybox", SKYBOX_CUBEMAP_SLOT);
 
         m_LightingSystem.SetLightsFor(*m_WorldOverrideShader, activeCamera);
 
@@ -161,6 +164,8 @@ void RenderSystem::UpdateGlobalShaderUniforms(const CameraComponent& activeCamer
         activeShader.SetUniformMat4f("u_View", view);
         activeShader.SetUniform1f("u_NearPlane", activeCamera.GetNearPlane());
         activeShader.SetUniform1f("u_FarPlane", activeCamera.GetFarPlane());
+        // TODO: no need to set it every frame. Implement setting up global uniforms that won't change frequently
+        activeShader.SetUniform1i("u_Skybox", SKYBOX_CUBEMAP_SLOT);
 
         m_LightingSystem.SetLightsFor(activeShader, activeCamera);
     }
@@ -384,12 +389,16 @@ void RenderSystem::SetupSkybox()
         "res/textures/skybox/back.jpg",
         "res/textures/skybox/front.jpg"
     };
-    std::shared_ptr<Rendering::Cubemap> skyCubemap = ResourceManager::LoadCubemap(skyCubemapSettings, "C_Sky");
+    m_SkyCubemap = ResourceManager::LoadCubemap(skyCubemapSettings, "C_Sky");
 
     const std::string SKYBOX_SHADER_NAME = "S_Skybox";
-    ResourceManager::LoadShader("res/core/shaders/Skybox.glsl", SKYBOX_SHADER_NAME);
+    std::shared_ptr<Shader> skyboxShader = ResourceManager::LoadShader("res/core/shaders/Skybox.glsl", SKYBOX_SHADER_NAME);
+    skyboxShader->Bind();
+    skyboxShader->SetUniform1i("u_Skybox", SKYBOX_CUBEMAP_SLOT);
+    skyboxShader->Unbind();
+
     m_SkyboxMaterial = ResourceManager::CreateMaterial("M_Skybox", SKYBOX_SHADER_NAME);
     m_SkyboxCube = Primitive::CreateSkyCube();
 
-    m_SkyboxMaterial->SetCubemap("u_Skybox", skyCubemap, 0);
+    m_SkyCubemap->Bind(SKYBOX_CUBEMAP_SLOT);
 }

@@ -47,6 +47,11 @@ void Material::SetBool(const std::string& name, const bool value)
     m_BoolProperties[name] = value;
 }
 
+void Material::SetFloat(const std::string& name, const float value)
+{
+    m_FloatProperties[name] = value;
+}
+
 void Material::SetRenderingMode(MaterialRenderingMode renderingMode)
 {
     m_RenderingMode = renderingMode;
@@ -81,6 +86,11 @@ void Material::Bind(Shader& shader) const
     for(const auto& propertyPair : m_BoolProperties)
     {
         shader.SetUniform1i(propertyPair.first, propertyPair.second);
+    }
+
+    for(const auto& propertyPair : m_FloatProperties)
+    {
+        shader.SetUniform1f(propertyPair.first, propertyPair.second);
     }
 
     shader.SetUniform1i("u_RenderingMode", static_cast<int>(m_RenderingMode));
