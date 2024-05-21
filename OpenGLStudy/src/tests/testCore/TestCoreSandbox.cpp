@@ -100,6 +100,7 @@ namespace tests
         flowerMaterial->SetColor("u_Color", glm::vec4(0.f));
         flowerMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Flower.png", "T_Flower", true, true), 1);
         flowerMaterial->SetFloat(reflectionUniformName, 0.f);
+        flowerMaterial->SetRenderingMode(MaterialRenderingMode::AlphaCutout);
         
         auto flowerQuad = m_World->Spawn<Quad>(glm::vec3(-2.f, 0.f, -2.f), glm::vec3{0.f, -90.f, 0.f});
         flowerQuad->SetName("Flower");

@@ -83,6 +83,10 @@ in vec3 v_FragPosition;
 #define MAX_POINT_LIGHTS 20
 #define MAX_SPOT_LIGHTS 20
 
+const int OPAQUE = 0;
+const int ALPHA_CUTOUT = 1;
+const int TRANSPARENT = 2;
+
 // Global Lighting
 uniform vec3 u_ViewPosition;
 uniform AmbientLight u_AmbientLight;
@@ -101,6 +105,7 @@ uniform vec4 u_Color;
 uniform sampler2D u_Diffuse;
 uniform sampler2D u_Specular;
 uniform float u_ReflectionValue;
+uniform int u_RenderingMode;
 
 int materialShininess = 32; // TODO: create material system
 
@@ -111,9 +116,9 @@ vec3 ComputeAmbientLight(vec3 baseColor);
 
 void main()
 {
-    vec4 diffuseTextureColor = texture(u_Diffuse, v_TexCoord); 
-    // TODO: have alpha cotout enabled and threshold coming from uniforms
-    if(diffuseTextureColor.a < 0.1f)
+    vec4 diffuseTextureColor = texture(u_Diffuse, v_TexCoord);
+ 
+    if(u_RenderingMode == ALPHA_CUTOUT && diffuseTextureColor.a < 0.1f)
     {
         discard;
     }
@@ -142,7 +147,14 @@ void main()
         result += ComputeSpotLight(u_SpotLights[i], normal, v_FragPosition, viewDir, baseColor);
     }
     
-    o_Color = vec4(result, diffuseTextureColor.a);
+    if(u_RenderingMode == OPAQUE)
+    {
+        o_Color = vec4(result, 1.f);
+    }
+    else
+    {
+        o_Color = vec4(result, diffuseTextureColor.a);
+    }
 }
 
 vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, vec3 baseColor)
