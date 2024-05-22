@@ -18,9 +18,6 @@ void Material::SetTexture(const std::string& name, const std::shared_ptr<Texture
 
     m_TextureProperties[name].Texture = texture;
     m_TextureProperties[name].Slot = slot;
-
-    m_Shader->Bind();
-    m_Shader->SetUniform1i(name, static_cast<int>(slot));
 }
 
 void Material::SetCubemap(const std::string& name, const std::shared_ptr<Rendering::Cubemap>& cubemap, unsigned int slot)
@@ -32,9 +29,6 @@ void Material::SetCubemap(const std::string& name, const std::shared_ptr<Renderi
 
     m_CubemapProperties[name].Cubemap = cubemap;
     m_CubemapProperties[name].Slot = slot;
-
-    m_Shader->Bind();
-    m_Shader->SetUniform1i(name, static_cast<int>(slot));
 }
 
 void Material::SetMat4(const std::string& name, const glm::mat4& matrix) const
@@ -75,12 +69,17 @@ void Material::Bind(Shader& shader) const
     {
         const MaterialTextureProperty& textureProperty = propertyPair.second;
         textureProperty.Texture->Bind(textureProperty.Slot);
+
+        // We also need to update the sample with correct slot,
+        // in case we are using a different shader with a greater than zero slot
+        shader.SetUniform1i(propertyPair.first, static_cast<int>(textureProperty.Slot));
     }
 
     for(const auto& propertyPair : m_CubemapProperties)
     {
         const MaterialCubemapProperty& cubemapProperty = propertyPair.second;
         cubemapProperty.Cubemap->Bind(cubemapProperty.Slot);
+        shader.SetUniform1i(propertyPair.first, static_cast<int>(cubemapProperty.Slot));
     }
 
     for(const auto& propertyPair : m_BoolProperties)
