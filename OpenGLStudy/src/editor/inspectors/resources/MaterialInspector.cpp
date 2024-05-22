@@ -18,10 +18,40 @@ namespace Editor
             std::string shaderName = shader ? shader->GetName() : "None";
             ImGui::Text("Shader: %s", shaderName.c_str());
 
+            RenderRenderingMode(material);
             RenderColorProperties(material);
             RenderTextureProperties(material);
             RenderBoolProperties(material);
             RenderFloatProperties(material);
+        }
+
+        void MaterialInspector::RenderRenderingMode(Material& material)
+        {
+            const char* renderingModes[] = { "Opaque", "AlphaCutout", "Transparent" };
+            int currentModeIndex = static_cast<int>(material.GetRenderingMode()); 
+
+            const char* currentModeName = renderingModes[currentModeIndex];
+
+            if (ImGui::BeginCombo("Rendering Mode", currentModeName))
+            {
+                for (int i = 0; i < IM_ARRAYSIZE(renderingModes); i++)
+                {
+                    const bool isSelected = currentModeIndex == i;
+                    if (ImGui::Selectable(renderingModes[i], isSelected))
+                    {
+                        currentModeIndex = i;
+                    }
+
+                    if (isSelected)
+                    {
+                        ImGui::SetItemDefaultFocus();
+                    }
+                }
+
+                ImGui::EndCombo();
+            }
+
+            material.SetRenderingMode(static_cast<MaterialRenderingMode>(currentModeIndex));
         }
 
         void MaterialInspector::RenderColorProperties(Material& material)

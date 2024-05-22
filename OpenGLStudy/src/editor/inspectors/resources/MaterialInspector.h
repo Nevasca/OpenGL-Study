@@ -12,6 +12,7 @@ namespace Editor
             void RenderGUI(Material& material);
 
         private:
+            void RenderRenderingMode(Material& material);
             void RenderColorProperties(Material& material);
             void RenderTextureProperties(Material& material);
             void RenderBoolProperties(Material& material);
