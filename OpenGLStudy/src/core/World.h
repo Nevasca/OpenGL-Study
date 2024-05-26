@@ -30,6 +30,8 @@ public:
     void AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent);
     void SetPostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent);
     void RemovePostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent);
+    void SetSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent);
+    void RemoveSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent);
 
     unsigned int GenerateUniqueId() { return m_LastUsedId++; }
     std::vector<std::shared_ptr<GameObject>>& GetAllGameObjects() { return m_GameObjects; }

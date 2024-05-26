@@ -13,6 +13,7 @@
 #include "core/Basics/Objects/Model.h"
 #include "core/Basics/Objects/PostProcessing.h"
 #include "core/Basics/Objects/Quad.h"
+#include "core/Basics/Objects/Skybox.h"
 #include "core/Basics/Objects/Sphere.h"
 #include "core/Rendering/Material.h"
 
@@ -82,7 +83,7 @@ namespace tests
         auto sphere = m_World->Spawn<Sphere>(glm::vec3(-4.f, 0.f, 0.f));
         auto sphereMaterial = ResourceManager::CreateMaterial("M_Sphere");
         sphereMaterial->SetFloat(reflectionUniformName, 1.f);
-        sphereMaterial->SetColor("u_Color", glm::vec4{0.f});
+        sphereMaterial->SetColor("u_Color", glm::vec4{0.1f});
         sphere->SetName("Sphere");
         sphere->SetMaterial(sphereMaterial);
 
@@ -90,6 +91,10 @@ namespace tests
 
         auto postProcessing = m_World->Spawn<PostProcessing>();
         postProcessing->SetName("PostProcessing");
+
+        auto skybox = m_World->Spawn<Skybox>();
+        skybox->SetName("Skybox");
+        skybox->SetDefaultSky();
     }
 
     void TestCoreSandbox::SpawnTransparentObjects()

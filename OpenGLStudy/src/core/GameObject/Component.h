@@ -23,8 +23,9 @@
     std::shared_ptr<ClassName> m_This{};\
     void SetThis(const std::shared_ptr<ClassName>& InThis) { m_This = InThis; }\
     std::shared_ptr<ClassName> GetThis() const { return m_This; }
-    
 
+
+class World;
 class Transform;
 class GameObject;
 
@@ -49,6 +50,7 @@ public:
     glm::vec3 GetOwnerRotation() const;
     glm::vec3 GetOwnerScale() const;
     Transform& GetOwnerTransform() const;
+    World& GetWorld() const;
     
     GameObject& GetOwner() const { return m_Owner; }
     bool IsEnabled() const { return bIsEnabled; }

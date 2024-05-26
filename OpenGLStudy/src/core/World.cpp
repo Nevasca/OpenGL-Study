@@ -90,6 +90,16 @@ void World::RemovePostProcessingComponent(const std::shared_ptr<PostProcessingCo
     m_RenderSystem->RemovePostProcessingComponent(postProcessingComponent);
 }
 
+void World::SetSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent)
+{
+    m_RenderSystem->SetSkyboxComponent(skyboxComponent);
+}
+
+void World::RemoveSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent)
+{
+    m_RenderSystem->RemoveSkyboxComponent(skyboxComponent);
+}
+
 void World::InitializeGameObject(const std::shared_ptr<GameObject>& gameObject) const
 {
     gameObject->Initialize();

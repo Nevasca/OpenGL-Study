@@ -16,6 +16,7 @@ namespace Rendering
     class Cubemap;
 }
 
+class SkyboxComponent;
 class PostProcessingComponent;
 class SpotLightComponent;
 class PointLightComponent;
@@ -39,6 +40,8 @@ public:
     void AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent);
     void SetPostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent);
     void RemovePostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent);
+    void SetSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent);
+    void RemoveSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent);
     void Render(const CameraComponent& activeCamera);
 
     void SetAmbientLightColor(const glm::vec3& ambientLightColor) { m_LightingSystem.SetAmbientLightColor(ambientLightColor); }
@@ -68,9 +71,7 @@ private:
     std::unique_ptr<InstancedArray> m_InstancedArray{};
     std::unique_ptr<Framebuffer> m_Framebuffer{};
     std::shared_ptr<Shader> m_OutlineShader{};
-    std::shared_ptr<Rendering::Cubemap> m_SkyCubemap{};
-    std::shared_ptr<Mesh> m_SkyboxCube{};
-    std::shared_ptr<Material> m_SkyboxMaterial{};
+    std::shared_ptr<SkyboxComponent> m_SkyboxComponent{};
 
     Rendering::MeshComponentRenderSet& GetComponentRenderSetFor(const std::shared_ptr<MeshComponent>& meshComponent);
     Rendering::MeshComponentRenderSet& GetOutlinedComponentRenderSetFor(const std::shared_ptr<MeshComponent>& meshComponent);
@@ -82,5 +83,5 @@ private:
     void RenderOutlinedObjects(const CameraComponent& activeCamera);
     void CreateInstancedBuffer();
     void SetupOutlineRendering();
-    void SetupSkybox();
+    bool IsSkyboxActive() const;
 };

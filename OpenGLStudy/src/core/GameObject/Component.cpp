@@ -65,3 +65,8 @@ Transform& Component::GetOwnerTransform() const
 {
     return m_Owner.GetTransform();
 }
+
+World& Component::GetWorld() const
+{
+    return m_Owner.GetWorld();
+}

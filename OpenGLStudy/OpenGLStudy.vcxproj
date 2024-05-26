@@ -179,6 +179,7 @@
     <ClCompile Include="src\core\Basics\Components\PilotComponent.cpp" />
     <ClCompile Include="src\core\Basics\Components\PointLightComponent.cpp" />
     <ClCompile Include="src\core\Basics\Components\PostProcessingComponent.cpp" />
+    <ClCompile Include="src\core\Basics\Components\SkyboxComponent.cpp" />
     <ClCompile Include="src\core\Basics\Components\SpotLightComponent.cpp" />
     <ClCompile Include="src\core\Basics\Objects\Cube.cpp" />
     <ClCompile Include="src\core\Basics\Objects\DirectionalLight.cpp" />
@@ -187,6 +188,7 @@
     <ClCompile Include="src\core\Basics\Objects\PointLight.cpp" />
     <ClCompile Include="src\core\Basics\Objects\PostProcessing.cpp" />
     <ClCompile Include="src\core\Basics\Objects\Quad.cpp" />
+    <ClCompile Include="src\core\Basics\Objects\Skybox.cpp" />
     <ClCompile Include="src\core\Basics\Objects\Sphere.cpp" />
     <ClCompile Include="src\core\Basics\Objects\SpotLight.cpp" />
     <ClCompile Include="src\core\GameTime.cpp" />
@@ -331,6 +333,7 @@
     <ClInclude Include="src\core\Basics\Components\PilotComponent.h" />
     <ClInclude Include="src\core\Basics\Components\PointLightComponent.h" />
     <ClInclude Include="src\core\Basics\Components\PostProcessingComponent.h" />
+    <ClInclude Include="src\core\Basics\Components\SkyboxComponent.h" />
     <ClInclude Include="src\core\Basics\Components\SpotLightComponent.h" />
     <ClInclude Include="src\core\Basics\Objects\Cube.h" />
     <ClInclude Include="src\core\Basics\Objects\DirectionalLight.h" />
@@ -339,6 +342,7 @@
     <ClInclude Include="src\core\Basics\Objects\PointLight.h" />
     <ClInclude Include="src\core\Basics\Objects\PostProcessing.h" />
     <ClInclude Include="src\core\Basics\Objects\Quad.h" />
+    <ClInclude Include="src\core\Basics\Objects\Skybox.h" />
     <ClInclude Include="src\core\Basics\Objects\Sphere.h" />
     <ClInclude Include="src\core\Basics\Objects\SpotLight.h" />
     <ClInclude Include="src\core\GameTime.h" />

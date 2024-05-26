@@ -31,12 +31,14 @@ public:
     static std::shared_ptr<Shader> GetShader(const std::string& name);
     static std::shared_ptr<Material> CreateMaterial(const std::string& name);
     static std::shared_ptr<Material> CreateMaterial(const std::string& name, const std::string& shaderName);
+    static std::shared_ptr<Material> GetOrCreateMaterial(const std::string& name, const std::string& shaderName);
     static std::shared_ptr<Material> GetMaterial(const std::string& name);
     static const std::unordered_map<std::string, std::shared_ptr<Material>>& GetAllMaterials();
 
     static std::shared_ptr<Texture> LoadTexture(const std::string& filePath, const std::string& name, bool bUseAlpha, bool bFlipVertically = false);
     static std::shared_ptr<Texture> GetTexture(const std::string& name);
     static std::shared_ptr<Rendering::Cubemap> LoadCubemap(const Rendering::CubemapLoadSettings& loadSettings, const std::string& name);
+    static std::shared_ptr<Rendering::Cubemap> GetOrLoadCubemap(const Rendering::CubemapLoadSettings& loadSettings, const std::string& name);
     static std::shared_ptr<Rendering::Cubemap> GetCubemap(const std::string& name);
 
     static std::shared_ptr<Mesh> GetMesh(const std::string& name);

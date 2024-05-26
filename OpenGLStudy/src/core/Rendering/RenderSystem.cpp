@@ -4,12 +4,12 @@
 #include "Cubemap.h"
 #include "Material.h"
 #include "Mesh.h"
-#include "Primitive.h"
 #include "Shader.h"
 #include "core/ResourceManager.h"
 #include "core/Screen.h"
 #include "core/Basics/Components/CameraComponent.h"
 #include "core/Basics/Components/MeshComponent.h"
+#include "core/Basics/Components/SkyboxComponent.h"
 #include "core/GameObject/GameObject.h"
 
 RenderSystem::RenderSystem()
@@ -24,7 +24,6 @@ RenderSystem::RenderSystem()
     m_Device.EnableFaceCulling();
 
     SetupOutlineRendering();
-    SetupSkybox();
 }
 
 void RenderSystem::Shutdown()
@@ -38,7 +37,7 @@ void RenderSystem::Shutdown()
 
     m_LightingSystem.Shutdown();
 
-    m_SkyCubemap->Unbind(SKYBOX_CUBEMAP_SLOT);
+    m_SkyboxComponent.reset();
 }
 
 void RenderSystem::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
@@ -120,6 +119,32 @@ void RenderSystem::SetPostProcessingComponent(const std::shared_ptr<PostProcessi
 void RenderSystem::RemovePostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent)
 {
     m_PostProcessingSystem.RemovePostProcessingComponent(postProcessingComponent);
+}
+
+void RenderSystem::SetSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent)
+{
+    assert(skyboxComponent && skyboxComponent->IsReadyToDraw());
+
+    m_SkyboxComponent = skyboxComponent;
+    const std::shared_ptr<Material>& skyboxMaterial = m_SkyboxComponent->GetMaterial();
+    const std::shared_ptr<Shader>& skyboxShader = skyboxMaterial->GetShader();
+    
+    skyboxShader->Bind();
+    skyboxShader->SetUniform1i("u_Skybox", SKYBOX_CUBEMAP_SLOT);
+    skyboxShader->Unbind();
+
+    const std::shared_ptr<Rendering::Cubemap>& skyboxCubemap = skyboxComponent->GetCubemap();
+    skyboxCubemap->Bind(SKYBOX_CUBEMAP_SLOT);
+}
+
+void RenderSystem::RemoveSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent)
+{
+    if(m_SkyboxComponent != skyboxComponent)
+    {
+        return;
+    }
+
+    m_SkyboxComponent = nullptr;
 }
 
 void RenderSystem::Render(const CameraComponent& activeCamera)
@@ -290,19 +315,25 @@ void RenderSystem::RenderWorld(const CameraComponent& activeCamera)
 
 void RenderSystem::RenderSkybox(const CameraComponent& activeCamera)
 {
+    if(!IsSkyboxActive())
+    {
+        return;
+    }
+
     // Disable depth write so we draw skybox as background of all other objects
     // Also need to render back faces, since we are inside the sky cube
     //m_Device.DisableDepthWrite(); // Only when we render skybox first
     m_Device.SetDepthFunction(GL_LEQUAL); // Only when we render it last
     m_Device.SetCullingFaceFront();
 
-    m_SkyboxMaterial->Bind();
-    m_SkyboxMaterial->SetMat4("u_Proj", activeCamera.GetProjectionMatrix());
+    const std::shared_ptr<Material>& skyboxMaterial = m_SkyboxComponent->GetMaterial();
+    skyboxMaterial->Bind();
+    skyboxMaterial->SetMat4("u_Proj", activeCamera.GetProjectionMatrix());
 
     // We use a view matrix with no translation so viewer can get move away from the skybox
-    m_SkyboxMaterial->SetMat4("u_View", activeCamera.GetViewNoTranslationMatrix());
+    skyboxMaterial->SetMat4("u_View", activeCamera.GetViewNoTranslationMatrix());
 
-    m_MeshRenderer.Render(*m_SkyboxCube, *m_SkyboxMaterial);
+    m_MeshRenderer.Render(*m_SkyboxComponent->GetMesh(), *skyboxMaterial);
     
     // m_Device.EnableDepthWrite();
     m_Device.SetDepthFunction(GL_LESS);
@@ -379,26 +410,7 @@ void RenderSystem::SetupOutlineRendering()
     m_OutlineShader->Unbind();
 }
 
-void RenderSystem::SetupSkybox()
+bool RenderSystem::IsSkyboxActive() const
 {
-    Rendering::CubemapLoadSettings skyCubemapSettings{
-        "res/textures/skybox/right.jpg",
-        "res/textures/skybox/left.jpg",
-        "res/textures/skybox/top.jpg",
-        "res/textures/skybox/bottom.jpg",
-        "res/textures/skybox/back.jpg",
-        "res/textures/skybox/front.jpg"
-    };
-    m_SkyCubemap = ResourceManager::LoadCubemap(skyCubemapSettings, "C_Sky");
-
-    const std::string SKYBOX_SHADER_NAME = "S_Skybox";
-    std::shared_ptr<Shader> skyboxShader = ResourceManager::LoadShader("res/core/shaders/Skybox.glsl", SKYBOX_SHADER_NAME);
-    skyboxShader->Bind();
-    skyboxShader->SetUniform1i("u_Skybox", SKYBOX_CUBEMAP_SLOT);
-    skyboxShader->Unbind();
-
-    m_SkyboxMaterial = ResourceManager::CreateMaterial("M_Skybox", SKYBOX_SHADER_NAME);
-    m_SkyboxCube = Primitive::CreateSkyCube();
-
-    m_SkyCubemap->Bind(SKYBOX_CUBEMAP_SLOT);
+    return m_SkyboxComponent && m_SkyboxComponent->IsReadyToDraw();
 }

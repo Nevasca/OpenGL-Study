@@ -109,6 +109,16 @@ std::shared_ptr<Material> ResourceManager::CreateMaterial(const std::string& nam
     return material;
 }
 
+std::shared_ptr<Material> ResourceManager::GetOrCreateMaterial(const std::string& name, const std::string& shaderName)
+{
+    if(m_Materials.find(name) == m_Materials.end())
+    {
+        return CreateMaterial(name, shaderName);
+    }
+
+    return m_Materials[name];
+}
+
 std::shared_ptr<Material> ResourceManager::GetMaterial(const std::string& name)
 {
     return m_Materials[name];
@@ -142,6 +152,16 @@ std::shared_ptr<Rendering::Cubemap> ResourceManager::LoadCubemap(const Rendering
     m_Cubemaps[name] = cubemap;
 
     return cubemap;
+}
+
+std::shared_ptr<Rendering::Cubemap> ResourceManager::GetOrLoadCubemap(const Rendering::CubemapLoadSettings& loadSettings, const std::string& name)
+{
+    if(m_Cubemaps.find(name) == m_Cubemaps.end())
+    {
+        return LoadCubemap(loadSettings, name);
+    }
+
+    return m_Cubemaps[name];
 }
 
 std::shared_ptr<Rendering::Cubemap> ResourceManager::GetCubemap(const std::string& name)
