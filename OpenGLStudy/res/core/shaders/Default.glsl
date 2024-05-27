@@ -109,6 +109,8 @@ uniform int u_RenderingMode;
 
 int materialShininess = 32; // TODO: create material system
 
+vec3 ComputeReflection(vec3 normal, vec3 viewDir);
+vec3 ComputeRefraction(vec3 normal, vec3 viewDir);
 vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, vec3 baseColor);
 vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor);
 vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor);
@@ -126,9 +128,8 @@ void main()
     vec3 normal = normalize(v_Normal);
     vec3 viewDir = normalize(u_ViewPosition - v_FragPosition);
 
-    vec3 reflectionDir = reflect(-viewDir, normal);
-    vec3 reflectionColor = texture(u_Skybox, reflectionDir).rgb * u_ReflectionValue;
-    vec3 baseColor = texture(u_Diffuse, v_TexCoord).rgb + u_Color.rgb + reflectionColor;
+    vec3 baseColor = diffuseTextureColor.rgb + u_Color.rgb;
+    baseColor += ComputeReflection(normal, viewDir);
     
     vec3 result = ComputeAmbientLight(baseColor);
     
@@ -155,6 +156,28 @@ void main()
     {
         o_Color = vec4(result, diffuseTextureColor.a);
     }
+}
+
+vec3 ComputeReflection(vec3 normal, vec3 viewDir)
+{
+    // View dir passed param is from fragmento to view, for reflection we need from view to frag, so we negate here
+    vec3 reflectionDir = reflect(-viewDir, normal);
+    vec3 reflectionColor = texture(u_Skybox, reflectionDir).rgb * u_ReflectionValue;
+
+    return reflectionColor;
+}
+
+// TODO: this is an example using from air to glass, implement receiving ratio from material for customization
+vec3 ComputeRefraction(vec3 normal, vec3 viewDir)
+{
+    // From air to glass
+    float ratio = 1.f / 1.52f;
+
+    // View dir passed param is from fragmento to view, for reflection we need from view to frag, so we negate here
+    vec3 refractionDir = refract(-viewDir, normal, ratio);
+    vec3 refractionColor = texture(u_Skybox, refractionDir).rgb * u_ReflectionValue; // TODO: Using reflectionValue, change for refractionValue
+
+    return refractionColor;
 }
 
 vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, vec3 baseColor)
