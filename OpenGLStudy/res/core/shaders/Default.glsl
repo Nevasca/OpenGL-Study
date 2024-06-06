@@ -6,9 +6,12 @@ layout(location = 1) in vec3 a_Normal;
 layout(location = 2) in vec2 a_TexCoord;
 layout(location = 3) in mat4 a_InstanceModelMatrix;    
 
-out vec2 v_TexCoord;
-out vec3 v_Normal;
-out vec3 v_FragPosition;
+out VS_OUT
+{
+    vec2 TexCoord;
+    vec3 Normal;
+    vec3 FragPosition;
+} vsOut;
 
 uniform mat4 u_Model;
 uniform mat4 u_View;
@@ -17,14 +20,17 @@ uniform mat4 u_Proj;
 void main()
 {
     gl_Position = u_Proj * u_View * a_InstanceModelMatrix * a_Position; // Instancing approach
+
+    // Set pointSize when rendering with GL_POINTS
+    //gl_PointSize = gl_Position.z;
     
-    v_TexCoord = a_TexCoord;
+    vsOut.TexCoord = a_TexCoord;
     
     // Normal attribute is on local space, we need to convert it to world by using the model matrix
     // But since normal is a direction, it doesn't make sense to translate it, so we cut it by casting to a mat3
     // We also need to take care of non-uniform scale so it doesn't mess with the actual direction, hence the transpose of inverse    
-    v_Normal = mat3(transpose(inverse(a_InstanceModelMatrix))) * a_Normal;
-    v_FragPosition = vec3(a_InstanceModelMatrix * a_Position);
+    vsOut.Normal = mat3(transpose(inverse(a_InstanceModelMatrix))) * a_Normal;
+    vsOut.FragPosition = vec3(a_InstanceModelMatrix * a_Position);
 }
 
 #shader fragment
@@ -75,9 +81,12 @@ struct AmbientLight
 
 layout(location = 0) out vec4 o_Color;
 
-in vec2 v_TexCoord;
-in vec3 v_Normal;
-in vec3 v_FragPosition;
+in VS_OUT
+{
+    vec2 TexCoord;
+    vec3 Normal;
+    vec3 FragPosition;
+} inFrag;
 
 #define MAX_DIRECTIONAL_LIGHTS 3
 #define MAX_POINT_LIGHTS 20
@@ -118,15 +127,15 @@ vec3 ComputeAmbientLight(vec3 baseColor);
 
 void main()
 {
-    vec4 diffuseTextureColor = texture(u_Diffuse, v_TexCoord);
+    vec4 diffuseTextureColor = texture(u_Diffuse, inFrag.TexCoord);
  
     if(u_RenderingMode == ALPHA_CUTOUT && diffuseTextureColor.a < 0.1f)
     {
         discard;
     }
 
-    vec3 normal = normalize(v_Normal);
-    vec3 viewDir = normalize(u_ViewPosition - v_FragPosition);
+    vec3 normal = normalize(inFrag.Normal);
+    vec3 viewDir = normalize(u_ViewPosition - inFrag.FragPosition);
 
     vec3 baseColor = diffuseTextureColor.rgb + u_Color.rgb;
     baseColor += ComputeReflection(normal, viewDir);
@@ -140,12 +149,12 @@ void main()
     
     for(int i = 0; i < u_TotalPointLights; i++)
     {
-        result += ComputePointLight(u_PointLights[i], normal, v_FragPosition, viewDir, baseColor);
+        result += ComputePointLight(u_PointLights[i], normal, inFrag.FragPosition, viewDir, baseColor);
     }
     
     for(int i = 0; i < u_TotalSpotLights; i++)
     {
-        result += ComputeSpotLight(u_SpotLights[i], normal, v_FragPosition, viewDir, baseColor);
+        result += ComputeSpotLight(u_SpotLights[i], normal, inFrag.FragPosition, viewDir, baseColor);
     }
     
     if(u_RenderingMode == OPAQUE)
@@ -190,7 +199,7 @@ vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, 
     // Specular
     vec3 reflectDirection = reflect(light.direction, normal);    
     float specularValue = pow(max(dot(viewDir, reflectDirection), 0.f), materialShininess);
-    vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, v_TexCoord));
+    vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, inFrag.TexCoord));
     
     return (diffuse + specular) * light.intensity;    
 }
@@ -215,7 +224,7 @@ vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir
     // Specular
     vec3 reflectDirection = reflect(-lightDir, normal);
     float specularValue = pow(max(dot(reflectDirection, viewDir), 0), materialShininess);
-    vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, v_TexCoord));
+    vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, inFrag.TexCoord));
     specular *= attenuation;
     
     return (diffuse + specular) * light.intensity;
@@ -248,7 +257,7 @@ vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, 
     // Specular
     vec3 reflectDirection = reflect(light.direction, normal);
     float specularValue = pow(max(dot(viewDir, reflectDirection), 0.f), materialShininess);
-    vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, v_TexCoord));
+    vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, inFrag.TexCoord));
     specular *= intensity;
     
     return (diffuse + specular) * light.intensity;

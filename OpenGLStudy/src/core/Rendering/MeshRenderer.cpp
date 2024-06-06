@@ -53,6 +53,8 @@ void MeshRenderer::RenderInstanced(const Mesh& mesh, const Material& material, i
     ibo.Bind();
 
     GLCall(glDrawElementsInstanced(GL_TRIANGLES, ibo.GetCount(), GL_UNSIGNED_INT, nullptr, amount));
+    // glEnable(GL_PROGRAM_POINT_SIZE);
+    // GLCall(glDrawElementsInstanced(GL_POINTS, ibo.GetCount(), GL_UNSIGNED_INT, nullptr, amount));
 
     ibo.Unbind();
     mesh.GetVertexArray().Unbind();
