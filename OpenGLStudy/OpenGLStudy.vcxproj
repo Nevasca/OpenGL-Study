@@ -127,6 +127,17 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLFW\lib-vc2022;$(SolutionDir)Dependencies\GLEW\lib\Release\x64;$(SolutionDir)Dependencies\irrKlang\Winx64-visualStudio;$(SolutionDir)Dependencies\FreeType;$(SolutionDir)Dependencies\Assimp</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;irrKlang.lib;freetype.lib;assimp-vc143-mt.lib</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>echo copying Assimp dlls to output folder
+echo copy "$(SolutionDir)Dependencies\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
+copy "$(SolutionDir)Dependencies\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
+
+echo copying irrKlang dlls to output folder
+echo copy "$(SolutionDir)Dependencies\irrKlang\Winx64-visualStudio\irrKlang.dll" "$(TargetDir)"
+copy "$(SolutionDir)Dependencies\irrKlang\Winx64-visualStudio\irrKlang.dll" "$(TargetDir)"
+echo copy "$(SolutionDir)Dependencies\irrKlang\Winx64-visualStudio\ikpMP3.dll" "$(TargetDir)"
+copy "$(SolutionDir)Dependencies\irrKlang\Winx64-visualStudio\ikpMP3.dll" "$(TargetDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -170,6 +181,17 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLFW\lib-vc2022;$(SolutionDir)Dependencies\GLEW\lib\Release\x64;$(SolutionDir)Dependencies\irrKlang\Winx64-visualStudio;$(SolutionDir)Dependencies\FreeType;$(SolutionDir)Dependencies\Assimp</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;irrKlang.lib;freetype.lib;assimp-vc143-mt.lib</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>echo copying Assimp dlls to output folder
+echo copy "$(SolutionDir)Dependencies\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
+copy "$(SolutionDir)Dependencies\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
+
+echo copying irrKlang dlls to output folder
+echo copy "$(SolutionDir)Dependencies\irrKlang\Winx64-visualStudio\irrKlang.dll" "$(TargetDir)"
+copy "$(SolutionDir)Dependencies\irrKlang\Winx64-visualStudio\irrKlang.dll" "$(TargetDir)"
+echo copy "$(SolutionDir)Dependencies\irrKlang\Winx64-visualStudio\ikpMP3.dll" "$(TargetDir)"
+copy "$(SolutionDir)Dependencies\irrKlang\Winx64-visualStudio\ikpMP3.dll" "$(TargetDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\core\Basics\Components\CameraComponent.cpp" />
