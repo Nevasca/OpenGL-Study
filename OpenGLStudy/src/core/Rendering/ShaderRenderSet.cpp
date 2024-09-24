@@ -5,9 +5,11 @@ namespace Rendering
 {
     void ShaderRenderSet::Add(const std::shared_ptr<Shader>& shader)
     {
+        assert(shader);
+
         const unsigned int shaderId = shader->GetRendererID();
         
-        if(m_UniqueActiveShaders.find(shaderId) == m_UniqueActiveShaders.end())
+        if(!Contains(shader))
         {
             ActiveShader activeShader{};
             activeShader.Shader = shader;
@@ -20,6 +22,8 @@ namespace Rendering
 
     void ShaderRenderSet::Remove(const std::shared_ptr<Shader>& shader)
     {
+        assert(shader);
+
         const unsigned int shaderId = shader->GetRendererID();
 
         m_UniqueActiveShaders[shaderId].UsageCount--;
@@ -28,6 +32,12 @@ namespace Rendering
         {
             m_UniqueActiveShaders.erase(shaderId);
         }
+    }
+
+    bool ShaderRenderSet::Contains(const std::shared_ptr<Shader>& shader)
+    {
+        assert(shader);
+        return m_UniqueActiveShaders.find(shader->GetRendererID()) != m_UniqueActiveShaders.end();
     }
 
     void ShaderRenderSet::Clear()

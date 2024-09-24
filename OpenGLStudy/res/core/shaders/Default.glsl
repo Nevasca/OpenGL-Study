@@ -13,13 +13,18 @@ out VS_OUT
     vec3 FragPosition;
 } vsOut;
 
-uniform mat4 u_Model;
-uniform mat4 u_View;
-uniform mat4 u_Proj;
+layout (std140) uniform Matrices
+{
+    mat4 projection;
+    mat4 view;
+};
+
+// Not used anymore, using instacing rendering
+// uniform mat4 u_Model;
 
 void main()
 {
-    gl_Position = u_Proj * u_View * a_InstanceModelMatrix * a_Position; // Instancing approach
+    gl_Position = projection * view * a_InstanceModelMatrix * a_Position; // Instancing approach
 
     // Set pointSize when rendering with GL_POINTS
     //gl_PointSize = gl_Position.z;
@@ -38,11 +43,10 @@ void main()
 
 struct DirectionalLight
 {
+    float intensity;
     vec3 direction;
     vec3 diffuse;
-    vec3 specular;
-    
-    float intensity;
+    vec3 specular;    
 };
 
 struct PointLight
@@ -96,15 +100,29 @@ const int OPAQUE = 0;
 const int ALPHA_CUTOUT = 1;
 const int TRANSPARENT = 2;
 
-// Global Lighting
-uniform vec3 u_ViewPosition;
-uniform AmbientLight u_AmbientLight;
-uniform int u_TotalDirectionalLights;
-uniform DirectionalLight u_DirectionalLights[MAX_DIRECTIONAL_LIGHTS];
-uniform int u_TotalPointLights;
-uniform PointLight u_PointLights[MAX_POINT_LIGHTS];
-uniform int u_TotalSpotLights;
-uniform SpotLight u_SpotLights[MAX_SPOT_LIGHTS];
+layout (std140) uniform LightingGeneral
+{
+    vec3 viewPosition;
+    AmbientLight ambientLight;
+    int totalDirectionalLights;
+    int totalPointLights;
+    int totalSpotLights;
+};
+
+layout (std140) uniform LightingDirectionals
+{
+    DirectionalLight directionalLights[MAX_DIRECTIONAL_LIGHTS];
+};
+
+layout (std140) uniform LightingPoints
+{
+    PointLight pointLights[MAX_POINT_LIGHTS];
+};
+
+layout (std140) uniform LightingSpots
+{
+   SpotLight spotLights[MAX_SPOT_LIGHTS];
+};
 
 // Global Environment
 uniform samplerCube u_Skybox;
@@ -135,26 +153,26 @@ void main()
     }
 
     vec3 normal = normalize(inFrag.Normal);
-    vec3 viewDir = normalize(u_ViewPosition - inFrag.FragPosition);
+    vec3 viewDir = normalize(viewPosition - inFrag.FragPosition);
 
     vec3 baseColor = diffuseTextureColor.rgb + u_Color.rgb;
     baseColor += ComputeReflection(normal, viewDir);
     
     vec3 result = ComputeAmbientLight(baseColor);
     
-    for(int i = 0; i < u_TotalDirectionalLights; i++)
+    for(int i = 0; i < totalDirectionalLights; i++)
     {
-        result += ComputeDirectionalLight(u_DirectionalLights[i], normal, viewDir, baseColor);
+        result += ComputeDirectionalLight(directionalLights[i], normal, viewDir, baseColor);
     }
     
-    for(int i = 0; i < u_TotalPointLights; i++)
+    for(int i = 0; i < totalPointLights; i++)
     {
-        result += ComputePointLight(u_PointLights[i], normal, inFrag.FragPosition, viewDir, baseColor);
+       result += ComputePointLight(pointLights[i], normal, inFrag.FragPosition, viewDir, baseColor);
     }
     
-    for(int i = 0; i < u_TotalSpotLights; i++)
+    for(int i = 0; i < totalSpotLights; i++)
     {
-        result += ComputeSpotLight(u_SpotLights[i], normal, inFrag.FragPosition, viewDir, baseColor);
+       result += ComputeSpotLight(spotLights[i], normal, inFrag.FragPosition, viewDir, baseColor);
     }
     
     if(u_RenderingMode == OPAQUE)
@@ -265,5 +283,5 @@ vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, 
 
 vec3 ComputeAmbientLight(vec3 baseColor)
 {
-    return baseColor * u_AmbientLight.color;
+    return baseColor * ambientLight.color;
 }

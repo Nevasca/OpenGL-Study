@@ -3,24 +3,19 @@
 #include "InstancedArray.h"
 #include "Material.h"
 #include "Mesh.h"
-#include "ShaderRenderSet.h"
 #include "VertexArray.h"
 #include "core/Basics/Components/MeshComponent.h"
 
 class Mesh;
-class Shader;
 class Material;
 
 namespace Rendering
 {
-    void MeshComponentRenderSet::Add(const std::shared_ptr<MeshComponent>& meshComponent, ShaderRenderSet& uniqueShadersSet, InstancedArray& instancedArray)
+    void MeshComponentRenderSet::Add(const std::shared_ptr<MeshComponent>& meshComponent, InstancedArray& instancedArray)
     {
         const std::shared_ptr<Material>& meshMaterial = meshComponent->GetMaterial();
         const unsigned int materialId = meshMaterial->GetId();
     
-        const std::shared_ptr<Shader>& meshShader = meshMaterial->GetShader();
-        uniqueShadersSet.Add(meshShader);
-
         const std::shared_ptr<Mesh>& mesh = meshComponent->GetMesh();
         VertexArray& vao = mesh->GetVertexArray();
         const unsigned int vaoID = vao.GetRendererID();
@@ -42,13 +37,12 @@ namespace Rendering
         m_TotalMeshComponents++;
     }
 
-    void MeshComponentRenderSet::Remove(const std::shared_ptr<MeshComponent>& meshComponent, ShaderRenderSet& uniqueShadersSet)
+    void MeshComponentRenderSet::Remove(const std::shared_ptr<MeshComponent>& meshComponent)
     {
         const std::shared_ptr<Material>& meshMaterial = meshComponent->GetMaterial();
         const unsigned int materialId = meshMaterial->GetId();
     
         const std::shared_ptr<Shader>& meshShader = meshMaterial->GetShader();
-        uniqueShadersSet.Remove(meshShader);
 
         const std::shared_ptr<Mesh>& mesh = meshComponent->GetMesh();
         VertexArray& vao = mesh->GetVertexArray();

@@ -208,6 +208,7 @@
     <ClCompile Include="src\core\Rendering\Shader.cpp" />
     <ClCompile Include="src\core\Rendering\ShaderRenderSet.cpp" />
     <ClCompile Include="src\core\Rendering\Texture.cpp" />
+    <ClCompile Include="src\core\Rendering\UniformBuffer.cpp" />
     <ClCompile Include="src\core\Rendering\VertexArray.cpp" />
     <ClCompile Include="src\core\Rendering\VertexBuffer.cpp" />
     <ClCompile Include="src\core\Rendering\VertexBufferLayout.cpp" />
@@ -362,6 +363,7 @@
     <ClInclude Include="src\core\Rendering\Shader.h" />
     <ClInclude Include="src\core\Rendering\ShaderRenderSet.h" />
     <ClInclude Include="src\core\Rendering\Texture.h" />
+    <ClInclude Include="src\core\Rendering\UniformBuffer.h" />
     <ClInclude Include="src\core\Rendering\VertexArray.h" />
     <ClInclude Include="src\core\Rendering\VertexBuffer.h" />
     <ClInclude Include="src\core\Rendering\VertexBufferLayout.h" />

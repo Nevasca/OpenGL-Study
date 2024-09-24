@@ -6,12 +6,6 @@
 #include "glm/vec3.hpp"
 
 class InstancedArray;
-
-namespace Rendering
-{
-    class ShaderRenderSet;
-}
-
 class MeshComponent;
 
 namespace Rendering
@@ -27,8 +21,8 @@ namespace Rendering
     {
     public:
 
-        void Add(const std::shared_ptr<MeshComponent>& meshComponent, ShaderRenderSet& uniqueShadersSet, InstancedArray& instancedArray);
-        void Remove(const std::shared_ptr<MeshComponent>& meshComponent, ShaderRenderSet& uniqueShadersSet);
+        void Add(const std::shared_ptr<MeshComponent>& meshComponent, InstancedArray& instancedArray);
+        void Remove(const std::shared_ptr<MeshComponent>& meshComponent);
         void OverrideAllObjectsScale(const glm::vec3& scaleToAdd);
         std::multimap<float, MeshComponentRenderElement> GetMeshComponentsSortedByDistance(const glm::vec3& cameraPosition) const;
         void Clear();

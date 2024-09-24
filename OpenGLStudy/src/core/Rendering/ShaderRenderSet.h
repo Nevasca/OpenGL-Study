@@ -18,6 +18,7 @@ namespace Rendering
 
         void Add(const std::shared_ptr<Shader>& shader);
         void Remove(const std::shared_ptr<Shader>& shader);
+        bool Contains(const std::shared_ptr<Shader>& shader);
         void Clear();
 
         std::map<unsigned int, ActiveShader>& GetShaders() { return m_UniqueActiveShaders; }

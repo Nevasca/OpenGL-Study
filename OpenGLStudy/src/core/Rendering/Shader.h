@@ -13,6 +13,7 @@ public:
 
     void Bind() const;
     void Unbind() const;
+    bool IsBound() const { return m_LastBoundShaderId == m_RendererID; }
 
     void SetUniform1i(const std::string& name, const int value);
     void SetUniform1iv(const std::string& name, const int count, const int* value);

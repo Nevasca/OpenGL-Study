@@ -20,7 +20,10 @@ Shader::~Shader()
     // If next shader created uses the same id as the one destroyed and previously bound
     // it will think it's already bound and cause a OpenGL crash,
     // so it's safer to set last bound to none now (0)
-    m_LastBoundShaderId = 0;
+    if(IsBound())
+    {
+        m_LastBoundShaderId = 0;
+    }
 }
 
 void Shader::Bind() const

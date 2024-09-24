@@ -10,6 +10,7 @@
 #include "FrameBuffer.h"
 #include "MeshComponentRenderSet.h"
 #include "ShaderRenderSet.h"
+#include "UniformBuffer.h"
 
 namespace Rendering
 {
@@ -48,7 +49,7 @@ public:
     glm::vec3 GetAmbientLightColor() const { return m_LightingSystem.GetAmbientLightColor(); }
     void SetClearColor(const glm::vec4& clearColor) const { m_Framebuffer->SetClearColor(clearColor); }
     glm::vec4 GetClearColor() const { return m_Framebuffer->GetClearColor(); }
-    void SetOverrideShader(const std::shared_ptr<Shader>& overrideShader) { m_WorldOverrideShader = overrideShader; }
+    void SetOverrideShader(const std::shared_ptr<Shader>& overrideShader);
     Rendering::Device& GetDevice() { return m_Device; }
 
 private:
@@ -67,6 +68,8 @@ private:
     Rendering::MeshComponentRenderSet m_TransparentOutlinedMeshComponentSet{};
     Rendering::ShaderRenderSet m_UniqueActiveShaderSet{};
     std::shared_ptr<Shader> m_WorldOverrideShader{}; // if set, render world using only this shader
+    std::unique_ptr<Rendering::UniformBuffer> m_MatricesUniformBuffer{};
+    std::unique_ptr<Rendering::UniformBuffer> m_CameraUniformBuffer{};
 
     std::unique_ptr<InstancedArray> m_InstancedArray{};
     std::unique_ptr<Framebuffer> m_Framebuffer{};
@@ -82,6 +85,8 @@ private:
     void RenderWorld(const CameraComponent& activeCamera);
     void RenderOutlinedObjects(const CameraComponent& activeCamera);
     void CreateInstancedBuffer();
+    void CreateUniformBuffers();
+    void SetupUniformsFor(Shader& shader) const;
     void SetupOutlineRendering();
     bool IsSkyboxActive() const;
 };

@@ -2,6 +2,7 @@
 
 #include "core/GameObject/GameObject.h"
 #include "core/World.h"
+#include "core/Rendering/Material.h"
 
 void MeshComponent::SetMesh(const std::shared_ptr<Mesh>& mesh)
 {
@@ -51,6 +52,11 @@ void MeshComponent::SetIsOutlined(const bool bOutlined)
     {
         AddToWorld();
     }
+}
+
+std::shared_ptr<Shader> MeshComponent::GetShader() const
+{
+    return m_Material ? m_Material->GetShader() : nullptr;   
 }
 
 void MeshComponent::AddToWorld()

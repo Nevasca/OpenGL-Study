@@ -2,6 +2,7 @@
 
 #include "core/GameObject/Component.h"
 
+class Shader;
 class Material;
 class Mesh;
 
@@ -18,6 +19,7 @@ public:
     bool IsReadyToDraw() const { return m_Mesh != nullptr && m_Material != nullptr; }
     const std::shared_ptr<Mesh>& GetMesh() const { return m_Mesh; }
     const std::shared_ptr<Material>& GetMaterial() const { return m_Material; }
+    std::shared_ptr<Shader> GetShader() const;
     bool IsOutlined() const { return bIsOutlined; }
 
 private:

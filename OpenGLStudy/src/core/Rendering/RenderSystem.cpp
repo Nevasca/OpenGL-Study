@@ -15,6 +15,7 @@
 RenderSystem::RenderSystem()
 {
     CreateInstancedBuffer();
+    CreateUniformBuffers();
 
     m_Framebuffer = std::make_unique<Framebuffer>(Screen::GetWidth(), Screen::GetHeight(), true, std::vector<TextureSettings>{});
     m_PostProcessingSystem.SetFramebuffer(*m_Framebuffer);
@@ -45,7 +46,17 @@ void RenderSystem::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshCo
     assert(meshComponent->IsReadyToDraw());
 
     Rendering::MeshComponentRenderSet& meshComponentSet = GetComponentRenderSetFor(meshComponent);
-    meshComponentSet.Add(meshComponent, m_UniqueActiveShaderSet, *m_InstancedArray);
+    meshComponentSet.Add(meshComponent, *m_InstancedArray);
+
+    std::shared_ptr<Shader> shader = meshComponent->GetShader();
+    assert(shader);
+
+    if(!m_UniqueActiveShaderSet.Contains(shader))
+    {
+        SetupUniformsFor(*shader);
+    }
+
+    m_UniqueActiveShaderSet.Add(shader);
 }
 
 void RenderSystem::RemoveMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
@@ -53,7 +64,8 @@ void RenderSystem::RemoveMeshComponent(const std::shared_ptr<MeshComponent>& mes
     assert(meshComponent->IsReadyToDraw());
     
     Rendering::MeshComponentRenderSet& meshComponentSet = GetComponentRenderSetFor(meshComponent);
-    meshComponentSet.Remove(meshComponent, m_UniqueActiveShaderSet);
+    meshComponentSet.Remove(meshComponent);
+    m_UniqueActiveShaderSet.Remove(meshComponent->GetShader());
 }
 
 void RenderSystem::AddOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
@@ -61,7 +73,17 @@ void RenderSystem::AddOutlinedMeshComponent(const std::shared_ptr<MeshComponent>
     assert(meshComponent->IsReadyToDraw());
 
     Rendering::MeshComponentRenderSet& meshComponentSet = GetOutlinedComponentRenderSetFor(meshComponent);
-    meshComponentSet.Add(meshComponent, m_UniqueActiveShaderSet, *m_InstancedArray);
+    meshComponentSet.Add(meshComponent, *m_InstancedArray);
+
+    std::shared_ptr<Shader> shader = meshComponent->GetShader();
+    assert(shader);
+
+    if(!m_UniqueActiveShaderSet.Contains(shader))
+    {
+        SetupUniformsFor(*shader);
+    }
+
+    m_UniqueActiveShaderSet.Add(shader);
 }
 
 void RenderSystem::RemoveOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
@@ -69,7 +91,8 @@ void RenderSystem::RemoveOutlinedMeshComponent(const std::shared_ptr<MeshCompone
     assert(meshComponent->IsReadyToDraw());
 
     Rendering::MeshComponentRenderSet& meshComponentSet = GetOutlinedComponentRenderSetFor(meshComponent);
-    meshComponentSet.Remove(meshComponent, m_UniqueActiveShaderSet);
+    meshComponentSet.Remove(meshComponent);
+    m_UniqueActiveShaderSet.Remove(meshComponent->GetShader());
 }
 
 Rendering::MeshComponentRenderSet& RenderSystem::GetComponentRenderSetFor(const std::shared_ptr<MeshComponent>& meshComponent)
@@ -159,41 +182,32 @@ void RenderSystem::Render(const CameraComponent& activeCamera)
     m_PostProcessingSystem.RenderToScreen();
 }
 
+void RenderSystem::SetOverrideShader(const std::shared_ptr<Shader>& overrideShader)
+{
+    m_WorldOverrideShader = overrideShader;
+
+    if(m_WorldOverrideShader)
+    {
+        SetupUniformsFor(*m_WorldOverrideShader);
+    }
+}
+
 void RenderSystem::UpdateGlobalShaderUniforms(const CameraComponent& activeCamera)
 {
     const glm::mat4 view = activeCamera.GetViewMatrix();
     const glm::mat4 proj = activeCamera.GetProjectionMatrix();
 
-    // If we have an override shader to use for all objects
-    // just update it and ignore world active shaders
-    if(m_WorldOverrideShader)
-    {
-        m_WorldOverrideShader->Bind();
-        m_WorldOverrideShader->SetUniformMat4f("u_Proj", proj);
-        m_WorldOverrideShader->SetUniformMat4f("u_View", view);
-        m_WorldOverrideShader->SetUniform1f("u_NearPlane", activeCamera.GetNearPlane());
-        m_WorldOverrideShader->SetUniform1f("u_FarPlane", activeCamera.GetFarPlane());
-        m_WorldOverrideShader->SetUniform1i("u_Skybox", SKYBOX_CUBEMAP_SLOT);
+    m_MatricesUniformBuffer->Bind();
+    glm::mat4 matrices[2] { proj, view };
+    m_MatricesUniformBuffer->SetSubData(matrices, sizeof(matrices));
+    m_MatricesUniformBuffer->Unbind();
 
-        m_LightingSystem.SetLightsFor(*m_WorldOverrideShader, activeCamera);
+    m_CameraUniformBuffer->Bind();
+    float cameraParams[2] { activeCamera.GetNearPlane(), activeCamera.GetFarPlane() };
+    m_CameraUniformBuffer->SetSubData(cameraParams, sizeof(cameraParams));
+    m_CameraUniformBuffer->Unbind();
 
-        return;    
-    }
-    
-    for(auto& activeShaderPair : m_UniqueActiveShaderSet.GetShaders())
-    {
-        Shader& activeShader = *activeShaderPair.second.Shader;
-
-        activeShader.Bind();
-        activeShader.SetUniformMat4f("u_Proj", proj);
-        activeShader.SetUniformMat4f("u_View", view);
-        activeShader.SetUniform1f("u_NearPlane", activeCamera.GetNearPlane());
-        activeShader.SetUniform1f("u_FarPlane", activeCamera.GetFarPlane());
-        // TODO: no need to set it every frame. Implement setting up global uniforms that won't change frequently
-        activeShader.SetUniform1i("u_Skybox", SKYBOX_CUBEMAP_SLOT);
-
-        m_LightingSystem.SetLightsFor(activeShader, activeCamera);
-    }
+    m_LightingSystem.UpdateLightingUniformBuffer(activeCamera);
 }
 
 void RenderSystem::RenderObjects(const Rendering::MeshComponentRenderSet& meshComponentSet)
@@ -394,6 +408,35 @@ void RenderSystem::CreateInstancedBuffer()
         MAX_INSTANCED_AMOUNT_PER_CALL * layout.GetStride(),
         true,
         std::move(layout));
+}
+
+void RenderSystem::CreateUniformBuffers()
+{
+    constexpr unsigned int UNIFORM_MATRICES_BINDING_INDEX = 0;
+    constexpr unsigned int UNIFORM_CAMERA_BINDING_INDEX = 1;
+
+    m_MatricesUniformBuffer = std::make_unique<Rendering::UniformBuffer>(nullptr,
+        2 * sizeof(glm::mat4),
+        UNIFORM_MATRICES_BINDING_INDEX,
+        "Matrices",
+        true);
+
+    m_CameraUniformBuffer = std::make_unique<Rendering::UniformBuffer>(nullptr,
+        2 * sizeof(float),
+        UNIFORM_CAMERA_BINDING_INDEX,
+        "Camera");
+}
+
+void RenderSystem::SetupUniformsFor(Shader& shader) const
+{
+    m_MatricesUniformBuffer->SetBindingIndexFor(shader);
+    m_CameraUniformBuffer->SetBindingIndexFor(shader);
+
+    shader.Bind();
+    shader.SetUniform1i("u_Skybox", SKYBOX_CUBEMAP_SLOT);
+    shader.Unbind();
+
+    m_LightingSystem.SetupUniformsFor(shader);
 }
 
 void RenderSystem::SetupOutlineRendering()
