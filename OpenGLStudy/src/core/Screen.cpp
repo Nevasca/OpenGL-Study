@@ -8,3 +8,8 @@ void Screen::SetSize(int width, int height)
     m_Width = width;
     m_Height = height;
 }
+
+Rendering::Resolution Screen::GetResolution()
+{
+    return Rendering::Resolution{static_cast<unsigned int>(m_Width), static_cast<unsigned>(m_Height)};
+}

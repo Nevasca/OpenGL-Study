@@ -382,6 +382,7 @@ copy "$(SolutionDir)Dependencies\irrKlang\Winx64-visualStudio\ikpMP3.dll" "$(Tar
     <ClInclude Include="src\core\Rendering\PostProcessingSystem.h" />
     <ClInclude Include="src\core\Rendering\Primitive.h" />
     <ClInclude Include="src\core\Rendering\RenderSystem.h" />
+    <ClInclude Include="src\core\Rendering\Resolution.h" />
     <ClInclude Include="src\core\Rendering\Shader.h" />
     <ClInclude Include="src\core\Rendering\ShaderRenderSet.h" />
     <ClInclude Include="src\core\Rendering\Texture.h" />

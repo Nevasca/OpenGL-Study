@@ -17,18 +17,28 @@ RenderSystem::RenderSystem()
     CreateInstancedBuffer();
     CreateUniformBuffers();
 
-    m_Framebuffer = std::make_unique<Framebuffer>(Screen::GetWidth(), Screen::GetHeight(), true, std::vector<TextureSettings>{});
-    m_PostProcessingSystem.SetFramebuffer(*m_Framebuffer);
+    m_Device.EnableFaceCulling();
+    m_Device.EnableMSAA(); // Seems we don't actually need to enable when using custom framebuffer
+    
+    Rendering::Resolution resolution = Screen::GetResolution();
+
+    // TODO: add way to set how many samples to use
+    constexpr unsigned int MSAA_SAMPLES = 4;
+    m_MultisampleFramebuffer = std::make_unique<Framebuffer>(resolution, true, std::vector<TextureSettings>{}, MSAA_SAMPLES);
+    m_IntermediateFramebuffer = std::make_unique<Framebuffer>(resolution, false, std::vector<TextureSettings>{});
+
+    m_PostProcessingSystem.SetFramebuffer(*m_IntermediateFramebuffer);
 
     constexpr glm::vec4 defaultClearColor{0.2f, 0.2f, 0.2f, 1.f};
     SetClearColor(defaultClearColor);
-    m_Device.EnableFaceCulling();
 
     SetupOutlineRendering();
 }
 
 void RenderSystem::Shutdown()
 {
+    m_Device.DisableMSAA();
+
     m_OpaqueMeshComponentSet.Clear();
     m_TransparentMeshComponentSet.Clear();
     m_OpaqueOutlinedMeshComponentSet.Clear();
@@ -172,12 +182,16 @@ void RenderSystem::RemoveSkyboxComponent(const std::shared_ptr<SkyboxComponent>&
 
 void RenderSystem::Render(const CameraComponent& activeCamera)
 {
-    m_Framebuffer->BindAndClear();
+    m_MultisampleFramebuffer->BindAndClear();
 
     RenderWorld(activeCamera);
     RenderOutlinedObjects(activeCamera);
-    
-    m_Framebuffer->Unbind();
+
+    // Blit (resolve) multisample framebuffer so we can sample the result color texture on post-processing
+    m_MultisampleFramebuffer->BindAsReadOnly();
+    m_IntermediateFramebuffer->BindAsWriteOnly();
+    m_MultisampleFramebuffer->ResolveMultisampleImage(m_IntermediateFramebuffer->GetResolution());
+    m_MultisampleFramebuffer->Unbind();
 
     m_PostProcessingSystem.RenderToScreen();
 }

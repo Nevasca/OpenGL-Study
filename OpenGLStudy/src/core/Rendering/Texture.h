@@ -12,6 +12,7 @@ struct TextureSettings
     unsigned int WrapS{GL_CLAMP_TO_EDGE};
     unsigned int WrapT{GL_CLAMP_TO_EDGE};
     bool GenerateMipmap{false};
+    unsigned int Samples{1};
 };
 
 class Texture
@@ -40,6 +41,7 @@ private:
     unsigned int m_RendererID{0};
     unsigned int m_Width{0};
     unsigned int m_Height{0};
+    unsigned int m_Target{GL_TEXTURE_2D};
     std::string m_Name{};
     bool bIsFlippedOnLoad{true};
 };

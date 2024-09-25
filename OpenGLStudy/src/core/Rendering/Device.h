@@ -25,6 +25,8 @@ namespace Rendering
         void SetCullingFaceFront() const;
         void SetCullingFaceBack() const;
         void SetCullingWindingOrder(bool bIsCounterClockwise) const;
+        void EnableMSAA() const;
+        void DisableMSAA() const;
 
         bool IsFaceCullingEnabled() const { return bIsFaceCullingEnabled; }
 

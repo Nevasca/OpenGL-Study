@@ -107,4 +107,14 @@ namespace Rendering
     {
         GLCall(glFrontFace(bIsCounterClockwise ? GL_CCW : GL_CW));
     }
+
+    void Device::EnableMSAA() const
+    {
+        GLCall(glEnable(GL_MULTISAMPLE));
+    }
+
+    void Device::DisableMSAA() const
+    {
+        GLCall(glDisable(GL_MULTISAMPLE));
+    }
 }

@@ -47,8 +47,8 @@ public:
 
     void SetAmbientLightColor(const glm::vec3& ambientLightColor) { m_LightingSystem.SetAmbientLightColor(ambientLightColor); }
     glm::vec3 GetAmbientLightColor() const { return m_LightingSystem.GetAmbientLightColor(); }
-    void SetClearColor(const glm::vec4& clearColor) const { m_Framebuffer->SetClearColor(clearColor); }
-    glm::vec4 GetClearColor() const { return m_Framebuffer->GetClearColor(); }
+    void SetClearColor(const glm::vec4& clearColor) const { m_MultisampleFramebuffer->SetClearColor(clearColor); }
+    glm::vec4 GetClearColor() const { return m_MultisampleFramebuffer->GetClearColor(); }
     void SetOverrideShader(const std::shared_ptr<Shader>& overrideShader);
     Rendering::Device& GetDevice() { return m_Device; }
 
@@ -72,7 +72,9 @@ private:
     std::unique_ptr<Rendering::UniformBuffer> m_CameraUniformBuffer{};
 
     std::unique_ptr<InstancedArray> m_InstancedArray{};
-    std::unique_ptr<Framebuffer> m_Framebuffer{};
+    std::unique_ptr<Framebuffer> m_MultisampleFramebuffer{};
+    std::unique_ptr<Framebuffer> m_IntermediateFramebuffer{};
+    
     std::shared_ptr<Shader> m_OutlineShader{};
     std::shared_ptr<SkyboxComponent> m_SkyboxComponent{};
 
