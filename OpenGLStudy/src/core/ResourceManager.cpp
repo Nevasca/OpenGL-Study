@@ -26,7 +26,7 @@ std::string ResourceManager::DEFAULT_MESH_SPHERE_NAME = "Sphere";
 
 void ResourceManager::LoadDefaultResources()
 {
-    std::shared_ptr<Shader> defaultShader = LoadShader("res/core/shaders/Phong.glsl", DEFAULT_SHADER_NAME);
+    std::shared_ptr<Shader> defaultShader = LoadShader("res/core/shaders/BlinnPhong.glsl", DEFAULT_SHADER_NAME);
 
     std::shared_ptr<Material> defaultMaterial = CreateMaterial(DEFAULT_MATERIAL_NAME);
     defaultMaterial->SetColor("u_Color", glm::vec4(0.5f, 0.5f, 0.5f, 1.f));
@@ -95,7 +95,7 @@ std::shared_ptr<Shader> ResourceManager::GetShader(const std::string& name)
 std::shared_ptr<Material> ResourceManager::CreateMaterial(const std::string& name)
 {
     std::shared_ptr<Material> material = CreateMaterial(name, DEFAULT_SHADER_NAME);
-    material->SetInt("u_MaterialShininess", 32);
+    material->SetInt("u_MaterialShininess", 64);
 
     return material;
 }

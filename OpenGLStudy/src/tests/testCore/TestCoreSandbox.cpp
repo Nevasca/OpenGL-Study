@@ -70,6 +70,7 @@ namespace tests
         sphere->SetName("Sphere");
         sphere->SetMaterial(sphereMaterial);
 
+        SpawnFloor();
         SpawnLights(*camera);
 
         auto postProcessing = m_World->Spawn<PostProcessing>();
@@ -148,8 +149,6 @@ namespace tests
 
         auto spotLightComponent = camera.AddComponent<SpotLightComponent>();
         spotLightComponent->SetRange(100.f);
-
-        SpawnFloor();
     }
 
     void TestCoreSandbox::SpawnCrates()

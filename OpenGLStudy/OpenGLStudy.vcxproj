@@ -325,6 +325,7 @@ copy "$(SolutionDir)Dependencies\irrKlang\Winx64-visualStudio\ikpMP3.dll" "$(Tar
     <Content Include="res\breakout\textures\block_solid.png" />
     <Content Include="res\breakout\textures\paddle.png" />
     <Content Include="res\breakout\textures\particle.png" />
+    <Content Include="res\core\shaders\BlinnPhong.glsl" />
     <Content Include="res\core\shaders\Phong.glsl" />
     <Content Include="res\core\shaders\DefaultUnlit.glsl" />
     <Content Include="res\core\shaders\Outline.glsl" />
