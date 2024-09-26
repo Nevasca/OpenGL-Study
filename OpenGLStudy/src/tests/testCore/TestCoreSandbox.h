@@ -27,5 +27,7 @@ namespace tests
 
         void SpawnTransparentObjects();
         void SpawnLights(GameObject& camera);
+        void SpawnCrates();
+        void SpawnFloor();
     };
 }

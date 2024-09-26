@@ -39,26 +39,9 @@ namespace tests
         std::shared_ptr<FlyingCamera> camera = m_World->Spawn<FlyingCamera>(cameraInitialPosition, cameraInitialRotation);
         camera->SetName("Camera");
 
-        int cubeIndex = 0;
-        for(int x = 0; x < 5; x++)
-        {
-            for(int z = 0; z < 5; z++)
-            {
-                glm::vec3 position{static_cast<float>(x) * 2.f, 0.f, static_cast<float>(z) * 2.f};
-                auto cube = m_World->Spawn<Cube>(position);
-                cube->SetName("Cube" + std::to_string(cubeIndex));
-
-                cubeIndex++;
-            }
-        }
+        SpawnCrates();
 
         const std::string reflectionUniformName = "u_ReflectionValue";
-
-        std::shared_ptr<Material> defaultMaterial = ResourceManager::GetDefaultMaterial();
-        defaultMaterial->SetColor("u_Color", glm::vec4(0.f)); // When using a texture, we need to set default color to black
-        defaultMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Container_Diff.png", "Container_Diffuse", false, true), 1);
-        defaultMaterial->SetTexture("u_Specular", ResourceManager::LoadTexture("res/textures/Container_Spec.png", "Container_Specular", false, true), 2);
-        defaultMaterial->SetFloat(reflectionUniformName, 0.f);
 
         auto cube = m_World->Spawn<Cube>(glm::vec3(0.f, 5.f, 0.f));
         cube->SetName("CubePigeon");
@@ -132,9 +115,9 @@ namespace tests
     void TestCoreSandbox::SpawnLights(GameObject& camera)
     {
         int lightIndex = 0;
-        for(int x = 0; x < 4; x++)
+        for(int x = 0; x < 2; x++)
         {
-            for(int z = 0; z < 4; z++)
+            for(int z = 0; z < 2; z++)
             {
                 glm::vec3 position{static_cast<float>(x) * 50.f, 3.f, static_cast<float>(z) * 50.f};
                 auto light = m_World->Spawn<PointLight>(position);
@@ -158,13 +141,49 @@ namespace tests
         testGetDirectionalLight->SetColor(glm::vec3(0.82f, 0.875f, 1.f));
         testGetDirectionalLight->SetIntensity(0.2f);
 
-        std::shared_ptr<PointLight> pointLight = m_World->Spawn<PointLight>(glm::vec3(0.f, 3.f, 0.f));
+        std::shared_ptr<PointLight> pointLight = m_World->Spawn<PointLight>(glm::vec3(-1.f, -0.25f, 10.f));
         pointLight->SetName("PointLight" + std::to_string(lightIndex++));
         pointLight->SetColor(glm::vec3(1.f, 0.f, 0.f));
         pointLight->SetRange(60.f);
 
         auto spotLightComponent = camera.AddComponent<SpotLightComponent>();
         spotLightComponent->SetRange(100.f);
+
+        SpawnFloor();
+    }
+
+    void TestCoreSandbox::SpawnCrates()
+    {
+        const std::string reflectionUniformName = "u_ReflectionValue";
+        
+        std::shared_ptr<Material> crateMaterial = ResourceManager::CreateMaterial("M_Crate");
+        crateMaterial->SetColor("u_Color", glm::vec4(0.f)); // When using a texture, we need to set default color to black
+        crateMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Container_Diff.png", "Container_Diffuse", false, true), 1);
+        crateMaterial->SetTexture("u_Specular", ResourceManager::LoadTexture("res/textures/Container_Spec.png", "Container_Specular", false, true), 2);
+        crateMaterial->SetFloat(reflectionUniformName, 0.f);
+        
+        int crateIndex = 0;
+        for(int x = 0; x < 3; x++)
+        {
+            for(int z = 0; z < 3; z++)
+            {
+                glm::vec3 position{static_cast<float>(x) * 2.f, 0.f, static_cast<float>(z) * 2.f};
+                auto crate = m_World->Spawn<Cube>(position);
+                crate->SetName("Crate" + std::to_string(crateIndex));
+                crate->SetMaterial(crateMaterial);
+
+                crateIndex++;
+            }
+        }
+    }
+
+    void TestCoreSandbox::SpawnFloor()
+    {
+        glm::vec3 floorPosition{4.f, -0.75f, 4.f};
+        glm::vec3 floorRotation{0.f};
+        glm::vec3 floorScale{14.f, 0.25f, 14.f};
+        std::shared_ptr<Cube> floor = m_World->Spawn<Cube>(floorPosition, floorRotation, floorScale);
+        floor->SetName("Floor");
     }
 
     TestCoreSandbox::~TestCoreSandbox()
