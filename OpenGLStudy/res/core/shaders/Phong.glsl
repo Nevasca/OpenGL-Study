@@ -133,8 +133,7 @@ uniform sampler2D u_Diffuse;
 uniform sampler2D u_Specular;
 uniform float u_ReflectionValue;
 uniform int u_RenderingMode;
-
-int materialShininess = 32; // TODO: create material system
+uniform int u_MaterialShininess;
 
 vec3 ComputeReflection(vec3 normal, vec3 viewDir);
 vec3 ComputeRefraction(vec3 normal, vec3 viewDir);
@@ -216,7 +215,7 @@ vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, 
     
     // Specular
     vec3 reflectDirection = reflect(light.direction, normal);    
-    float specularValue = pow(max(dot(viewDir, reflectDirection), 0.f), materialShininess);
+    float specularValue = pow(max(dot(viewDir, reflectDirection), 0.f), u_MaterialShininess);
     vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, inFrag.TexCoord));
     
     return (diffuse + specular) * light.intensity;    
@@ -241,7 +240,7 @@ vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir
     
     // Specular
     vec3 reflectDirection = reflect(-lightDir, normal);
-    float specularValue = pow(max(dot(reflectDirection, viewDir), 0), materialShininess);
+    float specularValue = pow(max(dot(reflectDirection, viewDir), 0), u_MaterialShininess);
     vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, inFrag.TexCoord));
     specular *= attenuation;
     
@@ -274,7 +273,7 @@ vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, 
     
     // Specular
     vec3 reflectDirection = reflect(light.direction, normal);
-    float specularValue = pow(max(dot(viewDir, reflectDirection), 0.f), materialShininess);
+    float specularValue = pow(max(dot(viewDir, reflectDirection), 0.f), u_MaterialShininess);
     vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, inFrag.TexCoord));
     specular *= intensity;
     

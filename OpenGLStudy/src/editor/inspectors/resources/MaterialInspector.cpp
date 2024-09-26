@@ -23,6 +23,7 @@ namespace Editor
             RenderTextureProperties(material);
             RenderBoolProperties(material);
             RenderFloatProperties(material);
+            RenderIntProperties(material);
         }
 
         void MaterialInspector::RenderRenderingMode(Material& material)
@@ -132,6 +133,25 @@ namespace Editor
             for (const auto& inspectorFloatPropertyPair : inspectorFloatProperties)
             {
                 material.SetFloat(inspectorFloatPropertyPair.first, inspectorFloatPropertyPair.second);
+            }
+        }
+
+        void MaterialInspector::RenderIntProperties(Material& material)
+        {
+            const auto& materialIntProperties = material.GetAllIntProperties();
+            std::map<std::string, int> inspectorIntProperties{};
+
+            for (const auto& intPropertyPair : materialIntProperties)
+            {
+                std::string intName = intPropertyPair.first;
+
+                inspectorIntProperties[intName] = intPropertyPair.second;
+                ImGui::DragInt(intName.c_str(), &inspectorIntProperties[intName]);
+            }
+
+            for (const auto& inspectorIntPropertyPair : inspectorIntProperties)
+            {
+                material.SetInt(inspectorIntPropertyPair.first, inspectorIntPropertyPair.second);
             }
         }
     }

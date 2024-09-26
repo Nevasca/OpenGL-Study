@@ -43,6 +43,7 @@ public:
     void SetMat4(const std::string& name, const glm::mat4& matrix) const;
     void SetBool(const std::string& name, const bool value);
     void SetFloat(const std::string& name, const float value);
+    void SetInt(const std::string& name, const int value);
     void SetRenderingMode(MaterialRenderingMode renderingMode);
     void Bind() const;
     void Bind(Shader& shader) const;
@@ -60,6 +61,7 @@ public:
     const std::map<std::string, MaterialTextureProperty>& GetAllTextureProperties() const { return m_TextureProperties; }
     const std::map<std::string, bool>& GetAllBoolProperties() const { return m_BoolProperties; }
     const std::map<std::string, float>& GetAllFloatProperties() const { return m_FloatProperties; }
+    const std::map<std::string, int>& GetAllIntProperties() const { return m_IntProperties; }
 
 private:
 
@@ -70,6 +72,7 @@ private:
     std::map<std::string, bool> m_BoolProperties{};
     std::map<std::string, MaterialCubemapProperty> m_CubemapProperties{};
     std::map<std::string, float> m_FloatProperties{};
+    std::map<std::string, int> m_IntProperties{};
     
     MaterialRenderingMode m_RenderingMode{MaterialRenderingMode::Opaque};
     std::string m_Name{};
