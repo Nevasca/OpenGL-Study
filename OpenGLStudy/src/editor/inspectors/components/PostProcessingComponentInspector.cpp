@@ -12,6 +12,9 @@ namespace Editor
             std::shared_ptr<PostProcessingComponent> postProcessing = std::dynamic_pointer_cast<PostProcessingComponent>(component);
             assert(postProcessing);
 
+            float gammaValue = postProcessing->GetGammaValue();
+            ImGui::DragFloat("Gamma Value", &gammaValue, 0.1f);
+            
             bool bIsColorInversionEnabled = postProcessing->IsColorInversionEnabled();
             ImGui::Checkbox("Color Inversion", &bIsColorInversionEnabled);
 
@@ -27,6 +30,7 @@ namespace Editor
             bool bIsEdgeDetectionEnabled = postProcessing->IsEdgeDetectionEnabled();
             ImGui::Checkbox("Edge Detection", &bIsEdgeDetectionEnabled);
 
+            postProcessing->SetGammaValue(gammaValue);
             postProcessing->SetColorInversion(bIsColorInversionEnabled);
             postProcessing->SetGrayScale(bIsGrayScaleEnabled);
             postProcessing->SetSharpen(bIsSharpenEnabled);

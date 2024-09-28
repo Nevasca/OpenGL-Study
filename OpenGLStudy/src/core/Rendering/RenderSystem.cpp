@@ -193,7 +193,10 @@ void RenderSystem::Render(const CameraComponent& activeCamera)
     m_MultisampleFramebuffer->ResolveMultisampleImage(m_IntermediateFramebuffer->GetResolution());
     m_MultisampleFramebuffer->Unbind();
 
+    // If we weren't gamma correction via shader and wanted to correct automatically with OpenGL
+    // m_Device.EnableGammaCorrection();
     m_PostProcessingSystem.RenderToScreen();
+    // m_Device.DisableGammaCorrection();
 }
 
 void RenderSystem::SetOverrideShader(const std::shared_ptr<Shader>& overrideShader)

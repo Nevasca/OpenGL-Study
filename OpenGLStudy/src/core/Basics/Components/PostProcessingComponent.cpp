@@ -19,6 +19,12 @@ void PostProcessingComponent::Disable()
     world.RemovePostProcessingComponent(GetThis());
 }
 
+void PostProcessingComponent::SetGammaValue(const float gammaValue)
+{
+    m_GammaValue = gammaValue;
+    bIsDirty = true;
+}
+
 void PostProcessingComponent::SetColorInversion(const bool bEnabled)
 {
     bIsColorInversionEnabled = bEnabled;

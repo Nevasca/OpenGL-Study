@@ -2,7 +2,6 @@
 
 #include <memory>
 
-#include "legacy/LegacyShader.h"
 #include "core/ResourceManager.h"
 #include "core/Basics/Objects/FlyingCamera.h"
 #include "core/Basics/Objects/Cube.h"
@@ -47,13 +46,16 @@ namespace tests
         cube->SetName("CubePigeon");
         auto anotherMaterial = ResourceManager::CreateMaterial("AnotherMaterial");
         anotherMaterial->SetColor("u_Color", glm::vec4(0.f));
-        anotherMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/FancyPigeon.png", "Pigeon", false, true), 1);
+
+        TextureSettings pigeonTextureSettings{false};
+        pigeonTextureSettings.GenerateMipmap = true;
+        anotherMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/FancyPigeon.png", "Pigeon", pigeonTextureSettings, true), 1);
         anotherMaterial->SetFloat(reflectionUniformName, 0.f);
         cube->SetMaterial(anotherMaterial);
 
         auto bridgeMaterial = ResourceManager::CreateMaterial("M_Bridge");
         bridgeMaterial->SetColor("u_Color", glm::vec4(0.f));
-        bridgeMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Atlas04_Diff.png", "T_Bridge_Diffuse", false), 1);
+        bridgeMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Atlas04_Diff.png", "T_Bridge_Diffuse", TextureSettings{false}), 1);
         bridgeMaterial->SetFloat(reflectionUniformName, 0.f);
         auto bridgeModel = ResourceManager::LoadModel("res/models/Bridge.fbx", "Bridge");
 
@@ -87,7 +89,7 @@ namespace tests
         
         auto flowerMaterial = ResourceManager::CreateMaterial("M_Flower");
         flowerMaterial->SetColor("u_Color", glm::vec4(0.f));
-        flowerMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Flower.png", "T_Flower", true, true), 1);
+        flowerMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Flower.png", "T_Flower", TextureSettings{true}, true), 1);
         flowerMaterial->SetFloat(reflectionUniformName, 0.f);
         flowerMaterial->SetRenderingMode(MaterialRenderingMode::AlphaCutout);
         
@@ -97,7 +99,7 @@ namespace tests
 
         auto windowMaterial = ResourceManager::CreateMaterial("M_Window");
         windowMaterial->SetColor("u_Color", glm::vec4(0.f));
-        windowMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/TransparentWindow.png", "T_Window", true, true), 1);
+        windowMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/TransparentWindow.png", "T_Window", TextureSettings{true}, true), 1);
         windowMaterial->SetFloat(reflectionUniformName, 0.f);
         windowMaterial->SetRenderingMode(MaterialRenderingMode::Transparent);
 
@@ -157,8 +159,8 @@ namespace tests
         
         std::shared_ptr<Material> crateMaterial = ResourceManager::CreateMaterial("M_Crate");
         crateMaterial->SetColor("u_Color", glm::vec4(0.f)); // When using a texture, we need to set default color to black
-        crateMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Container_Diff.png", "Container_Diffuse", false, true), 1);
-        crateMaterial->SetTexture("u_Specular", ResourceManager::LoadTexture("res/textures/Container_Spec.png", "Container_Specular", false, true), 2);
+        crateMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Container_Diff.png", "Container_Diffuse", TextureSettings{false}, true), 1);
+        crateMaterial->SetTexture("u_Specular", ResourceManager::LoadTexture("res/textures/Container_Spec.png", "Container_Specular", TextureSettings{false, false}, true), 2);
         crateMaterial->SetFloat(reflectionUniformName, 0.f);
         
         int crateIndex = 0;

@@ -117,4 +117,14 @@ namespace Rendering
     {
         GLCall(glDisable(GL_MULTISAMPLE));
     }
+
+    void Device::EnableGammaCorrection() const
+    {
+        GLCall(glEnable(GL_FRAMEBUFFER_SRGB)); 
+    }
+
+    void Device::DisableGammaCorrection() const
+    {
+        GLCall(glDisable(GL_FRAMEBUFFER_SRGB));
+    }
 }

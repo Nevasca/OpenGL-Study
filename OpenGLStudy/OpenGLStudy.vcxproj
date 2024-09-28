@@ -230,6 +230,7 @@ copy "$(SolutionDir)Dependencies\irrKlang\Winx64-visualStudio\ikpMP3.dll" "$(Tar
     <ClCompile Include="src\core\Rendering\Shader.cpp" />
     <ClCompile Include="src\core\Rendering\ShaderRenderSet.cpp" />
     <ClCompile Include="src\core\Rendering\Texture.cpp" />
+    <ClCompile Include="src\core\Rendering\TextureSettings.cpp" />
     <ClCompile Include="src\core\Rendering\UniformBuffer.cpp" />
     <ClCompile Include="src\core\Rendering\VertexArray.cpp" />
     <ClCompile Include="src\core\Rendering\VertexBuffer.cpp" />
@@ -387,6 +388,7 @@ copy "$(SolutionDir)Dependencies\irrKlang\Winx64-visualStudio\ikpMP3.dll" "$(Tar
     <ClInclude Include="src\core\Rendering\Shader.h" />
     <ClInclude Include="src\core\Rendering\ShaderRenderSet.h" />
     <ClInclude Include="src\core\Rendering\Texture.h" />
+    <ClInclude Include="src\core\Rendering\TextureSettings.h" />
     <ClInclude Include="src\core\Rendering\UniformBuffer.h" />
     <ClInclude Include="src\core\Rendering\VertexArray.h" />
     <ClInclude Include="src\core\Rendering\VertexBuffer.h" />

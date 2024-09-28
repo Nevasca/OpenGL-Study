@@ -2,16 +2,6 @@
 
 #include <cassert>
 
-Texture::Texture(unsigned char* data, unsigned int width, unsigned int height, bool bUseAlpha)
-    : m_Width(width), m_Height(height)
-{
-    TextureSettings settings{};
-    settings.InternalFormat = bUseAlpha ? GL_RGBA8 : GL_RGB;
-    settings.Format = bUseAlpha ? GL_RGBA : GL_RGB;
-
-    Create(data, settings);
-}
-
 Texture::Texture(unsigned char* data, unsigned width, unsigned height, const TextureSettings& settings)
     : m_Width(width), m_Height(height)
 {

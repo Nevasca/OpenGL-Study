@@ -9,17 +9,19 @@ namespace Rendering
         GLCall(glGenTextures(1, &m_RendererId));
         GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererId));
 
+        int internalFormat = data.bIsSRGB ? GL_SRGB : GL_RGB;
+        
         // Since GL_TEXTURE_CUBE_MAP_POSITIVE_X is just a int, we could just loop through the 6 textures incrementing it
         // (GL_TEXTURE_CUBE_MAP_POSITIVE_X + i) to get the same result as calling it separately 
-        CreateSideTexture(GL_TEXTURE_CUBE_MAP_POSITIVE_X, data.RightTextureData, data.Width, data.Height);
-        CreateSideTexture(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, data.LeftTextureData, data.Width, data.Height);
-        CreateSideTexture(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, data.TopTextureData, data.Width, data.Height);
-        CreateSideTexture(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, data.BottomTextureData, data.Width, data.Height);
+        CreateSideTexture(GL_TEXTURE_CUBE_MAP_POSITIVE_X, data.RightTextureData, data.Width, data.Height, internalFormat);
+        CreateSideTexture(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, data.LeftTextureData, data.Width, data.Height, internalFormat);
+        CreateSideTexture(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, data.TopTextureData, data.Width, data.Height, internalFormat);
+        CreateSideTexture(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, data.BottomTextureData, data.Width, data.Height, internalFormat);
 
         // TODO: There is something going on with sky cube faces or coordinate system that requires swapping front and back textures
         // Maybe the vertices order?
-        CreateSideTexture(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, data.FrontTextureData, data.Width, data.Height);
-        CreateSideTexture(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, data.BackTextureData, data.Width, data.Height);
+        CreateSideTexture(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, data.FrontTextureData, data.Width, data.Height, internalFormat);
+        CreateSideTexture(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, data.BackTextureData, data.Width, data.Height, internalFormat);
 
         GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
         GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
@@ -47,8 +49,8 @@ namespace Rendering
         GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, 0));
     }
 
-    void Cubemap::CreateSideTexture(unsigned int sideTarget, unsigned char* data, unsigned int width, unsigned int height)
+    void Cubemap::CreateSideTexture(unsigned int sideTarget, unsigned char* data, unsigned int width, unsigned int height, int internalFormat)
     {
-        GLCall(glTexImage2D(sideTarget,0, GL_RGB, static_cast<int>(width), static_cast<int>(height), 0, GL_RGB, GL_UNSIGNED_BYTE, data));
+        GLCall(glTexImage2D(sideTarget,0, internalFormat, static_cast<int>(width), static_cast<int>(height), 0, GL_RGB, GL_UNSIGNED_BYTE, data));
     }
 }

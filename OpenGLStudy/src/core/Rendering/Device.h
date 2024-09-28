@@ -27,6 +27,8 @@ namespace Rendering
         void SetCullingWindingOrder(bool bIsCounterClockwise) const;
         void EnableMSAA() const;
         void DisableMSAA() const;
+        void EnableGammaCorrection() const;
+        void DisableGammaCorrection() const;
 
         bool IsFaceCullingEnabled() const { return bIsFaceCullingEnabled; }
 

@@ -132,9 +132,9 @@ const std::unordered_map<std::string, std::shared_ptr<Material>>& ResourceManage
     return m_Materials;
 }
 
-std::shared_ptr<Texture> ResourceManager::LoadTexture(const std::string& filePath, const std::string& name, bool bUseAlpha, bool bFlipVertically)
+std::shared_ptr<Texture> ResourceManager::LoadTexture(const std::string& filePath, const std::string& name, const TextureSettings& settings, bool bFlipVertically)
 {
-    std::shared_ptr<Texture> texture = TextureResource::LoadTextureFromFile(filePath, bUseAlpha, bFlipVertically);
+    std::shared_ptr<Texture> texture = TextureResource::LoadTextureFromFile(filePath, settings, bFlipVertically);
     texture->SetName(name);
     
     m_Textures[name] = texture; 

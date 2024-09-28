@@ -53,6 +53,7 @@ void PostProcessingSystem::RenderToScreen()
 
 void PostProcessingSystem::UpdatePostProcessingMaterial()
 {
+    float gammaValue = 2.2f;
     bool bIsColorInversionEnabled = false;
     bool bIsGrayScaleEnabled = false;
     bool bIsSharpenEnabled = false;
@@ -61,6 +62,7 @@ void PostProcessingSystem::UpdatePostProcessingMaterial()
 
     if(m_PostProcessingComponent)
     {
+        gammaValue = m_PostProcessingComponent->GetGammaValue();
         bIsColorInversionEnabled = m_PostProcessingComponent->IsColorInversionEnabled();
         bIsGrayScaleEnabled = m_PostProcessingComponent->IsGrayScaleEnabled();
         bIsSharpenEnabled = m_PostProcessingComponent->IsSharpenEnabled();
@@ -68,6 +70,7 @@ void PostProcessingSystem::UpdatePostProcessingMaterial()
         bIsEdgeDetectionEnabled = m_PostProcessingComponent->IsEdgeDetectionEnabled();
     }
 
+    m_PostProcessingMaterial->SetFloat("u_PostProcessing.Gamma", gammaValue);
     m_PostProcessingMaterial->SetBool("u_PostProcessing.ColorInversionEnabled", bIsColorInversionEnabled);
     m_PostProcessingMaterial->SetBool("u_PostProcessing.GrayScaleEnabled", bIsGrayScaleEnabled);
     m_PostProcessingMaterial->SetBool("u_PostProcessing.SharpenEnabled", bIsSharpenEnabled);

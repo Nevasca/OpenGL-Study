@@ -11,6 +11,7 @@ namespace Rendering
         std::string BottomTextureFilePath{};
         std::string BackTextureFilePath{};
         std::string FrontTextureFilePath{};
+        bool bIsSRGB{true};
     };
 
     struct CubemapTextureData
@@ -23,6 +24,7 @@ namespace Rendering
         unsigned char* FrontTextureData{nullptr};
         unsigned int Width{0};
         unsigned int Height{0};
+        bool bIsSRGB{true};
     };
     
     class Cubemap
@@ -41,7 +43,7 @@ namespace Rendering
 
     private:
 
-        void CreateSideTexture(unsigned int sideTarget, unsigned char* data, unsigned int width, unsigned int height);
+        void CreateSideTexture(unsigned int sideTarget, unsigned char* data, unsigned int width, unsigned int height, int internalFormat);
         
         unsigned int m_RendererId{0};
         std::string m_Name{};

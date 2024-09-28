@@ -1,16 +1,15 @@
 #include "TextureResource.h"
 
-#include <assert.h>
+#include <cassert>
 #include <stb_image/stb_image.h>
 
 #include "core/Rendering/Cubemap.h"
-#include "core/Rendering/Texture.h"
 
-std::shared_ptr<Texture> TextureResource::LoadTextureFromFile(const std::string& filePath, bool bUseAlpha, bool bFlipVertically)
+std::shared_ptr<Texture> TextureResource::LoadTextureFromFile(const std::string& filePath, const TextureSettings& settings, bool bFlipVertically)
 {
     stbi_set_flip_vertically_on_load(bFlipVertically);
 
-    int desiredChannels = bUseAlpha ? 4 : 3;
+    int desiredChannels = settings.UseAlpha ? 4 : 3;
 
     int width;
     int height;
@@ -18,7 +17,7 @@ std::shared_ptr<Texture> TextureResource::LoadTextureFromFile(const std::string&
 
     unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &channels, desiredChannels);
 
-    std::shared_ptr<Texture> texture = std::make_shared<Texture>(data, width, height, bUseAlpha);
+    std::shared_ptr<Texture> texture = std::make_shared<Texture>(data, width, height, settings);
     texture->SetIsFlippedOnLoad(bFlipVertically);
     
     if(data)
@@ -49,6 +48,7 @@ std::shared_ptr<Rendering::Cubemap> TextureResource::LoadCubemapFromFile(const R
     cubemapData.FrontTextureData = stbi_load(loadSettings.FrontTextureFilePath.c_str(), &width, &height, &channels, 0);
     cubemapData.Width = static_cast<unsigned int>(width);
     cubemapData.Height = static_cast<unsigned int>(height);
+    cubemapData.bIsSRGB = loadSettings.bIsSRGB;
 
     std::shared_ptr<Rendering::Cubemap> cubemap = std::make_shared<Rendering::Cubemap>(cubemapData);
 

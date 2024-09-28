@@ -3,6 +3,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "Rendering/TextureSettings.h"
+
 namespace Rendering
 {
     struct CubemapLoadSettings;
@@ -35,7 +37,7 @@ public:
     static std::shared_ptr<Material> GetMaterial(const std::string& name);
     static const std::unordered_map<std::string, std::shared_ptr<Material>>& GetAllMaterials();
 
-    static std::shared_ptr<Texture> LoadTexture(const std::string& filePath, const std::string& name, bool bUseAlpha, bool bFlipVertically = false);
+    static std::shared_ptr<Texture> LoadTexture(const std::string& filePath, const std::string& name, const TextureSettings& settings, bool bFlipVertically = false);
     static std::shared_ptr<Texture> GetTexture(const std::string& name);
     static std::shared_ptr<Rendering::Cubemap> LoadCubemap(const Rendering::CubemapLoadSettings& loadSettings, const std::string& name);
     static std::shared_ptr<Rendering::Cubemap> GetOrLoadCubemap(const Rendering::CubemapLoadSettings& loadSettings, const std::string& name);

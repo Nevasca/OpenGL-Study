@@ -24,6 +24,7 @@ struct PostProcessing
     bool SharpenEnabled;
     bool BlurEnabled;
     bool EdgeDetectionEnabled;
+    float Gamma;
 };
 
 uniform sampler2D u_ScreenTexture;
@@ -49,8 +50,13 @@ const vec2 offsets[9] = vec2[](
 vec3 ApplyKernel(float[9] kernel);
 
 void main()
-{          
+{      
+    // Without gamma correction (or if gamma correction is enabled via glEnable(GL_FRAMEBUFFER_SRGB))
+    // vec4 colorResult = texture(u_ScreenTexture, v_UV);
+
+    // With gamma correction from shader
     vec4 colorResult = texture(u_ScreenTexture, v_UV);
+    colorResult.rgb = pow(colorResult.rgb, vec3(1.0/u_PostProcessing.Gamma));
     
     if(u_PostProcessing.SharpenEnabled)
     {
