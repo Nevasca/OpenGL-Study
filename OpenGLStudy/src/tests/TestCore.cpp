@@ -65,7 +65,7 @@ namespace tests
         std::shared_ptr<DirectionalLight> directionalLight = m_World->Spawn<DirectionalLight>(directionalLightPosition, directionalLightRotation);
         directionalLight->SetName("DirectionalLight");
         directionalLight->SetColor(glm::vec3{1.f, 0.89f, 0.83f});
-        directionalLight->SetIntensity(1.4f);
+        directionalLight->SetIntensity(1.2f);
 
         std::shared_ptr<PostProcessing> postProcessing = m_World->Spawn<PostProcessing>();
         postProcessing->SetName("PostProcessing");

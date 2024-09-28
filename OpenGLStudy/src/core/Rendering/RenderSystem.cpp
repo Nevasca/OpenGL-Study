@@ -29,7 +29,7 @@ RenderSystem::RenderSystem()
 
     m_PostProcessingSystem.SetFramebuffer(*m_IntermediateFramebuffer);
 
-    constexpr glm::vec4 defaultClearColor{0.2f, 0.2f, 0.2f, 1.f};
+    constexpr glm::vec4 defaultClearColor{0.1f, 0.1f, 0.1f, 1.f};
     SetClearColor(defaultClearColor);
 
     SetupOutlineRendering();
