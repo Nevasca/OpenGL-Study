@@ -10,6 +10,7 @@ public:
     static int GetWidth() { return m_Width; }
     static int GetHeight() { return m_Height; }
     static Rendering::Resolution GetResolution();
+    static float GetAspectRatio();
     
 private:
 

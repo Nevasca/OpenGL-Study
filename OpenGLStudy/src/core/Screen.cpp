@@ -11,5 +11,10 @@ void Screen::SetSize(int width, int height)
 
 Rendering::Resolution Screen::GetResolution()
 {
-    return Rendering::Resolution{static_cast<unsigned int>(m_Width), static_cast<unsigned>(m_Height)};
+    return Rendering::Resolution{static_cast<unsigned int>(m_Width), static_cast<unsigned int>(m_Height)};
+}
+
+float Screen::GetAspectRatio()
+{
+    return static_cast<float>(m_Width) / static_cast<float>(m_Height);
 }

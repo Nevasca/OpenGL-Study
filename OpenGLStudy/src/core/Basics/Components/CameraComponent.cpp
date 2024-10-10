@@ -20,6 +20,7 @@ void CameraComponent::Initialize()
 glm::mat4 CameraComponent::GetViewMatrix() const
 {
     const Transform& OwnerTransform = GetOwner().GetTransform();
+
     return glm::lookAt(OwnerTransform.GetPosition(), OwnerTransform.GetPosition() + OwnerTransform.GetForwardVector(), m_Up);
 }
 
@@ -29,13 +30,43 @@ glm::mat4 CameraComponent::GetViewNoTranslationMatrix() const
     return glm::mat4(glm::mat3(GetViewMatrix()));
 }
 
+glm::mat4 CameraComponent::GetViewCenteredMatrix() const
+{
+    const Transform& OwnerTransform = GetOwner().GetTransform();
+
+    return glm::lookAt(OwnerTransform.GetPosition(), glm::vec3{0.f}, m_Up);
+}
+
 glm::mat4 CameraComponent::GetProjectionMatrix() const
 {
-    const float aspect = static_cast<float>(Screen::GetWidth()) / static_cast<float>(Screen::GetHeight());
-    return glm::perspective(glm::radians(m_Fov), aspect, m_NearPlane, m_FarPlane);
+    if(!bIsOrthographic)
+    {
+        return glm::perspective(glm::radians(m_Fov), Screen::GetAspectRatio(), m_NearPlane, m_FarPlane);
+    }
+
+    float height = m_OrthographicHeight;
+
+    if(bEnableOrthographicAspectCorrection)
+    {
+        height = m_OrthographicWidth / Screen::GetAspectRatio();
+    }
+
+    return glm::ortho(-m_OrthographicWidth / 2.f, m_OrthographicWidth / 2.f, -height /2.f, height / 2.f, m_NearPlane, m_FarPlane);
 }
 
 void CameraComponent::SetFov(const float fov)
 {
     m_Fov = fov;
+}
+
+void CameraComponent::SetIsOrthographic(bool bInIsOrthographic)
+{
+    bIsOrthographic = bInIsOrthographic;
+}
+
+void CameraComponent::SetOrthographicSize(const float width, const float height, bool bEnableAspectCorrection)
+{
+    m_OrthographicWidth = width;
+    m_OrthographicHeight = height;
+    bEnableOrthographicAspectCorrection = bEnableAspectCorrection;
 }
