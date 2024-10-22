@@ -11,35 +11,60 @@ Framebuffer::Framebuffer(
     const unsigned int samples)
         : m_Resolution(resolution)
 {
+    FramebufferSettings settings{};
+    settings.Resolution = resolution;
+    settings.EnableDepthBuffer = bIsDepthTestEnabled;
+    settings.AdditionalColorAttachments = additionalColorAttachments;
+    settings.Samples = samples;
+
+    Create(settings);
+}
+
+Framebuffer::Framebuffer(const FramebufferSettings& settings)
+    : m_Resolution(settings.Resolution)
+{
+    Create(settings);
+}
+
+void Framebuffer::Create(const FramebufferSettings& settings)
+{
     GLCall(glGenFramebuffers(1, &m_FBO));
     GLCall(glBindFramebuffer(GL_FRAMEBUFFER, m_FBO));
 
+    if(!settings.EnableDepthMapOnly)
+    {
+        CreateColorAttachments(settings);
+    }
+
+    if(settings.EnableDepthMapOnly || !settings.EnableDepthBufferWriteOnly)
+    {
+        CreateDepthMapAttachment(settings);
+    }
+    else if(settings.EnableDepthBuffer || settings.Samples > 1)
+    {
+        CreateRenderBuffer(settings.Samples);
+    }
+
+    bool bSuccess = glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE; 
+    assert(bSuccess);
+
+    GLCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+}
+
+void Framebuffer::CreateColorAttachments(const FramebufferSettings& settings)
+{
     TextureSettings mainColorTextureSettings{};
     mainColorTextureSettings.InternalFormat = GL_RGB;
     mainColorTextureSettings.Format = GL_RGB;
-    mainColorTextureSettings.Samples = samples;
+    mainColorTextureSettings.Samples = settings.Samples;
 
-    m_MainColorBufferTexture = std::make_shared<Texture>(nullptr, resolution.Width, resolution.Height, mainColorTextureSettings);
+    m_MainColorBufferTexture = std::make_shared<Texture>(nullptr, settings.Resolution.Width, settings.Resolution.Height, mainColorTextureSettings);
 
-    unsigned int targetColorTexture = samples > 1 ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;
+    unsigned int targetColorTexture = settings.Samples > 1 ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;
     GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, targetColorTexture, m_MainColorBufferTexture->GetRendererID(), 0));
 
-    CreateAdditionalColorAttachments(additionalColorAttachments);
-    EnableAdditionalColorAttachments(static_cast<unsigned int>(additionalColorAttachments.size()));
-
-    // TODO: allow a setting for using a depth texture attachment instead of using RenderBuffer 
-    // if we intend on using it for some effect
-    if(bIsDepthTestEnabled || samples > 1)
-    {
-        CreateRenderBuffer(samples);
-    }
-    
-    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-    {
-        std::cout << "ERROR:FRAMEBUFFER: Framebuffer is not complete!\n";
-    }
-
-    GLCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+    CreateAdditionalColorAttachments(settings.AdditionalColorAttachments);
+    EnableAdditionalColorAttachments(static_cast<unsigned int>(settings.AdditionalColorAttachments.size()));
 }
 
 void Framebuffer::CreateAdditionalColorAttachments(const std::vector<TextureSettings>& additionalColorAttachments)
@@ -72,6 +97,25 @@ void Framebuffer::EnableAdditionalColorAttachments(unsigned int totalAdditionalC
     }
     
     GLCall(glDrawBuffers(1 + totalAdditionalColorAttachments, drawBuffers.data()));
+}
+
+void Framebuffer::CreateDepthMapAttachment(const FramebufferSettings& settings)
+{
+    TextureSettings depthTextureSettings{};
+    depthTextureSettings.InternalFormat = GL_DEPTH_COMPONENT;
+    depthTextureSettings.Format = GL_DEPTH_COMPONENT;
+    depthTextureSettings.Samples = settings.Samples;
+
+    m_DepthBufferTexture = std::make_shared<Texture>(nullptr, settings.Resolution.Width, settings.Resolution.Height, depthTextureSettings);
+
+    unsigned int targetDepthTexture = settings.Samples > 1 ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;
+    GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, targetDepthTexture, m_DepthBufferTexture->GetRendererID(), 0));
+
+    if(settings.EnableDepthMapOnly)
+    {
+        GLCall(glDrawBuffer(GL_NONE));
+        GLCall(glReadBuffer(GL_NONE));
+    }
 }
 
 void Framebuffer::CreateRenderBuffer(const unsigned int samples)
@@ -109,6 +153,7 @@ Framebuffer::~Framebuffer()
 
     m_MainColorBufferTexture.reset();
     m_AdditionalColorTextures.clear();
+    m_DepthBufferTexture.reset();
 }
 
 void Framebuffer::Bind() const
