@@ -4,6 +4,8 @@
 
 #include "glm/glm.hpp"
 
+#define ENABLE_SHADER_DEBUG 0
+
 class Shader
 {
 public:

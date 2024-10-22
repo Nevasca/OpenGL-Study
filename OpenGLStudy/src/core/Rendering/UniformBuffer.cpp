@@ -60,7 +60,9 @@ namespace Rendering
 
         if(uniformBlockIndex == GL_INVALID_INDEX)
         {
+#if ENABLE_SHADER_DEBUG
             std::cout << "Warning: Uniform block '" << m_Name << "' does not exist on shader '" << shader.GetName() << "'\n";
+#endif
             return;
         }
         

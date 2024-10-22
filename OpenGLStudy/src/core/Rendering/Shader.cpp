@@ -95,10 +95,12 @@ int Shader::GetUniformLocation(const std::string& name) const
     
     GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
 
+#if ENABLE_SHADER_DEBUG
     if(location == -1)
     {
         std::cout << "Warning: Uniform " << name << " doesn't exist!\n";
     }
+#endif
 
     m_UniformLocationCache[name] = location;
 
