@@ -11,6 +11,8 @@
 #include "core/Basics/Components/MeshComponent.h"
 #include "core/Basics/Components/SkyboxComponent.h"
 #include "core/GameObject/GameObject.h"
+#include "glm/ext/matrix_clip_space.hpp"
+#include "glm/ext/matrix_transform.hpp"
 
 RenderSystem::RenderSystem()
 {
@@ -21,6 +23,7 @@ RenderSystem::RenderSystem()
     m_Device.EnableMSAA(); // Seems we don't actually need to enable when using custom framebuffer
     
     Rendering::Resolution resolution = Screen::GetResolution();
+    m_Device.SetViewportResolution(resolution);
 
     // TODO: add way to set how many samples to use
     constexpr unsigned int MSAA_SAMPLES = 4;
@@ -33,6 +36,13 @@ RenderSystem::RenderSystem()
     SetClearColor(defaultClearColor);
 
     SetupOutlineRendering();
+    SetupShadowRendering();
+}
+
+void RenderSystem::Setup()
+{
+    // Binding shadow map texture too early on constructor end ups getting unbound somewhere else internally 
+    m_LightingSystem.Setup();
 }
 
 void RenderSystem::Shutdown()
@@ -182,6 +192,8 @@ void RenderSystem::RemoveSkyboxComponent(const std::shared_ptr<SkyboxComponent>&
 
 void RenderSystem::Render(const CameraComponent& activeCamera)
 {
+    RenderShadowPass(activeCamera);
+
     m_MultisampleFramebuffer->BindAndClear();
 
     RenderWorld(activeCamera);
@@ -344,6 +356,42 @@ void RenderSystem::RenderWorld(const CameraComponent& activeCamera)
     RenderObjectsSortedByDistance(m_TransparentMeshComponentSet, activeCamera.GetOwnerPosition());
 }
 
+void RenderSystem::RenderShadowPass(const CameraComponent& activeCamera)
+{
+    std::shared_ptr<DirectionalLightComponent> mainDirectionalLight = m_LightingSystem.GetMainDirectionalLight();
+
+    if(!mainDirectionalLight)
+    {
+        return;
+    }
+    
+    Framebuffer& shadowMapBuffer = m_LightingSystem.GetShadowMapFramebuffer();
+
+    m_Device.SetViewportResolution(shadowMapBuffer.GetResolution());
+    shadowMapBuffer.BindAndClear();
+
+    glm::vec3 lightPosition = mainDirectionalLight->GetOwnerPosition();
+    const glm::mat4 view = mainDirectionalLight->GetViewMatrix();
+    const glm::mat4 proj = mainDirectionalLight->GetProjectionMatrix();
+
+    m_MatricesUniformBuffer->Bind();
+    glm::mat4 matrices[2] { proj, view };
+    m_MatricesUniformBuffer->SetSubData(matrices, sizeof(matrices));
+    m_MatricesUniformBuffer->Unbind();
+    
+    std::shared_ptr<Shader> previousOverrideShader = m_WorldOverrideShader;
+    SetOverrideShader(m_DepthShader);
+    
+    RenderObjects(m_OpaqueMeshComponentSet);
+    RenderObjectsSortedByDistance(m_TransparentMeshComponentSet, lightPosition);
+    RenderObjects(m_OpaqueOutlinedMeshComponentSet);
+    RenderObjectsSortedByDistance(m_TransparentOutlinedMeshComponentSet, lightPosition);
+
+    SetOverrideShader(previousOverrideShader);
+    m_Device.SetViewportResolution(Screen::GetResolution());
+    shadowMapBuffer.Unbind();
+}
+
 void RenderSystem::RenderSkybox(const CameraComponent& activeCamera)
 {
     if(!IsSkyboxActive())
@@ -472,5 +520,10 @@ void RenderSystem::SetupOutlineRendering()
 
 bool RenderSystem::IsSkyboxActive() const
 {
-    return m_SkyboxComponent && m_SkyboxComponent->IsReadyToDraw();
+    return m_SkyboxComponent && m_SkyboxComponent->IsReadyToDraw() && bIsSkyboxEnabled;
+}
+
+void RenderSystem::SetupShadowRendering()
+{
+    m_DepthShader = ResourceManager::LoadShader("res/core/shaders/SimpleDepth.glsl", "SimpleDepth");
 }

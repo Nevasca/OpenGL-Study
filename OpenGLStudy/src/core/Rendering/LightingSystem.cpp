@@ -11,6 +11,15 @@
 LightingSystem::LightingSystem()
 {
     CreateUniformBuffers();
+
+    const Rendering::Resolution DEFAULT_SHADOW_RESOLUTION{1024, 1024};
+    CreateShadowDepthMap(DEFAULT_SHADOW_RESOLUTION);
+}
+
+void LightingSystem::Setup()
+{
+    std::shared_ptr<Texture> depthTexture = m_ShadowDepthMapBuffer->GetDepthBufferTexture();
+    depthTexture->Bind(SHADOW_MAP_SLOT);
 }
 
 void LightingSystem::Shutdown()
@@ -18,6 +27,10 @@ void LightingSystem::Shutdown()
     m_DirectionalLights.clear();
     m_PointLights.clear();
     m_SpotLights.clear();
+
+    std::shared_ptr<Texture> depthTexture = m_ShadowDepthMapBuffer->GetDepthBufferTexture();
+    depthTexture->Unbind(SHADOW_MAP_SLOT);
+    m_ShadowDepthMapBuffer.reset();
 }
 
 void LightingSystem::AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent)
@@ -59,12 +72,17 @@ void LightingSystem::AddSpotLight(const std::shared_ptr<SpotLightComponent>& spo
     m_TotalActiveSpotLights = std::min(static_cast<int>(m_SpotLights.size()), Rendering::MAX_SPOT_LIGHTS);
 }
 
-void LightingSystem::SetupUniformsFor(const Shader& shader) const
+void LightingSystem::SetupUniformsFor(Shader& shader) const
 {
     m_GeneralUniformBuffer->SetBindingIndexFor(shader);
     m_DirectionalUniformBuffer->SetBindingIndexFor(shader);
     m_PointUniformBuffer->SetBindingIndexFor(shader);
     m_SpotsUniformBuffer->SetBindingIndexFor(shader);
+    m_DirectionalMatrixUniformBuffer->SetBindingIndexFor(shader);
+
+    shader.Bind();
+    shader.SetUniform1i("u_ShadowMap", SHADOW_MAP_SLOT);
+    shader.Unbind();
 }
 
 void LightingSystem::UpdateLightingUniformBuffer(const CameraComponent& activeCamera)
@@ -147,6 +165,28 @@ void LightingSystem::UpdateLightingUniformBuffer(const CameraComponent& activeCa
     m_SpotsUniformBuffer->Bind();
     m_SpotsUniformBuffer->SetSubData(m_SpotsShaderData, Rendering::MAX_SPOT_LIGHTS * sizeof(Rendering::SpotLightShaderData));
     m_SpotsUniformBuffer->Unbind();
+
+    std::shared_ptr<DirectionalLightComponent> mainDirectionalLight = GetMainDirectionalLight();
+
+    if(!mainDirectionalLight)
+    {
+        return;
+    }
+    
+    glm::mat4 lightSpaceMatrix = mainDirectionalLight->GetViewProjectionMatrix();
+    m_DirectionalMatrixUniformBuffer->Bind();
+    m_DirectionalMatrixUniformBuffer->SetSubData(&lightSpaceMatrix, sizeof(glm::mat4));
+    m_DirectionalMatrixUniformBuffer->Unbind();
+}
+
+std::shared_ptr<DirectionalLightComponent> LightingSystem::GetMainDirectionalLight()
+{
+    if(m_DirectionalLights.empty())
+    {
+        return nullptr;
+    }
+
+    return m_DirectionalLights[0];
 }
 
 void LightingSystem::CreateUniformBuffers()
@@ -155,6 +195,7 @@ void LightingSystem::CreateUniformBuffers()
     constexpr unsigned int UNIFORM_LIGHTING_DIRECTIONALS_BINDING_INDEX = 3;
     constexpr unsigned int UNIFORM_LIGHTING_POINTS_BINDING_INDEX = 4;
     constexpr unsigned int UNIFORM_LIGHTING_SPOTS_BINDING_INDEX = 5;
+    constexpr unsigned int UNIFORM_LIGHTING_DIRECTIONAL_MATRIX_BINDING_INDEX = 6;
 
     m_GeneralUniformBuffer = std::make_unique<Rendering::UniformBuffer>(
         nullptr,
@@ -183,4 +224,21 @@ void LightingSystem::CreateUniformBuffers()
         UNIFORM_LIGHTING_SPOTS_BINDING_INDEX,
         "LightingSpots",
         true);
+
+    m_DirectionalMatrixUniformBuffer = std::make_unique<Rendering::UniformBuffer>(
+        nullptr,
+        sizeof(glm::mat4),
+        UNIFORM_LIGHTING_DIRECTIONAL_MATRIX_BINDING_INDEX,
+        "LightMatrix",
+        true);
+}
+
+void LightingSystem::CreateShadowDepthMap(const Rendering::Resolution& resolution)
+{
+    FramebufferSettings settings{};
+    settings.Resolution = resolution;
+    settings.EnableDepthMapOnly = true;
+    
+    m_ShadowDepthMapBuffer = std::make_unique<Framebuffer>(settings);
+    m_ShadowDepthMapBuffer->SetClearColor(glm::vec4{1.f, 0.f, 1.f, 1.f});
 }

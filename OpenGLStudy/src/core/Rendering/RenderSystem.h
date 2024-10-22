@@ -30,6 +30,7 @@ class RenderSystem
 public:
 
     RenderSystem();
+    void Setup();
     void Shutdown();
 
     void AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
@@ -51,6 +52,7 @@ public:
     glm::vec4 GetClearColor() const { return m_MultisampleFramebuffer->GetClearColor(); }
     void SetOverrideShader(const std::shared_ptr<Shader>& overrideShader);
     Rendering::Device& GetDevice() { return m_Device; }
+    void ToggleSkybox(bool bEnable) { bIsSkyboxEnabled = bEnable; }
 
 private:
 
@@ -77,6 +79,9 @@ private:
     
     std::shared_ptr<Shader> m_OutlineShader{};
     std::shared_ptr<SkyboxComponent> m_SkyboxComponent{};
+    bool bIsSkyboxEnabled{true};
+
+    std::shared_ptr<Shader> m_DepthShader{};
 
     Rendering::MeshComponentRenderSet& GetComponentRenderSetFor(const std::shared_ptr<MeshComponent>& meshComponent);
     Rendering::MeshComponentRenderSet& GetOutlinedComponentRenderSetFor(const std::shared_ptr<MeshComponent>& meshComponent);
@@ -85,10 +90,12 @@ private:
     void RenderObjectsSortedByDistance(const Rendering::MeshComponentRenderSet& meshComponentSet, const glm::vec3& cameraPosition);
     void RenderSkybox(const CameraComponent& activeCamera);
     void RenderWorld(const CameraComponent& activeCamera);
+    void RenderShadowPass(const CameraComponent& activeCamera);
     void RenderOutlinedObjects(const CameraComponent& activeCamera);
     void CreateInstancedBuffer();
     void CreateUniformBuffers();
     void SetupUniformsFor(Shader& shader) const;
     void SetupOutlineRendering();
     bool IsSkyboxActive() const;
+    void SetupShadowRendering();
 };

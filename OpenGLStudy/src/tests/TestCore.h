@@ -15,6 +15,7 @@ namespace tests
         TestCore();
         virtual ~TestCore() override;
 
+        void Setup(GLFWwindow* Window) override;
         void OnUpdate(float deltaTime) override;
         void OnRender() override;
         void OnImGuiRender() override;

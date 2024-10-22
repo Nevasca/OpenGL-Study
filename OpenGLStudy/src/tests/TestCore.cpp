@@ -30,6 +30,13 @@ namespace tests
         ResourceManager::UnloadAll();
     }
 
+    void TestCore::Setup(GLFWwindow* Window)
+    {
+        Test::Setup(Window);
+
+        m_World->Setup();
+    }
+
     void TestCore::OnUpdate(float deltaTime)
     {
         Test::OnUpdate(deltaTime);

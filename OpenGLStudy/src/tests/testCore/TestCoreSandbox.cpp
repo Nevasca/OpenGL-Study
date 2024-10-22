@@ -132,6 +132,7 @@ namespace tests
         }
 
         std::shared_ptr<DirectionalLight> mainDirectionalLight = m_World->Spawn<DirectionalLight>();
+        mainDirectionalLight->SetPosition(glm::vec3(-11.f, 15.f, 14.f));
         mainDirectionalLight->SetName("MainDirectionalLight");
         mainDirectionalLight->SetRotation(glm::vec3(-45.f, 0.f, 0.f));
         mainDirectionalLight->SetColor(glm::vec3(1.f, 0.82f, 0.635f));
@@ -193,6 +194,13 @@ namespace tests
         m_World.reset();
 
         ResourceManager::UnloadAll();
+    }
+
+    void TestCoreSandbox::Setup(GLFWwindow* Window)
+    {
+        Test::Setup(Window);
+
+        m_World->Setup();
     }
 
     void TestCoreSandbox::OnUpdate(float deltaTime)

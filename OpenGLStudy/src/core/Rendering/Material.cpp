@@ -11,13 +11,15 @@ void Material::SetColor(const std::string& name, const glm::vec4& color)
 
 void Material::SetTexture(const std::string& name, const std::shared_ptr<Texture>& texture, unsigned int slot)
 {
+    assert(texture != nullptr);
+    
     if(m_TextureProperties.find(name) == m_TextureProperties.end())
     {
         m_TextureProperties[name] = MaterialTextureProperty{};
     }
 
     m_TextureProperties[name].Texture = texture;
-    m_TextureProperties[name].Slot = slot;
+    m_TextureProperties[name].Slot = TOTAL_SYSTEM_RESERVED_TEXTURE_SLOTS + slot;
 }
 
 void Material::SetCubemap(const std::string& name, const std::shared_ptr<Rendering::Cubemap>& cubemap, unsigned int slot)
@@ -28,7 +30,7 @@ void Material::SetCubemap(const std::string& name, const std::shared_ptr<Renderi
     }
 
     m_CubemapProperties[name].Cubemap = cubemap;
-    m_CubemapProperties[name].Slot = slot;
+    m_CubemapProperties[name].Slot = TOTAL_SYSTEM_RESERVED_TEXTURE_SLOTS + slot;
 }
 
 void Material::SetMat4(const std::string& name, const glm::mat4& matrix) const

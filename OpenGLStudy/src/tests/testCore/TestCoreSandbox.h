@@ -14,6 +14,7 @@ namespace tests
         TestCoreSandbox();
         ~TestCoreSandbox() override;
 
+        void Setup(GLFWwindow* Window) override;
         void OnUpdate(float deltaTime) override;
         void OnRender() override;
         void OnImGuiRender() override;

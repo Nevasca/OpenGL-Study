@@ -9,6 +9,23 @@ void World::Initialize()
     m_RenderSystem = std::make_unique<RenderSystem>();
 }
 
+void World::Setup()
+{
+    m_RenderSystem->Setup();
+}
+
+void World::Shutdown()
+{
+    for(const std::shared_ptr<GameObject>& gameObject : m_GameObjects)
+    {
+        gameObject->Destroy();
+    }
+
+    m_RenderSystem->Shutdown();
+    m_RenderSystem.reset();
+    m_GameObjects.clear();
+}
+
 void World::Update(float deltaTime)
 {
     for(const std::shared_ptr<GameObject>& gameObject : m_GameObjects)
@@ -26,18 +43,6 @@ void World::Render()
     }
 
     m_RenderSystem->Render(*m_ActiveCamera);
-}
-
-void World::Shutdown()
-{
-    for(const std::shared_ptr<GameObject>& gameObject : m_GameObjects)
-    {
-        gameObject->Destroy();
-    }
-
-    m_RenderSystem->Shutdown();
-    m_RenderSystem.reset();
-    m_GameObjects.clear();
 }
 
 void World::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)

@@ -2,6 +2,8 @@
 #include <memory>
 #include <vector>
 
+#include "FrameBuffer.h"
+#include "Resolution.h"
 #include "UniformBuffer.h"
 #include "glm/vec3.hpp"
 
@@ -92,19 +94,25 @@ class LightingSystem
 public:
 
     LightingSystem();
+    void Setup();
     void Shutdown();
     
     void AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent);
     void AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent);
     void AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent);
-    void SetupUniformsFor(const Shader& shader) const;
+    void SetupUniformsFor(Shader& shader) const;
     void UpdateLightingUniformBuffer(const CameraComponent& activeCamera);
 
     void SetAmbientLightColor(const glm::vec3& ambientLightColor) { m_AmbientLightColor = ambientLightColor; }
     glm::vec3 GetAmbientLightColor() const { return m_AmbientLightColor; }
+    Framebuffer& GetShadowMapFramebuffer() const { return *m_ShadowDepthMapBuffer; }
+    Rendering::Resolution GetShadowResolution() const { return m_ShadowDepthMapBuffer->GetResolution(); }
+    std::shared_ptr<DirectionalLightComponent> GetMainDirectionalLight();
 
 private:
 
+    constexpr static int SHADOW_MAP_SLOT = 1;
+    
     std::vector<std::shared_ptr<DirectionalLightComponent>> m_DirectionalLights{};
     std::vector<std::shared_ptr<PointLightComponent>> m_PointLights{};
     std::vector<std::shared_ptr<SpotLightComponent>> m_SpotLights{};
@@ -118,13 +126,17 @@ private:
     std::unique_ptr<Rendering::UniformBuffer> m_DirectionalUniformBuffer{};
     std::unique_ptr<Rendering::UniformBuffer> m_PointUniformBuffer{};
     std::unique_ptr<Rendering::UniformBuffer> m_SpotsUniformBuffer{};
+    std::unique_ptr<Rendering::UniformBuffer> m_DirectionalMatrixUniformBuffer{};
 
     Rendering::LightingGeneralShaderData m_GeneralShaderData{};
     Rendering::DirectionalLightShaderData m_DirectionalsShaderData[Rendering::MAX_DIRECTIONAL_LIGHTS]{};
     Rendering::PointLightShaderData m_PointsShaderData[Rendering::MAX_POINT_LIGHTS];
     Rendering::SpotLightShaderData m_SpotsShaderData[Rendering::MAX_SPOT_LIGHTS];
 
+    std::unique_ptr<Framebuffer> m_ShadowDepthMapBuffer{};
+
     void CreateUniformBuffers();
+    void CreateShadowDepthMap(const Rendering::Resolution& resolution);
 };
 
 

@@ -11,6 +11,7 @@ out VS_OUT
     vec2 TexCoord;
     vec3 Normal;
     vec3 FragPosition;
+    vec4 FragPosLightSpace;
 } vsOut;
 
 layout (std140) uniform Matrices
@@ -19,15 +20,18 @@ layout (std140) uniform Matrices
     mat4 view;
 };
 
+layout (std140) uniform LightMatrix
+{
+    mat4 lightSpaceMatrix;    
+};
+
 // Not used anymore, using instacing rendering
 // uniform mat4 u_Model;
 
 void main()
 {
-    gl_Position = projection * view * a_InstanceModelMatrix * a_Position; // Instancing approach
-
-    // Set pointSize when rendering with GL_POINTS
-    //gl_PointSize = gl_Position.z;
+    vsOut.FragPosition = vec3(a_InstanceModelMatrix * a_Position);
+    vsOut.FragPosLightSpace = lightSpaceMatrix * vec4(vsOut.FragPosition, 1.f);
     
     vsOut.TexCoord = a_TexCoord;
     
@@ -35,7 +39,12 @@ void main()
     // But since normal is a direction, it doesn't make sense to translate it, so we cut it by casting to a mat3
     // We also need to take care of non-uniform scale so it doesn't mess with the actual direction, hence the transpose of inverse    
     vsOut.Normal = mat3(transpose(inverse(a_InstanceModelMatrix))) * a_Normal;
-    vsOut.FragPosition = vec3(a_InstanceModelMatrix * a_Position);
+
+    // Set pointSize when rendering with GL_POINTS
+    //gl_PointSize = gl_Position.z;
+
+    gl_Position = projection * view * vec4(vsOut.FragPosition, 1.f);
+
 }
 
 #shader fragment
@@ -90,6 +99,7 @@ in VS_OUT
     vec2 TexCoord;
     vec3 Normal;
     vec3 FragPosition;
+    vec4 FragPosLightSpace;
 } inFrag;
 
 #define MAX_DIRECTIONAL_LIGHTS 3
@@ -126,6 +136,7 @@ layout (std140) uniform LightingSpots
 
 // Global Environment
 uniform samplerCube u_Skybox;
+uniform sampler2D u_ShadowMap;
 
 // Material
 uniform vec4 u_Color;
@@ -137,10 +148,11 @@ uniform int u_MaterialShininess;
 
 vec3 ComputeReflection(vec3 normal, vec3 viewDir);
 vec3 ComputeRefraction(vec3 normal, vec3 viewDir);
-vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, vec3 baseColor);
-vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor);
-vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor);
+vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, vec3 baseColor, float shadow);
+vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor, float shadow);
+vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor, float shadow);
 vec3 ComputeAmbientLight(vec3 baseColor);
+float ComputeShadow(vec4 fragPosLightSpace);
 
 void main()
 {
@@ -157,21 +169,23 @@ void main()
     vec3 baseColor = diffuseTextureColor.rgb + u_Color.rgb;
     baseColor += ComputeReflection(normal, viewDir);
     
+    float shadow = ComputeShadow(inFrag.FragPosLightSpace);
+
     vec3 result = ComputeAmbientLight(baseColor);
     
     for(int i = 0; i < totalDirectionalLights; i++)
     {
-        result += ComputeDirectionalLight(directionalLights[i], normal, viewDir, baseColor);
+        result += ComputeDirectionalLight(directionalLights[i], normal, viewDir, baseColor, shadow);
     }
     
     for(int i = 0; i < totalPointLights; i++)
     {
-       result += ComputePointLight(pointLights[i], normal, inFrag.FragPosition, viewDir, baseColor);
+       result += ComputePointLight(pointLights[i], normal, inFrag.FragPosition, viewDir, baseColor, shadow);
     }
     
     for(int i = 0; i < totalSpotLights; i++)
     {
-       result += ComputeSpotLight(spotLights[i], normal, inFrag.FragPosition, viewDir, baseColor);
+       result += ComputeSpotLight(spotLights[i], normal, inFrag.FragPosition, viewDir, baseColor, shadow);
     }
     
     if(u_RenderingMode == OPAQUE)
@@ -206,7 +220,7 @@ vec3 ComputeRefraction(vec3 normal, vec3 viewDir)
     return refractionColor;
 }
 
-vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, vec3 baseColor)
+vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, vec3 baseColor, float shadow)
 {
     // Diffuse
     vec3 lightDir = normalize(-light.direction);
@@ -220,10 +234,10 @@ vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, 
     float specularValue = pow(max(dot(normal, halfwayDir), 0.f), u_MaterialShininess);
     vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, inFrag.TexCoord));
     
-    return (diffuse + specular) * light.intensity;    
+    return (1.f - shadow) * ((diffuse + specular) * light.intensity);
 }
 
-vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor)
+vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor, float shadow)
 {
     // Attenuation
     float distance = length(light.position - fragPos);
@@ -246,10 +260,10 @@ vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir
     vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, inFrag.TexCoord));
     specular *= attenuation;
     
-    return (diffuse + specular) * light.intensity;
+    return (1.f - shadow) * ((diffuse + specular) * light.intensity);
 }
 
-vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor)
+vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor, float shadow)
 {
     // Attenuation
     float distance = length(light.position - fragPos);
@@ -279,10 +293,26 @@ vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, 
     vec3 specular = light.specular * specularValue * vec3(texture(u_Specular, inFrag.TexCoord));
     specular *= intensity;
     
-    return (diffuse + specular) * light.intensity;
+    return (1.f - shadow) * ((diffuse + specular) * light.intensity);
 }
 
 vec3 ComputeAmbientLight(vec3 baseColor)
 {
     return baseColor * ambientLight.color;
+}
+
+float ComputeShadow(vec4 fragPosLightSpace)
+{
+    // Perform perspective devide, raging from [-1, 1]
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    
+    // To use our depth map that ranges from [0, 1], we need to transform the NDC coordinates to the range [0, 1] as well
+    projCoords = projCoords * 0.5f + 0.5f;
+
+    float closestDepth = texture(u_ShadowMap, projCoords.xy).r;
+
+    float currentDepth = projCoords.z;    
+
+    // Returns 1.f if fragment is in shadow or 0.f if not in shadow
+    return currentDepth > closestDepth ? 1.f : 0.f;
 }

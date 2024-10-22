@@ -17,9 +17,10 @@ class World
 public:
 
     void Initialize();
+    void Setup();
+    void Shutdown();
     void Update(float deltaTime);
     void Render();
-    void Shutdown();
     void AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
     void RemoveMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
     void AddOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
