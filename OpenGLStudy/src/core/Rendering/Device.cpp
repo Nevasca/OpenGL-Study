@@ -3,6 +3,11 @@
 
 namespace Rendering
 {
+    void Device::SetViewportResolution(const Resolution& resolution) const
+    {
+        GLCall(glViewport(0, 0, static_cast<int>(resolution.Width), static_cast<int>(resolution.Height)));
+    }
+
     void Device::EnableDepthTest() const
     {
         GLCall(glEnable(GL_DEPTH_TEST));

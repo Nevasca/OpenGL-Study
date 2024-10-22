@@ -1,4 +1,5 @@
 #pragma once
+#include "Resolution.h"
 
 namespace Rendering
 {
@@ -6,6 +7,7 @@ namespace Rendering
     {
     public:
 
+        void SetViewportResolution(const Resolution& resolution) const;
         void EnableDepthTest() const;
         void DisableDepthTest() const;
         void EnableDepthWrite() const;
