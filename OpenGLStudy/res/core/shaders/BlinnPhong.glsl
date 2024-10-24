@@ -53,6 +53,8 @@ void main()
 struct DirectionalLight
 {
     float intensity;
+    float bias;
+    float normalBias;
     vec3 direction;
     vec3 diffuse;
     vec3 specular;    
@@ -113,6 +115,7 @@ const int TRANSPARENT = 2;
 layout (std140) uniform LightingGeneral
 {
     vec3 viewPosition;
+    float shadowBias;
     AmbientLight ambientLight;
     int totalDirectionalLights;
     int totalPointLights;
@@ -152,7 +155,7 @@ vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, 
 vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor, float shadow);
 vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor, float shadow);
 vec3 ComputeAmbientLight(vec3 baseColor);
-float ComputeShadow(vec4 fragPosLightSpace);
+float ComputeShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir, float bias, float normalBias);
 
 void main()
 {
@@ -169,7 +172,13 @@ void main()
     vec3 baseColor = diffuseTextureColor.rgb + u_Color.rgb;
     baseColor += ComputeReflection(normal, viewDir);
     
-    float shadow = ComputeShadow(inFrag.FragPosLightSpace);
+    float shadow = 0.f;
+
+    // TODO: implement multiple directional lights shadows and not consider 0 as the main and only light
+    if(totalDirectionalLights > 0)
+    {
+        shadow = ComputeShadow(inFrag.FragPosLightSpace, normal, directionalLights[0].direction, directionalLights[0].bias, directionalLights[0].normalBias);
+    }
 
     vec3 result = ComputeAmbientLight(baseColor);
     
@@ -180,12 +189,12 @@ void main()
     
     for(int i = 0; i < totalPointLights; i++)
     {
-       result += ComputePointLight(pointLights[i], normal, inFrag.FragPosition, viewDir, baseColor, shadow);
+       result += ComputePointLight(pointLights[i], normal, inFrag.FragPosition, viewDir, baseColor, 0.f);
     }
     
     for(int i = 0; i < totalSpotLights; i++)
     {
-       result += ComputeSpotLight(spotLights[i], normal, inFrag.FragPosition, viewDir, baseColor, shadow);
+       result += ComputeSpotLight(spotLights[i], normal, inFrag.FragPosition, viewDir, baseColor, 0.f);
     }
     
     if(u_RenderingMode == OPAQUE)
@@ -301,7 +310,7 @@ vec3 ComputeAmbientLight(vec3 baseColor)
     return baseColor * ambientLight.color;
 }
 
-float ComputeShadow(vec4 fragPosLightSpace)
+float ComputeShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir, float bias, float normalBias)
 {
     // Perform perspective devide, raging from [-1, 1]
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
@@ -310,9 +319,11 @@ float ComputeShadow(vec4 fragPosLightSpace)
     projCoords = projCoords * 0.5f + 0.5f;
 
     float closestDepth = texture(u_ShadowMap, projCoords.xy).r;
+    float currentDepth = projCoords.z;
 
-    float currentDepth = projCoords.z;    
+    // Bias to fix shadow acne
+    float finalBias = max(normalBias * (1.0 - dot(normal, lightDir)), bias);
 
     // Returns 1.f if fragment is in shadow or 0.f if not in shadow
-    return currentDepth > closestDepth ? 1.f : 0.f;
+    return currentDepth - finalBias > closestDepth ? 1.f : 0.f;
 }

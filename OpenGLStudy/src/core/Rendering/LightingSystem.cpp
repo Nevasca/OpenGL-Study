@@ -99,9 +99,11 @@ void LightingSystem::UpdateLightingUniformBuffer(const CameraComponent& activeCa
         auto& directionalLight = m_DirectionalLights[i];
     
         Rendering::DirectionalLightShaderData directionalLightShaderData;
+        directionalLightShaderData.Intensity = directionalLight->GetIntensity();
+        directionalLightShaderData.Bias = directionalLight->GetBias();
+        directionalLightShaderData.NormalBias = directionalLight->GetNormalBias();
         directionalLightShaderData.Direction = directionalLight->GetDirection();
         directionalLightShaderData.Diffuse = directionalLight->GetColor();
-        directionalLightShaderData.Intensity = directionalLight->GetIntensity();
         directionalLightShaderData.Specular = m_DefaultSpecularColor;
         
         m_DirectionalsShaderData[i] = directionalLightShaderData;

@@ -20,9 +20,17 @@ namespace Editor
 
             float intensity = directionalLight->GetIntensity();
             ImGui::DragFloat("Intensity", &intensity, 1.f, 0.f);
+
+            float bias = directionalLight->GetBias();
+            ImGui::DragFloat("Bias", &bias, 0.001f);
+
+            float normalBias = directionalLight->GetNormalBias();
+            ImGui::DragFloat("Normal Bias", &normalBias, 0.001f);
             
             directionalLight->SetColor(color);
             directionalLight->SetIntensity(intensity);
+            directionalLight->SetBias(bias);
+            directionalLight->SetNormalBias(normalBias);
         }
 
         int DirectionalLightComponentInspector::GetComponentHash()

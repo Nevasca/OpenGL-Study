@@ -28,7 +28,9 @@ namespace Rendering
     struct DirectionalLightShaderData
     {
         float Intensity{0.f};
-        glm::vec3 PADDING_01{0.f};
+        float Bias{0.005f};
+        float NormalBias{0.001f};
+        float PADDING_01{0.f};
 
         glm::vec3 Direction{0.f};
         float PADDING_02{0.f};
