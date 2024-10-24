@@ -132,9 +132,9 @@ namespace tests
         }
 
         std::shared_ptr<DirectionalLight> mainDirectionalLight = m_World->Spawn<DirectionalLight>();
-        mainDirectionalLight->SetPosition(glm::vec3(-11.f, 15.f, 14.f));
+        mainDirectionalLight->SetPosition(glm::vec3(-6.f, 15.f, 4.f));
         mainDirectionalLight->SetName("MainDirectionalLight");
-        mainDirectionalLight->SetRotation(glm::vec3(-45.f, 0.f, 0.f));
+        mainDirectionalLight->SetRotation(glm::vec3(-45.f, -55.f, 0.f));
         mainDirectionalLight->SetColor(glm::vec3(1.f, 0.82f, 0.635f));
         mainDirectionalLight->SetIntensity(0.3f);
 
@@ -183,7 +183,7 @@ namespace tests
     {
         glm::vec3 floorPosition{4.f, -0.75f, 4.f};
         glm::vec3 floorRotation{0.f};
-        glm::vec3 floorScale{14.f, 0.25f, 14.f};
+        glm::vec3 floorScale{14.f, 0.5f, 14.f};
         std::shared_ptr<Cube> floor = m_World->Spawn<Cube>(floorPosition, floorRotation, floorScale);
         floor->SetName("Floor");
     }

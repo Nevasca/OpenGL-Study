@@ -21,11 +21,9 @@ glm::vec3 DirectionalLightComponent::GetDirection() const
 
 glm::mat4 DirectionalLightComponent::GetViewMatrix() const
 {
-    return glm::lookAt(GetOwnerPosition(), glm::vec3{0.f}, glm::vec3{0.f, 1.f, 0.f});
-
-    // TODO: implement using light rotation instead of position
-    // glm::vec3 lightPosition = GetOwnerPosition();
-    // return glm::lookAt(lightPosition, lightPosition + GetOwnerTransform().GetForwardVector(), glm::vec3{0.f, 1.f, 0.f});
+    // TODO: implement to be position agnostic (maybe use the camera position?)
+    glm::vec3 lightPosition = GetOwnerPosition();
+    return glm::lookAt(lightPosition, lightPosition + GetOwnerTransform().GetForwardVector(), glm::vec3{0.f, 1.f, 0.f});
 }
 
 glm::mat4 DirectionalLightComponent::GetProjectionMatrix() const
