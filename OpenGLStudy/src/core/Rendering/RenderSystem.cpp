@@ -119,7 +119,8 @@ Rendering::MeshComponentRenderSet& RenderSystem::GetComponentRenderSetFor(const 
 {
     const std::shared_ptr<Material>& material = meshComponent->GetMaterial();
 
-    if(material->GetRenderingMode() == MaterialRenderingMode::Transparent)
+    MaterialRenderingMode materialMode = material->GetRenderingMode();
+    if(materialMode == MaterialRenderingMode::Transparent || materialMode == MaterialRenderingMode::AlphaCutout)
     {
         return m_TransparentMeshComponentSet;
     }
@@ -131,7 +132,8 @@ Rendering::MeshComponentRenderSet& RenderSystem::GetOutlinedComponentRenderSetFo
 {
     const std::shared_ptr<Material>& material = meshComponent->GetMaterial();
 
-    if(material->GetRenderingMode() == MaterialRenderingMode::Transparent)
+    MaterialRenderingMode materialMode = material->GetRenderingMode();
+    if(materialMode == MaterialRenderingMode::Transparent || materialMode == MaterialRenderingMode::AlphaCutout)
     {
         return m_TransparentOutlinedMeshComponentSet;
     }
@@ -390,16 +392,24 @@ void RenderSystem::RenderShadowPass(const CameraComponent& activeCamera)
 
     // Set front face culling to fix petter panning shadow
     m_Device.SetCullingFaceFront();
-    
     RenderObjects(m_OpaqueMeshComponentSet);
+
+    // TODO: temp fix for casting shadow for one sided transparent object
+    // a better solution would be having a render set for objects that need to cast shadow from both sides (like a DoubleSided flag on MeshComponent or Material) 
+    m_Device.DisableFaceCulling();
     RenderObjectsSortedByDistance(m_TransparentMeshComponentSet, lightPosition);
+    m_Device.EnableFaceCulling();
+    
+    m_Device.SetCullingFaceFront();
     RenderObjects(m_OpaqueOutlinedMeshComponentSet);
+    m_Device.SetCullingFaceBack();
+
+    m_Device.DisableFaceCulling();
     RenderObjectsSortedByDistance(m_TransparentOutlinedMeshComponentSet, lightPosition);
 
-    m_Device.SetCullingFaceBack();
-    if(!bPreviousFaceCullingEnabled)
+    if(bPreviousFaceCullingEnabled)
     {
-        m_Device.DisableFaceCulling();
+        m_Device.EnableFaceCulling();
     }
     
     SetOverrideShader(previousOverrideShader);
