@@ -381,12 +381,27 @@ void RenderSystem::RenderShadowPass(const CameraComponent& activeCamera)
     
     std::shared_ptr<Shader> previousOverrideShader = m_WorldOverrideShader;
     SetOverrideShader(m_DepthShader);
+
+    bool bPreviousFaceCullingEnabled = m_Device.IsFaceCullingEnabled();
+    if(!bPreviousFaceCullingEnabled)
+    {
+        m_Device.EnableFaceCulling();
+    }
+
+    // Set front face culling to fix petter panning shadow
+    m_Device.SetCullingFaceFront();
     
     RenderObjects(m_OpaqueMeshComponentSet);
     RenderObjectsSortedByDistance(m_TransparentMeshComponentSet, lightPosition);
     RenderObjects(m_OpaqueOutlinedMeshComponentSet);
     RenderObjectsSortedByDistance(m_TransparentOutlinedMeshComponentSet, lightPosition);
 
+    m_Device.SetCullingFaceBack();
+    if(!bPreviousFaceCullingEnabled)
+    {
+        m_Device.DisableFaceCulling();
+    }
+    
     SetOverrideShader(previousOverrideShader);
     m_Device.SetViewportResolution(Screen::GetResolution());
     shadowMapBuffer.Unbind();
