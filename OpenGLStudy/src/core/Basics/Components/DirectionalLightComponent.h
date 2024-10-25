@@ -30,5 +30,5 @@ private:
     glm::vec3 m_Color{1.f};
     float m_Intensity{1.f};
     float m_Bias{0.f};
-    float m_NormalBias{0.f};
+    float m_NormalBias{0.0001f};
 };
