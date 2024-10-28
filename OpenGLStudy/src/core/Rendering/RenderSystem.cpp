@@ -550,5 +550,5 @@ bool RenderSystem::IsSkyboxActive() const
 
 void RenderSystem::SetupShadowRendering()
 {
-    m_DepthShader = ResourceManager::LoadShader("res/core/shaders/SimpleDepth.glsl", "SimpleDepth");
+    m_DepthShader = ResourceManager::LoadShader("res/core/shaders/AlphaSimpleDepth.glsl", "AlphaSimpleDepth");
 }
