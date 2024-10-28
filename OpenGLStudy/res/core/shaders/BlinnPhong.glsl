@@ -314,6 +314,12 @@ float ComputeShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir, float bi
 {
     // Perform perspective devide, raging from [-1, 1]
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+
+    // If projected coordinate is further than light's far plane (shadow distance), return no shadow (lit)
+    if(projCoords.z > 1.0)
+    {
+        return 0.f;
+    }
     
     // To use our depth map that ranges from [0, 1], we need to transform the NDC coordinates to the range [0, 1] as well
     projCoords = projCoords * 0.5f + 0.5f;

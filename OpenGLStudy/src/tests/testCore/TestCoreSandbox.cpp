@@ -65,7 +65,7 @@ namespace tests
 
         SpawnTransparentObjects();
 
-        auto sphere = m_World->Spawn<Sphere>(glm::vec3(-4.f, 0.f, 0.f));
+        auto sphere = m_World->Spawn<Sphere>(glm::vec3(-4.f, 1.f, 2.f));
         auto sphereMaterial = ResourceManager::CreateMaterial("M_Sphere");
         sphereMaterial->SetFloat(reflectionUniformName, 1.f);
         sphereMaterial->SetColor("u_Color", glm::vec4{0.1f});
@@ -183,7 +183,7 @@ namespace tests
     {
         glm::vec3 floorPosition{4.f, -0.75f, 4.f};
         glm::vec3 floorRotation{0.f};
-        glm::vec3 floorScale{14.f, 0.5f, 14.f};
+        glm::vec3 floorScale{44.f, 0.5f, 44.f};
         std::shared_ptr<Cube> floor = m_World->Spawn<Cube>(floorPosition, floorRotation, floorScale);
         floor->SetName("Floor");
     }

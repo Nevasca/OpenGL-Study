@@ -26,6 +26,12 @@ void Texture::Create(unsigned char* data, const TextureSettings& settings)
         GLCall(glTexParameteri(m_Target, GL_TEXTURE_MAG_FILTER, settings.MagFilter));
         GLCall(glTexParameteri(m_Target, GL_TEXTURE_WRAP_S, settings.WrapS));
         GLCall(glTexParameteri(m_Target, GL_TEXTURE_WRAP_T, settings.WrapT));
+
+        if(settings.UseBorder)
+        {
+            GLCall(glTexParameterfv(m_Target, GL_TEXTURE_BORDER_COLOR, &settings.BorderColor.r));
+        }
+        
         GLCall(glTexImage2D(m_Target, 0, settings.InternalFormat, m_Width, m_Height, 0, settings.Format, settings.Type, data));
     }
 

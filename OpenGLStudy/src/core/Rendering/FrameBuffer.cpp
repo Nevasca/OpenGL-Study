@@ -106,6 +106,13 @@ void Framebuffer::CreateDepthMapAttachment(const FramebufferSettings& settings)
     depthTextureSettings.Format = GL_DEPTH_COMPONENT;
     depthTextureSettings.Samples = settings.Samples;
 
+    // When using a depth texture for shadow mapping, to partially fix oversampling
+    // we clamp texture to a white border so when sampling outside light frustum it returns not in shadow
+    depthTextureSettings.UseBorder = true;
+    depthTextureSettings.WrapS = GL_CLAMP_TO_BORDER;
+    depthTextureSettings.WrapT = GL_CLAMP_TO_BORDER;
+    depthTextureSettings.BorderColor = glm::vec4{1.f};
+
     m_DepthBufferTexture = std::make_shared<Texture>(nullptr, settings.Resolution.Width, settings.Resolution.Height, depthTextureSettings);
 
     unsigned int targetDepthTexture = settings.Samples > 1 ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;

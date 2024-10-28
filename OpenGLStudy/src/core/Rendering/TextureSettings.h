@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 #include "OpenGLCore.h"
+#include "glm/vec3.hpp"
+#include "glm/vec4.hpp"
 
 struct TextureSettings
 {
@@ -11,6 +13,8 @@ struct TextureSettings
     unsigned int MagFilter{GL_LINEAR};
     unsigned int WrapS{GL_CLAMP_TO_EDGE};
     unsigned int WrapT{GL_CLAMP_TO_EDGE};
+    bool UseBorder{false};
+    glm::vec4 BorderColor{0.f};
     bool GenerateMipmap{false};
     unsigned int Samples{1};
     bool UseAlpha{false};
