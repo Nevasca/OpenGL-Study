@@ -324,12 +324,26 @@ float ComputeShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir, float bi
     // To use our depth map that ranges from [0, 1], we need to transform the NDC coordinates to the range [0, 1] as well
     projCoords = projCoords * 0.5f + 0.5f;
 
-    float closestDepth = texture(u_ShadowMap, projCoords.xy).r;
     float currentDepth = projCoords.z;
 
     // Bias to fix shadow acne
     float finalBias = max(normalBias * (1.0 - dot(normal, lightDir)), bias);
 
+    // Apply PCF (percentage-closer filtering)
+    float shadow = 0.f;
+    vec2 texelSize = 1.f / textureSize(u_ShadowMap, 0);
+    for(int x = -1; x <= 1; x++)
+    {
+        for(int y = -1; y <= 1; y++)
+        {
+            float pcfDepth = texture(u_ShadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+            shadow += currentDepth - finalBias > pcfDepth ? 1.f : 0.f;
+        }
+    }
+
+    // Average by total samples
+    shadow /= 9.f;
+
     // Returns 1.f if fragment is in shadow or 0.f if not in shadow
-    return currentDepth - finalBias > closestDepth ? 1.f : 0.f;
+    return shadow;
 }
