@@ -12,7 +12,7 @@ LightingSystem::LightingSystem()
 {
     CreateUniformBuffers();
 
-    const Rendering::Resolution DEFAULT_SHADOW_RESOLUTION{1024, 1024};
+    const Rendering::Resolution DEFAULT_SHADOW_RESOLUTION{2048, 2048};
     CreateShadowDepthMap(DEFAULT_SHADOW_RESOLUTION);
 }
 

@@ -28,7 +28,9 @@ glm::mat4 DirectionalLightComponent::GetViewMatrix() const
 
 glm::mat4 DirectionalLightComponent::GetProjectionMatrix() const
 {
-    return glm::ortho(-10.f, 10.f, -10.f, 10.f, 1.f, 40.f);
+    // TODO: implement better ortho size calculation and positioning to improve shadow quality
+    constexpr float width = 50.f;
+    return glm::ortho(-width / 2.f, width / 2.f, -width /2.f, width / 2.f, 1.f, 30.f);
 }
 
 glm::mat4 DirectionalLightComponent::GetViewProjectionMatrix() const
