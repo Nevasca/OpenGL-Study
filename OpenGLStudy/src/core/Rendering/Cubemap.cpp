@@ -1,6 +1,7 @@
 #include "Cubemap.h"
 
 #include "OpenGLCore.h"
+#include "TextureSettings.h"
 
 namespace Rendering
 {
@@ -32,6 +33,25 @@ namespace Rendering
         GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, 0));
     }
 
+    Cubemap::Cubemap(unsigned int width, unsigned int height, const TextureSettings& settings)
+    {
+        GLCall(glGenTextures(1, &m_RendererId));
+        GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererId));
+
+        for (unsigned int i = 0; i < 6; i++)
+        {
+            CreateSideTexture(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, nullptr, width, height, settings);
+        }
+
+        GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, settings.MinFilter));
+        GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, settings.MagFilter));
+        GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, settings.WrapS));
+        GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, settings.WrapT));
+        GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, settings.WrapR));
+
+        GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, 0));
+    }
+
     Cubemap::~Cubemap()
     {
         GLCall(glDeleteTextures(1, &m_RendererId));
@@ -49,8 +69,23 @@ namespace Rendering
         GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, 0));
     }
 
-    void Cubemap::CreateSideTexture(unsigned int sideTarget, unsigned char* data, unsigned int width, unsigned int height, int internalFormat)
+    void Cubemap::CreateSideTexture(
+        const unsigned int sideTarget,
+        const unsigned char* data,
+        const unsigned int width,
+        const unsigned int height,
+        const int internalFormat)
     {
         GLCall(glTexImage2D(sideTarget,0, internalFormat, static_cast<int>(width), static_cast<int>(height), 0, GL_RGB, GL_UNSIGNED_BYTE, data));
+    }
+
+    void Cubemap::CreateSideTexture(
+        const unsigned int sideTarget,
+        const unsigned char* data,
+        const unsigned int width,
+        const unsigned int height,
+        const TextureSettings& settings)
+    {
+        GLCall(glTexImage2D(sideTarget,0, settings.InternalFormat, static_cast<int>(width), static_cast<int>(height), 0, settings.Format, settings.Type, data));
     }
 }

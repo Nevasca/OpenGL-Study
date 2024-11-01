@@ -13,6 +13,7 @@ struct TextureSettings
     unsigned int MagFilter{GL_LINEAR};
     unsigned int WrapS{GL_CLAMP_TO_EDGE};
     unsigned int WrapT{GL_CLAMP_TO_EDGE};
+    unsigned int WrapR{GL_CLAMP_TO_EDGE};
     bool UseBorder{false};
     glm::vec4 BorderColor{0.f};
     bool GenerateMipmap{false};

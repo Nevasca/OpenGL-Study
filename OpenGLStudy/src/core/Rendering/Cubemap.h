@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+struct TextureSettings;
+
 namespace Rendering
 {
     struct CubemapLoadSettings
@@ -32,6 +34,7 @@ namespace Rendering
     public:
 
         Cubemap(const CubemapTextureData& data);
+        Cubemap(unsigned int width, unsigned int height, const TextureSettings& settings);
         ~Cubemap();
 
         void Bind(unsigned int slot = 0) const;
@@ -43,7 +46,19 @@ namespace Rendering
 
     private:
 
-        void CreateSideTexture(unsigned int sideTarget, unsigned char* data, unsigned int width, unsigned int height, int internalFormat);
+        void CreateSideTexture(
+            const unsigned int sideTarget,
+            const unsigned char* data,
+            const unsigned int width,
+            const unsigned int height,
+            const int internalFormat);
+
+        void CreateSideTexture(
+            const unsigned int sideTarget,
+            const unsigned char* data,
+            const unsigned int width,
+            const unsigned int height,
+            const TextureSettings& settings);
         
         unsigned int m_RendererId{0};
         std::string m_Name{};
