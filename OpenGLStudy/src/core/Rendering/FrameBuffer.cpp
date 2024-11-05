@@ -38,7 +38,14 @@ void Framebuffer::Create(const FramebufferSettings& settings)
 
     if(settings.EnableDepthMapOnly || !settings.EnableDepthBufferWriteOnly)
     {
-        CreateDepthMapAttachment(settings);
+        if(settings.UseDepthCubemap)
+        {
+            CreateDepthMapCubemapAttachment(settings);
+        }
+        else
+        {
+            CreateDepthMap2DAttachment(settings);
+        }
     }
     else if(settings.EnableDepthBuffer || settings.Samples > 1)
     {
@@ -99,7 +106,7 @@ void Framebuffer::EnableAdditionalColorAttachments(unsigned int totalAdditionalC
     GLCall(glDrawBuffers(1 + totalAdditionalColorAttachments, drawBuffers.data()));
 }
 
-void Framebuffer::CreateDepthMapAttachment(const FramebufferSettings& settings)
+void Framebuffer::CreateDepthMap2DAttachment(const FramebufferSettings& settings)
 {
     TextureSettings depthTextureSettings{};
     depthTextureSettings.InternalFormat = GL_DEPTH_COMPONENT;
@@ -117,6 +124,27 @@ void Framebuffer::CreateDepthMapAttachment(const FramebufferSettings& settings)
 
     unsigned int targetDepthTexture = settings.Samples > 1 ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;
     GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, targetDepthTexture, m_DepthBufferTexture->GetRendererID(), 0));
+
+    if(settings.EnableDepthMapOnly)
+    {
+        GLCall(glDrawBuffer(GL_NONE));
+        GLCall(glReadBuffer(GL_NONE));
+    }
+}
+
+void Framebuffer::CreateDepthMapCubemapAttachment(const FramebufferSettings& settings)
+{
+    TextureSettings depthCubemapSettings{};
+    depthCubemapSettings.InternalFormat = GL_DEPTH_COMPONENT;
+    depthCubemapSettings.Format = GL_DEPTH_COMPONENT;
+    depthCubemapSettings.Type = GL_FLOAT;
+    depthCubemapSettings.Samples = settings.Samples;
+    depthCubemapSettings.MinFilter = GL_NEAREST;
+    depthCubemapSettings.MagFilter = GL_NEAREST;
+
+    m_DepthBufferCubemap = std::make_shared<Rendering::Cubemap>(settings.Resolution.Width, settings.Resolution.Height, depthCubemapSettings);
+
+    GLCall(glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_DepthBufferCubemap->GetRendererId(), 0));
 
     if(settings.EnableDepthMapOnly)
     {
@@ -161,6 +189,7 @@ Framebuffer::~Framebuffer()
     m_MainColorBufferTexture.reset();
     m_AdditionalColorTextures.clear();
     m_DepthBufferTexture.reset();
+    m_DepthBufferCubemap.reset();
 }
 
 void Framebuffer::Bind() const
