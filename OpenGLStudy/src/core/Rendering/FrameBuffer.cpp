@@ -111,6 +111,10 @@ void Framebuffer::CreateDepthMap2DAttachment(const FramebufferSettings& settings
     TextureSettings depthTextureSettings{};
     depthTextureSettings.InternalFormat = GL_DEPTH_COMPONENT;
     depthTextureSettings.Format = GL_DEPTH_COMPONENT;
+    depthTextureSettings.Type = GL_FLOAT;
+    // TODO: tutorial uses GL_NEAREST, but it's reproducing worse results, investigate how to have better shadows
+    // depthTextureSettings.MinFilter = GL_NEAREST;
+    // depthTextureSettings.MagFilter = GL_NEAREST;
     depthTextureSettings.Samples = settings.Samples;
 
     // When using a depth texture for shadow mapping, to partially fix oversampling
