@@ -6,11 +6,21 @@
 
 #define ENABLE_SHADER_DEBUG 0
 
+namespace Rendering
+{
+    struct ShaderSource
+    {
+        std::string VertexShader{};
+        std::string FragmentShader{};
+        std::string GeometryShader{};
+    };
+}
+
 class Shader
 {
 public:
 
-    Shader(const std::string& vertexShaderSource, const std::string& fragmentShaderSource);
+    Shader(const Rendering::ShaderSource& source);
     ~Shader();
 
     void Bind() const;
@@ -39,7 +49,7 @@ private:
     mutable std::unordered_map<std::string, int> m_UniformLocationCache{};
     std::string m_Name{};
 
-    unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader);
+    unsigned int CreateShader(const Rendering::ShaderSource& source);
     unsigned int CompileShader(unsigned int type, const std::string& source);
     int GetUniformLocation(const std::string& name) const;
 };

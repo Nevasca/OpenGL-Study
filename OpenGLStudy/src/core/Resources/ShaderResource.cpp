@@ -8,8 +8,7 @@
 
 std::shared_ptr<Shader> ShaderResource::LoadShaderFromFile(const std::string& vertexShaderPath, const std::string& fragShaderPath)
 {
-    std::string vertexSourceCode{};
-    std::string fragSourceCode{};
+    Rendering::ShaderSource source{};
 
     try
     {
@@ -25,15 +24,15 @@ std::shared_ptr<Shader> ShaderResource::LoadShaderFromFile(const std::string& ve
         vertexShaderFile.close();
         fragShaderFile.close();
 
-        vertexSourceCode = vertexStream.str();
-        fragSourceCode = fragStream.str();
+        source.VertexShader = vertexStream.str();
+        source.FragmentShader = fragStream.str();
     }
     catch (const std::exception& e)
     {
         std::cout << "ERROR::SHADER: Failed to read shader files" << vertexShaderPath << " | " << fragShaderPath;
     }
 
-    return std::make_shared<Shader>(vertexSourceCode, fragSourceCode);
+    return std::make_shared<Shader>(source);
 }
 
 std::shared_ptr<Shader> ShaderResource::LoadShaderFromFile(const std::string& singleFileShaderPath)
@@ -42,12 +41,15 @@ std::shared_ptr<Shader> ShaderResource::LoadShaderFromFile(const std::string& si
 
     enum class EShaderType
     {
-        NONE = -1, VERTEX = 0, FRAGMENT = 1
+        None = -1,
+        Vertex = 0,
+        Fragment = 1,
+        Geometry = 2
     };
 
     std::string line;
-    std::stringstream ss[2]; // One for the vertex shader [0] and other for the fragment [1]
-    EShaderType type = EShaderType::NONE;
+    std::stringstream ss[3]; // Vertex shader [0], Fragment [1] and Geometry [2]
+    EShaderType type = EShaderType::None;
 
     while(getline(Stream, line))
     {
@@ -55,14 +57,15 @@ std::shared_ptr<Shader> ShaderResource::LoadShaderFromFile(const std::string& si
         {
             if(line.find(VERTEX_SHADER_KEYWORD) != std::string::npos)
             {
-                type = EShaderType::VERTEX;
+                type = EShaderType::Vertex;
             }
-            else
+            else if(line.find(FRAGMENT_SHADER_KEYWORD) != std::string::npos)
             {
-                if(line.find(FRAGMENT_SHADER_KEYWORD) != std::string::npos)
-                {
-                    type = EShaderType::FRAGMENT;
-                }
+                type = EShaderType::Fragment;
+            }
+            else if(line.find(GEOMETRY_SHADER_KEYWORD) != std::string::npos)
+            {
+                type = EShaderType::Geometry;
             }
         }
         else
@@ -71,5 +74,10 @@ std::shared_ptr<Shader> ShaderResource::LoadShaderFromFile(const std::string& si
         }
     }
 
-    return std::make_shared<Shader>(ss[0].str(), ss[1].str());
+    Rendering::ShaderSource source{};
+    source.VertexShader = ss[0].str();
+    source.FragmentShader = ss[1].str();
+    source.GeometryShader = ss[2].str();
+    
+    return std::make_shared<Shader>(source);
 }

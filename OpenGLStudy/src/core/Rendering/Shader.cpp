@@ -8,9 +8,9 @@
 
 unsigned int Shader::m_LastBoundShaderId = 0;
 
-Shader::Shader(const std::string& vertexShaderSource, const std::string& fragmentShaderSource)
+Shader::Shader(const Rendering::ShaderSource& source)
 {
-    m_RendererID = CreateShader(vertexShaderSource, fragmentShaderSource);
+    m_RendererID = CreateShader(source);
 }
 
 Shader::~Shader()
@@ -107,19 +107,35 @@ int Shader::GetUniformLocation(const std::string& name) const
     return location;
 }
 
-unsigned int Shader::CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
+unsigned int Shader::CreateShader(const Rendering::ShaderSource& source)
 {
     GLCall(unsigned int program = glCreateProgram());
-    unsigned int Vs = CompileShader(GL_VERTEX_SHADER, vertexShader); 
-    unsigned int Fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader); 
+
+    unsigned int Vs = CompileShader(GL_VERTEX_SHADER, source.VertexShader);
+    unsigned int Fs = CompileShader(GL_FRAGMENT_SHADER, source.FragmentShader);
 
     GLCall(glAttachShader(program, Vs));
     GLCall(glAttachShader(program, Fs));
+    
+    unsigned int Gs = 0;
+    bool bIsUsingGeometryShader = !source.GeometryShader.empty();
+
+    if(bIsUsingGeometryShader)
+    {
+        Gs = CompileShader(GL_GEOMETRY_SHADER, source.GeometryShader);
+        GLCall(glAttachShader(program, Gs));
+    }
+
     GLCall(glLinkProgram(program));
     GLCall(glValidateProgram(program));
 
     GLCall(glDeleteShader(Vs));
     GLCall(glDeleteShader(Fs));
+
+    if(bIsUsingGeometryShader)
+    {
+        GLCall(glDeleteShader(Gs));
+    }
 
     return program;
 }
