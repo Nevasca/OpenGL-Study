@@ -180,18 +180,18 @@ void main()
     vec3 baseColor = diffuseTextureColor.rgb + u_Color.rgb;
     baseColor += ComputeReflection(normal, viewDir);
     
-    float shadow = 0.f;
-
-    // TODO: implement multiple directional lights shadows and not consider 0 as the main and only light
-    if(totalDirectionalLights > 0)
-    {
-        shadow = ComputeDirectionalShadow(inFrag.FragPosLightSpace, normal, directionalLights[0].direction, directionalLights[0].bias, directionalLights[0].normalBias);
-    }
-
     vec3 result = ComputeAmbientLight(baseColor);
     
     for(int i = 0; i < totalDirectionalLights; i++)
     {
+        float shadow = 0.f;
+
+        // TODO: implement multiple directional lights shadows and not consider 0 as the main and only light
+        if(i == 0)
+        {
+            shadow = ComputeDirectionalShadow(inFrag.FragPosLightSpace, normal, directionalLights[0].direction, directionalLights[0].bias, directionalLights[0].normalBias);
+        }
+
         result += ComputeDirectionalLight(directionalLights[i], normal, viewDir, baseColor, shadow);
     }
     
