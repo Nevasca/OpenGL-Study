@@ -81,16 +81,21 @@ private:
     std::shared_ptr<SkyboxComponent> m_SkyboxComponent{};
     bool bIsSkyboxEnabled{true};
 
-    std::shared_ptr<Shader> m_DepthShader{};
+    std::shared_ptr<Shader> m_DirectionalDepthShader{};
+    std::shared_ptr<Shader> m_OmnidirectionalDepthShader{};
 
     Rendering::MeshComponentRenderSet& GetComponentRenderSetFor(const std::shared_ptr<MeshComponent>& meshComponent);
     Rendering::MeshComponentRenderSet& GetOutlinedComponentRenderSetFor(const std::shared_ptr<MeshComponent>& meshComponent);
     void UpdateGlobalShaderUniforms(const CameraComponent& activeCamera);
+    void UpdateCameraMatricesShaderUniforms(const CameraComponent& activeCamera);
     void RenderObjects(const Rendering::MeshComponentRenderSet& meshComponentSet);
     void RenderObjectsSortedByDistance(const Rendering::MeshComponentRenderSet& meshComponentSet, const glm::vec3& cameraPosition);
     void RenderSkybox(const CameraComponent& activeCamera);
     void RenderWorld(const CameraComponent& activeCamera);
     void RenderShadowPass(const CameraComponent& activeCamera);
+    void RenderDirectionalShadowPass();
+    void RenderOmnidirectionalShadowPass();
+    void RenderWorldForShadowPass(const glm::vec3& lightPosition);
     void RenderOutlinedObjects(const CameraComponent& activeCamera);
     void CreateInstancedBuffer();
     void CreateUniformBuffers();

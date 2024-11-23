@@ -66,7 +66,7 @@ public:
 private:
 
     // TODO: have this set somewhere else
-    constexpr static int TOTAL_SYSTEM_RESERVED_TEXTURE_SLOTS = 2;
+    constexpr static int TOTAL_SYSTEM_RESERVED_TEXTURE_SLOTS = 3;
     
     unsigned int m_Id{0};
     std::shared_ptr<Shader> m_Shader{};

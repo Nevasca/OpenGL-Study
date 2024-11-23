@@ -20,7 +20,7 @@ layout (std140) uniform Matrices
     mat4 view;
 };
 
-layout (std140) uniform LightMatrix
+layout (std140) uniform DirectionalLightMatrix
 {
     mat4 lightSpaceMatrix;    
 };
@@ -137,9 +137,16 @@ layout (std140) uniform LightingSpots
    SpotLight spotLights[MAX_SPOT_LIGHTS];
 };
 
+layout (std140) uniform Camera
+{
+    float nearPlane;
+    float farPlane;
+};
+
 // Global Environment
 uniform samplerCube u_Skybox;
 uniform sampler2D u_ShadowMap;
+uniform samplerCube u_OmnidirectionalShadowMap;
 
 // Material
 uniform vec4 u_Color;
@@ -155,7 +162,8 @@ vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, 
 vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor, float shadow);
 vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor, float shadow);
 vec3 ComputeAmbientLight(vec3 baseColor);
-float ComputeShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir, float bias, float normalBias);
+float ComputeDirectionalShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir, float bias, float normalBias);
+float ComputePointShadow(vec3 fragPos, vec3 lightPosition);
 
 void main()
 {
@@ -177,7 +185,7 @@ void main()
     // TODO: implement multiple directional lights shadows and not consider 0 as the main and only light
     if(totalDirectionalLights > 0)
     {
-        shadow = ComputeShadow(inFrag.FragPosLightSpace, normal, directionalLights[0].direction, directionalLights[0].bias, directionalLights[0].normalBias);
+        shadow = ComputeDirectionalShadow(inFrag.FragPosLightSpace, normal, directionalLights[0].direction, directionalLights[0].bias, directionalLights[0].normalBias);
     }
 
     vec3 result = ComputeAmbientLight(baseColor);
@@ -189,12 +197,15 @@ void main()
     
     for(int i = 0; i < totalPointLights; i++)
     {
-       result += ComputePointLight(pointLights[i], normal, inFrag.FragPosition, viewDir, baseColor, 0.f);
+        // TODO: implement multiple point light shadow. Currently assuming 0 is the main point light
+        float shadow = i == 0 ? ComputePointShadow(inFrag.FragPosition, pointLights[i].position) : 0.f;
+
+        result += ComputePointLight(pointLights[i], normal, inFrag.FragPosition, viewDir, baseColor, shadow);
     }
     
     for(int i = 0; i < totalSpotLights; i++)
     {
-       result += ComputeSpotLight(spotLights[i], normal, inFrag.FragPosition, viewDir, baseColor, 0.f);
+        result += ComputeSpotLight(spotLights[i], normal, inFrag.FragPosition, viewDir, baseColor, 0.f);
     }
     
     if(u_RenderingMode == OPAQUE)
@@ -310,7 +321,7 @@ vec3 ComputeAmbientLight(vec3 baseColor)
     return baseColor * ambientLight.color;
 }
 
-float ComputeShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir, float bias, float normalBias)
+float ComputeDirectionalShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir, float bias, float normalBias)
 {
     // Perform perspective devide, raging from [-1, 1]
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
@@ -345,5 +356,21 @@ float ComputeShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir, float bi
     shadow /= 9.f;
 
     // Returns 1.f if fragment is in shadow or 0.f if not in shadow
+    return shadow;
+}
+
+float ComputePointShadow(vec3 fragPos, vec3 lightPosition)
+{
+    vec3 fragToLight = fragPos - lightPosition;
+    float closestDepth = texture(u_OmnidirectionalShadowMap, fragToLight).r;
+
+    // Closest depth is currently in [0, 1] range, transform back to [0, farPlane] range
+    closestDepth *= farPlane;
+
+    float currentDepth = length(fragToLight);
+
+    float bias = 0.01f;
+    float shadow = currentDepth - bias > closestDepth ? 1.f : 0.f;
+
     return shadow;
 }

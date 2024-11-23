@@ -1,6 +1,14 @@
 #pragma once
+#include <vector>
+
 #include "core/GameObject/Component.h"
 #include "core/Rendering/Light.h"
+#include <glm/fwd.hpp>
+
+namespace Rendering
+{
+    struct Resolution;
+}
 
 class PointLightComponent : public Component
 {
@@ -21,6 +29,9 @@ public:
     glm::vec3 GetColor() const { return m_Color; }
     void SetIntensity(float intensity) { m_Intensity = intensity; }
     float GetIntensity() const { return m_Intensity; }
+
+    glm::mat4 GetProjectionMatrix(const Rendering::Resolution& shadowResolution) const;
+    std::vector<glm::mat4> GetViewProjectionMatrices(const Rendering::Resolution& shadowResolution) const;
 
 private:
 

@@ -107,13 +107,18 @@ public:
 
     void SetAmbientLightColor(const glm::vec3& ambientLightColor) { m_AmbientLightColor = ambientLightColor; }
     glm::vec3 GetAmbientLightColor() const { return m_AmbientLightColor; }
-    Framebuffer& GetShadowMapFramebuffer() const { return *m_ShadowDepthMapBuffer; }
-    Rendering::Resolution GetShadowResolution() const { return m_ShadowDepthMapBuffer->GetResolution(); }
+    Framebuffer& GetDirectionalShadowMapFramebuffer() const { return *m_DirectionalShadowMapBuffer; }
+    Framebuffer& GetOmnidirectionalShadowMapFramebuffer() const { return *m_OmmnidirectionalShadowMapBuffer; }
+    Rendering::Resolution GetShadowResolution() const { return m_DirectionalShadowMapBuffer->GetResolution(); }
+
+    // TODO: implement multiple lights shadow
     std::shared_ptr<DirectionalLightComponent> GetMainDirectionalLight();
+    std::shared_ptr<PointLightComponent> GetMainPointLight();
 
 private:
 
     constexpr static int SHADOW_MAP_SLOT = 1;
+    constexpr static int OMNIDIRECTIONAL_SHADOW_MAP_SLOT = 2;
     
     std::vector<std::shared_ptr<DirectionalLightComponent>> m_DirectionalLights{};
     std::vector<std::shared_ptr<PointLightComponent>> m_PointLights{};
@@ -129,16 +134,22 @@ private:
     std::unique_ptr<Rendering::UniformBuffer> m_PointUniformBuffer{};
     std::unique_ptr<Rendering::UniformBuffer> m_SpotsUniformBuffer{};
     std::unique_ptr<Rendering::UniformBuffer> m_DirectionalMatrixUniformBuffer{};
+    std::unique_ptr<Rendering::UniformBuffer> m_OmnidirectionalMatricesUniformBuffer{};
 
     Rendering::LightingGeneralShaderData m_GeneralShaderData{};
     Rendering::DirectionalLightShaderData m_DirectionalsShaderData[Rendering::MAX_DIRECTIONAL_LIGHTS]{};
     Rendering::PointLightShaderData m_PointsShaderData[Rendering::MAX_POINT_LIGHTS];
     Rendering::SpotLightShaderData m_SpotsShaderData[Rendering::MAX_SPOT_LIGHTS];
 
-    std::unique_ptr<Framebuffer> m_ShadowDepthMapBuffer{};
+    Rendering::Resolution m_ShadowResolution{2048, 2048};
+    std::unique_ptr<Framebuffer> m_DirectionalShadowMapBuffer{};
+    std::unique_ptr<Framebuffer> m_OmmnidirectionalShadowMapBuffer{};
+
+    void UpdateDirectionalUniformBuffer();
+    void UpdateOmnidirectionalUniformBuffer();
 
     void CreateUniformBuffers();
-    void CreateShadowDepthMap(const Rendering::Resolution& resolution);
+    void CreateShadowMaps();
 };
 
 

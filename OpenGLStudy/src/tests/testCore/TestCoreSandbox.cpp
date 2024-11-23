@@ -118,9 +118,9 @@ namespace tests
     void TestCoreSandbox::SpawnLights(GameObject& camera)
     {
         int lightIndex = 0;
-        for(int x = 0; x < 2; x++)
+        for(int x = 0; x < 1; x++)
         {
-            for(int z = 0; z < 2; z++)
+            for(int z = 0; z < 1; z++)
             {
                 glm::vec3 position{static_cast<float>(x) * 50.f, 3.f, static_cast<float>(z) * 50.f};
                 auto light = m_World->Spawn<PointLight>(position);
@@ -145,13 +145,13 @@ namespace tests
         testGetDirectionalLight->SetColor(glm::vec3(0.82f, 0.875f, 1.f));
         testGetDirectionalLight->SetIntensity(0.2f);
 
-        std::shared_ptr<PointLight> pointLight = m_World->Spawn<PointLight>(glm::vec3(-1.f, -0.25f, 10.f));
-        pointLight->SetName("PointLight" + std::to_string(lightIndex++));
-        pointLight->SetColor(glm::vec3(1.f, 0.f, 0.f));
-        pointLight->SetRange(60.f);
+        // std::shared_ptr<PointLight> pointLight = m_World->Spawn<PointLight>(glm::vec3(-1.f, -0.25f, 10.f));
+        // pointLight->SetName("PointLight" + std::to_string(lightIndex++));
+        // pointLight->SetColor(glm::vec3(1.f, 0.f, 0.f));
+        // pointLight->SetRange(60.f);
 
-        auto spotLightComponent = camera.AddComponent<SpotLightComponent>();
-        spotLightComponent->SetRange(100.f);
+        // auto spotLightComponent = camera.AddComponent<SpotLightComponent>();
+        // spotLightComponent->SetRange(100.f);
     }
 
     void TestCoreSandbox::SpawnCrates()

@@ -9,6 +9,7 @@
 #include "core/Screen.h"
 #include "core/Basics/Components/CameraComponent.h"
 #include "core/Basics/Components/MeshComponent.h"
+#include "core/Basics/Components/PointLightComponent.h"
 #include "core/Basics/Components/SkyboxComponent.h"
 #include "core/GameObject/GameObject.h"
 #include "glm/ext/matrix_clip_space.hpp"
@@ -194,6 +195,8 @@ void RenderSystem::RemoveSkyboxComponent(const std::shared_ptr<SkyboxComponent>&
 
 void RenderSystem::Render(const CameraComponent& activeCamera)
 {
+    UpdateGlobalShaderUniforms(activeCamera);
+
     RenderShadowPass(activeCamera);
 
     m_MultisampleFramebuffer->BindAndClear();
@@ -225,13 +228,7 @@ void RenderSystem::SetOverrideShader(const std::shared_ptr<Shader>& overrideShad
 
 void RenderSystem::UpdateGlobalShaderUniforms(const CameraComponent& activeCamera)
 {
-    const glm::mat4 view = activeCamera.GetViewMatrix();
-    const glm::mat4 proj = activeCamera.GetProjectionMatrix();
-
-    m_MatricesUniformBuffer->Bind();
-    glm::mat4 matrices[2] { proj, view };
-    m_MatricesUniformBuffer->SetSubData(matrices, sizeof(matrices));
-    m_MatricesUniformBuffer->Unbind();
+    UpdateCameraMatricesShaderUniforms(activeCamera);
 
     m_CameraUniformBuffer->Bind();
     float cameraParams[2] { activeCamera.GetNearPlane(), activeCamera.GetFarPlane() };
@@ -239,6 +236,17 @@ void RenderSystem::UpdateGlobalShaderUniforms(const CameraComponent& activeCamer
     m_CameraUniformBuffer->Unbind();
 
     m_LightingSystem.UpdateLightingUniformBuffer(activeCamera);
+}
+
+void RenderSystem::UpdateCameraMatricesShaderUniforms(const CameraComponent& activeCamera)
+{
+    const glm::mat4 view = activeCamera.GetViewMatrix();
+    const glm::mat4 proj = activeCamera.GetProjectionMatrix();
+
+    m_MatricesUniformBuffer->Bind();
+    glm::mat4 matrices[2] { proj, view };
+    m_MatricesUniformBuffer->SetSubData(matrices, sizeof(matrices));
+    m_MatricesUniformBuffer->Unbind();
 }
 
 void RenderSystem::RenderObjects(const Rendering::MeshComponentRenderSet& meshComponentSet)
@@ -351,7 +359,6 @@ void RenderSystem::RenderObjectsSortedByDistance(const Rendering::MeshComponentR
 void RenderSystem::RenderWorld(const CameraComponent& activeCamera)
 {
     m_Device.DisableStencilWrite();
-    UpdateGlobalShaderUniforms(activeCamera);
 
     RenderObjects(m_OpaqueMeshComponentSet);
     RenderSkybox(activeCamera);
@@ -360,6 +367,18 @@ void RenderSystem::RenderWorld(const CameraComponent& activeCamera)
 
 void RenderSystem::RenderShadowPass(const CameraComponent& activeCamera)
 {
+    std::shared_ptr<Shader> previousOverrideShader = m_WorldOverrideShader;
+
+    RenderDirectionalShadowPass();
+    RenderOmnidirectionalShadowPass();
+
+    UpdateCameraMatricesShaderUniforms(activeCamera);
+    SetOverrideShader(previousOverrideShader);
+    m_Device.SetViewportResolution(Screen::GetResolution());
+}
+
+void RenderSystem::RenderDirectionalShadowPass()
+{
     std::shared_ptr<DirectionalLightComponent> mainDirectionalLight = m_LightingSystem.GetMainDirectionalLight();
 
     if(!mainDirectionalLight)
@@ -367,7 +386,7 @@ void RenderSystem::RenderShadowPass(const CameraComponent& activeCamera)
         return;
     }
     
-    Framebuffer& shadowMapBuffer = m_LightingSystem.GetShadowMapFramebuffer();
+    Framebuffer& shadowMapBuffer = m_LightingSystem.GetDirectionalShadowMapFramebuffer();
 
     m_Device.SetViewportResolution(shadowMapBuffer.GetResolution());
     shadowMapBuffer.BindAndClear();
@@ -381,9 +400,36 @@ void RenderSystem::RenderShadowPass(const CameraComponent& activeCamera)
     m_MatricesUniformBuffer->SetSubData(matrices, sizeof(matrices));
     m_MatricesUniformBuffer->Unbind();
     
-    std::shared_ptr<Shader> previousOverrideShader = m_WorldOverrideShader;
-    SetOverrideShader(m_DepthShader);
+    SetOverrideShader(m_DirectionalDepthShader);
 
+    RenderWorldForShadowPass(lightPosition);
+    
+    shadowMapBuffer.Unbind();
+}
+
+void RenderSystem::RenderOmnidirectionalShadowPass()
+{
+    std::shared_ptr<PointLightComponent> mainPointLight = m_LightingSystem.GetMainPointLight();
+
+    if(!mainPointLight)
+    {
+        return;
+    }
+
+    Framebuffer& shadowMapBuffer = m_LightingSystem.GetOmnidirectionalShadowMapFramebuffer();
+
+    m_Device.SetViewportResolution(shadowMapBuffer.GetResolution());
+    shadowMapBuffer.BindAndClear();
+
+    SetOverrideShader(m_OmnidirectionalDepthShader);
+
+    RenderWorldForShadowPass(mainPointLight->GetPosition());
+    
+    shadowMapBuffer.Unbind();
+}
+
+void RenderSystem::RenderWorldForShadowPass(const glm::vec3& lightPosition)
+{
     bool bPreviousFaceCullingEnabled = m_Device.IsFaceCullingEnabled();
     if(!bPreviousFaceCullingEnabled)
     {
@@ -411,10 +457,6 @@ void RenderSystem::RenderShadowPass(const CameraComponent& activeCamera)
     {
         m_Device.EnableFaceCulling();
     }
-    
-    SetOverrideShader(previousOverrideShader);
-    m_Device.SetViewportResolution(Screen::GetResolution());
-    shadowMapBuffer.Unbind();
 }
 
 void RenderSystem::RenderSkybox(const CameraComponent& activeCamera)
@@ -472,7 +514,6 @@ void RenderSystem::RenderOutlinedObjects(const CameraComponent& activeCamera)
 
     std::shared_ptr<Shader> currentOverrideShader = m_WorldOverrideShader;
     SetOverrideShader(m_OutlineShader);
-    UpdateGlobalShaderUniforms(activeCamera);
 
     RenderObjects(m_OpaqueOutlinedMeshComponentSet);
     RenderObjects(m_TransparentOutlinedMeshComponentSet);
@@ -550,5 +591,6 @@ bool RenderSystem::IsSkyboxActive() const
 
 void RenderSystem::SetupShadowRendering()
 {
-    m_DepthShader = ResourceManager::LoadShader("res/core/shaders/AlphaSimpleDepth.glsl", "AlphaSimpleDepth");
+    m_DirectionalDepthShader = ResourceManager::LoadShader("res/core/shaders/AlphaSimpleDepth.glsl", "AlphaSimpleDepth");
+    m_OmnidirectionalDepthShader = ResourceManager::LoadShader("res/core/shaders/OmnidirectionalDepth.glsl", "OminidirectionalDepth");
 }
