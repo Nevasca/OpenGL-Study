@@ -362,15 +362,38 @@ float ComputeDirectionalShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDi
 float ComputePointShadow(vec3 fragPos, vec3 lightPosition)
 {
     vec3 fragToLight = fragPos - lightPosition;
-    float closestDepth = texture(u_OmnidirectionalShadowMap, fragToLight).r;
-
-    // Closest depth is currently in [0, 1] range, transform back to [0, farPlane] range
-    closestDepth *= farPlane;
-
     float currentDepth = length(fragToLight);
 
+    vec3 sampleOffsetDirections[20] = vec3[]
+    (
+        vec3( 1,  1,  1), vec3( 1, -1,  1), vec3(-1, -1,  1), vec3(-1,  1,  1), 
+        vec3( 1,  1, -1), vec3( 1, -1, -1), vec3(-1, -1, -1), vec3(-1,  1, -1),
+        vec3( 1,  1,  0), vec3( 1, -1,  0), vec3(-1, -1,  0), vec3(-1,  1,  0),
+        vec3( 1,  0,  1), vec3(-1,  0,  1), vec3( 1,  0, -1), vec3(-1,  0, -1),
+        vec3( 0,  1,  1), vec3( 0, -1,  1), vec3( 0, -1, -1), vec3( 0,  1, -1)
+    );
+
+    float shadow = 0.f;
     float bias = 0.01f;
-    float shadow = currentDepth - bias > closestDepth ? 1.f : 0.f;
+    int totalSamples = 20;
+    float viewDistance = length(viewPosition - fragPos);
+    // float diskRadius = (1.f + (viewDistance / farPlane)) / 25.f;
+    float diskRadius = 0.01f;
+
+    for(int i = 0; i < totalSamples; i++)
+    {
+        float closestDepth = texture(u_OmnidirectionalShadowMap, fragToLight + sampleOffsetDirections[i] * diskRadius).r;
+
+        // Closest depth is currently in [0, 1] range, transform back to [0, farPlane] range
+        closestDepth *= farPlane;
+
+        if(currentDepth - bias > closestDepth)
+        {
+            shadow += 1.f;
+        }
+    }
+
+    shadow /= float(totalSamples);
 
     return shadow;
 }
