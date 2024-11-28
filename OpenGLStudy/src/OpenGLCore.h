@@ -3,7 +3,11 @@
 #include <GL/glew.h>
 
 // To use param as condition on macro, need to wrap on (), as (x)
-#define ASSERT(x) if (!(x)) __debugbreak()
+#ifdef _DEBUG
+    #define ASSERT(x) if (!(x)) __debugbreak()
+#else
+    #define ASSERT(x)
+#endif
 
 #ifdef _DEBUG
     #define GLCall(x) GLClearError();\
