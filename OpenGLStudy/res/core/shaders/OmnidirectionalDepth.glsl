@@ -22,18 +22,30 @@ void main()
 layout (triangles) in;
 layout (triangle_strip, max_vertices=18) out;
 
-layout (std140) uniform OmnidirectionalLightMatrices
+#define MAX_POINT_LIGHTS 20
+
+struct PointLightShadowMapData
 {
     mat4 viewProjectionMatrices[6];
 };
 
+layout (std140) uniform PointLightShadowMapMatrices
+{
+    PointLightShadowMapData pointLightShadowMaps[MAX_POINT_LIGHTS];
+};
+
 in vec2 v_TexCoord[];
+
+uniform int u_LightIndex;
 
 out vec2 g_TexCoord;
 out vec4 v_FragPos;
 
 void main()
 {
+    PointLightShadowMapData pointLightShadowMapData = pointLightShadowMaps[u_LightIndex];
+    mat4 viewProjectionMatrices[6] = pointLightShadowMapData.viewProjectionMatrices;
+
     for(int cubemapFace = 0; cubemapFace < 6; cubemapFace++)
     {
         // Set what face of the cubemap to render
@@ -43,6 +55,7 @@ void main()
         {
             v_FragPos = gl_in[vertice].gl_Position;
             g_TexCoord = v_TexCoord[vertice];
+            
             gl_Position = viewProjectionMatrices[cubemapFace] * v_FragPos;
             EmitVertex();
         }
@@ -61,6 +74,8 @@ in vec2 g_TexCoord;
 
 uniform sampler2D u_Diffuse;
 uniform int u_RenderingMode;
+
+uniform int u_LightIndex;
 
 const int OPAQUE = 0;
 const int ALPHA_CUTOUT = 1;
@@ -102,8 +117,7 @@ void main()
         }
     }
 
-    // TODO: assuming only one point light and first one
-    vec3 lightPosition = pointLights[0].position;
+    vec3 lightPosition = pointLights[u_LightIndex].position;
     
     float lightDistance = length(v_FragPos.xyz - lightPosition);
 

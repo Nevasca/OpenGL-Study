@@ -16,11 +16,7 @@ LightingSystem::LightingSystem()
 
 void LightingSystem::Setup()
 {
-    std::shared_ptr<Texture> directionalDepthTexture = m_DirectionalShadowMapBuffer->GetDepthBufferTexture();
-    directionalDepthTexture->Bind(SHADOW_MAP_SLOT);
-
-    std::shared_ptr<Rendering::Cubemap> omnidirectionalDepthCubemap = m_OmmnidirectionalShadowMapBuffer->GetDepthBufferCubemap();
-    omnidirectionalDepthCubemap->Bind(OMNIDIRECTIONAL_SHADOW_MAP_SLOT);
+    SetupShadowMaps();
 }
 
 void LightingSystem::Shutdown()
@@ -34,11 +30,12 @@ void LightingSystem::Shutdown()
     m_PointUniformBuffer.reset();
     m_SpotsUniformBuffer.reset();
     m_DirectionalMatrixUniformBuffer.reset();
-    m_OmnidirectionalMatricesUniformBuffer.reset();
+    m_PointLightMatricesUniformBuffer.reset();
 
     std::shared_ptr<Texture> depthTexture = m_DirectionalShadowMapBuffer->GetDepthBufferTexture();
     depthTexture->Unbind(SHADOW_MAP_SLOT);
     m_DirectionalShadowMapBuffer.reset();
+    m_PointLightShadowMapBuffers.clear();
 }
 
 void LightingSystem::AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent)
@@ -57,14 +54,16 @@ void LightingSystem::AddDirectionalLight(const std::shared_ptr<DirectionalLightC
 void LightingSystem::AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent)
 {
     m_PointLights.push_back(pointLightComponent);
+    m_TotalActivePointLights = std::min(static_cast<int>(m_PointLights.size()), Rendering::MAX_POINT_LIGHTS);
 
     if(m_PointLights.size() > Rendering::MAX_POINT_LIGHTS)
     {
         // TODO: replace for log class when implemented
         std::cout << "Max point lights reached. Last added point light won't affect world\n";
+        return;
     }
 
-    m_TotalActivePointLights = std::min(static_cast<int>(m_PointLights.size()), Rendering::MAX_POINT_LIGHTS);
+    CreatePointLightShadowMapFor(m_TotalActivePointLights - 1);
 }
 
 void LightingSystem::AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent)
@@ -87,11 +86,17 @@ void LightingSystem::SetupUniformsFor(Shader& shader) const
     m_PointUniformBuffer->SetBindingIndexFor(shader);
     m_SpotsUniformBuffer->SetBindingIndexFor(shader);
     m_DirectionalMatrixUniformBuffer->SetBindingIndexFor(shader);
-    m_OmnidirectionalMatricesUniformBuffer->SetBindingIndexFor(shader);
+    m_PointLightMatricesUniformBuffer->SetBindingIndexFor(shader);
 
     shader.Bind();
     shader.SetUniform1i("u_ShadowMap", SHADOW_MAP_SLOT);
-    shader.SetUniform1i("u_OmnidirectionalShadowMap", OMNIDIRECTIONAL_SHADOW_MAP_SLOT);
+
+    for(int i = 0; i < Rendering::MAX_SPOT_LIGHTS; i++)
+    {
+        std::string uniformName = "u_PointLightShadowMaps[" + std::to_string(i) + "]";
+        shader.SetUniform1i(uniformName, POINTLIGHT_SHADOW_MAP_START_SLOT + i);
+    }
+
     shader.Unbind();
 }
 
@@ -199,17 +204,38 @@ void LightingSystem::UpdateDirectionalUniformBuffer()
 
 void LightingSystem::UpdateOmnidirectionalUniformBuffer()
 {
-    std::shared_ptr<PointLightComponent> mainPointLight = GetMainPointLight();
-
-    if(!mainPointLight)
+    if(m_TotalActivePointLights == 0)
     {
         return;
     }
+    
+    for(int i = 0; i < m_TotalActivePointLights; i++)
+    {
+        std::vector<glm::mat4> lightSpaceMatrices = m_PointLights[i]->GetViewProjectionMatrices(m_ShadowResolution);
 
-    std::vector<glm::mat4> lightSpaceMatrices = mainPointLight->GetViewProjectionMatrices(m_ShadowResolution);
-    m_OmnidirectionalMatricesUniformBuffer->Bind();
-    m_OmnidirectionalMatricesUniformBuffer->SetSubData(lightSpaceMatrices.data(), sizeof(glm::mat4) * 6);
-    m_OmnidirectionalMatricesUniformBuffer->Unbind();
+        // TODO: maybe we could use pointers to avoid another loop
+        for(int j = 0; j < static_cast<int>(lightSpaceMatrices.size()); j++)
+        {
+            Rendering::PointLightShadowMapShaderData& shaderData = m_PointLightShadowMapShaderData[i];
+            shaderData.ViewProjectionMatrices[j] = lightSpaceMatrices[j];
+        }
+    }
+
+    m_PointLightMatricesUniformBuffer->Bind();
+    m_PointLightMatricesUniformBuffer->SetSubData(m_PointLightShadowMapShaderData, Rendering::MAX_POINT_LIGHTS * sizeof(Rendering::PointLightShadowMapShaderData));
+    m_PointLightMatricesUniformBuffer->Unbind();
+}
+
+const Framebuffer& LightingSystem::GetPointLightShadowMapFramebuffer(const int activeLightindex) const
+{
+    ASSERT(activeLightindex >= 0 && activeLightindex < m_TotalActivePointLights);
+    return *m_PointLightShadowMapBuffers[activeLightindex];
+}
+
+const PointLightComponent& LightingSystem::GetPointLight(const int activeLightindex) const
+{
+    ASSERT(activeLightindex >= 0 && activeLightindex < m_TotalActivePointLights);
+    return *m_PointLights[activeLightindex];
 }
 
 std::shared_ptr<DirectionalLightComponent> LightingSystem::GetMainDirectionalLight()
@@ -220,16 +246,6 @@ std::shared_ptr<DirectionalLightComponent> LightingSystem::GetMainDirectionalLig
     }
 
     return m_DirectionalLights[0];
-}
-
-std::shared_ptr<PointLightComponent> LightingSystem::GetMainPointLight()
-{
-    if(m_PointLights.empty())
-    {
-        return nullptr;
-    }
-
-    return m_PointLights[0];
 }
 
 void LightingSystem::CreateUniformBuffers()
@@ -276,12 +292,24 @@ void LightingSystem::CreateUniformBuffers()
         "DirectionalLightMatrix",
         true);
 
-    m_OmnidirectionalMatricesUniformBuffer = std::make_unique<Rendering::UniformBuffer>(
+    m_PointLightMatricesUniformBuffer = std::make_unique<Rendering::UniformBuffer>(
         nullptr,
-        sizeof(glm::mat4) * 6,
+        Rendering::MAX_POINT_LIGHTS * sizeof(Rendering::PointLightShadowMapShaderData),
         UNIFORM_LIGHTING_OMNIDIRECTIONAL_MATRIX_BINDING_INDEX,
-        "OmnidirectionalLightMatrices",
+        "PointLightShadowMapMatrices",
         true);
+}
+
+void LightingSystem::SetupShadowMaps()
+{
+    std::shared_ptr<Texture> directionalDepthTexture = m_DirectionalShadowMapBuffer->GetDepthBufferTexture();
+    directionalDepthTexture->Bind(SHADOW_MAP_SLOT);
+
+    for(int i = 0; i < m_TotalActivePointLights; i++)
+    {
+        std::shared_ptr<Rendering::Cubemap> omnidirectionalDepthCubemap = m_PointLightShadowMapBuffers[i]->GetDepthBufferCubemap();
+        omnidirectionalDepthCubemap->Bind(POINTLIGHT_SHADOW_MAP_START_SLOT + i);
+    }
 }
 
 void LightingSystem::CreateShadowMaps()
@@ -293,7 +321,17 @@ void LightingSystem::CreateShadowMaps()
     m_DirectionalShadowMapBuffer = std::make_unique<Framebuffer>(settings);
     m_DirectionalShadowMapBuffer->SetClearColor(glm::vec4{1.f, 1.f, 1.f, 1.f});
 
+    m_PointLightShadowMapBuffers.reserve(Rendering::MAX_POINT_LIGHTS);
+}
+
+void LightingSystem::CreatePointLightShadowMapFor(int lightIndex)
+{
+    assert(lightIndex >= 0 && lightIndex < static_cast<int>(m_PointLightShadowMapBuffers.capacity()));
+
+    FramebufferSettings settings{};
+    settings.Resolution = m_ShadowResolution;
+    settings.EnableDepthMapOnly = true;
     settings.UseDepthCubemap = true;
-    m_OmmnidirectionalShadowMapBuffer = std::make_unique<Framebuffer>(settings);
-    m_OmmnidirectionalShadowMapBuffer->SetClearColor(glm::vec4{1.f, 1.f, 1.f, 1.f});
+    
+    m_PointLightShadowMapBuffers.emplace_back(std::make_unique<Framebuffer>(settings));
 }

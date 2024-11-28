@@ -146,7 +146,7 @@ layout (std140) uniform Camera
 // Global Environment
 uniform samplerCube u_Skybox;
 uniform sampler2D u_ShadowMap;
-uniform samplerCube u_OmnidirectionalShadowMap;
+uniform samplerCube u_PointLightShadowMaps[MAX_POINT_LIGHTS];
 
 // Material
 uniform vec4 u_Color;
@@ -163,7 +163,7 @@ vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir
 vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor, float shadow);
 vec3 ComputeAmbientLight(vec3 baseColor);
 float ComputeDirectionalShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir, float bias, float normalBias);
-float ComputePointShadow(vec3 fragPos, vec3 lightPosition);
+float ComputePointShadow(vec3 fragPos, vec3 lightPosition, samplerCube shadowMap);
 
 void main()
 {
@@ -197,8 +197,7 @@ void main()
     
     for(int i = 0; i < totalPointLights; i++)
     {
-        // TODO: implement multiple point light shadow. Currently assuming 0 is the main point light
-        float shadow = i == 0 ? ComputePointShadow(inFrag.FragPosition, pointLights[i].position) : 0.f;
+        float shadow = ComputePointShadow(inFrag.FragPosition, pointLights[i].position, u_PointLightShadowMaps[i]);
 
         result += ComputePointLight(pointLights[i], normal, inFrag.FragPosition, viewDir, baseColor, shadow);
     }
@@ -359,7 +358,7 @@ float ComputeDirectionalShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDi
     return shadow;
 }
 
-float ComputePointShadow(vec3 fragPos, vec3 lightPosition)
+float ComputePointShadow(vec3 fragPos, vec3 lightPosition, samplerCube shadowMap)
 {
     vec3 fragToLight = fragPos - lightPosition;
     float currentDepth = length(fragToLight);
@@ -382,7 +381,7 @@ float ComputePointShadow(vec3 fragPos, vec3 lightPosition)
 
     for(int i = 0; i < totalSamples; i++)
     {
-        float closestDepth = texture(u_OmnidirectionalShadowMap, fragToLight + sampleOffsetDirections[i] * diskRadius).r;
+        float closestDepth = texture(shadowMap, fragToLight + sampleOffsetDirections[i] * diskRadius).r;
 
         // Closest depth is currently in [0, 1] range, transform back to [0, farPlane] range
         closestDepth *= farPlane;

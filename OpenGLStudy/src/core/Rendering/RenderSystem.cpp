@@ -409,23 +409,30 @@ void RenderSystem::RenderDirectionalShadowPass()
 
 void RenderSystem::RenderOmnidirectionalShadowPass()
 {
-    std::shared_ptr<PointLightComponent> mainPointLight = m_LightingSystem.GetMainPointLight();
+    int totalActivePointLights = m_LightingSystem.GetTotalActivePointLights();
 
-    if(!mainPointLight)
+    if(totalActivePointLights == 0)
     {
         return;
     }
 
-    Framebuffer& shadowMapBuffer = m_LightingSystem.GetOmnidirectionalShadowMapFramebuffer();
+    for(int i = 0; i < totalActivePointLights; i++)
+    {
+        const Framebuffer& shadowMapBuffer = m_LightingSystem.GetPointLightShadowMapFramebuffer(i);
 
-    m_Device.SetViewportResolution(shadowMapBuffer.GetResolution());
-    shadowMapBuffer.BindAndClear();
+        m_Device.SetViewportResolution(shadowMapBuffer.GetResolution());
+        shadowMapBuffer.BindAndClear();
 
-    SetOverrideShader(m_OmnidirectionalDepthShader);
+        SetOverrideShader(m_OmnidirectionalDepthShader);
+        m_OmnidirectionalDepthShader->Bind();
+        m_OmnidirectionalDepthShader->SetUniform1i("u_LightIndex", i);
+        m_OmnidirectionalDepthShader->Unbind();
 
-    RenderWorldForShadowPass(mainPointLight->GetPosition());
-    
-    shadowMapBuffer.Unbind();
+        const PointLightComponent& pointLight = m_LightingSystem.GetPointLight(i);
+        RenderWorldForShadowPass(pointLight.GetPosition());
+        
+        shadowMapBuffer.Unbind();
+    }
 }
 
 void RenderSystem::RenderWorldForShadowPass(const glm::vec3& lightPosition)

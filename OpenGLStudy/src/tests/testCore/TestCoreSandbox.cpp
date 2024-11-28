@@ -120,12 +120,12 @@ namespace tests
         int lightIndex = 0;
         for(int x = 0; x < 1; x++)
         {
-            for(int z = 0; z < 1; z++)
+            for(int z = 0; z < 2; z++)
             {
-                glm::vec3 position{static_cast<float>(x) * 50.f, 3.f, static_cast<float>(z) * 50.f};
+                glm::vec3 position{static_cast<float>(x) * 2.f, 3.f, static_cast<float>(z) * 2.f};
                 auto light = m_World->Spawn<PointLight>(position);
                 light->SetName("PointLight" + std::to_string(lightIndex));
-                light->SetColor(glm::vec3(1.f, 0.f, 1.f));
+                light->SetColor(glm::vec3(1.f, 1.f, 1.f));
 
                 lightIndex++;
             }
