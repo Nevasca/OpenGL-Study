@@ -44,6 +44,10 @@ void RenderSystem::Setup()
 {
     // Binding shadow map texture too early on constructor end ups getting unbound somewhere else internally 
     m_LightingSystem.Setup();
+
+    SetupUniformsFor(*m_DirectionalDepthShader);
+    SetupUniformsFor(*m_OmnidirectionalDepthShader);
+    SetupUniformsFor(*m_OutlineShader);
 }
 
 void RenderSystem::Shutdown()
@@ -216,11 +220,11 @@ void RenderSystem::Render(const CameraComponent& activeCamera)
     // m_Device.DisableGammaCorrection();
 }
 
-void RenderSystem::SetOverrideShader(const std::shared_ptr<Shader>& overrideShader)
+void RenderSystem::SetOverrideShader(const std::shared_ptr<Shader>& overrideShader, bool bSetupUniforms)
 {
     m_WorldOverrideShader = overrideShader;
 
-    if(m_WorldOverrideShader)
+    if(m_WorldOverrideShader && bSetupUniforms)
     {
         SetupUniformsFor(*m_WorldOverrideShader);
     }
@@ -373,7 +377,7 @@ void RenderSystem::RenderShadowPass(const CameraComponent& activeCamera)
     RenderOmnidirectionalShadowPass();
 
     UpdateCameraMatricesShaderUniforms(activeCamera);
-    SetOverrideShader(previousOverrideShader);
+    SetOverrideShader(previousOverrideShader, false);
     m_Device.SetViewportResolution(Screen::GetResolution());
 }
 
@@ -385,6 +389,8 @@ void RenderSystem::RenderDirectionalShadowPass()
     {
         return;
     }
+
+    SetOverrideShader(m_DirectionalDepthShader, false);
 
     for(int i = 0; i < totalActiveDirectionalLights; i++)
     {
@@ -404,8 +410,6 @@ void RenderSystem::RenderDirectionalShadowPass()
         m_MatricesUniformBuffer->SetSubData(matrices, sizeof(matrices));
         m_MatricesUniformBuffer->Unbind();
 
-        SetOverrideShader(m_DirectionalDepthShader);
-
         RenderWorldForShadowPass(lightPosition);
         
         shadowMapBuffer.Unbind();
@@ -421,6 +425,8 @@ void RenderSystem::RenderOmnidirectionalShadowPass()
         return;
     }
 
+    SetOverrideShader(m_OmnidirectionalDepthShader, false);
+
     for(int i = 0; i < totalActivePointLights; i++)
     {
         const Framebuffer& shadowMapBuffer = m_LightingSystem.GetPointLightShadowMapFramebuffer(i);
@@ -428,7 +434,6 @@ void RenderSystem::RenderOmnidirectionalShadowPass()
         m_Device.SetViewportResolution(shadowMapBuffer.GetResolution());
         shadowMapBuffer.BindAndClear();
 
-        SetOverrideShader(m_OmnidirectionalDepthShader);
         m_OmnidirectionalDepthShader->Bind();
         m_OmnidirectionalDepthShader->SetUniform1i("u_LightIndex", i);
         m_OmnidirectionalDepthShader->Unbind();
@@ -525,14 +530,14 @@ void RenderSystem::RenderOutlinedObjects(const CameraComponent& activeCamera)
     m_TransparentOutlinedMeshComponentSet.OverrideAllObjectsScale(outlineThickness);
 
     std::shared_ptr<Shader> currentOverrideShader = m_WorldOverrideShader;
-    SetOverrideShader(m_OutlineShader);
+    SetOverrideShader(m_OutlineShader, false);
 
     RenderObjects(m_OpaqueOutlinedMeshComponentSet);
     RenderObjects(m_TransparentOutlinedMeshComponentSet);
 
     m_OpaqueOutlinedMeshComponentSet.OverrideAllObjectsScale(-outlineThickness);
     m_TransparentOutlinedMeshComponentSet.OverrideAllObjectsScale(-outlineThickness);
-    SetOverrideShader(currentOverrideShader);
+    SetOverrideShader(currentOverrideShader, false);
 
     m_Device.EnableStencilWrite();
     m_Device.SetStencilFunction(GL_ALWAYS, 1.f, 0xFF);

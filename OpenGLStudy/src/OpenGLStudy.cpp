@@ -159,7 +159,7 @@ int main(void)
 
         CreateTests();
 
-        testMenu->OpenTest("Core");
+        testMenu->OpenTest("CoreSandbox");
 
         float lastFrameTime = 0.f;
         

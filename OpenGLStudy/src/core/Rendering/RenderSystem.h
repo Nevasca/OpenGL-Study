@@ -50,7 +50,7 @@ public:
     glm::vec3 GetAmbientLightColor() const { return m_LightingSystem.GetAmbientLightColor(); }
     void SetClearColor(const glm::vec4& clearColor) const { m_MultisampleFramebuffer->SetClearColor(clearColor); }
     glm::vec4 GetClearColor() const { return m_MultisampleFramebuffer->GetClearColor(); }
-    void SetOverrideShader(const std::shared_ptr<Shader>& overrideShader);
+    void SetOverrideShader(const std::shared_ptr<Shader>& overrideShader, bool bSetupUniforms = true);
     Rendering::Device& GetDevice() { return m_Device; }
     void ToggleSkybox(bool bEnable) { bIsSkyboxEnabled = bEnable; }
 
