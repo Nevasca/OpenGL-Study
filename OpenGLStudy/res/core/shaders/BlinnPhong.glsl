@@ -6,12 +6,14 @@ layout(location = 1) in vec3 a_Normal;
 layout(location = 2) in vec2 a_TexCoord;
 layout(location = 3) in mat4 a_InstanceModelMatrix;    
 
+#define MAX_DIRECTIONAL_LIGHTS 3
+
 out VS_OUT
 {
     vec2 TexCoord;
     vec3 Normal;
     vec3 FragPosition;
-    vec4 FragPosLightSpace;
+    vec4 FragPosLightSpace[MAX_DIRECTIONAL_LIGHTS];
 } vsOut;
 
 layout (std140) uniform Matrices
@@ -20,9 +22,9 @@ layout (std140) uniform Matrices
     mat4 view;
 };
 
-layout (std140) uniform DirectionalLightMatrix
+layout (std140) uniform DirectionalLightShadowMapMatrices
 {
-    mat4 lightSpaceMatrix;    
+    mat4 directionalLightViewProjectionMatrices[MAX_DIRECTIONAL_LIGHTS];
 };
 
 // Not used anymore, using instacing rendering
@@ -31,7 +33,12 @@ layout (std140) uniform DirectionalLightMatrix
 void main()
 {
     vsOut.FragPosition = vec3(a_InstanceModelMatrix * a_Position);
-    vsOut.FragPosLightSpace = lightSpaceMatrix * vec4(vsOut.FragPosition, 1.f);
+
+    vec4 fragPosition = vec4(vsOut.FragPosition, 1.f);
+    for(int i = 0; i < MAX_DIRECTIONAL_LIGHTS; i++)
+    {
+        vsOut.FragPosLightSpace[i] = directionalLightViewProjectionMatrices[i] * fragPosition;
+    }
     
     vsOut.TexCoord = a_TexCoord;
     
@@ -96,17 +103,17 @@ struct AmbientLight
 
 layout(location = 0) out vec4 o_Color;
 
+#define MAX_DIRECTIONAL_LIGHTS 3
+#define MAX_POINT_LIGHTS 20
+#define MAX_SPOT_LIGHTS 20
+
 in VS_OUT
 {
     vec2 TexCoord;
     vec3 Normal;
     vec3 FragPosition;
-    vec4 FragPosLightSpace;
+    vec4 FragPosLightSpace[MAX_DIRECTIONAL_LIGHTS];
 } inFrag;
-
-#define MAX_DIRECTIONAL_LIGHTS 3
-#define MAX_POINT_LIGHTS 20
-#define MAX_SPOT_LIGHTS 20
 
 const int OPAQUE = 0;
 const int ALPHA_CUTOUT = 1;
@@ -145,7 +152,7 @@ layout (std140) uniform Camera
 
 // Global Environment
 uniform samplerCube u_Skybox;
-uniform sampler2D u_ShadowMap;
+uniform sampler2D u_DirectionalLightShadowMaps[MAX_DIRECTIONAL_LIGHTS];
 uniform samplerCube u_PointLightShadowMaps[MAX_POINT_LIGHTS];
 
 // Material
@@ -162,7 +169,7 @@ vec3 ComputeDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir, 
 vec3 ComputePointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor, float shadow);
 vec3 ComputeSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 baseColor, float shadow);
 vec3 ComputeAmbientLight(vec3 baseColor);
-float ComputeDirectionalShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir, float bias, float normalBias);
+float ComputeDirectionalShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir, float bias, float normalBias, sampler2D shadowMap);
 float ComputePointShadow(vec3 fragPos, vec3 lightPosition, samplerCube shadowMap);
 
 void main()
@@ -184,13 +191,13 @@ void main()
     
     for(int i = 0; i < totalDirectionalLights; i++)
     {
-        float shadow = 0.f;
-
-        // TODO: implement multiple directional lights shadows and not consider 0 as the main and only light
-        if(i == 0)
-        {
-            shadow = ComputeDirectionalShadow(inFrag.FragPosLightSpace, normal, directionalLights[0].direction, directionalLights[0].bias, directionalLights[0].normalBias);
-        }
+        float shadow = ComputeDirectionalShadow(
+            inFrag.FragPosLightSpace[i],
+            normal,
+            directionalLights[0].direction,
+            directionalLights[0].bias,
+            directionalLights[0].normalBias,
+            u_DirectionalLightShadowMaps[i]);
 
         result += ComputeDirectionalLight(directionalLights[i], normal, viewDir, baseColor, shadow);
     }
@@ -320,7 +327,7 @@ vec3 ComputeAmbientLight(vec3 baseColor)
     return baseColor * ambientLight.color;
 }
 
-float ComputeDirectionalShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir, float bias, float normalBias)
+float ComputeDirectionalShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir, float bias, float normalBias, sampler2D shadowMap)
 {
     // Perform perspective devide, raging from [-1, 1]
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
@@ -341,12 +348,12 @@ float ComputeDirectionalShadow(vec4 fragPosLightSpace, vec3 normal, vec3 lightDi
 
     // Apply PCF (percentage-closer filtering)
     float shadow = 0.f;
-    vec2 texelSize = 1.f / textureSize(u_ShadowMap, 0);
+    vec2 texelSize = 1.f / textureSize(shadowMap, 0);
     for(int x = -1; x <= 1; x++)
     {
         for(int y = -1; y <= 1; y++)
         {
-            float pcfDepth = texture(u_ShadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
             shadow += currentDepth - finalBias > pcfDepth ? 1.f : 0.f;
         }
     }

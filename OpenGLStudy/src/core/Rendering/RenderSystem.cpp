@@ -379,32 +379,37 @@ void RenderSystem::RenderShadowPass(const CameraComponent& activeCamera)
 
 void RenderSystem::RenderDirectionalShadowPass()
 {
-    std::shared_ptr<DirectionalLightComponent> mainDirectionalLight = m_LightingSystem.GetMainDirectionalLight();
+    int totalActiveDirectionalLights = m_LightingSystem.GetTotalActiveDirectionalLights();
 
-    if(!mainDirectionalLight)
+    if(totalActiveDirectionalLights == 0)
     {
         return;
     }
-    
-    Framebuffer& shadowMapBuffer = m_LightingSystem.GetDirectionalShadowMapFramebuffer();
 
-    m_Device.SetViewportResolution(shadowMapBuffer.GetResolution());
-    shadowMapBuffer.BindAndClear();
+    for(int i = 0; i < totalActiveDirectionalLights; i++)
+    {
+        const Framebuffer& shadowMapBuffer = m_LightingSystem.GetDirectionalShadowMapFramebuffer(i);
 
-    glm::vec3 lightPosition = mainDirectionalLight->GetOwnerPosition();
-    const glm::mat4 view = mainDirectionalLight->GetViewMatrix();
-    const glm::mat4 proj = mainDirectionalLight->GetProjectionMatrix();
+        m_Device.SetViewportResolution(shadowMapBuffer.GetResolution());
+        shadowMapBuffer.BindAndClear();
 
-    m_MatricesUniformBuffer->Bind();
-    glm::mat4 matrices[2] { proj, view };
-    m_MatricesUniformBuffer->SetSubData(matrices, sizeof(matrices));
-    m_MatricesUniformBuffer->Unbind();
-    
-    SetOverrideShader(m_DirectionalDepthShader);
+        const DirectionalLightComponent& directionalLight = m_LightingSystem.GetDirectionalLight(i);
 
-    RenderWorldForShadowPass(lightPosition);
-    
-    shadowMapBuffer.Unbind();
+        glm::vec3 lightPosition = directionalLight.GetOwnerPosition();
+        const glm::mat4 view = directionalLight.GetViewMatrix();
+        const glm::mat4 proj = directionalLight.GetProjectionMatrix();
+
+        m_MatricesUniformBuffer->Bind();
+        glm::mat4 matrices[2] { proj, view };
+        m_MatricesUniformBuffer->SetSubData(matrices, sizeof(matrices));
+        m_MatricesUniformBuffer->Unbind();
+
+        SetOverrideShader(m_DirectionalDepthShader);
+
+        RenderWorldForShadowPass(lightPosition);
+        
+        shadowMapBuffer.Unbind();
+    }
 }
 
 void RenderSystem::RenderOmnidirectionalShadowPass()

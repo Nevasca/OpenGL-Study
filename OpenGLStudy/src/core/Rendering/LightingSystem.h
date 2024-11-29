@@ -92,6 +92,11 @@ namespace Rendering
         int TotalSpotLights{0};
     };
 
+    struct DirectionalLightShadowMapShaderData
+    {
+        glm::mat4 ViewProjectionMatrix{};
+    };
+
     struct PointLightShadowMapShaderData
     {
         glm::mat4 ViewProjectionMatrices[6]{};
@@ -115,19 +120,18 @@ public:
     void SetAmbientLightColor(const glm::vec3& ambientLightColor) { m_AmbientLightColor = ambientLightColor; }
     glm::vec3 GetAmbientLightColor() const { return m_AmbientLightColor; }
 
-    Framebuffer& GetDirectionalShadowMapFramebuffer() const { return *m_DirectionalShadowMapBuffer; }
+    int GetTotalActiveDirectionalLights() const { return m_TotalActiveDirectionalLights; }
+    Framebuffer& GetDirectionalShadowMapFramebuffer(const int activeLightIndex) const;
+    const DirectionalLightComponent& GetDirectionalLight(const int activeLightIndex) const;
     int GetTotalActivePointLights() const { return m_TotalActivePointLights; }
-    const Framebuffer& GetPointLightShadowMapFramebuffer(const int activeLightindex) const;
+    const Framebuffer& GetPointLightShadowMapFramebuffer(const int activeLightIndex) const;
     const PointLightComponent& GetPointLight(const int activeLightindex) const;
-    Rendering::Resolution GetShadowResolution() const { return m_DirectionalShadowMapBuffer->GetResolution(); }
-
-    // TODO: implement multiple lights shadow
-    std::shared_ptr<DirectionalLightComponent> GetMainDirectionalLight();
+    Rendering::Resolution GetShadowResolution() const { return m_ShadowResolution; }
 
 private:
 
-    constexpr static int SHADOW_MAP_SLOT = 1;
-    constexpr static int POINTLIGHT_SHADOW_MAP_START_SLOT = 2;
+    constexpr static int DIRECTIONAL_SHADOW_MAP_START_SLOT = 1;
+    constexpr static int POINT_SHADOW_MAP_START_SLOT = DIRECTIONAL_SHADOW_MAP_START_SLOT + Rendering::MAX_DIRECTIONAL_LIGHTS;
     
     std::vector<std::shared_ptr<DirectionalLightComponent>> m_DirectionalLights{};
     std::vector<std::shared_ptr<PointLightComponent>> m_PointLights{};
@@ -149,10 +153,11 @@ private:
     Rendering::DirectionalLightShaderData m_DirectionalsShaderData[Rendering::MAX_DIRECTIONAL_LIGHTS]{};
     Rendering::PointLightShaderData m_PointsShaderData[Rendering::MAX_POINT_LIGHTS];
     Rendering::SpotLightShaderData m_SpotsShaderData[Rendering::MAX_SPOT_LIGHTS];
+    Rendering::DirectionalLightShadowMapShaderData m_DirectionalLightShadowMapShaderData[Rendering::MAX_DIRECTIONAL_LIGHTS];
     Rendering::PointLightShadowMapShaderData m_PointLightShadowMapShaderData[Rendering::MAX_POINT_LIGHTS];
 
     Rendering::Resolution m_ShadowResolution{2048, 2048};
-    std::unique_ptr<Framebuffer> m_DirectionalShadowMapBuffer{};
+    std::vector<std::unique_ptr<Framebuffer>> m_DirectionalShadowMapBuffers{};
     std::vector<std::unique_ptr<Framebuffer>> m_PointLightShadowMapBuffers{};
 
     void UpdateDirectionalUniformBuffer();
@@ -161,6 +166,7 @@ private:
     void CreateUniformBuffers();
     void SetupShadowMaps();
     void CreateShadowMaps();
+    void CreateDirectionalLightShadowMapFor(int lightIndex);
     void CreatePointLightShadowMapFor(int lightIndex);
 };
 
