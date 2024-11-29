@@ -145,10 +145,10 @@ namespace tests
         secondaryDirectionalLight->SetColor(glm::vec3(0.82f, 0.875f, 1.f));
         secondaryDirectionalLight->SetIntensity(0.3f);
 
-        // std::shared_ptr<PointLight> pointLight = m_World->Spawn<PointLight>(glm::vec3(-1.f, -0.25f, 10.f));
-        // pointLight->SetName("PointLight" + std::to_string(lightIndex++));
-        // pointLight->SetColor(glm::vec3(1.f, 0.f, 0.f));
-        // pointLight->SetRange(60.f);
+        std::shared_ptr<PointLight> pointLight = m_World->Spawn<PointLight>(glm::vec3(-1.f, 0.4f, 10.f));
+        pointLight->SetName("PointLight" + std::to_string(lightIndex++));
+        pointLight->SetColor(glm::vec3(1.f, 0.f, 0.f));
+        pointLight->SetRange(60.f);
 
         // auto spotLightComponent = camera.AddComponent<SpotLightComponent>();
         // spotLightComponent->SetRange(100.f);
