@@ -134,7 +134,6 @@ public:
     int GetTotalActiveSpotLights() const { return m_TotalActiveSpotLights; }
     const Framebuffer& GetSpotLightShadowMapFramebuffer(const int activeLightIndex) const;
     const SpotLightComponent& GetSpotLight(const int activeLightIndex) const;
-    Rendering::Resolution GetShadowResolution() const { return m_ShadowResolution; }
 
 private:
 
@@ -167,7 +166,9 @@ private:
     Rendering::PointLightShadowMapShaderData m_PointLightShadowMapShaderData[Rendering::MAX_POINT_LIGHTS]{};
     Rendering::SpotLightShadowMapShaderData m_SpotLightShadowMapShaderData[Rendering::MAX_SPOT_LIGHTS]{};
 
-    Rendering::Resolution m_ShadowResolution{2048, 2048};
+    // TODO: fix directional shadow map quality to not required separate and higher resolution
+    Rendering::Resolution m_DirectionalShadowResolution{2048, 2048};
+    Rendering::Resolution m_ShadowResolution{1024, 1024};
     std::vector<std::unique_ptr<Framebuffer>> m_DirectionalShadowMapBuffers{};
     std::vector<std::unique_ptr<Framebuffer>> m_PointLightShadowMapBuffers{};
     std::vector<std::unique_ptr<Framebuffer>> m_SpotLightShadowMapBuffers{};

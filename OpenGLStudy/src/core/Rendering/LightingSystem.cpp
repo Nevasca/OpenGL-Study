@@ -393,7 +393,7 @@ void LightingSystem::CreateDirectionalLightShadowMapFor(int lightIndex)
     ASSERT(lightIndex >= 0 && lightIndex < static_cast<int>(m_DirectionalShadowMapBuffers.capacity()));
 
     FramebufferSettings settings{};
-    settings.Resolution = m_ShadowResolution;
+    settings.Resolution = m_DirectionalShadowResolution;
     settings.EnableDepthMapOnly = true;
     
     m_DirectionalShadowMapBuffers.emplace_back(std::make_unique<Framebuffer>(settings));
