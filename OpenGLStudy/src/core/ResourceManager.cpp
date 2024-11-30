@@ -30,7 +30,6 @@ void ResourceManager::LoadDefaultResources()
 
     std::shared_ptr<Material> defaultMaterial = CreateMaterial(DEFAULT_MATERIAL_NAME);
     defaultMaterial->SetColor("u_Color", glm::vec4(0.5f, 0.5f, 0.5f, 1.f));
-    defaultMaterial->SetFloat("u_ReflectionValue", 0.f);
 
     m_Meshes[DEFAULT_MESH_CUBE_NAME] = MeshResource::LoadCube();
     m_Meshes[DEFAULT_MESH_QUAD_NAME] = MeshResource::LoadQuad();
@@ -97,6 +96,7 @@ std::shared_ptr<Material> ResourceManager::CreateMaterial(const std::string& nam
 {
     std::shared_ptr<Material> material = CreateMaterial(name, DEFAULT_SHADER_NAME);
     material->SetInt("u_MaterialShininess", 64);
+    material->SetFloat("u_ReflectionValue", 0.f);
 
     return material;
 }
