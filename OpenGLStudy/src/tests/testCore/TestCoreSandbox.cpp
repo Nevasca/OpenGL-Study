@@ -52,6 +52,7 @@ namespace tests
         cube->SetMaterial(anotherMaterial);
 
         SpawnBridge();
+        SpawnWarrior();
         
         SpawnTransparentObjects();
 
@@ -183,11 +184,30 @@ namespace tests
         auto bridgeMaterial = ResourceManager::CreateMaterial("M_Bridge");
         bridgeMaterial->SetColor("u_Color", glm::vec4(0.f));
         bridgeMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Atlas04_Diff.png", "T_Bridge_Diffuse", TextureSettings{false}), 1);
+
         auto bridgeModel = ResourceManager::LoadModel("res/models/Bridge.fbx", "Bridge");
 
         auto bridge = m_World->Spawn<Model>(glm::vec3(0.f, 0.f, -20.f));
         bridge->Setup(bridgeModel, bridgeMaterial);
         bridge->SetName("Bridge");
+    }
+
+    void TestCoreSandbox::SpawnWarrior()
+    {
+        auto warriorMaterial = ResourceManager::CreateMaterial("M_Liz");
+        warriorMaterial->SetColor("u_Color", glm::vec4(0.f));
+        warriorMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/liz/T_Liz_Diffuse.png", "T_Liz_Diffuse", TextureSettings{false}), 0);
+        warriorMaterial->SetTexture("u_Specular", ResourceManager::LoadTexture("res/textures/liz/T_Liz_Specular.png", "T_Liz_Specular", TextureSettings{false}), 1);
+        
+        auto warriorModel = ResourceManager::LoadModel("res/models/PigeonsAttack_Liz.fbx", "Liz");
+
+        glm::vec3 spawnPosition{0.f, -0.5f, -4.f};
+        glm::vec3 spawnRotation{0.f, -31.f, 0.f};
+        glm::vec3 spawnScale{0.25f};
+
+        auto warrior = m_World->Spawn<Model>(spawnPosition, spawnRotation, spawnScale);
+        warrior->Setup(warriorModel, warriorMaterial);
+        warrior->SetName("Warrior");
     }
 
     TestCoreSandbox::~TestCoreSandbox()

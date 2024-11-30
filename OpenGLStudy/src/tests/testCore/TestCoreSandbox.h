@@ -31,5 +31,6 @@ namespace tests
         void SpawnCrates();
         void SpawnFloor();
         void SpawnBridge();
+        void SpawnWarrior();
     };
 }
