@@ -33,10 +33,14 @@ public:
     glm::mat4 GetProjectionMatrix(const Rendering::Resolution& shadowResolution) const;
     std::vector<glm::mat4> GetViewProjectionMatrices(const Rendering::Resolution& shadowResolution) const;
 
+    void SetCastShadowEnabled(const bool enable) { bCastShadow = enable; }
+    bool IsCastShadowEnabled() const { return bCastShadow; }
+
 private:
 
     glm::vec3 m_Color{1.f};
     Attenuation m_Attenuation{};
     float m_Intensity{1.f};
     float m_Range{32.f};
+    bool bCastShadow{true};
 };

@@ -396,12 +396,17 @@ void RenderSystem::RenderDirectionalShadowPass()
 
     for(int i = 0; i < totalActiveDirectionalLights; i++)
     {
+        const DirectionalLightComponent& directionalLight = m_LightingSystem.GetDirectionalLight(i);
+
+        if(!directionalLight.IsCastShadowEnabled())
+        {
+            continue;
+        }
+
         const Framebuffer& shadowMapBuffer = m_LightingSystem.GetDirectionalShadowMapFramebuffer(i);
 
         m_Device.SetViewportResolution(shadowMapBuffer.GetResolution());
         shadowMapBuffer.BindAndClear();
-
-        const DirectionalLightComponent& directionalLight = m_LightingSystem.GetDirectionalLight(i);
 
         glm::vec3 lightPosition = directionalLight.GetOwnerPosition();
         const glm::mat4 view = directionalLight.GetViewMatrix();
@@ -431,6 +436,13 @@ void RenderSystem::RenderPointShadowPass()
 
     for(int i = 0; i < totalActivePointLights; i++)
     {
+        const PointLightComponent& pointLight = m_LightingSystem.GetPointLight(i);
+
+        if(!pointLight.IsCastShadowEnabled())
+        {
+            continue;
+        }
+
         const Framebuffer& shadowMapBuffer = m_LightingSystem.GetPointLightShadowMapFramebuffer(i);
 
         m_Device.SetViewportResolution(shadowMapBuffer.GetResolution());
@@ -440,7 +452,6 @@ void RenderSystem::RenderPointShadowPass()
         m_OmnidirectionalDepthShader->SetUniform1i("u_LightIndex", i);
         m_OmnidirectionalDepthShader->Unbind();
 
-        const PointLightComponent& pointLight = m_LightingSystem.GetPointLight(i);
         RenderWorldForShadowPass(pointLight.GetPosition());
         
         shadowMapBuffer.Unbind();
@@ -460,13 +471,18 @@ void RenderSystem::RenderSpotShadowPass()
 
     for(int i = 0; i < totalActiveSpotLights; i++)
     {
+        const SpotLightComponent& spotLightComponent = m_LightingSystem.GetSpotLight(i);
+
+        if(!spotLightComponent.IsCastShadowEnabled())
+        {
+            continue;
+        }
+
         const Framebuffer& shadowMapBuffer = m_LightingSystem.GetSpotLightShadowMapFramebuffer(i);
 
         Rendering::Resolution shadowMapResolution = shadowMapBuffer.GetResolution();
         m_Device.SetViewportResolution(shadowMapResolution);
         shadowMapBuffer.BindAndClear();
-
-        const SpotLightComponent& spotLightComponent = m_LightingSystem.GetSpotLight(i);
 
         glm::vec3 lightPosition = spotLightComponent.GetOwnerPosition();
         const glm::mat4 view = spotLightComponent.GetViewMatrix();

@@ -145,6 +145,7 @@ namespace tests
         secondaryDirectionalLight->SetRotation(glm::vec3(-45.f, -55.f, 0.f));
         secondaryDirectionalLight->SetColor(glm::vec3(0.82f, 0.875f, 1.f));
         secondaryDirectionalLight->SetIntensity(0.3f);
+        secondaryDirectionalLight->SetCastShadowEnabled(false);
 
         std::shared_ptr<PointLight> pointLight = m_World->Spawn<PointLight>(glm::vec3(-1.f, 0.4f, 10.f));
         pointLight->SetName("PointLight" + std::to_string(lightIndex++));

@@ -88,6 +88,8 @@ struct PointLight
     float linear;
     float quadratic;
     
+    int CastShadow;
+
     vec3 diffuse;
     vec3 specular;
     

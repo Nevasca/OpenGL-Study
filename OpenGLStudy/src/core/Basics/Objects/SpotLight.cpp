@@ -4,5 +4,5 @@ void SpotLight::Initialize()
 {
     GameObject::Initialize();
 
-    m_Light = AddComponent<SpotLightComponent>();
+    m_LightComponent = AddComponent<SpotLightComponent>();
 }

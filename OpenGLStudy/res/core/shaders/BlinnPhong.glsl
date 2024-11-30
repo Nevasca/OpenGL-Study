@@ -74,6 +74,7 @@ struct DirectionalLight
     float intensity;
     float bias;
     float normalBias;
+    int CastShadow;
     vec3 direction;
     vec3 diffuse;
     vec3 specular;    
@@ -85,6 +86,8 @@ struct PointLight
     float constant;
     float linear;
     float quadratic;
+
+    int CastShadow;
     
     vec3 diffuse;
     vec3 specular;
@@ -95,6 +98,7 @@ struct PointLight
 struct SpotLight
 {
     vec3 position;
+    int CastShadow;
     vec3 direction;
     float cutoff;
     float outerCutoff;
@@ -206,27 +210,43 @@ void main()
     
     for(int i = 0; i < totalDirectionalLights; i++)
     {
-        float shadow = ComputeDirectionalShadow(
-            inFrag.FragPosDirectionalLightSpace[i],
-            normal,
-            directionalLights[0].direction,
-            directionalLights[0].bias,
-            directionalLights[0].normalBias,
-            u_DirectionalLightShadowMaps[i]);
+        float shadow = 0.f;
+
+        if(directionalLights[i].CastShadow == 1)
+        {
+            shadow = ComputeDirectionalShadow(
+                inFrag.FragPosDirectionalLightSpace[i],
+                normal,
+                directionalLights[i].direction,
+                directionalLights[i].bias,
+                directionalLights[i].normalBias,
+                u_DirectionalLightShadowMaps[i]);
+        }
 
         result += ComputeDirectionalLight(directionalLights[i], normal, viewDir, baseColor, shadow);
     }
     
     for(int i = 0; i < totalPointLights; i++)
     {
-        float shadow = ComputePointShadow(inFrag.FragPosition, pointLights[i].position, u_PointLightShadowMaps[i]);
+        float shadow = 0.f;
+        
+        if(pointLights[i].CastShadow == 1)
+        {
+            shadow = ComputePointShadow(inFrag.FragPosition, pointLights[i].position, u_PointLightShadowMaps[i]);
+        }
 
         result += ComputePointLight(pointLights[i], normal, inFrag.FragPosition, viewDir, baseColor, shadow);
     }
     
     for(int i = 0; i < totalSpotLights; i++)
     {
-        float shadow = ComputeSpotShadow(inFrag.FragPosSpotLightSpace[i], u_SpotLightShadowMaps[i]);
+        float shadow = 0.f;
+        
+        if(spotLights[i].CastShadow == 1)
+        {
+            shadow = ComputeSpotShadow(inFrag.FragPosSpotLightSpace[i], u_SpotLightShadowMaps[i]);
+        }
+
         result += ComputeSpotLight(spotLights[i], normal, inFrag.FragPosition, viewDir, baseColor, shadow);
     }
     

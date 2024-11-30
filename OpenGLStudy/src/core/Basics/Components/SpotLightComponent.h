@@ -34,6 +34,9 @@ public:
     glm::mat4 GetProjectionMatrix(const Rendering::Resolution& shadowResolution) const;
     glm::mat4 GetViewProjectionMatrix(const Rendering::Resolution& shadowResolution) const;
 
+    void SetCastShadowEnabled(const bool enable) { bCastShadow = enable; }
+    bool IsCastShadowEnabled() const { return bCastShadow; }
+
 private:
 
     glm::vec3 m_Color{1.f};
@@ -42,4 +45,5 @@ private:
     float m_OuterCutoffDegrees{17.5f};
     float m_Range{32.f};
     Attenuation m_Attenuation{};
+    bool bCastShadow{true};
 };

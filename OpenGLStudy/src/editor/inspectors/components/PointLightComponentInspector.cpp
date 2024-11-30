@@ -23,9 +23,13 @@ namespace Editor
             float range = pointLight->GetRange();
             ImGui::DragFloat("Range", &range);
 
+            bool bCastShadow = pointLight->IsCastShadowEnabled();
+            ImGui::Checkbox("Cast Shadow", &bCastShadow);
+
             pointLight->SetColor(color);
             pointLight->SetIntensity(intensity);
             pointLight->SetRange(range);
+            pointLight->SetCastShadowEnabled(bCastShadow);
         }
 
         int PointLightComponentInspector::GetComponentHash()

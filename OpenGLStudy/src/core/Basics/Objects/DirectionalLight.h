@@ -15,6 +15,7 @@ public:
 
     void SetColor(const glm::vec3& color) { m_LightComponent->SetColor(color); }
     void SetIntensity(const float intensity) { m_LightComponent->SetIntensity(intensity); }
+    void SetCastShadowEnabled(const bool enable) { m_LightComponent->SetCastShadowEnabled(enable); }
 
 private:
 

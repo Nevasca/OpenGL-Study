@@ -32,16 +32,16 @@ namespace Rendering
         float Intensity{0.f};
         float Bias{0.005f};
         float NormalBias{0.001f};
-        float PADDING_01{0.f};
+        int CastShadow{1};
 
         glm::vec3 Direction{0.f};
-        float PADDING_02{0.f};
+        float PADDING_01{0.f};
 
         glm::vec3 Diffuse{0.f};
-        float PADDING_03{0.f};
+        float PADDING_02{0.f};
 
         glm::vec3 Specular{0.f};
-        float PADDING_04{0.f};
+        float PADDING_03{0.f};
     };
 
     struct PointLightShaderData
@@ -51,11 +51,11 @@ namespace Rendering
         float Linear{1.f};
         float Quadratic{1.f};
         
+        int CastShadow{1};
         float PADDING_01{0.f};
-        float PADDING_02{0.f};
 
         glm::vec3 Diffuse{0.f};
-        float PADDING_03{0.f};
+        float PADDING_02{0.f};
 
         glm::vec3 Specular{0.f};
         float Intensity{0.f};
@@ -64,7 +64,7 @@ namespace Rendering
     struct SpotLightShaderData
     {
         glm::vec3 Position{0.f};
-        float PADDING_01{0.f};
+        int CastShadow{1};
 
         glm::vec3 Direction{0.f};
 
@@ -75,7 +75,7 @@ namespace Rendering
         float Quadratic{1.f};
         
         glm::vec3 Diffuse{0.f};
-        float PADDING_02{0.f};
+        float PADDING_01{0.f};
         
         glm::vec3 Specular{0.f};
         float Intensity{0.f};

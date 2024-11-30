@@ -26,11 +26,15 @@ namespace Editor
 
             float normalBias = directionalLight->GetNormalBias();
             ImGui::DragFloat("Normal Bias", &normalBias, 0.001f);
+
+            bool bCastShadow = directionalLight->IsCastShadowEnabled();
+            ImGui::Checkbox("Cast Shadow", &bCastShadow);
             
             directionalLight->SetColor(color);
             directionalLight->SetIntensity(intensity);
             directionalLight->SetBias(bias);
             directionalLight->SetNormalBias(normalBias);
+            directionalLight->SetCastShadowEnabled(bCastShadow);
         }
 
         int DirectionalLightComponentInspector::GetComponentHash()

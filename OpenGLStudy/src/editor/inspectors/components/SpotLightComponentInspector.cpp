@@ -27,12 +27,16 @@ namespace Editor
             
             float outerCutoff = spotLight->GetOuterCutoffDegrees();
             ImGui::DragFloat("Outer Cutoff Degrees", &outerCutoff);
+
+            bool bCastShadow = spotLight->IsCastShadowEnabled();
+            ImGui::Checkbox("Cast Shadow", &bCastShadow);
             
             spotLight->SetColor(color);
             spotLight->SetIntensity(intensity);
             spotLight->SetRange(range);
             spotLight->SetInnerCutoffDegrees(innerCutoff);
             spotLight->SetOuterCutoffDegrees(outerCutoff);
+            spotLight->SetCastShadowEnabled(bCastShadow);
         }
 
         int SpotLightComponentInspector::GetComponentHash()

@@ -138,6 +138,7 @@ void LightingSystem::UpdateLightingUniformBuffer(const CameraComponent& activeCa
         directionalLightShaderData.Direction = directionalLight->GetDirection();
         directionalLightShaderData.Diffuse = directionalLight->GetColor();
         directionalLightShaderData.Specular = m_DefaultSpecularColor;
+        directionalLightShaderData.CastShadow = directionalLight->IsCastShadowEnabled() ? 1 : 0;
         
         m_DirectionalsShaderData[i] = directionalLightShaderData;
     }
@@ -157,6 +158,7 @@ void LightingSystem::UpdateLightingUniformBuffer(const CameraComponent& activeCa
         pointLightShaderData.Linear = attenuation.Linear;
         pointLightShaderData.Quadratic = attenuation.Quadratic;
         pointLightShaderData.Specular = m_DefaultSpecularColor;
+        pointLightShaderData.CastShadow = pointLight->IsCastShadowEnabled() ? 1 : 0;
     
         m_PointsShaderData[i] = pointLightShaderData;
     }
@@ -181,6 +183,7 @@ void LightingSystem::UpdateLightingUniformBuffer(const CameraComponent& activeCa
         spotLightShaderData.Linear = attenuation.Linear;
         spotLightShaderData.Quadratic = attenuation.Quadratic;
         spotLightShaderData.Specular = m_DefaultSpecularColor;
+        spotLightShaderData.CastShadow = spotLight->IsCastShadowEnabled() ? 1 : 0;
     
         m_SpotsShaderData[i] = spotLightShaderData;
     }
