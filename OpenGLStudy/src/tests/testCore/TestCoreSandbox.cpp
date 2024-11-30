@@ -37,6 +37,7 @@ namespace tests
         glm::vec3 cameraInitialPosition(-12.f, 11.f, 12.f);
         glm::vec3 cameraInitialRotation(-25.f, -47.f, 0.f);
         std::shared_ptr<FlyingCamera> camera = m_World->Spawn<FlyingCamera>(cameraInitialPosition, cameraInitialRotation);
+        camera->DisablePilotMode();
         camera->SetName("Camera");
 
         SpawnCrates();
