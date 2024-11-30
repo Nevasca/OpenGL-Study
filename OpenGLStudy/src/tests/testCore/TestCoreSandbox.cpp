@@ -51,15 +51,8 @@ namespace tests
         anotherMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/FancyPigeon.png", "Pigeon", pigeonTextureSettings, true), 1);
         cube->SetMaterial(anotherMaterial);
 
-        auto bridgeMaterial = ResourceManager::CreateMaterial("M_Bridge");
-        bridgeMaterial->SetColor("u_Color", glm::vec4(0.f));
-        bridgeMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Atlas04_Diff.png", "T_Bridge_Diffuse", TextureSettings{false}), 1);
-        auto bridgeModel = ResourceManager::LoadModel("res/models/Bridge.fbx", "Bridge");
-
-        auto bridge = m_World->Spawn<Model>(glm::vec3(0.f, 0.f, -20.f));
-        bridge->Setup(bridgeModel, bridgeMaterial);
-        bridge->SetName("Bridge");
-
+        SpawnBridge();
+        
         SpawnTransparentObjects();
 
         auto sphere = m_World->Spawn<Sphere>(glm::vec3(-4.f, 1.f, 2.f));
@@ -183,6 +176,18 @@ namespace tests
         glm::vec3 floorScale{44.f, 0.5f, 44.f};
         std::shared_ptr<Cube> floor = m_World->Spawn<Cube>(floorPosition, floorRotation, floorScale);
         floor->SetName("Floor");
+    }
+
+    void TestCoreSandbox::SpawnBridge()
+    {
+        auto bridgeMaterial = ResourceManager::CreateMaterial("M_Bridge");
+        bridgeMaterial->SetColor("u_Color", glm::vec4(0.f));
+        bridgeMaterial->SetTexture("u_Diffuse", ResourceManager::LoadTexture("res/textures/Atlas04_Diff.png", "T_Bridge_Diffuse", TextureSettings{false}), 1);
+        auto bridgeModel = ResourceManager::LoadModel("res/models/Bridge.fbx", "Bridge");
+
+        auto bridge = m_World->Spawn<Model>(glm::vec3(0.f, 0.f, -20.f));
+        bridge->Setup(bridgeModel, bridgeMaterial);
+        bridge->SetName("Bridge");
     }
 
     TestCoreSandbox::~TestCoreSandbox()

@@ -30,5 +30,6 @@ namespace tests
         void SpawnLights(GameObject& camera);
         void SpawnCrates();
         void SpawnFloor();
+        void SpawnBridge();
     };
 }
