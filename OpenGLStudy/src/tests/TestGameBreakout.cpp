@@ -4,6 +4,7 @@
 #include "TestGameBreakout.h"
 
 #include "core/GameTime.h"
+#include "core/Screen.h"
 
 namespace tests
 {
@@ -68,6 +69,8 @@ namespace tests
 
         glfwSetFramebufferSizeCallback(Window, nullptr);
         glfwSetKeyCallback(Window, nullptr);
+
+        Screen::SetSize(m_previousScreenWidth, m_previousScreenHeight);
     }
 
     void TestGameBreakout::OnUpdate(float DeltaTime)
