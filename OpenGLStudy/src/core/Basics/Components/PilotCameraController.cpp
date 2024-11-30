@@ -14,9 +14,15 @@ namespace
     // for glfw scroll callback
     // This is a workaround, not sure what's the best approach on these cases...
     PilotCameraController* g_PilotCameraComponent;
+    GLFWscrollfun g_PreviousScrollCallback;
 
     void ScrollCallbackWrapper(GLFWwindow* Window, double XOffset, double YOffset)
     {
+        if(g_PreviousScrollCallback)
+        {
+            g_PreviousScrollCallback(Window, XOffset, YOffset);
+        }
+
         g_PilotCameraComponent->UpdateCameraZoom(YOffset);
     }
 }
@@ -34,6 +40,8 @@ void PilotCameraController::Destroy()
     Component::Destroy();
 
     g_PilotCameraComponent = nullptr;
+    g_PreviousScrollCallback = nullptr;
+
     m_Camera.reset();
     m_Pilot.reset();
 }
@@ -88,12 +96,15 @@ void PilotCameraController::Enable()
 {
     Component::Enable();
 
-    glfwSetScrollCallback(Application::GetCurrentWindow(), ScrollCallbackWrapper);   
+    // glfwSetScrollCallback overrides whatever callback is currently set
+    // it also returns the previous callback when setting a new one
+    // so we store it to also call the previous behavior if any on ScrollCallbackWrapper 
+    g_PreviousScrollCallback = glfwSetScrollCallback(Application::GetCurrentWindow(), ScrollCallbackWrapper);   
 }
 
 void PilotCameraController::Disable()
 {
     Component::Disable();
 
-    glfwSetScrollCallback(Application::GetCurrentWindow(), nullptr);
+    glfwSetScrollCallback(Application::GetCurrentWindow(), g_PreviousScrollCallback);
 }
