@@ -59,6 +59,7 @@ namespace tests
 
     void TestGameBreakout::Shutdown(GLFWwindow* Window)
     {
+        m_Breakout.Shutdown();
         g_Game = nullptr;
 
         glfwSetWindowSize(Window, m_previousScreenWidth, m_previousScreenHeight);

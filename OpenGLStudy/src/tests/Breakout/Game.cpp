@@ -76,6 +76,11 @@ namespace Breakout
         m_SoundEngine->play2D("res/breakout/audio/breakout.mp3", true);
     }
 
+    void Game::Shutdown()
+    {
+        m_SoundEngine->stopAllSounds();
+    }
+
     void Game::ProcessInput(float deltaTime)
     {
         if(State == EGameState::GAME_ACTIVE)

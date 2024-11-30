@@ -42,6 +42,7 @@ namespace Breakout
         ~Game();
 
         void Init();
+        void Shutdown();
         void ProcessInput(float deltaTime);
         void Update(float deltaTime);
         void Render();
