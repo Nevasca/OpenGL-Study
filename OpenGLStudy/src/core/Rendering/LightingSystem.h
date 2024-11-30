@@ -101,6 +101,11 @@ namespace Rendering
     {
         glm::mat4 ViewProjectionMatrices[6]{};
     };
+
+    struct SpotLightShadowMapShaderData
+    {
+        glm::mat4 ViewProjectionMatrix{};
+    };
 }
 
 class LightingSystem
@@ -125,13 +130,17 @@ public:
     const DirectionalLightComponent& GetDirectionalLight(const int activeLightIndex) const;
     int GetTotalActivePointLights() const { return m_TotalActivePointLights; }
     const Framebuffer& GetPointLightShadowMapFramebuffer(const int activeLightIndex) const;
-    const PointLightComponent& GetPointLight(const int activeLightindex) const;
+    const PointLightComponent& GetPointLight(const int activeLightIndex) const;
+    int GetTotalActiveSpotLights() const { return m_TotalActiveSpotLights; }
+    const Framebuffer& GetSpotLightShadowMapFramebuffer(const int activeLightIndex) const;
+    const SpotLightComponent& GetSpotLight(const int activeLightIndex) const;
     Rendering::Resolution GetShadowResolution() const { return m_ShadowResolution; }
 
 private:
 
     constexpr static int DIRECTIONAL_SHADOW_MAP_START_SLOT = 1;
     constexpr static int POINT_SHADOW_MAP_START_SLOT = DIRECTIONAL_SHADOW_MAP_START_SLOT + Rendering::MAX_DIRECTIONAL_LIGHTS;
+    constexpr static int SPOT_SHADOW_MAP_START_SLOT = POINT_SHADOW_MAP_START_SLOT + Rendering::MAX_POINT_LIGHTS;
     
     std::vector<std::shared_ptr<DirectionalLightComponent>> m_DirectionalLights{};
     std::vector<std::shared_ptr<PointLightComponent>> m_PointLights{};
@@ -148,26 +157,31 @@ private:
     std::unique_ptr<Rendering::UniformBuffer> m_SpotsUniformBuffer{};
     std::unique_ptr<Rendering::UniformBuffer> m_DirectionalMatrixUniformBuffer{};
     std::unique_ptr<Rendering::UniformBuffer> m_PointLightMatricesUniformBuffer{};
+    std::unique_ptr<Rendering::UniformBuffer> m_SpotLightMatricesUniformBuffer{};
 
     Rendering::LightingGeneralShaderData m_GeneralShaderData{};
     Rendering::DirectionalLightShaderData m_DirectionalsShaderData[Rendering::MAX_DIRECTIONAL_LIGHTS]{};
-    Rendering::PointLightShaderData m_PointsShaderData[Rendering::MAX_POINT_LIGHTS];
-    Rendering::SpotLightShaderData m_SpotsShaderData[Rendering::MAX_SPOT_LIGHTS];
-    Rendering::DirectionalLightShadowMapShaderData m_DirectionalLightShadowMapShaderData[Rendering::MAX_DIRECTIONAL_LIGHTS];
-    Rendering::PointLightShadowMapShaderData m_PointLightShadowMapShaderData[Rendering::MAX_POINT_LIGHTS];
+    Rendering::PointLightShaderData m_PointsShaderData[Rendering::MAX_POINT_LIGHTS]{};
+    Rendering::SpotLightShaderData m_SpotsShaderData[Rendering::MAX_SPOT_LIGHTS]{};
+    Rendering::DirectionalLightShadowMapShaderData m_DirectionalLightShadowMapShaderData[Rendering::MAX_DIRECTIONAL_LIGHTS]{};
+    Rendering::PointLightShadowMapShaderData m_PointLightShadowMapShaderData[Rendering::MAX_POINT_LIGHTS]{};
+    Rendering::SpotLightShadowMapShaderData m_SpotLightShadowMapShaderData[Rendering::MAX_SPOT_LIGHTS]{};
 
     Rendering::Resolution m_ShadowResolution{2048, 2048};
     std::vector<std::unique_ptr<Framebuffer>> m_DirectionalShadowMapBuffers{};
     std::vector<std::unique_ptr<Framebuffer>> m_PointLightShadowMapBuffers{};
+    std::vector<std::unique_ptr<Framebuffer>> m_SpotLightShadowMapBuffers{};
 
-    void UpdateDirectionalUniformBuffer();
-    void UpdateOmnidirectionalUniformBuffer();
+    void UpdateDirectionalShadowMapUniformBuffers();
+    void UpdatePointShadowMapUniformBuffers();
+    void UpdateSpotShadowMapUniformBuffers();
 
     void CreateUniformBuffers();
     void SetupShadowMaps();
     void CreateShadowMaps();
     void CreateDirectionalLightShadowMapFor(int lightIndex);
     void CreatePointLightShadowMapFor(int lightIndex);
+    void CreateSportLightShadowMapFor(int lightIndex);
 };
 
 

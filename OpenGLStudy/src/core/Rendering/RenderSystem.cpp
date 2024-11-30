@@ -11,6 +11,7 @@
 #include "core/Basics/Components/MeshComponent.h"
 #include "core/Basics/Components/PointLightComponent.h"
 #include "core/Basics/Components/SkyboxComponent.h"
+#include "core/Basics/Components/SpotLightComponent.h"
 #include "core/GameObject/GameObject.h"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
@@ -374,7 +375,8 @@ void RenderSystem::RenderShadowPass(const CameraComponent& activeCamera)
     std::shared_ptr<Shader> previousOverrideShader = m_WorldOverrideShader;
 
     RenderDirectionalShadowPass();
-    RenderOmnidirectionalShadowPass();
+    RenderPointShadowPass();
+    RenderSpotShadowPass();
 
     UpdateCameraMatricesShaderUniforms(activeCamera);
     SetOverrideShader(previousOverrideShader, false);
@@ -416,7 +418,7 @@ void RenderSystem::RenderDirectionalShadowPass()
     }
 }
 
-void RenderSystem::RenderOmnidirectionalShadowPass()
+void RenderSystem::RenderPointShadowPass()
 {
     int totalActivePointLights = m_LightingSystem.GetTotalActivePointLights();
 
@@ -440,6 +442,42 @@ void RenderSystem::RenderOmnidirectionalShadowPass()
 
         const PointLightComponent& pointLight = m_LightingSystem.GetPointLight(i);
         RenderWorldForShadowPass(pointLight.GetPosition());
+        
+        shadowMapBuffer.Unbind();
+    }
+}
+
+void RenderSystem::RenderSpotShadowPass()
+{
+    int totalActiveSpotLights = m_LightingSystem.GetTotalActiveSpotLights();
+
+    if(totalActiveSpotLights == 0)
+    {
+        return;
+    }
+
+    SetOverrideShader(m_DirectionalDepthShader, false);
+
+    for(int i = 0; i < totalActiveSpotLights; i++)
+    {
+        const Framebuffer& shadowMapBuffer = m_LightingSystem.GetSpotLightShadowMapFramebuffer(i);
+
+        Rendering::Resolution shadowMapResolution = shadowMapBuffer.GetResolution();
+        m_Device.SetViewportResolution(shadowMapResolution);
+        shadowMapBuffer.BindAndClear();
+
+        const SpotLightComponent& spotLightComponent = m_LightingSystem.GetSpotLight(i);
+
+        glm::vec3 lightPosition = spotLightComponent.GetOwnerPosition();
+        const glm::mat4 view = spotLightComponent.GetViewMatrix();
+        const glm::mat4 proj = spotLightComponent.GetProjectionMatrix(shadowMapResolution);
+
+        m_MatricesUniformBuffer->Bind();
+        glm::mat4 matrices[2] { proj, view };
+        m_MatricesUniformBuffer->SetSubData(matrices, sizeof(matrices));
+        m_MatricesUniformBuffer->Unbind();
+
+        RenderWorldForShadowPass(lightPosition);
         
         shadowMapBuffer.Unbind();
     }

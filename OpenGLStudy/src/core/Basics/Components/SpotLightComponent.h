@@ -1,6 +1,12 @@
 #pragma once
 #include "core/GameObject/Component.h"
 #include "core/Rendering/Light.h"
+#include <glm/fwd.hpp>
+
+namespace Rendering
+{
+    struct Resolution;
+}
 
 class SpotLightComponent : public Component
 {
@@ -23,6 +29,10 @@ public:
     float GetOuterCutoffDegrees() const { return m_OuterCutoffDegrees; }
     void SetOuterCutoffDegrees(float outerCutoffDegrees) { m_OuterCutoffDegrees = outerCutoffDegrees; }
     Attenuation GetAttenuation() const { return m_Attenuation; }
+
+    glm::mat4 GetViewMatrix() const;
+    glm::mat4 GetProjectionMatrix(const Rendering::Resolution& shadowResolution) const;
+    glm::mat4 GetViewProjectionMatrix(const Rendering::Resolution& shadowResolution) const;
 
 private:
 

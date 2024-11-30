@@ -36,6 +36,7 @@ void LightingSystem::Shutdown()
 
     m_DirectionalShadowMapBuffers.clear();
     m_PointLightShadowMapBuffers.clear();
+    m_SpotLightShadowMapBuffers.clear();
 }
 
 void LightingSystem::AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent)
@@ -72,6 +73,7 @@ void LightingSystem::AddPointLight(const std::shared_ptr<PointLightComponent>& p
 void LightingSystem::AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent)
 {
     m_SpotLights.push_back(spotLightComponent);
+    m_TotalActiveSpotLights = std::min(static_cast<int>(m_SpotLights.size()), Rendering::MAX_SPOT_LIGHTS);
 
     if(m_SpotLights.size() > Rendering::MAX_SPOT_LIGHTS)
     {
@@ -79,7 +81,8 @@ void LightingSystem::AddSpotLight(const std::shared_ptr<SpotLightComponent>& spo
         std::cout << "Max spot lights reached. Last added spot light won't affect world\n";
     }
 
-    m_TotalActiveSpotLights = std::min(static_cast<int>(m_SpotLights.size()), Rendering::MAX_SPOT_LIGHTS);
+    int lastActiveLightIndex = m_TotalActiveSpotLights - 1;
+    CreateSportLightShadowMapFor(lastActiveLightIndex);
 }
 
 void LightingSystem::SetupUniformsFor(Shader& shader) const
@@ -90,6 +93,7 @@ void LightingSystem::SetupUniformsFor(Shader& shader) const
     m_SpotsUniformBuffer->SetBindingIndexFor(shader);
     m_DirectionalMatrixUniformBuffer->SetBindingIndexFor(shader);
     m_PointLightMatricesUniformBuffer->SetBindingIndexFor(shader);
+    m_SpotLightMatricesUniformBuffer->SetBindingIndexFor(shader);
 
     shader.Bind();
 
@@ -103,6 +107,12 @@ void LightingSystem::SetupUniformsFor(Shader& shader) const
     {
         std::string uniformName = "u_PointLightShadowMaps[" + std::to_string(i) + "]";
         shader.SetUniform1i(uniformName, POINT_SHADOW_MAP_START_SLOT + i);
+    }
+
+    for(int i = 0; i < Rendering::MAX_SPOT_LIGHTS; i++)
+    {
+        std::string uniformName = "u_SpotLightShadowMaps[" + std::to_string(i) + "]";
+        shader.SetUniform1i(uniformName, SPOT_SHADOW_MAP_START_SLOT + i);
     }
 
     shader.Unbind();
@@ -191,11 +201,12 @@ void LightingSystem::UpdateLightingUniformBuffer(const CameraComponent& activeCa
     m_SpotsUniformBuffer->SetSubData(m_SpotsShaderData, Rendering::MAX_SPOT_LIGHTS * sizeof(Rendering::SpotLightShaderData));
     m_SpotsUniformBuffer->Unbind();
 
-    UpdateDirectionalUniformBuffer();
-    UpdateOmnidirectionalUniformBuffer();    
+    UpdateDirectionalShadowMapUniformBuffers();
+    UpdatePointShadowMapUniformBuffers();
+    UpdateSpotShadowMapUniformBuffers();
 }
 
-void LightingSystem::UpdateDirectionalUniformBuffer()
+void LightingSystem::UpdateDirectionalShadowMapUniformBuffers()
 {
     if(m_TotalActiveDirectionalLights == 0)
     {
@@ -212,7 +223,7 @@ void LightingSystem::UpdateDirectionalUniformBuffer()
     m_DirectionalMatrixUniformBuffer->Unbind();
 }
 
-void LightingSystem::UpdateOmnidirectionalUniformBuffer()
+void LightingSystem::UpdatePointShadowMapUniformBuffers()
 {
     if(m_TotalActivePointLights == 0)
     {
@@ -236,6 +247,22 @@ void LightingSystem::UpdateOmnidirectionalUniformBuffer()
     m_PointLightMatricesUniformBuffer->Unbind();
 }
 
+void LightingSystem::UpdateSpotShadowMapUniformBuffers()
+{
+    if(m_TotalActiveSpotLights == 0)
+    {
+        return;
+    }
+
+    for(int i = 0; i < m_TotalActiveSpotLights; i++)
+    {
+        m_SpotLightShadowMapShaderData[i].ViewProjectionMatrix = m_SpotLights[i]->GetViewProjectionMatrix(m_ShadowResolution);
+    }
+
+    m_SpotLightMatricesUniformBuffer->Bind();
+    m_SpotLightMatricesUniformBuffer->SetSubData(m_SpotLightShadowMapShaderData, Rendering::MAX_SPOT_LIGHTS * sizeof(Rendering::SpotLightShadowMapShaderData));
+    m_SpotLightMatricesUniformBuffer->Unbind();
+}
 
 Framebuffer& LightingSystem::GetDirectionalShadowMapFramebuffer(const int activeLightIndex) const
 {
@@ -255,10 +282,22 @@ const Framebuffer& LightingSystem::GetPointLightShadowMapFramebuffer(const int a
     return *m_PointLightShadowMapBuffers[activeLightIndex];
 }
 
-const PointLightComponent& LightingSystem::GetPointLight(const int activeLightindex) const
+const PointLightComponent& LightingSystem::GetPointLight(const int activeLightIndex) const
 {
-    ASSERT(activeLightindex >= 0 && activeLightindex < m_TotalActivePointLights);
-    return *m_PointLights[activeLightindex];
+    ASSERT(activeLightIndex >= 0 && activeLightIndex < m_TotalActivePointLights);
+    return *m_PointLights[activeLightIndex];
+}
+
+const Framebuffer& LightingSystem::GetSpotLightShadowMapFramebuffer(const int activeLightIndex) const
+{
+    ASSERT(activeLightIndex >= 0 && activeLightIndex < m_TotalActiveSpotLights);
+    return *m_SpotLightShadowMapBuffers[activeLightIndex];
+}
+
+const SpotLightComponent& LightingSystem::GetSpotLight(const int activeLightIndex) const
+{
+    ASSERT(activeLightIndex >= 0 && activeLightIndex < m_TotalActiveSpotLights);
+    return *m_SpotLights[activeLightIndex];
 }
 
 void LightingSystem::CreateUniformBuffers()
@@ -268,7 +307,8 @@ void LightingSystem::CreateUniformBuffers()
     constexpr unsigned int UNIFORM_LIGHTING_POINTS_BINDING_INDEX = 4;
     constexpr unsigned int UNIFORM_LIGHTING_SPOTS_BINDING_INDEX = 5;
     constexpr unsigned int UNIFORM_LIGHTING_DIRECTIONAL_MATRIX_BINDING_INDEX = 6;
-    constexpr unsigned int UNIFORM_LIGHTING_OMNIDIRECTIONAL_MATRIX_BINDING_INDEX = 7;
+    constexpr unsigned int UNIFORM_LIGHTING_POINT_MATRIX_BINDING_INDEX = 7;
+    constexpr unsigned int UNIFORM_LIGHTING_SPOT_MATRIX_BINDING_INDEX = 8;
 
     m_GeneralUniformBuffer = std::make_unique<Rendering::UniformBuffer>(
         nullptr,
@@ -308,8 +348,15 @@ void LightingSystem::CreateUniformBuffers()
     m_PointLightMatricesUniformBuffer = std::make_unique<Rendering::UniformBuffer>(
         nullptr,
         Rendering::MAX_POINT_LIGHTS * sizeof(Rendering::PointLightShadowMapShaderData),
-        UNIFORM_LIGHTING_OMNIDIRECTIONAL_MATRIX_BINDING_INDEX,
+        UNIFORM_LIGHTING_POINT_MATRIX_BINDING_INDEX,
         "PointLightShadowMapMatrices",
+        true);
+
+    m_SpotLightMatricesUniformBuffer = std::make_unique<Rendering::UniformBuffer>(
+        nullptr,
+        Rendering::MAX_SPOT_LIGHTS * sizeof(Rendering::SpotLightShadowMapShaderData),
+        UNIFORM_LIGHTING_SPOT_MATRIX_BINDING_INDEX,
+        "SpotLightShadowMapMatrices",
         true);
 }
 
@@ -323,8 +370,14 @@ void LightingSystem::SetupShadowMaps()
 
     for(int i = 0; i < m_TotalActivePointLights; i++)
     {
-        std::shared_ptr<Rendering::Cubemap> omnidirectionalDepthCubemap = m_PointLightShadowMapBuffers[i]->GetDepthBufferCubemap();
-        omnidirectionalDepthCubemap->Bind(POINT_SHADOW_MAP_START_SLOT + i);
+        std::shared_ptr<Rendering::Cubemap> pointDepthCubemap = m_PointLightShadowMapBuffers[i]->GetDepthBufferCubemap();
+        pointDepthCubemap->Bind(POINT_SHADOW_MAP_START_SLOT + i);
+    }
+
+    for(int i = 0; i < m_TotalActiveSpotLights; i++)
+    {
+        std::shared_ptr<Texture> spotDepthTexture = m_SpotLightShadowMapBuffers[i]->GetDepthBufferTexture();
+        spotDepthTexture->Bind(SPOT_SHADOW_MAP_START_SLOT + i);
     }
 }
 
@@ -332,6 +385,7 @@ void LightingSystem::CreateShadowMaps()
 {
     m_DirectionalShadowMapBuffers.reserve(Rendering::MAX_DIRECTIONAL_LIGHTS);
     m_PointLightShadowMapBuffers.reserve(Rendering::MAX_POINT_LIGHTS);
+    m_SpotLightShadowMapBuffers.reserve(Rendering::MAX_SPOT_LIGHTS);
 }
 
 void LightingSystem::CreateDirectionalLightShadowMapFor(int lightIndex)
@@ -355,4 +409,15 @@ void LightingSystem::CreatePointLightShadowMapFor(int lightIndex)
     settings.UseDepthCubemap = true;
     
     m_PointLightShadowMapBuffers.emplace_back(std::make_unique<Framebuffer>(settings));
+}
+
+void LightingSystem::CreateSportLightShadowMapFor(int lightIndex)
+{
+    ASSERT(lightIndex >= 0 && lightIndex < static_cast<int>(m_SpotLightShadowMapBuffers.capacity()));
+
+    FramebufferSettings settings{};
+    settings.Resolution = m_ShadowResolution;
+    settings.EnableDepthMapOnly = true;
+    
+    m_SpotLightShadowMapBuffers.emplace_back(std::make_unique<Framebuffer>(settings));
 }

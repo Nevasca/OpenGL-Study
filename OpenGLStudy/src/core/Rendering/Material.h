@@ -66,8 +66,8 @@ public:
 private:
 
     // TODO: have this set somewhere else and with defines/constexpr to not manually add it
-    // 1 SKYBOX + 3 DIRECTIONAL SHADOW MAP + 20 POINT SHADOW MAP
-    constexpr static int TOTAL_SYSTEM_RESERVED_TEXTURE_SLOTS = 24;
+    // 1 SKYBOX + 3 DIRECTIONAL SHADOW MAP + 20 POINT SHADOW MAP + 20 SPOT SHADOW MAP
+    constexpr static int TOTAL_SYSTEM_RESERVED_TEXTURE_SLOTS = 44;
     
     unsigned int m_Id{0};
     std::shared_ptr<Shader> m_Shader{};

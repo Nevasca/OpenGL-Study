@@ -94,7 +94,8 @@ private:
     void RenderWorld(const CameraComponent& activeCamera);
     void RenderShadowPass(const CameraComponent& activeCamera);
     void RenderDirectionalShadowPass();
-    void RenderOmnidirectionalShadowPass();
+    void RenderPointShadowPass();
+    void RenderSpotShadowPass();
     void RenderWorldForShadowPass(const glm::vec3& lightPosition);
     void RenderOutlinedObjects(const CameraComponent& activeCamera);
     void CreateInstancedBuffer();

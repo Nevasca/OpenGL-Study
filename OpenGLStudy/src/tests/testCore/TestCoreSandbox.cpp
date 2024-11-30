@@ -14,6 +14,7 @@
 #include "core/Basics/Objects/Quad.h"
 #include "core/Basics/Objects/Skybox.h"
 #include "core/Basics/Objects/Sphere.h"
+#include "core/Basics/Objects/SpotLight.h"
 #include "core/Rendering/Material.h"
 
 namespace tests
@@ -149,6 +150,12 @@ namespace tests
         pointLight->SetName("PointLight" + std::to_string(lightIndex++));
         pointLight->SetColor(glm::vec3(1.f, 0.f, 0.f));
         pointLight->SetRange(60.f);
+
+        std::shared_ptr<SpotLight> spotLight = m_World->Spawn<SpotLight>(glm::vec3{2.2f, 4.5f, 6.5f}, glm::vec3{-41.f, 37.f, 0.f});
+        spotLight->SetName("Spotlight");
+        spotLight->SetRange(59.f);
+        spotLight->SetInnerCutoffDegrees(22.f);
+        spotLight->SetOuterCutoffDegrees(36.5f);
 
         // auto spotLightComponent = camera.AddComponent<SpotLightComponent>();
         // spotLightComponent->SetRange(100.f);
