@@ -185,6 +185,8 @@ int main(void)
                 currentTest->OnUpdate(GameTime::DeltaTime);
                 currentTest->OnRender();
 
+                ImGui::SetNextWindowPos(ImVec2(610.f, 30.f), ImGuiCond_FirstUseEver);
+                ImGui::SetNextWindowSize(ImVec2(200.f, 60.f), ImGuiCond_FirstUseEver);
                 ImGui::Begin("Test");
 
                 // Return to menu if back button clicked
@@ -200,6 +202,7 @@ int main(void)
             }
 
             {
+                ImGui::SetNextWindowPos(ImVec2(380.f, 30.f), ImGuiCond_FirstUseEver);
                 ImGui::Begin("Statistics");
                 ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
                 ImGui::End();
