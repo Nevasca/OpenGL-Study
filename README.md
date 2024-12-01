@@ -3,6 +3,11 @@
 
 ![Main](Docs/ReadmeResources/Readme_Main.png)
 
+# Download
+
+1. Head to the repository [releases](https://github.com/Nevasca/OpenGL-Study/releases) and download the `.zip` from one of the available versions;
+2. Extract and run the `OpenGLStudy.exe`.
+
 # Editor
 
 ## Camera navigation
