@@ -1,5 +1,5 @@
 # OpenGL-Study
- OpenGL-Study started as a series of studies for learning OpenGL and it's now gradually growing towards a custom realtime component based rendering engine, with a custom editor.
+ OpenGL-Study started as a series of studies for learning OpenGL and it is now gradually growing towards a custom realtime component based rendering engine, with a custom editor.
 
 ![Main](Docs/ReadmeResources/Readme_Main.png)
 
@@ -23,7 +23,7 @@ For the sandbox and core scenes, you can fly around with the camera by using:
 
 ## Shortcuts
 
-Beside camera navigation shortcuts explained in the previous section, you can also:
+Besides camera navigation shortcuts explained in the previous section, you can also:
 
 * `Ctrl + Space`: hide/show Editor.
 
@@ -33,7 +33,7 @@ On the right side of the Editor, you can find the world hierarchy with all curre
 
 ![GameObject Inspector](Docs/ReadmeResources/Readme_GameObjectInspector.png)
 
-From there you can select one game object, inspect and modify its components on the Inspector tab bellow it.
+From there you can select one game object, inspect and modify its components on the Inspector tab below it.
 Every game object contains transform values (position, rotation and scale) and their own components.
 
 For changing a point light color, for example, simply select the desired light and modify the `Color` property of the `PointLightComponent`: 
@@ -49,7 +49,7 @@ Continuing on the right side of the Editor, you can find a World Settings tab wh
 ## Material Inspector
 
 Now to the left side of the Editor. You can find all the current used materials for the world in the Materials tab.
-Selecting one of them will present their details on the inspector panel bellow it, where you can also modify some of their values (changing textures not implemented yet).
+Selecting one of them will present their details on the inspector panel below it, where you can also modify some of their values (changing textures not implemented yet).
 
 ![Material Inspector](Docs/ReadmeResources/Readme_MaterialInspector.png)
 
@@ -57,7 +57,7 @@ Selecting one of them will present their details on the inspector panel bellow i
 # Accessing other study tests
 
 At the beginning of the study, instead of having an engine to keep adding new features as the study progressed, each topic was implemented on a different test "scene".
-To access these studies, expand the Test by clicking on the market arrow and them on the `<-` button:
+To access these studies, expand the Test by clicking on the marked arrow and then on the `<-` button:
 
 ![Accessing other tests - 01](Docs/ReadmeResources/Readme_AccessingOtherTests_01.png)
 
@@ -101,7 +101,7 @@ If you want to dig in how the project works, here are some files to start at:
 Resources are located at the `res` folder (shaders, models, audio and textures).
 ### Dependencies
 
-Contains third-party dependencies:
+Third-party dependencies:
 * [GLFW](https://www.glfw.org/download.html): window and context creation, user input;
 * [Glew](https://glew.sourceforge.net/): exposes OpenGL manufacturer driver implementation;
 * [Assimp](https://assimp.org/): model loader;
@@ -137,6 +137,6 @@ Here are some things required for that:
 * Save and load scenes;
 * Implement object picking;
 * Gizmos;
-* Implement other rendering techniques, such as normal map, ambient occlusion;
+* Implement other rendering techniques, such as normal map, ambient occlusion.
 
 All of this to later mature it into a game engine, which will require tons of new things as well (particles, collision, physics, animation, audio, UI).
