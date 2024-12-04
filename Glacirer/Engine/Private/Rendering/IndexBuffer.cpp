@@ -1,6 +1,6 @@
-#include "IndexBuffer.h"
+#include "Rendering/IndexBuffer.h"
 
-#include "OpenGLCore.h"
+#include "Rendering/OpenGLCore.h"
 
 unsigned int IndexBuffer::m_LastBoundIndexBufferId = 0;
 

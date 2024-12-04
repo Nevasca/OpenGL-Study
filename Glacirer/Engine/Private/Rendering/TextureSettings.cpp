@@ -1,4 +1,4 @@
-﻿#include "TextureSettings.h"
+﻿#include "Rendering/TextureSettings.h"
 
 TextureSettings::TextureSettings(bool bUseAlpha, bool bIsSRGB)
     : UseAlpha(bUseAlpha)

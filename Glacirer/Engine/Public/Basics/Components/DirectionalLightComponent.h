@@ -1,5 +1,5 @@
 #pragma once
-#include "core/GameObject/Component.h"
+#include "GameObject/Component.h"
 #include "glm/vec4.hpp"
 #include <glm/fwd.hpp>
 

@@ -1,10 +1,10 @@
-﻿#include "UniformBuffer.h"
+﻿#include "Rendering/UniformBuffer.h"
 
 #include <iostream>
 #include <ostream>
 
-#include "OpenGLCore.h"
-#include "Shader.h"
+#include "Rendering/OpenGLCore.h"
+#include "Rendering/Shader.h"
 
 namespace Rendering
 {

@@ -6,7 +6,7 @@
 #include "InstancedArray.h"
 #include "LightingSystem.h"
 #include "PostProcessingSystem.h"
-#include "core/Basics/Components/DirectionalLightComponent.h"
+#include "Basics/Components/DirectionalLightComponent.h"
 #include "FrameBuffer.h"
 #include "MeshComponentRenderSet.h"
 #include "ShaderRenderSet.h"

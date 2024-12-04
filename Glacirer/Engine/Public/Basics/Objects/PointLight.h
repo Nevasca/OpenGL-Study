@@ -1,7 +1,7 @@
 #pragma once
-#include "core/GameObject/GameObject.h"
+#include "GameObject/GameObject.h"
 
-#include "core/Basics/Components/PointLightComponent.h"
+#include "Basics/Components/PointLightComponent.h"
 
 class PointLight : public GameObject
 {

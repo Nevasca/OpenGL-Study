@@ -1,5 +1,5 @@
 #pragma once
-#include "Basics/GameObject/GameObject.h"
+#include "GameObject/GameObject.h"
 
 
 class Material;

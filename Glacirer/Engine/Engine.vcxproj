@@ -120,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Assimp\include;Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,7 +142,7 @@ copy "$(SolutionDir)Dependencies\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Com
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\Assimp\include;Public;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -181,6 +181,7 @@ copy "$(SolutionDir)Dependencies\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Com
     <ClCompile Include="Private\Rendering\Cubemap.cpp" />
     <ClCompile Include="Private\Rendering\Device.cpp" />
     <ClCompile Include="Private\Rendering\FrameBuffer.cpp" />
+    <ClCompile Include="Private\Rendering\OpenGLCore.cpp" />
     <ClCompile Include="Private\Rendering\IndexBuffer.cpp" />
     <ClCompile Include="Private\Rendering\InstancedArray.cpp" />
     <ClCompile Include="Private\Rendering\Light.cpp" />
@@ -237,6 +238,7 @@ copy "$(SolutionDir)Dependencies\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Com
     <ClInclude Include="Public\Rendering\Cubemap.h" />
     <ClInclude Include="Public\Rendering\Device.h" />
     <ClInclude Include="Public\Rendering\FrameBuffer.h" />
+    <ClInclude Include="Public\Rendering\OpenGLCore.h" />
     <ClInclude Include="Public\Rendering\IndexBuffer.h" />
     <ClInclude Include="Public\Rendering\InstancedArray.h" />
     <ClInclude Include="Public\Rendering\Light.h" />

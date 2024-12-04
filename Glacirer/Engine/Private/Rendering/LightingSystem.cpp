@@ -1,12 +1,12 @@
-#include "LightingSystem.h"
+#include "Rendering/LightingSystem.h"
 
 #include <iostream>
 
-#include "Shader.h"
-#include "core/Basics/Components/CameraComponent.h"
-#include "core/Basics/Components/DirectionalLightComponent.h"
-#include "core/Basics/Components/PointLightComponent.h"
-#include "core/Basics/Components/SpotLightComponent.h"
+#include "Rendering/Shader.h"
+#include "Basics/Components/CameraComponent.h"
+#include "Basics/Components/DirectionalLightComponent.h"
+#include "Basics/Components/PointLightComponent.h"
+#include "Basics/Components/SpotLightComponent.h"
 
 LightingSystem::LightingSystem()
 {

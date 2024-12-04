@@ -1,8 +1,8 @@
-#include "FrameBuffer.h"
+#include "Rendering/FrameBuffer.h"
 
 #include <iostream>
 
-#include "OpenGLCore.h"
+#include "Rendering/OpenGLCore.h"
 
 Framebuffer::Framebuffer(
     const Rendering::Resolution& resolution,

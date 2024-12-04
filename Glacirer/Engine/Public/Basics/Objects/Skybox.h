@@ -1,5 +1,5 @@
 #pragma once
-#include "core/GameObject/GameObject.h"
+#include "GameObject/GameObject.h"
 
 class SkyboxComponent;
 

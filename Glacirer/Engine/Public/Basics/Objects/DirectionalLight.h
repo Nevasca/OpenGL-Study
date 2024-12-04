@@ -1,6 +1,6 @@
 #pragma once
-#include "core/GameObject/GameObject.h"
-#include "core/Basics/Components/DirectionalLightComponent.h"
+#include "GameObject/GameObject.h"
+#include "Basics/Components/DirectionalLightComponent.h"
 
 class DirectionalLightComponent;
 

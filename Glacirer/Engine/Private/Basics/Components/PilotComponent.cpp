@@ -1,11 +1,11 @@
-#include "PilotComponent.h"
+#include "Basics/Components/PilotComponent.h"
 
 #include <GLFW/glfw3.h>
 
-#include "core/Application.h"
-#include "core/Input.h"
-#include "core/Screen.h"
-#include "core/GameObject/Transform.h"
+#include "Application.h"
+#include "Input.h"
+#include "Screen.h"
+#include "GameObject/Transform.h"
 #include "glm/common.hpp"
 
 void PilotComponent::Initialize()

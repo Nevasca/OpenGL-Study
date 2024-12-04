@@ -1,9 +1,9 @@
-#include "TextureResource.h"
+#include "Resources/TextureResource.h"
 
 #include <cassert>
 #include <stb_image/stb_image.h>
 
-#include "core/Rendering/Cubemap.h"
+#include "Rendering/Cubemap.h"
 
 std::shared_ptr<Texture> TextureResource::LoadTextureFromFile(const std::string& filePath, const TextureSettings& settings, bool bFlipVertically)
 {

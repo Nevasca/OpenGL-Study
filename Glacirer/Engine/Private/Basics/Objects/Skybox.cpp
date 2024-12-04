@@ -1,8 +1,8 @@
-#include "Skybox.h"
+#include "Basics/Objects/Skybox.h"
 
-#include "core/ResourceManager.h"
-#include "core/Basics/Components/SkyboxComponent.h"
-#include "core/Rendering/Cubemap.h"
+#include "ResourceManager.h"
+#include "Basics/Components/SkyboxComponent.h"
+#include "Rendering/Cubemap.h"
 
 void Skybox::Initialize()
 {

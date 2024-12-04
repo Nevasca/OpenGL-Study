@@ -1,7 +1,7 @@
-#include "Component.h"
+#include "GameObject/Component.h"
 
-#include "GameObject.h"
-#include "core/World.h"
+#include "GameObject/GameObject.h"
+#include "World.h"
 
 Component::Component(GameObject& owner)
     : m_Owner(owner)

@@ -1,7 +1,7 @@
-#include "PostProcessingComponent.h"
+#include "Basics/Components/PostProcessingComponent.h"
 
-#include "core/World.h"
-#include "core/GameObject/GameObject.h"
+#include "World.h"
+#include "GameObject/GameObject.h"
 
 void PostProcessingComponent::Enable()
 {

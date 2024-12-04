@@ -1,8 +1,8 @@
-#include "SpotLightComponent.h"
+#include "Basics/Components/SpotLightComponent.h"
 
-#include "core/World.h"
-#include "core/GameObject/GameObject.h"
-#include "core/GameObject/Transform.h"
+#include "World.h"
+#include "GameObject/GameObject.h"
+#include "GameObject/Transform.h"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 

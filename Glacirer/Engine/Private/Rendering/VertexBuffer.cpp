@@ -1,6 +1,6 @@
-#include "VertexBuffer.h"
+#include "Rendering/VertexBuffer.h"
 
-#include "OpenGLCore.h"
+#include "Rendering/OpenGLCore.h"
 
 VertexBuffer::VertexBuffer(const void* data, unsigned int size, bool bIsDynamic)
 {

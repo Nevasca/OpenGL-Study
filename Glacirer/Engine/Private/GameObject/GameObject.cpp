@@ -1,6 +1,6 @@
-#include "GameObject.h"
+#include "GameObject/GameObject.h"
 
-#include "core/World.h"
+#include "World.h"
 
 GameObject::GameObject(World& world)
     : m_World(world)

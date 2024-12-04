@@ -1,7 +1,7 @@
-#include "Quad.h"
+#include "Basics/Objects/Quad.h"
 
-#include "core/ResourceManager.h"
-#include "core/Basics/Components/MeshComponent.h"
+#include "ResourceManager.h"
+#include "Basics/Components/MeshComponent.h"
 
 void Quad::Initialize()
 {

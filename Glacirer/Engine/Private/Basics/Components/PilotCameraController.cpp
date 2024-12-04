@@ -1,11 +1,11 @@
-#include "PilotCameraController.h"
+#include "Basics/Components/PilotCameraController.h"
 
 #include <GLFW/glfw3.h>
 
-#include "CameraComponent.h"
-#include "PilotComponent.h"
-#include "core/Application.h"
-#include "core/Input.h"
+#include "Basics/Components/CameraComponent.h"
+#include "Basics/Components/PilotComponent.h"
+#include "Application.h"
+#include "Input.h"
 #include "glm/common.hpp"
 
 namespace

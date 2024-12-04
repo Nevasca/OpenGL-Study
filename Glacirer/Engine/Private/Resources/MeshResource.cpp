@@ -1,12 +1,12 @@
-#include "MeshResource.h"
+#include "Resources/MeshResource.h"
 
 #include <iostream>
 #include <memory>
 #include <assimp/postprocess.h>
 
-#include "core/Rendering/Mesh.h"
-#include "core/Rendering/ModelData.h"
-#include "core/Rendering/Primitive.h"
+#include "Rendering/Mesh.h"
+#include "Rendering/ModelData.h"
+#include "Rendering/Primitive.h"
 
 std::shared_ptr<Mesh> MeshResource::LoadCube()
 {

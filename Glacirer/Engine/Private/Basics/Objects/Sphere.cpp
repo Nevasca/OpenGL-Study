@@ -1,7 +1,7 @@
-#include "Sphere.h"
+#include "Basics/Objects/Sphere.h"
 
-#include "core/ResourceManager.h"
-#include "core/Basics/Components/MeshComponent.h"
+#include "ResourceManager.h"
+#include "Basics/Components/MeshComponent.h"
 
 void Sphere::Initialize()
 {

@@ -1,7 +1,7 @@
-#include "PointLightComponent.h"
+#include "Basics/Components/PointLightComponent.h"
 
-#include "core/World.h"
-#include "core/GameObject/GameObject.h"
+#include "World.h"
+#include "GameObject/GameObject.h"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 

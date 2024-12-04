@@ -1,5 +1,5 @@
 #pragma once
-#include "core/GameObject/Component.h"
+#include "GameObject/Component.h"
 
 class PostProcessingComponent : public Component
 {

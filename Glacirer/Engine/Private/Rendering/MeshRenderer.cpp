@@ -1,12 +1,12 @@
-#include "MeshRenderer.h"
+#include "Rendering/MeshRenderer.h"
 
-#include "OpenGLCore.h"
+#include "Rendering/OpenGLCore.h"
 
-#include "IndexBuffer.h"
-#include "Material.h"
-#include "Mesh.h"
-#include "VertexArray.h"
-#include "core/GameObject/Transform.h"
+#include "Rendering/IndexBuffer.h"
+#include "Rendering/Material.h"
+#include "Rendering/Mesh.h"
+#include "Rendering/VertexArray.h"
+#include "GameObject/Transform.h"
 
 void MeshRenderer::Render(const Mesh& mesh, const Transform& transform, const Material& material) const
 {

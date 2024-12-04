@@ -1,6 +1,6 @@
 #pragma once
-#include "core/GameObject/GameObject.h"
-#include "core/Basics/Components/PostProcessingComponent.h"
+#include "GameObject/GameObject.h"
+#include "Basics/Components/PostProcessingComponent.h"
 
 class PostProcessing : public GameObject
 {

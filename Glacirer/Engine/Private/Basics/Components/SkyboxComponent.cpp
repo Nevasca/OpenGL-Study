@@ -1,8 +1,8 @@
-#include "SkyboxComponent.h"
+#include "Basics/Components/SkyboxComponent.h"
 
-#include "core/World.h"
-#include "core/GameObject/GameObject.h"
-#include "core/Rendering/Primitive.h"
+#include "World.h"
+#include "GameObject/GameObject.h"
+#include "Rendering/Primitive.h"
 
 void SkyboxComponent::Initialize()
 {

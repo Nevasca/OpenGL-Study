@@ -1,9 +1,9 @@
-#include "Primitive.h"
+#include "Rendering/Primitive.h"
 
 #include <memory>
 
-#include "Mesh.h"
-#include "VertexBufferLayout.h"
+#include "Rendering/Mesh.h"
+#include "Rendering/VertexBufferLayout.h"
 
 std::shared_ptr<Mesh> Primitive::CreateCube()
 {

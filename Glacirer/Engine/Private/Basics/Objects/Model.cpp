@@ -1,7 +1,7 @@
-#include "Model.h"
+#include "Basics/Objects/Model.h"
 
-#include "core/Basics/Components/MeshComponent.h"
-#include "core/Rendering/ModelData.h"
+#include "Basics/Components/MeshComponent.h"
+#include "Rendering/ModelData.h"
 
 void Model::Setup(const std::shared_ptr<ModelData>& modelData, const std::shared_ptr<Material>& material)
 {

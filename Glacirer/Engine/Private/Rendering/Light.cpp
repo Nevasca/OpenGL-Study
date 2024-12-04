@@ -1,4 +1,4 @@
-#include "Light.h"
+#include "Rendering/Light.h"
 
 Attenuation Light::CalculateAttenuation(float range)
 {

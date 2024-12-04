@@ -1,4 +1,4 @@
-#include "PointLight.h"
+#include "Basics/Objects/PointLight.h"
 
 void PointLight::Initialize()
 {

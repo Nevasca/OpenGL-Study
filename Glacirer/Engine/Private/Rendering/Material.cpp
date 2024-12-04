@@ -1,8 +1,8 @@
-#include "Material.h"
+#include "Rendering/Material.h"
 
-#include "Cubemap.h"
-#include "Shader.h"
-#include "Texture.h"
+#include "Rendering/Cubemap.h"
+#include "Rendering/Shader.h"
+#include "Rendering/Texture.h"
 
 void Material::SetColor(const std::string& name, const glm::vec4& color)
 {

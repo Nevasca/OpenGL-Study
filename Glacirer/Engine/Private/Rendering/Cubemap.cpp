@@ -1,7 +1,7 @@
-#include "Cubemap.h"
+#include "Rendering/Cubemap.h"
 
-#include "OpenGLCore.h"
-#include "TextureSettings.h"
+#include "Rendering/OpenGLCore.h"
+#include "Rendering/TextureSettings.h"
 
 namespace Rendering
 {

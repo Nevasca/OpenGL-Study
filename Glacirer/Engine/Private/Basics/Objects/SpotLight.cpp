@@ -1,4 +1,4 @@
-#include "SpotLight.h"
+#include "Basics/Objects/SpotLight.h"
 
 void SpotLight::Initialize()
 {

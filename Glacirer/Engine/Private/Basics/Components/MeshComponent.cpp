@@ -1,8 +1,8 @@
-#include "MeshComponent.h"
+#include "Basics/Components/MeshComponent.h"
 
-#include "core/GameObject/GameObject.h"
-#include "core/World.h"
-#include "core/Rendering/Material.h"
+#include "GameObject/GameObject.h"
+#include "World.h"
+#include "Rendering/Material.h"
 
 void MeshComponent::SetMesh(const std::shared_ptr<Mesh>& mesh)
 {

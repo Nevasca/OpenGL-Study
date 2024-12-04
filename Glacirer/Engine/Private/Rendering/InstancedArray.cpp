@@ -1,6 +1,6 @@
-#include "InstancedArray.h"
+#include "Rendering/InstancedArray.h"
 
-#include "VertexArray.h"
+#include "Rendering/VertexArray.h"
 
 InstancedArray::InstancedArray(const void* data, unsigned size, bool bIsDynamic, VertexBufferLayout&& layout)
 {

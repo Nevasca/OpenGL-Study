@@ -2,7 +2,7 @@
 #include <memory>
 #include <string>
 
-#include "core/Rendering/Texture.h"
+#include "Rendering/Texture.h"
 
 namespace Rendering
 {

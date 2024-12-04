@@ -1,6 +1,6 @@
 #pragma once
-#include "core/GameObject/Component.h"
-#include "core/Rendering/Light.h"
+#include "GameObject/Component.h"
+#include "Rendering/Light.h"
 #include <glm/fwd.hpp>
 
 namespace Rendering

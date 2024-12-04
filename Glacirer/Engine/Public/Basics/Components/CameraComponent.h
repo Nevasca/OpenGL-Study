@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/GameObject/Component.h"
+#include "GameObject/Component.h"
 #include <glm/fwd.hpp>
 #include <glm/vec3.hpp>
 

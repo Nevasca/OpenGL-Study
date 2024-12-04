@@ -1,9 +1,9 @@
-#include "Cube.h"
+#include "Basics/Objects/Cube.h"
 
 #include <memory>
 
-#include "core/ResourceManager.h"
-#include "core/Basics/Components/MeshComponent.h"
+#include "ResourceManager.h"
+#include "Basics/Components/MeshComponent.h"
 
 void Cube::Initialize()
 {

@@ -1,5 +1,5 @@
-#include "Device.h"
-#include "OpenGLCore.h"
+#include "Rendering/Device.h"
+#include "Rendering/OpenGLCore.h"
 
 namespace Rendering
 {

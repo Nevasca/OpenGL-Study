@@ -1,10 +1,10 @@
-#include "PostProcessingSystem.h"
+#include "Rendering/PostProcessingSystem.h"
 
-#include "FrameBuffer.h"
-#include "Material.h"
-#include "Primitive.h"
-#include "core/ResourceManager.h"
-#include "core/Basics/Components/PostProcessingComponent.h"
+#include "Rendering/FrameBuffer.h"
+#include "Rendering/Material.h"
+#include "Rendering/Primitive.h"
+#include "ResourceManager.h"
+#include "Basics/Components/PostProcessingComponent.h"
 
 PostProcessingSystem::PostProcessingSystem()
 {

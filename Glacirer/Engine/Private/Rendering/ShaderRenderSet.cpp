@@ -1,5 +1,5 @@
-#include "ShaderRenderSet.h"
-#include "Shader.h"
+#include "Rendering/ShaderRenderSet.h"
+#include "Rendering/Shader.h"
 
 namespace Rendering
 {

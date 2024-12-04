@@ -1,10 +1,10 @@
-#include "MeshComponentRenderSet.h"
+#include "Rendering/MeshComponentRenderSet.h"
 
-#include "InstancedArray.h"
-#include "Material.h"
-#include "Mesh.h"
-#include "VertexArray.h"
-#include "core/Basics/Components/MeshComponent.h"
+#include "Rendering/InstancedArray.h"
+#include "Rendering/Material.h"
+#include "Rendering/Mesh.h"
+#include "Rendering/VertexArray.h"
+#include "Basics/Components/MeshComponent.h"
 
 class Mesh;
 class Material;

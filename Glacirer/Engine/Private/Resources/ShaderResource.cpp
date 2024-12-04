@@ -1,10 +1,10 @@
-#include "ShaderResource.h"
+#include "Resources/ShaderResource.h"
 
 #include <fstream>
 #include <iostream>
 #include <sstream>
 
-#include "core/Rendering/Shader.h"
+#include "Rendering/Shader.h"
 
 std::shared_ptr<Shader> ShaderResource::LoadShaderFromFile(const std::string& vertexShaderPath, const std::string& fragShaderPath)
 {

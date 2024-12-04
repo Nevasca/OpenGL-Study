@@ -1,9 +1,9 @@
-#include "VertexArray.h"
+#include "Rendering/VertexArray.h"
 
-#include "OpenGLCore.h"
+#include "Rendering/OpenGLCore.h"
 
-#include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
+#include "Rendering/VertexBuffer.h"
+#include "Rendering/VertexBufferLayout.h"
 
 unsigned int VertexArray::m_LastBoundVertexArrayId = 0;
 

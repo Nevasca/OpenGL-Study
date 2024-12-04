@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/GameObject/Component.h"
+#include "GameObject/Component.h"
 
 class Shader;
 class Material;

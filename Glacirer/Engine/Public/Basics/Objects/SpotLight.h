@@ -1,6 +1,6 @@
 #pragma once
-#include "core/Basics/Components/SpotLightComponent.h"
-#include "core/GameObject/GameObject.h"
+#include "Basics/Components/SpotLightComponent.h"
+#include "GameObject/GameObject.h"
 
 class SpotLight : public GameObject
 {
