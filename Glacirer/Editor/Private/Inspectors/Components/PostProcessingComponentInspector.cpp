@@ -1,6 +1,6 @@
 #include "Inspectors/Components/PostProcessingComponentInspector.h"
 
-#include "core/Basics/Components/PostProcessingComponent.h"
+#include "Basics/Components/PostProcessingComponent.h"
 #include "imgui/imgui.h"
 
 namespace Editor

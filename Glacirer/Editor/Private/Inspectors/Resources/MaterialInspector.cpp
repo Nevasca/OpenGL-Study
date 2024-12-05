@@ -2,9 +2,9 @@
 
 #include <imgui/imgui.h>
 
-#include "core/Rendering/Material.h"
-#include "core/Rendering/Shader.h"
-#include "core/Rendering/Texture.h"
+#include "Rendering/Material.h"
+#include "Rendering/Shader.h"
+#include "Rendering/Texture.h"
 
 namespace Editor
 {

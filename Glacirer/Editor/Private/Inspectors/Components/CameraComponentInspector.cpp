@@ -1,6 +1,6 @@
 #include "Inspectors/Components/CameraComponentInspector.h"
 
-#include "core/Basics/Components/CameraComponent.h"
+#include "Basics/Components/CameraComponent.h"
 #include <imgui/imgui.h>
 
 namespace Editor

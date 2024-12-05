@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-#include "core/Basics/Components/DirectionalLightComponent.h"
+#include "Basics/Components/DirectionalLightComponent.h"
 #include <imgui/imgui.h>
 
 namespace Editor

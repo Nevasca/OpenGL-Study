@@ -1,6 +1,6 @@
 #include "Inspectors/Components/PilotCameraControllerInspector.h"
 
-#include "core/Basics/Components/PilotCameraController.h"
+#include "Basics/Components/PilotCameraController.h"
 #include <imgui/imgui.h>
 
 namespace Editor

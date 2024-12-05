@@ -3,8 +3,8 @@
 #include <string>
 #include <imgui/imgui.h>
 
-#include "core/World.h"
-#include "core/GameObject/GameObject.h"
+#include "World.h"
+#include "GameObject/GameObject.h"
 
 namespace Editor
 {

@@ -1,6 +1,6 @@
 #include "ResourcesPanel.h"
 
-#include "core/ResourceManager.h"
+#include "ResourceManager.h"
 #include <memory>
 #include <imgui/imgui.h>
 

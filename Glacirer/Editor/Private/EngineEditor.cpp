@@ -3,10 +3,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "core/Input.h"
-#include "core/World.h"
-#include "core/GameObject/GameObject.h"
-#include "core/Basics/Components/MeshComponent.h"
+#include "Input.h"
+#include "World.h"
+#include "GameObject/GameObject.h"
+#include "Basics/Components/MeshComponent.h"
 
 namespace Editor
 {

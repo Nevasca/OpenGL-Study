@@ -1,8 +1,8 @@
 #include "GameObjectInspector.h"
 
-#include "core/GameObject/GameObject.h"
-#include "core/GameObject/Transform.h"
-#include "core/GameObject/Component.h"
+#include "GameObject/GameObject.h"
+#include "GameObject/Transform.h"
+#include "GameObject/Component.h"
 #include <imgui/imgui.h>
 
 #include "inspectors/components/CameraComponentInspector.h"

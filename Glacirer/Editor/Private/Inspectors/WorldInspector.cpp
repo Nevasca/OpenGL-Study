@@ -1,7 +1,7 @@
 #include "Inspectors/WorldInspector.h"
 
-#include "core/World.h"
-#include "core/Rendering/RenderSystem.h"
+#include "World.h"
+#include "Rendering/RenderSystem.h"
 #include <imgui/imgui.h>
 
 namespace Editor

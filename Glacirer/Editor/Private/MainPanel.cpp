@@ -1,7 +1,7 @@
 #include "MainPanel.h"
 
 #include <imgui/imgui.h>
-#include "core/World.h"
+#include "World.h"
 
 namespace Editor
 {

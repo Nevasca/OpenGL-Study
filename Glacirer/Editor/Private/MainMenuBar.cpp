@@ -2,9 +2,9 @@
 
 #include <imgui/imgui.h>
 
-#include "core/ResourceManager.h"
-#include "core/World.h"
-#include "core/Rendering/RenderSystem.h"
+#include "ResourceManager.h"
+#include "World.h"
+#include "Rendering/RenderSystem.h"
 
 namespace Editor
 {

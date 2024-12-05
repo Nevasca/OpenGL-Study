@@ -1,7 +1,7 @@
 #include "ResourceCollection.h"
 
-#include "core/ResourceManager.h"
-#include "core/Rendering/Material.h"
+#include "ResourceManager.h"
+#include "Rendering/Material.h"
 #include <imgui/imgui.h>
 
 void Editor::ResourceCollection::RenderMaterialsGUI()

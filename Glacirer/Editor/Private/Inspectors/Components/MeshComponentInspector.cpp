@@ -1,8 +1,8 @@
 #include "Inspectors/Components/MeshComponentInspector.h"
 
-#include "core/Basics/Components/MeshComponent.h"
-#include "core/Rendering/Material.h"
-#include "core/Rendering/Mesh.h"
+#include "Basics/Components/MeshComponent.h"
+#include "Rendering/Material.h"
+#include "Rendering/Mesh.h"
 #include "imgui/imgui.h"
 
 namespace Editor
