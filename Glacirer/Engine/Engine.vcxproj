@@ -40,13 +40,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -133,6 +133,10 @@
 echo copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
 copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)External\GLFW\lib-vc2022;$(SolutionDir)External\GLEW\lib\Release\x64;$(SolutionDir)External\Assimp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -157,6 +161,10 @@ copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command
 echo copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
 copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)External\GLFW\lib-vc2022;$(SolutionDir)External\GLEW\lib\Release\x64;$(SolutionDir)External\Assimp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\External\glm\detail\glm.cpp" />
