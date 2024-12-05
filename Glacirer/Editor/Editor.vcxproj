@@ -136,6 +136,43 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Editor.cpp" />
+    <ClCompile Include="Private\EngineEditor.cpp" />
+    <ClCompile Include="Private\GameObjectInspector.cpp" />
+    <ClCompile Include="Private\Inspectors\Components\CameraComponentInspector.cpp" />
+    <ClCompile Include="Private\Inspectors\Components\DirectionalLightComponentInspector.cpp" />
+    <ClCompile Include="Private\Inspectors\Components\MeshComponentInspector.cpp" />
+    <ClCompile Include="Private\Inspectors\Components\PilotCameraControllerInspector.cpp" />
+    <ClCompile Include="Private\Inspectors\Components\PilotComponentInspector.cpp" />
+    <ClCompile Include="Private\Inspectors\Components\PointLightComponentInspector.cpp" />
+    <ClCompile Include="Private\Inspectors\Components\PostProcessingComponentInspector.cpp" />
+    <ClCompile Include="Private\Inspectors\Components\SpotLightComponentInspector.cpp" />
+    <ClCompile Include="Private\Inspectors\Resources\MaterialInspector.cpp" />
+    <ClCompile Include="Private\Inspectors\WorldInspector.cpp" />
+    <ClCompile Include="Private\MainMenuBar.cpp" />
+    <ClCompile Include="Private\MainPanel.cpp" />
+    <ClCompile Include="Private\ResourceCollection.cpp" />
+    <ClCompile Include="Private\ResourcesPanel.cpp" />
+    <ClCompile Include="Private\WorldHierarchy.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Public\EngineEditor.h" />
+    <ClInclude Include="Public\GameObjectInspector.h" />
+    <ClInclude Include="Public\IComponentInspector.h" />
+    <ClInclude Include="Public\Inspectors\Components\CameraComponentInspector.h" />
+    <ClInclude Include="Public\Inspectors\Components\DirectionalLightComponentInspector.h" />
+    <ClInclude Include="Public\Inspectors\Components\MeshComponentInspector.h" />
+    <ClInclude Include="Public\Inspectors\Components\PilotCameraControllerInspector.h" />
+    <ClInclude Include="Public\Inspectors\Components\PilotComponentInspector.h" />
+    <ClInclude Include="Public\Inspectors\Components\PointLightComponentInspector.h" />
+    <ClInclude Include="Public\Inspectors\Components\PostProcessingComponentInspector.h" />
+    <ClInclude Include="Public\Inspectors\Components\SpotLightComponentInspector.h" />
+    <ClInclude Include="Public\Inspectors\Resources\MaterialInspector.h" />
+    <ClInclude Include="Public\Inspectors\WorldInspector.h" />
+    <ClInclude Include="Public\MainMenuBar.h" />
+    <ClInclude Include="Public\MainPanel.h" />
+    <ClInclude Include="Public\ResourceCollection.h" />
+    <ClInclude Include="Public\ResourcesPanel.h" />
+    <ClInclude Include="Public\WorldHierarchy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
