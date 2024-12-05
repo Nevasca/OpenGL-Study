@@ -158,6 +158,7 @@ copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\External\glm\detail\glm.cpp" />
+    <ClCompile Include="..\External\stb_image\stb_image.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Private\Application.cpp" />
     <ClCompile Include="Private\Basics\Components\CameraComponent.cpp" />
@@ -641,6 +642,7 @@ copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command
     <ClInclude Include="..\External\glm\vec3.hpp" />
     <ClInclude Include="..\External\glm\vec4.hpp" />
     <ClInclude Include="..\External\glm\vector_relational.hpp" />
+    <ClInclude Include="..\External\stb_image\stb_image.h" />
     <ClInclude Include="Public\Application.h" />
     <ClInclude Include="Public\Basics\Components\CameraComponent.h" />
     <ClInclude Include="Public\Basics\Components\DirectionalLightComponent.h" />

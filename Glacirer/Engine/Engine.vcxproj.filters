@@ -19,6 +19,9 @@
     <Filter Include="External\glm">
       <UniqueIdentifier>{84ce5e5c-cd1d-4c6d-ae76-7938f2d77caf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External\stb_image">
+      <UniqueIdentifier>{bc646182-b94c-4945-8c48-720af00daffd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -189,11 +192,11 @@
     <ClCompile Include="..\External\glm\detail\glm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\External\glm\glm.cppm">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Private\Rendering\OpenGLCore.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External\stb_image\stb_image.cpp">
+      <Filter>External\stb_image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1639,6 +1642,9 @@
     </ClInclude>
     <ClInclude Include="..\External\glm\detail\_noise.hpp">
       <Filter>External\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\stb_image\stb_image.h">
+      <Filter>External\stb_image</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
