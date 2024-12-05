@@ -6,7 +6,7 @@
 #include <string>
 #include <functional>
 
-#include "glm/vec3.hpp"
+#include <glm/vec3.hpp>
 
 #define GENERATE_COMPONENT_BODY(ClassName) friend class GameObject;\
     public:\

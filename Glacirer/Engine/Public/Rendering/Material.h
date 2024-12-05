@@ -3,8 +3,8 @@
 #include <memory>
 #include <string>
 
-#include "glm/fwd.hpp"
-#include "glm/vec4.hpp"
+#include <glm/fwd.hpp>
+#include <glm/vec4.hpp>
 
 namespace Rendering
 {

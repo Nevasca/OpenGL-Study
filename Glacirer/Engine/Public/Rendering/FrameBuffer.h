@@ -5,7 +5,7 @@
 #include "Cubemap.h"
 #include "Resolution.h"
 #include "Texture.h"
-#include "glm/vec4.hpp"
+#include <glm/vec4.hpp>
 
 struct FramebufferSettings
 {

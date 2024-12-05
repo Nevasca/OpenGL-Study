@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-#include "glm/vec3.hpp"
+#include <glm/vec3.hpp>
 
 class InstancedArray;
 class MeshComponent;

@@ -2,7 +2,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 
 #define ENABLE_SHADER_DEBUG 0
 

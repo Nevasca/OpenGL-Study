@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include "OpenGLCore.h"
-#include "glm/vec3.hpp"
-#include "glm/vec4.hpp"
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
 
 struct TextureSettings
 {

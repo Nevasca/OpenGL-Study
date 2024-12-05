@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject/Component.h"
-#include "glm/vec4.hpp"
+#include <glm/vec4.hpp>
 #include <glm/fwd.hpp>
 
 class DirectionalLightComponent : public Component

@@ -6,7 +6,7 @@
 #include "Input.h"
 #include "Screen.h"
 #include "GameObject/Transform.h"
-#include "glm/common.hpp"
+#include <glm/common.hpp>
 
 void PilotComponent::Initialize()
 {
