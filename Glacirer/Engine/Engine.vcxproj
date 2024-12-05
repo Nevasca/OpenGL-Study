@@ -150,6 +150,11 @@ copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>echo copying Assimp dlls to output folder
+echo copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
+copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\External\glm\detail\glm.cpp" />
