@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>{49cb2ae5-18c8-430f-83da-953efe79fd76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\ImGUI">
+      <UniqueIdentifier>{64a52d66-1b61-487a-96ed-e10d25791bb7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Editor.cpp">
@@ -69,6 +75,27 @@
     <ClCompile Include="Private\Inspectors\WorldInspector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\External\imgui\imgui.cpp">
+      <Filter>External\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External\imgui\imgui_demo.cpp">
+      <Filter>External\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External\imgui\imgui_draw.cpp">
+      <Filter>External\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External\imgui\imgui_impl_glfw.cpp">
+      <Filter>External\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External\imgui\imgui_impl_opengl3.cpp">
+      <Filter>External\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External\imgui\imgui_tables.cpp">
+      <Filter>External\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\External\imgui\imgui_widgets.cpp">
+      <Filter>External\ImGUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Public\Inspectors\Components\CameraComponentInspector.h">
@@ -124,6 +151,33 @@
     </ClInclude>
     <ClInclude Include="Public\Inspectors\WorldInspector.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imconfig.h">
+      <Filter>External\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imgui.h">
+      <Filter>External\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imgui_impl_glfw.h">
+      <Filter>External\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imgui_impl_opengl3.h">
+      <Filter>External\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imgui_impl_opengl3_loader.h">
+      <Filter>External\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imgui_internal.h">
+      <Filter>External\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imstb_rectpack.h">
+      <Filter>External\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imstb_textedit.h">
+      <Filter>External\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\imgui\imstb_truetype.h">
+      <Filter>External\ImGUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
