@@ -1,4 +1,4 @@
-#include "PilotComponentInspector.h"
+#include "Inspectors/Components/PilotComponentInspector.h"
 
 #include "core/Basics/Components/PilotComponent.h"
 #include <imgui/imgui.h>

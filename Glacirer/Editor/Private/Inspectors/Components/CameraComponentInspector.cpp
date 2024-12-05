@@ -1,4 +1,4 @@
-#include "CameraComponentInspector.h"
+#include "Inspectors/Components/CameraComponentInspector.h"
 
 #include "core/Basics/Components/CameraComponent.h"
 #include <imgui/imgui.h>

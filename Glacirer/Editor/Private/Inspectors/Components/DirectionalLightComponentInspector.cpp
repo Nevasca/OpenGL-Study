@@ -1,4 +1,4 @@
-#include "DirectionalLightComponentInspector.h"
+#include "Inspectors/Components/DirectionalLightComponentInspector.h"
 
 #include <cassert>
 

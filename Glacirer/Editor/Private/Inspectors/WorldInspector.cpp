@@ -1,4 +1,4 @@
-#include "WorldInspector.h"
+#include "Inspectors/WorldInspector.h"
 
 #include "core/World.h"
 #include "core/Rendering/RenderSystem.h"

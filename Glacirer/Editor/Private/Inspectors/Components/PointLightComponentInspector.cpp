@@ -1,4 +1,4 @@
-#include "PointLightComponentInspector.h"
+#include "Inspectors/Components/PointLightComponentInspector.h"
 #include "core/Basics/Components/PointLightComponent.h"
 
 #include <cassert>

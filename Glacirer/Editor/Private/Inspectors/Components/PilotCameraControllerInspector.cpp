@@ -1,4 +1,4 @@
-#include "PilotCameraControllerInspector.h"
+#include "Inspectors/Components/PilotCameraControllerInspector.h"
 
 #include "core/Basics/Components/PilotCameraController.h"
 #include <imgui/imgui.h>

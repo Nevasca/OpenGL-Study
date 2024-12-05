@@ -1,4 +1,4 @@
-#include "SpotLightComponentInspector.h"
+#include "Inspectors/Components/SpotLightComponentInspector.h"
 
 #include "core/Basics/Components/SpotLightComponent.h"
 #include <imgui/imgui.h>

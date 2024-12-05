@@ -1,4 +1,4 @@
-#include "PostProcessingComponentInspector.h"
+#include "Inspectors/Components/PostProcessingComponentInspector.h"
 
 #include "core/Basics/Components/PostProcessingComponent.h"
 #include "imgui/imgui.h"

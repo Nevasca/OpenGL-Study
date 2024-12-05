@@ -1,4 +1,4 @@
-#include "MaterialInspector.h"
+#include "Inspectors/Resources/MaterialInspector.h"
 
 #include <imgui/imgui.h>
 

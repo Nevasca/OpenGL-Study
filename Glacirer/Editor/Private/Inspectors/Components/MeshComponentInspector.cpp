@@ -1,4 +1,4 @@
-#include "MeshComponentInspector.h"
+#include "Inspectors/Components/MeshComponentInspector.h"
 
 #include "core/Basics/Components/MeshComponent.h"
 #include "core/Rendering/Material.h"
