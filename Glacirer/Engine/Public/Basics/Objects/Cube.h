@@ -5,7 +5,7 @@
 class Material;
 class MeshComponent;
 
-class Cube : public GameObject
+class ENGINE_API Cube : public GameObject
 {
     GENERATE_OBJECT_BODY(Cube)
     

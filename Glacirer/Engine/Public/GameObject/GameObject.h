@@ -13,7 +13,7 @@
 
 class World;
 
-class GameObject
+class ENGINE_API GameObject
 {
 public:
 

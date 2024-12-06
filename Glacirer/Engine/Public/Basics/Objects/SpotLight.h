@@ -2,7 +2,7 @@
 #include "Basics/Components/SpotLightComponent.h"
 #include "GameObject/GameObject.h"
 
-class SpotLight : public GameObject
+class ENGINE_API SpotLight : public GameObject
 {
     GENERATE_OBJECT_BODY(SpotLight)
     

@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 
+#include "EngineAPI.h"
 #include <glm/fwd.hpp>
 #include <glm/vec4.hpp>
 
@@ -33,7 +34,7 @@ enum class MaterialRenderingMode : uint8_t
     Transparent
 };
 
-class Material
+class ENGINE_API Material
 {
 public:
     

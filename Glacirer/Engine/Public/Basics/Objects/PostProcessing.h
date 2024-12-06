@@ -2,7 +2,7 @@
 #include "GameObject/GameObject.h"
 #include "Basics/Components/PostProcessingComponent.h"
 
-class PostProcessing : public GameObject
+class ENGINE_API PostProcessing : public GameObject
 {
     GENERATE_OBJECT_BODY(PostProcessing)
 

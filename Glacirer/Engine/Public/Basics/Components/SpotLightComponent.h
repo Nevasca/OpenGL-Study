@@ -8,7 +8,7 @@ namespace Rendering
     struct Resolution;
 }
 
-class SpotLightComponent : public Component
+class ENGINE_API SpotLightComponent : public Component
 {
     GENERATE_COMPONENT_BODY(SpotLightComponent)
 

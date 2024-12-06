@@ -3,7 +3,7 @@
 
 #include "Basics/Components/PointLightComponent.h"
 
-class PointLight : public GameObject
+class ENGINE_API PointLight : public GameObject
 {
     GENERATE_OBJECT_BODY(PointLight)
     

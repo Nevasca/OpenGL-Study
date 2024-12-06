@@ -1,9 +1,10 @@
 #pragma once
+#include "EngineAPI.h"
 #include "Resolution.h"
 
 namespace Rendering
 {
-    class Device
+    class ENGINE_API Device
     {
     public:
 

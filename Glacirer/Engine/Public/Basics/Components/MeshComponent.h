@@ -6,7 +6,7 @@ class Shader;
 class Material;
 class Mesh;
 
-class MeshComponent : public Component
+class ENGINE_API MeshComponent : public Component
 {
     GENERATE_COMPONENT_BODY(MeshComponent)
 

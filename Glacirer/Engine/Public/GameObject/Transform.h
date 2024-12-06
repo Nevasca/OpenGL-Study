@@ -1,7 +1,8 @@
 #pragma once
+#include "EngineAPI.h"
 #include <glm/glm.hpp>
 
-class Transform
+class ENGINE_API Transform
 {
 public:
 

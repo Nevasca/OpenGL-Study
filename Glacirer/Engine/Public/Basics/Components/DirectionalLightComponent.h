@@ -3,7 +3,7 @@
 #include <glm/vec4.hpp>
 #include <glm/fwd.hpp>
 
-class DirectionalLightComponent : public Component
+class ENGINE_API DirectionalLightComponent : public Component
 {
     GENERATE_COMPONENT_BODY(DirectionalLightComponent)
     

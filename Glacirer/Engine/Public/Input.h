@@ -1,8 +1,10 @@
 #pragma once
 
+#include "EngineAPI.h"
+
 struct GLFWwindow;
 
-class Input
+class ENGINE_API Input
 {
 public:
 

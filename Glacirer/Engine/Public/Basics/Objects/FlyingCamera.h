@@ -3,7 +3,7 @@
 
 class PilotCameraController;
 
-class FlyingCamera : public GameObject
+class ENGINE_API FlyingCamera : public GameObject
 {
     GENERATE_OBJECT_BODY(FlyingCamera)
     

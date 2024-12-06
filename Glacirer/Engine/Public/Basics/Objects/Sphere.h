@@ -4,7 +4,7 @@
 class Material;
 class MeshComponent;
 
-class Sphere : public GameObject
+class ENGINE_API Sphere : public GameObject
 {
     GENERATE_OBJECT_BODY(Sphere)
 

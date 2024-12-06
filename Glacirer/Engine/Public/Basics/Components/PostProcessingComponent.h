@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject/Component.h"
 
-class PostProcessingComponent : public Component
+class ENGINE_API PostProcessingComponent : public Component
 {
     GENERATE_COMPONENT_BODY(PostProcessingComponent)
 

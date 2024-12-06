@@ -4,7 +4,7 @@
 class MeshComponent;
 class Material;
 
-class Quad : public GameObject
+class ENGINE_API Quad : public GameObject
 {
     GENERATE_OBJECT_BODY(Quad)
 

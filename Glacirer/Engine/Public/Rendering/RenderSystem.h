@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 
+#include "EngineAPI.h"
 #include "Device.h"
 #include "MeshRenderer.h"
 #include "InstancedArray.h"
@@ -25,7 +26,7 @@ class MeshComponent;
 class Shader;
 class CameraComponent;
 
-class RenderSystem
+class ENGINE_API RenderSystem
 {
 public:
 

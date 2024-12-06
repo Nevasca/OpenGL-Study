@@ -6,6 +6,7 @@
 #include <string>
 #include <functional>
 
+#include "EngineAPI.h"
 #include <glm/vec3.hpp>
 
 #define GENERATE_COMPONENT_BODY(ClassName) friend class GameObject;\
@@ -29,7 +30,7 @@ class World;
 class Transform;
 class GameObject;
 
-class Component
+class ENGINE_API Component
 {
     friend class GameObject;
 

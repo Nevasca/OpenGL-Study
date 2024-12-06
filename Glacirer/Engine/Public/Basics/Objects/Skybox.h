@@ -3,7 +3,7 @@
 
 class SkyboxComponent;
 
-class Skybox : public GameObject
+class ENGINE_API Skybox : public GameObject
 {
     GENERATE_OBJECT_BODY(Skybox)
 

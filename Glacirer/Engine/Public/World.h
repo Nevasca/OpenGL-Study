@@ -3,6 +3,7 @@
 #include <vector>
 #include <glm/vec3.hpp>
 #include "Rendering/RenderSystem.h"
+#include "EngineAPI.h"
 
 class PostProcessingComponent;
 class SpotLightComponent;
@@ -12,7 +13,7 @@ class MeshComponent;
 class CameraComponent;
 class GameObject;
 
-class World
+class ENGINE_API World
 {
 public:
 

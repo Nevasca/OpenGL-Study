@@ -4,7 +4,7 @@
 class ModelData;
 class Material;
 
-class Model : public GameObject
+class ENGINE_API Model : public GameObject
 {
     GENERATE_OBJECT_BODY(Model)
     

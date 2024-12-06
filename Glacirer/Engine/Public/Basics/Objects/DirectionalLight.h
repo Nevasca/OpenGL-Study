@@ -4,7 +4,7 @@
 
 class DirectionalLightComponent;
 
-class DirectionalLight : public GameObject
+class ENGINE_API DirectionalLight : public GameObject
 {
     GENERATE_OBJECT_BODY(DirectionalLight)
     

@@ -123,7 +123,15 @@
     <PostBuildEvent>
       <Command>echo copying Assimp dlls to output folder
 echo copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
-copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command>
+copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
+
+echo copying Engine dll to output folder
+echo copy $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.dll "$(TargetDir)"
+copy $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.dll "$(TargetDir)"
+
+echo copying Engine pdb to output folder
+echo if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb "$(TargetDir)"
+if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -147,7 +155,15 @@ copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command
     <PostBuildEvent>
       <Command>echo copying Assimp dlls to output folder
 echo copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
-copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command>
+copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
+
+echo copying Engine dll to output folder
+echo copy $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.dll "$(TargetDir)"
+copy $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.dll "$(TargetDir)"
+
+echo copying Engine pdb to output folder
+echo if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb "$(TargetDir)"
+if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

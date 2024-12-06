@@ -10,7 +10,7 @@ namespace Rendering
     struct Resolution;
 }
 
-class PointLightComponent : public Component
+class ENGINE_API PointLightComponent : public Component
 {
     GENERATE_COMPONENT_BODY(PointLightComponent)
     

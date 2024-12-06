@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject/Component.h"
 
-class PilotComponent : public Component
+class ENGINE_API PilotComponent : public Component
 {
     GENERATE_COMPONENT_BODY(PilotComponent)
     

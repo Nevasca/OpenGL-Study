@@ -4,7 +4,7 @@
 #include <glm/fwd.hpp>
 #include <glm/vec3.hpp>
 
-class CameraComponent : public Component 
+class ENGINE_API CameraComponent : public Component 
 {
     GENERATE_COMPONENT_BODY(CameraComponent)
 

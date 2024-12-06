@@ -4,7 +4,7 @@
 class PilotComponent;
 class CameraComponent;
 
-class PilotCameraController : public Component
+class ENGINE_API PilotCameraController : public Component
 {
     GENERATE_COMPONENT_BODY(PilotCameraController)
     

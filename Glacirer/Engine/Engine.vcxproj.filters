@@ -1646,5 +1646,8 @@
     <ClInclude Include="..\External\stb_image\stb_image.h">
       <Filter>External\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="Public\EngineAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

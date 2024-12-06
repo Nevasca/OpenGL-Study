@@ -9,7 +9,7 @@ namespace Rendering
 class Material;
 class Mesh;
 
-class SkyboxComponent : public Component
+class ENGINE_API SkyboxComponent : public Component
 {
     GENERATE_COMPONENT_BODY(SkyboxComponent)
 

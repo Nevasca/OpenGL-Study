@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 
+#include "EngineAPI.h"
 #include "Rendering/TextureSettings.h"
 
 namespace Rendering
@@ -16,7 +17,8 @@ class Texture;
 class Material;
 class Mesh;
 class Shader;
-class ResourceManager
+
+class ENGINE_API ResourceManager
 {
 public:
     
