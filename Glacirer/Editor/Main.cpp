@@ -14,4 +14,6 @@ int main()
         engine.Update();
         engine.Render();
     }
+
+    return 0;
 }

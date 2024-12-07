@@ -17,6 +17,8 @@ std::unordered_map<std::string, std::shared_ptr<Texture>> ResourceManager::m_Tex
 std::unordered_map<std::string, std::shared_ptr<ModelData>> ResourceManager::m_Models{};
 std::unordered_map<std::string, std::shared_ptr<Rendering::Cubemap>> ResourceManager::m_Cubemaps{};
 
+std::string ResourceManager::RESOURCES_PATH = "EngineData/";
+
 unsigned int ResourceManager::m_LastMaterialID = 0;
 std::string ResourceManager::DEFAULT_SHADER_NAME = "Default";
 std::string ResourceManager::DEFAULT_MATERIAL_NAME = "Default";
@@ -26,14 +28,14 @@ std::string ResourceManager::DEFAULT_MESH_SPHERE_NAME = "Sphere";
 
 void ResourceManager::LoadDefaultResources()
 {
-    std::shared_ptr<Shader> defaultShader = LoadShader("res/core/shaders/BlinnPhong.glsl", DEFAULT_SHADER_NAME);
+    std::shared_ptr<Shader> defaultShader = LoadShader(RESOURCES_PATH + "Shaders/BlinnPhong.glsl", DEFAULT_SHADER_NAME);
 
     std::shared_ptr<Material> defaultMaterial = CreateMaterial(DEFAULT_MATERIAL_NAME);
     defaultMaterial->SetColor("u_Color", glm::vec4(0.5f, 0.5f, 0.5f, 1.f));
 
     m_Meshes[DEFAULT_MESH_CUBE_NAME] = MeshResource::LoadCube();
     m_Meshes[DEFAULT_MESH_QUAD_NAME] = MeshResource::LoadQuad();
-    m_Meshes[DEFAULT_MESH_SPHERE_NAME] = MeshResource::LoadSphere();
+    m_Meshes[DEFAULT_MESH_SPHERE_NAME] = MeshResource::LoadSphere(RESOURCES_PATH + "Primitives/Sphere.fbx");
 }
 
 std::shared_ptr<Material> ResourceManager::GetDefaultMaterial()

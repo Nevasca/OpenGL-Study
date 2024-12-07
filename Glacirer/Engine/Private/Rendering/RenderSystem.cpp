@@ -649,7 +649,7 @@ void RenderSystem::SetupOutlineRendering()
     m_Device.EnableStencilTest();
     m_Device.SetStencilOperation(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-    m_OutlineShader = ResourceManager::LoadShader("res/core/shaders/Outline.glsl", "Outline");
+    m_OutlineShader = ResourceManager::LoadShader(ResourceManager::RESOURCES_PATH + "Shaders/Outline.glsl", "Outline");
 
     constexpr glm::vec4 OUTLINE_COLOR = glm::vec4{1.f, 0.576f, 0.f, 1.f};
 
@@ -665,6 +665,6 @@ bool RenderSystem::IsSkyboxActive() const
 
 void RenderSystem::SetupShadowRendering()
 {
-    m_DirectionalDepthShader = ResourceManager::LoadShader("res/core/shaders/AlphaSimpleDepth.glsl", "AlphaSimpleDepth");
-    m_OmnidirectionalDepthShader = ResourceManager::LoadShader("res/core/shaders/OmnidirectionalDepth.glsl", "OminidirectionalDepth");
+    m_DirectionalDepthShader = ResourceManager::LoadShader(ResourceManager::RESOURCES_PATH + "Shaders/AlphaSimpleDepth.glsl", "AlphaSimpleDepth");
+    m_OmnidirectionalDepthShader = ResourceManager::LoadShader(ResourceManager::RESOURCES_PATH + "Shaders/OmnidirectionalDepth.glsl", "OminidirectionalDepth");
 }

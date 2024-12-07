@@ -18,10 +18,10 @@ std::shared_ptr<Mesh> MeshResource::LoadQuad()
     return Primitive::CreateQuad();
 }
 
-std::shared_ptr<Mesh> MeshResource::LoadSphere()
+std::shared_ptr<Mesh> MeshResource::LoadSphere(const std::string& filePath)
 {
     // Load sphere from primitive model file and return it as a single mesh
-    const std::shared_ptr<ModelData> sphereModel = LoadModelFromFile("res/core/primitives/Sphere.fbx");
+    const std::shared_ptr<ModelData> sphereModel = LoadModelFromFile(filePath);
 
     const std::vector<std::shared_ptr<Mesh>>& sphereMeshes = sphereModel->GetMeshes();
     assert(sphereMeshes.size() == 1);

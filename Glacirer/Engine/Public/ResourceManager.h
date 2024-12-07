@@ -21,6 +21,8 @@ class Shader;
 class ENGINE_API ResourceManager
 {
 public:
+
+    static std::string RESOURCES_PATH;
     
     static void LoadDefaultResources();
     static std::shared_ptr<Material> GetDefaultMaterial();
