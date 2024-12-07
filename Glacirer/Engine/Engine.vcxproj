@@ -169,7 +169,6 @@ copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command
   <ItemGroup>
     <ClCompile Include="..\External\glm\detail\glm.cpp" />
     <ClCompile Include="..\External\stb_image\stb_image.cpp" />
-    <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Private\Application.cpp" />
     <ClCompile Include="Private\Basics\Components\CameraComponent.cpp" />
     <ClCompile Include="Private\Basics\Components\DirectionalLightComponent.cpp" />
@@ -190,6 +189,7 @@ copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command
     <ClCompile Include="Private\Basics\Objects\Skybox.cpp" />
     <ClCompile Include="Private\Basics\Objects\Sphere.cpp" />
     <ClCompile Include="Private\Basics\Objects\SpotLight.cpp" />
+    <ClCompile Include="Private\Engine.cpp" />
     <ClCompile Include="Private\GameObject\Component.cpp" />
     <ClCompile Include="Private\GameObject\GameObject.cpp" />
     <ClCompile Include="Private\GameObject\Transform.cpp" />
@@ -673,6 +673,7 @@ copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command
     <ClInclude Include="Public\Basics\Objects\Skybox.h" />
     <ClInclude Include="Public\Basics\Objects\Sphere.h" />
     <ClInclude Include="Public\Basics\Objects\SpotLight.h" />
+    <ClInclude Include="Public\Engine.h" />
     <ClInclude Include="Public\EngineAPI.h" />
     <ClInclude Include="Public\GameObject\Component.h" />
     <ClInclude Include="Public\GameObject\GameObject.h" />

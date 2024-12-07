@@ -21,6 +21,9 @@ RenderSystem::RenderSystem()
     CreateInstancedBuffer();
     CreateUniformBuffers();
 
+    m_Device.EnableBlend();
+    m_Device.SetBlendFunction(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    m_Device.EnableDepthTest();
     m_Device.EnableFaceCulling();
     m_Device.EnableMSAA(); // Seems we don't actually need to enable when using custom framebuffer
     
