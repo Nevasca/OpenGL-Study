@@ -4,9 +4,6 @@
     <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <NintendoTargetName>Default</NintendoTargetName>
-    <NXTargetSerialNumber>$(NintendoTargetSerialNumber)</NXTargetSerialNumber>
-    <NXTargetName>$(NintendoTargetName)</NXTargetName>
     <LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
