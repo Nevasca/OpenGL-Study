@@ -3,6 +3,7 @@
 #include "MainMenuBar.h"
 #include "MainPanel.h"
 #include "ResourcesPanel.h"
+#include "StatisticsWindow.h"
 
 class World;
 
@@ -27,6 +28,7 @@ namespace Editor
         MainMenuBar m_MainMenuBar{};
         MainPanel m_MainPanel{};
         ResourcesPanel m_ResourcesPanel{};
+        StatisticsWindow m_StatisticsWindow{};
         int m_SelectedGameObjectIndex{-1};
         bool bShowPanelsEnabled{true};
 

@@ -199,6 +199,7 @@ if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $
     <ClCompile Include="Private\MainPanel.cpp" />
     <ClCompile Include="Private\ResourceCollection.cpp" />
     <ClCompile Include="Private\ResourcesPanel.cpp" />
+    <ClCompile Include="Private\StatisticsWindow.cpp" />
     <ClCompile Include="Private\WorldHierarchy.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +229,7 @@ if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $
     <ClInclude Include="Public\MainPanel.h" />
     <ClInclude Include="Public\ResourceCollection.h" />
     <ClInclude Include="Public\ResourcesPanel.h" />
+    <ClInclude Include="Public\StatisticsWindow.h" />
     <ClInclude Include="Public\WorldHierarchy.h" />
   </ItemGroup>
   <ItemGroup>

@@ -68,6 +68,7 @@ namespace Editor
 
         m_MainPanel.RenderGUI(world);
         m_ResourcesPanel.RenderGUI();
+        m_StatisticsWindow.RenderGUI();
     }
 
     void Editor::UpdateSelectedGameObject(const World& world)
