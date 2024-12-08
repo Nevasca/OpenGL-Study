@@ -9,6 +9,7 @@ namespace Rendering
     public:
 
         void SetViewportResolution(const Resolution& resolution) const;
+        void Clear() const;
         void EnableDepthTest() const;
         void DisableDepthTest() const;
         void EnableDepthWrite() const;

@@ -8,6 +8,11 @@ namespace Rendering
         GLCall(glViewport(0, 0, static_cast<int>(resolution.Width), static_cast<int>(resolution.Height)));
     }
 
+    void Device::Clear() const
+    {
+        GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT));
+    }
+
     void Device::EnableDepthTest() const
     {
         GLCall(glEnable(GL_DEPTH_TEST));

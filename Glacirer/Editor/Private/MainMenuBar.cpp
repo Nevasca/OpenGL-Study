@@ -38,7 +38,7 @@ namespace Editor
 
         if(ImGui::MenuItem("Unlit"))
         {
-            std::string unlitShaderFilePath = "res/core/shaders/DefaultUnlit.glsl";
+            std::string unlitShaderFilePath = ResourceManager::RESOURCES_PATH + "Shaders/DefaultUnlit.glsl";
             std::shared_ptr<Shader> unlitShader = ResourceManager::GetOrLoadShader(unlitShaderFilePath, "Unlit");
 
             renderSystem.SetOverrideShader(unlitShader);
@@ -46,7 +46,7 @@ namespace Editor
 
         if(ImGui::MenuItem("Linear Depth"))
         {
-            std::string depthBufferShaderFilePath = "res/core/shaders/visualizers/DepthBufferVisualizer.glsl";
+            std::string depthBufferShaderFilePath = ResourceManager::RESOURCES_PATH + "Shaders/visualizers/DepthBufferVisualizer.glsl";
             std::shared_ptr<Shader> depthBufferShader = ResourceManager::GetOrLoadShader(depthBufferShaderFilePath, "DepthBufferVisualizer");
 
             renderSystem.SetOverrideShader(depthBufferShader);

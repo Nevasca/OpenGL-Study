@@ -11,7 +11,7 @@ PostProcessingSystem::PostProcessingSystem()
     m_ScreenQuad = Primitive::CreateScreenQuad();
 
     const std::string POST_PROCESSING_SHADER_NAME = "PostProcessing";
-    ResourceManager::LoadShader("res/core/shaders/PostProcessing.glsl", POST_PROCESSING_SHADER_NAME);
+    ResourceManager::LoadShader(ResourceManager::RESOURCES_PATH + "Shaders/PostProcessing.glsl", POST_PROCESSING_SHADER_NAME);
 
     m_PostProcessingMaterial = ResourceManager::CreateMaterial("M_PostProcessing", POST_PROCESSING_SHADER_NAME);
 }

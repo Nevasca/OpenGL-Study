@@ -203,6 +203,8 @@ void RenderSystem::RemoveSkyboxComponent(const std::shared_ptr<SkyboxComponent>&
 
 void RenderSystem::Render(const CameraComponent& activeCamera)
 {
+    m_Device.Clear();
+
     UpdateGlobalShaderUniforms(activeCamera);
 
     RenderShadowPass(activeCamera);
