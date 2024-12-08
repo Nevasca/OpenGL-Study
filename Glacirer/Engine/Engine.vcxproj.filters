@@ -24,9 +24,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Private\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -197,6 +194,9 @@
     </ClCompile>
     <ClCompile Include="..\External\stb_image\stb_image.cpp">
       <Filter>External\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Engine.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1647,6 +1647,9 @@
       <Filter>External\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="Public\EngineAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

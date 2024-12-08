@@ -126,12 +126,24 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)External\GLFW\lib-vc2022;$(SolutionDir)External\GLEW\lib\Release\x64;$(SolutionDir)External\Assimp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>echo copying Assimp dlls to output folder
+      <Command>echo copying GLFW dll to output folder
+echo copy "$(SolutionDir)External\GLFW\lib-vc2022\glfw3.dll" "$(TargetDir)"
+copy "$(SolutionDir)External\GLFW\lib-vc2022\glfw3.dll" "$(TargetDir)"
+
+echo copying Assimp dlls to output folder
 echo copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
-copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command>
+copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
+
+echo copying Engine dll to Editor output folder
+echo if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy "$(TargetPath)" "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"
+if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy $(TargetPath)" $(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"
+
+echo copying Engine pdb to Editor output folder
+echo if exist "$(TargetDir)Engine.pdb" if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy "$(TargetDir)Engine.pdb" "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"
+if exist "$(TargetDir)Engine.pdb" if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy "$(TargetDir)Engine.pdb" "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"</Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)External\GLFW\lib-vc2022;$(SolutionDir)External\GLEW\lib\Release\x64;$(SolutionDir)External\Assimp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -154,12 +166,24 @@ copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)External\GLFW\lib-vc2022;$(SolutionDir)External\GLEW\lib\Release\x64;$(SolutionDir)External\Assimp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>echo copying Assimp dlls to output folder
+      <Command>echo copying GLFW dll to output folder
+echo copy "$(SolutionDir)External\GLFW\lib-vc2022\glfw3.dll" "$(TargetDir)"
+copy "$(SolutionDir)External\GLFW\lib-vc2022\glfw3.dll" "$(TargetDir)"
+
+echo copying Assimp dlls to output folder
 echo copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
-copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"</Command>
+copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
+
+echo copying Engine dll to Editor output folder
+echo if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy "$(TargetPath)" "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"
+if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy $(TargetPath)" $(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"
+
+echo copying Engine pdb to Editor output folder
+echo if exist "$(TargetDir)Engine.pdb" if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy "$(TargetDir)Engine.pdb" "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"
+if exist "$(TargetDir)Engine.pdb" if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy "$(TargetDir)Engine.pdb" "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"</Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>

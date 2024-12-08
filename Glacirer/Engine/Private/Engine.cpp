@@ -95,7 +95,6 @@ namespace Glacirer
             return false;
         }
 
-        const char* glsl_version = "#version 330";
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -133,6 +132,13 @@ namespace Glacirer
 
     bool Engine::InitializeGlew() const
     {
-        return glewInit() == GLEW_OK;
+        const GLenum result = glewInit();
+        return result == GLEW_OK;
     }
+
+    const char* Engine::GetGLSLVersion()
+    {
+        return "#version 330";
+    }
+    
 }

@@ -118,10 +118,14 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)External\GLFW\lib-vc2022;$(SolutionDir)External\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>echo copying Assimp dlls to output folder
+      <Command>echo copying GLFW dll to output folder
+echo copy "$(SolutionDir)External\GLFW\lib-vc2022\glfw3.dll" "$(TargetDir)"
+copy "$(SolutionDir)External\GLFW\lib-vc2022\glfw3.dll" "$(TargetDir)"
+
+echo copying Assimp dlls to output folder
 echo copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
 copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
 
@@ -150,10 +154,14 @@ if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)External\GLFW\lib-vc2022;$(SolutionDir)External\GLEW\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3dll.lib;glew32s.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>echo copying Assimp dlls to output folder
+      <Command>echo copying GLFW dll to output folder
+echo copy "$(SolutionDir)External\GLFW\lib-vc2022\glfw3.dll" "$(TargetDir)"
+copy "$(SolutionDir)External\GLFW\lib-vc2022\glfw3.dll" "$(TargetDir)"
+
+echo copying Assimp dlls to output folder
 echo copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
 copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
 
@@ -175,7 +183,7 @@ if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $
     <ClCompile Include="..\External\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Private\EngineEditor.cpp" />
+    <ClCompile Include="Private\Editor.cpp" />
     <ClCompile Include="Private\GameObjectInspector.cpp" />
     <ClCompile Include="Private\Inspectors\Components\CameraComponentInspector.cpp" />
     <ClCompile Include="Private\Inspectors\Components\DirectionalLightComponentInspector.cpp" />
@@ -203,7 +211,7 @@ if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $
     <ClInclude Include="..\External\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\External\imgui\imstb_textedit.h" />
     <ClInclude Include="..\External\imgui\imstb_truetype.h" />
-    <ClInclude Include="Public\EngineEditor.h" />
+    <ClInclude Include="Public\Editor.h" />
     <ClInclude Include="Public\GameObjectInspector.h" />
     <ClInclude Include="Public\IComponentInspector.h" />
     <ClInclude Include="Public\Inspectors\Components\CameraComponentInspector.h" />

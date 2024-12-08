@@ -1,7 +1,10 @@
-#include "EngineEditor.h"
+#include "Editor.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
 
 #include "Input.h"
 #include "World.h"
@@ -10,16 +13,51 @@
 
 namespace Editor
 {
-    void EngineEditor::Initialize()
-    { }
-
-    void EngineEditor::Update(float deltaTime, World& world)
+    void Editor::Initialize()
     {
-        UpdateSelectedGameObject(world);
+        m_Engine.Initialize("Glacirer Engine");
+
+        InitializeImGUI();
+    }
+
+    void Editor::Setup()
+    {
+        m_Engine.Setup();
+    }
+
+    bool Editor::IsInitialized() const
+    {
+        return m_Engine.IsInitialized();
+    }
+
+    bool Editor::ShouldClose() const
+    {
+        return m_Engine.ShouldClose();
+    }
+
+    void Editor::Update()
+    {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        
+        m_Engine.Update();
+
+        UpdateSelectedGameObject(m_Engine.GetWorld());
         UpdateShortcuts();
     }
 
-    void EngineEditor::RenderGUI(World& world)
+    void Editor::Render()
+    {
+        m_Engine.Render();
+
+        RenderGUI(m_Engine.GetWorld());
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    }
+
+    void Editor::RenderGUI(World& world)
     {
         m_MainMenuBar.RenderGUI(world);
 
@@ -32,7 +70,7 @@ namespace Editor
         m_ResourcesPanel.RenderGUI();
     }
 
-    void EngineEditor::UpdateSelectedGameObject(const World& world)
+    void Editor::UpdateSelectedGameObject(const World& world)
     {
         if(m_MainPanel.HasAnyGameObjectSelected())
         {
@@ -53,7 +91,7 @@ namespace Editor
         }
     }
 
-    void EngineEditor::SelectGameObject(int index, const World& world)
+    void Editor::SelectGameObject(int index, const World& world)
     {
         std::shared_ptr<GameObject> selectedGameObject = world.GetGameObjectAt(index);
         std::shared_ptr<MeshComponent> meshComponent = selectedGameObject->GetComponent<MeshComponent>();
@@ -64,7 +102,7 @@ namespace Editor
         }
     }
 
-    void EngineEditor::DeselectGameObject(int index, const World& world)
+    void Editor::DeselectGameObject(int index, const World& world)
     {
         std::shared_ptr<GameObject> selectedGameObject = world.GetGameObjectAt(index);
         std::shared_ptr<MeshComponent> meshComponent = selectedGameObject->GetComponent<MeshComponent>();
@@ -75,12 +113,27 @@ namespace Editor
         }
     }
 
-    void EngineEditor::UpdateShortcuts()
+    void Editor::UpdateShortcuts()
     {
         if(Input::GetKey(GLFW_KEY_LEFT_CONTROL) && Input::GetKeyDown(GLFW_KEY_SPACE))
         {
             bShowPanelsEnabled = !bShowPanelsEnabled;
         }
+    }
+
+    void Editor::InitializeImGUI()
+    {
+        GLFWwindow* window = m_Engine.GetWindow();
+
+        ImGui::CreateContext();
+        
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+        ImGui_ImplGlfw_InitForOpenGL(window, true);
+        ImGui_ImplOpenGL3_Init(Glacirer::Engine::GetGLSLVersion());
+        ImGui::StyleColorsDark();
     }
 }
 

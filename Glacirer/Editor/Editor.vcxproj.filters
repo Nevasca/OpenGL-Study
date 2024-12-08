@@ -21,16 +21,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Editor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Private\Inspectors\Components\CameraComponentInspector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Private\Inspectors\Components\DirectionalLightComponentInspector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Private\EngineEditor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Private\GameObjectInspector.cpp">
@@ -96,15 +90,18 @@
     <ClCompile Include="..\External\imgui\imgui_widgets.cpp">
       <Filter>External\ImGUI</Filter>
     </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Editor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Public\Inspectors\Components\CameraComponentInspector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Public\Inspectors\Components\DirectionalLightComponentInspector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Public\EngineEditor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Public\GameObjectInspector.h">
@@ -178,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="..\External\imgui\imstb_truetype.h">
       <Filter>External\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Editor.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

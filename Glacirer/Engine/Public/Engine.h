@@ -20,8 +20,13 @@ namespace Glacirer
         void Render();
         void Shutdown();
 
+        World& GetWorld() const { return *m_World; }
+        GLFWwindow* GetWindow() const { return m_Window; }
+
         bool IsInitialized() const { return bIsInitialized; }
         bool ShouldClose() const;
+
+        static const char* GetGLSLVersion();
 
     private:
 
