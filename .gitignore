@@ -37,3 +37,6 @@ bin/
 # IDE files
 .idea/
 .vs/
+
+# ImGUI files
+**/imgui.ini
