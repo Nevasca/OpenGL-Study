@@ -46,9 +46,6 @@ RenderSystem::RenderSystem()
 
 void RenderSystem::Setup()
 {
-    // Binding shadow map texture too early on constructor end ups getting unbound somewhere else internally 
-    m_LightingSystem.Setup();
-
     SetupUniformsFor(*m_DirectionalDepthShader);
     SetupUniformsFor(*m_OmnidirectionalDepthShader);
     SetupUniformsFor(*m_OutlineShader);

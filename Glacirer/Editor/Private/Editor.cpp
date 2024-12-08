@@ -40,10 +40,6 @@ namespace Editor
 
     void Editor::Update()
     {
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-        
         m_Engine.Update();
 
         UpdateSelectedGameObject(m_Engine.GetWorld());
@@ -52,6 +48,10 @@ namespace Editor
 
     void Editor::Render()
     {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
         m_Engine.Render();
 
         RenderGUI(m_Engine.GetWorld());

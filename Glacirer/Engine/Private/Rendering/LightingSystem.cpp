@@ -14,11 +14,6 @@ LightingSystem::LightingSystem()
     CreateShadowMaps();
 }
 
-void LightingSystem::Setup()
-{
-    SetupShadowMaps();
-}
-
 void LightingSystem::Shutdown()
 {
     m_DirectionalLights.clear();
@@ -207,6 +202,11 @@ void LightingSystem::UpdateLightingUniformBuffer(const CameraComponent& activeCa
     UpdateDirectionalShadowMapUniformBuffers();
     UpdatePointShadowMapUniformBuffers();
     UpdateSpotShadowMapUniformBuffers();
+
+    // Binding shadow map texture too early on Setup end ups getting unbound somewhere else internally
+    // Also, when binding after creating a new shadow map (new light added) it makes first light to not proper have its texture bound
+    // TODO: investigate above issue to not have to bind it every frame (or if it is expected and we should do this way)
+    BindShadowMapTextures();
 }
 
 void LightingSystem::UpdateDirectionalShadowMapUniformBuffers()
@@ -363,7 +363,7 @@ void LightingSystem::CreateUniformBuffers()
         true);
 }
 
-void LightingSystem::SetupShadowMaps()
+void LightingSystem::BindShadowMapTextures()
 {
     for(int i = 0; i < m_TotalActiveDirectionalLights; i++)
     {

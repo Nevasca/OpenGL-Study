@@ -67,9 +67,6 @@ namespace Glacirer
 
     void Engine::Update()
     {
-        /* Swap front and back buffers */
-        glfwSwapBuffers(m_Window);
-
         /* Poll for and process events, like keyboard input and mouse movement */
         Input::SwapBuffers();
         glfwPollEvents();
@@ -85,6 +82,9 @@ namespace Glacirer
 
     void Engine::Render()
     {
+        /* Swap front and back buffers */
+        glfwSwapBuffers(m_Window);
+
         m_World->Render();
     }
 

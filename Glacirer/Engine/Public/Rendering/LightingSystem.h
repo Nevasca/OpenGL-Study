@@ -113,7 +113,6 @@ class LightingSystem
 public:
 
     LightingSystem();
-    void Setup();
     void Shutdown();
     
     void AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent);
@@ -178,7 +177,7 @@ private:
     void UpdateSpotShadowMapUniformBuffers();
 
     void CreateUniformBuffers();
-    void SetupShadowMaps();
+    void BindShadowMapTextures();
     void CreateShadowMaps();
     void CreateDirectionalLightShadowMapFor(int lightIndex);
     void CreatePointLightShadowMapFor(int lightIndex);
