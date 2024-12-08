@@ -10,6 +10,7 @@
 #include "World.h"
 #include "GameObject/GameObject.h"
 #include "Basics/Components/MeshComponent.h"
+#include "Sandbox/SandboxSceneSpawner.h"
 
 namespace Editor
 {
@@ -23,6 +24,8 @@ namespace Editor
     void Editor::Setup()
     {
         m_Engine.Setup();
+
+        Sandbox::SandboxSceneSpawner::Spawn(m_Engine.GetWorld());
     }
 
     bool Editor::IsInitialized() const

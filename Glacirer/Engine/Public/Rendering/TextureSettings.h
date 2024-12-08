@@ -1,10 +1,11 @@
 ﻿#pragma once
 
+#include "EngineAPI.h"
 #include "OpenGLCore.h"
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 
-struct TextureSettings
+struct ENGINE_API TextureSettings
 {
     unsigned int InternalFormat{GL_SRGB};
     unsigned int Format{GL_RGB};

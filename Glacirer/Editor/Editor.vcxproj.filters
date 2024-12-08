@@ -96,6 +96,12 @@
     <ClCompile Include="Private\Editor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Private\Sandbox\SandboxSceneSpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\StatisticsWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Public\Inspectors\Components\CameraComponentInspector.h">
@@ -177,6 +183,12 @@
       <Filter>External\ImGUI</Filter>
     </ClInclude>
     <ClInclude Include="Public\Editor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Sandbox\SandboxSceneSpawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\StatisticsWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
