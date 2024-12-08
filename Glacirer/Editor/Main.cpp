@@ -1,18 +1,17 @@
-#include <iostream>
-
-#include "Engine.h"
+#include "Editor.h"
 
 int main()
 {
-    Glacirer::Engine engine{};
-    engine.Initialize("Glacirer Engine");
-    assert(engine.IsInitialized());
-    engine.Setup();
+    Editor::Editor editor{};
+    editor.Initialize();
+    assert(editor.IsInitialized());
+    
+    editor.Setup();
 
-    while(!engine.ShouldClose())
+    while(!editor.ShouldClose())
     {
-        engine.Update();
-        engine.Render();
+        editor.Update();
+        editor.Render();
     }
 
     return 0;
