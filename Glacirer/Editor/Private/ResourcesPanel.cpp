@@ -1,10 +1,10 @@
 #include "ResourcesPanel.h"
 
-#include "ResourceManager.h"
+#include "Resources/ResourceManager.h"
 #include <memory>
 #include <imgui/imgui.h>
 
-namespace Editor
+namespace GlacirerEditor
 {
     void ResourcesPanel::RenderGUI()
     {
@@ -55,7 +55,7 @@ namespace Editor
         {
             if(m_ResourceCollection.HasAnyMaterialSelected())
             {
-                std::shared_ptr<Material> selectedMaterial = ResourceManager::GetMaterial(m_ResourceCollection.GetCurrentSelectedMaterialName());
+                std::shared_ptr<Glacirer::Rendering::Material> selectedMaterial = Glacirer::Resources::ResourceManager::GetMaterial(m_ResourceCollection.GetCurrentSelectedMaterialName());
                 assert(selectedMaterial);
                 m_MaterialInspector.RenderGUI(*selectedMaterial);
             }

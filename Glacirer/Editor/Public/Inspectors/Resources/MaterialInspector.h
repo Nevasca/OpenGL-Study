@@ -1,23 +1,29 @@
 #pragma once
 
-class Material;
+namespace Glacirer
+{
+    namespace Rendering
+    {
+        class Material;
+    }
+}
 
-namespace Editor
+namespace GlacirerEditor
 {
     namespace Inspector
     {
         class MaterialInspector
         {
         public:
-            void RenderGUI(Material& material);
+            void RenderGUI(Glacirer::Rendering::Material& material);
 
         private:
-            void RenderRenderingMode(Material& material);
-            void RenderColorProperties(Material& material);
-            void RenderTextureProperties(Material& material);
-            void RenderBoolProperties(Material& material);
-            void RenderFloatProperties(Material& material);
-            void RenderIntProperties(Material& material);
+            void RenderRenderingMode(Glacirer::Rendering::Material& material);
+            void RenderColorProperties(Glacirer::Rendering::Material& material);
+            void RenderTextureProperties(Glacirer::Rendering::Material& material);
+            void RenderBoolProperties(Glacirer::Rendering::Material& material);
+            void RenderFloatProperties(Glacirer::Rendering::Material& material);
+            void RenderIntProperties(Glacirer::Rendering::Material& material);
         };
     }
 }

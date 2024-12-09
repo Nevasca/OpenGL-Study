@@ -3,15 +3,18 @@
 #include "WorldHierarchy.h"
 #include "inspectors/WorldInspector.h"
 
-class World;
+namespace Glacirer
+{
+    class World;
+}
 
-namespace Editor
+namespace GlacirerEditor
 {
     class MainPanel
     {
     public:
 
-        void RenderGUI(World& world);
+        void RenderGUI(Glacirer::World& world);
         bool HasAnyGameObjectSelected() const { return m_Hierarchy.HasAnyGameObjectSelected(); }
         int GetCurrentSelectedGameObjectIndex() const { return m_Hierarchy.GetCurrentSelectedGameObjectIndex(); } 
 
@@ -22,8 +25,8 @@ namespace Editor
         Inspector::WorldInspector m_WorldInspector{};
         float m_MainPanelWidth{350.f};
 
-        void RenderHierarchyTabItem(World& world);
-        void RenderInspectorTabItem(World& world);
-        void RenderWorldSettingsTabItem(World& world);
+        void RenderHierarchyTabItem(Glacirer::World& world);
+        void RenderInspectorTabItem(Glacirer::World& world);
+        void RenderWorldSettingsTabItem(Glacirer::World& world);
     };
 }

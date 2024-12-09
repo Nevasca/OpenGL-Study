@@ -4,11 +4,11 @@
 #include "Rendering/RenderSystem.h"
 #include <imgui/imgui.h>
 
-namespace Editor
+namespace GlacirerEditor
 {
     namespace Inspector
     {
-        void WorldInspector::RenderGUI(World& world)
+        void WorldInspector::RenderGUI(Glacirer::World& world)
         {
             if(ImGui::CollapsingHeader("Lighting", ImGuiTreeNodeFlags_DefaultOpen))
             {
@@ -21,9 +21,9 @@ namespace Editor
             }
         }
 
-        void WorldInspector::RenderLightingProperties(World& world)
+        void WorldInspector::RenderLightingProperties(Glacirer::World& world)
         {
-            RenderSystem& renderSystem = world.GetRenderSystem();
+            Glacirer::Rendering::RenderSystem& renderSystem = world.GetRenderSystem();
 
             glm::vec3 ambientLightColor = renderSystem.GetAmbientLightColor();
             ImGui::ColorEdit3("Ambient Light", &ambientLightColor.r);
@@ -31,16 +31,16 @@ namespace Editor
             renderSystem.SetAmbientLightColor(ambientLightColor);
         }
 
-        void WorldInspector::RenderRenderingProperties(World& world)
+        void WorldInspector::RenderRenderingProperties(Glacirer::World& world)
         {
-            RenderSystem& renderSystem = world.GetRenderSystem();
+            Glacirer::Rendering::RenderSystem& renderSystem = world.GetRenderSystem();
 
             glm::vec4 clearColor = renderSystem.GetClearColor();
             ImGui::ColorEdit4("Clear Color", &clearColor.r);
 
             renderSystem.SetClearColor(clearColor);
 
-            Rendering::Device& device = renderSystem.GetDevice();
+            Glacirer::Rendering::Device& device = renderSystem.GetDevice();
 
             bool bIsFaceCullingEnabled = device.IsFaceCullingEnabled();
             ImGui::Checkbox("Face culling", &bIsFaceCullingEnabled);

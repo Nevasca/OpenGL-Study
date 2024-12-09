@@ -2,13 +2,13 @@
 
 #include <imgui/imgui.h>
 
-#include "ResourceManager.h"
+#include "Resources/ResourceManager.h"
 #include "World.h"
 #include "Rendering/RenderSystem.h"
 
-namespace Editor
+namespace GlacirerEditor
 {
-    void MainMenuBar::RenderGUI(World& world)
+    void MainMenuBar::RenderGUI(Glacirer::World& world)
     {
         if(!ImGui::BeginMainMenuBar())
         {
@@ -20,14 +20,14 @@ namespace Editor
         ImGui::EndMainMenuBar();
     }
 
-    void MainMenuBar::RenderViewportMenu(World& world)
+    void MainMenuBar::RenderViewportMenu(Glacirer::World& world)
     {
         if(!ImGui::BeginMenu("Viewport"))
         {
             return;
         }
 
-        RenderSystem& renderSystem = world.GetRenderSystem();
+        Glacirer::Rendering::RenderSystem& renderSystem = world.GetRenderSystem();
 
         ImGui::SeparatorText("Visualizations");
         
@@ -38,16 +38,16 @@ namespace Editor
 
         if(ImGui::MenuItem("Unlit"))
         {
-            std::string unlitShaderFilePath = ResourceManager::RESOURCES_PATH + "Shaders/DefaultUnlit.glsl";
-            std::shared_ptr<Shader> unlitShader = ResourceManager::GetOrLoadShader(unlitShaderFilePath, "Unlit");
+            std::string unlitShaderFilePath = Glacirer::Resources::ResourceManager::RESOURCES_PATH + "Shaders/DefaultUnlit.glsl";
+            std::shared_ptr<Glacirer::Rendering::Shader> unlitShader = Glacirer::Resources::ResourceManager::GetOrLoadShader(unlitShaderFilePath, "Unlit");
 
             renderSystem.SetOverrideShader(unlitShader);
         }
 
         if(ImGui::MenuItem("Linear Depth"))
         {
-            std::string depthBufferShaderFilePath = ResourceManager::RESOURCES_PATH + "Shaders/visualizers/DepthBufferVisualizer.glsl";
-            std::shared_ptr<Shader> depthBufferShader = ResourceManager::GetOrLoadShader(depthBufferShaderFilePath, "DepthBufferVisualizer");
+            std::string depthBufferShaderFilePath = Glacirer::Resources::ResourceManager::RESOURCES_PATH + "Shaders/visualizers/DepthBufferVisualizer.glsl";
+            std::shared_ptr<Glacirer::Rendering::Shader> depthBufferShader = Glacirer::Resources::ResourceManager::GetOrLoadShader(depthBufferShaderFilePath, "DepthBufferVisualizer");
 
             renderSystem.SetOverrideShader(depthBufferShader);
         }

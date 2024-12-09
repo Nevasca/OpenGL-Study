@@ -3,13 +3,13 @@
 #include "Basics/Components/SpotLightComponent.h"
 #include <imgui/imgui.h>
 
-namespace Editor
+namespace GlacirerEditor
 {
     namespace Inspector
     {
-        void SpotLightComponentInspector::RenderGUI(const std::shared_ptr<Component>& component)
+        void SpotLightComponentInspector::RenderGUI(const std::shared_ptr<Glacirer::Component>& component)
         {
-            std::shared_ptr<SpotLightComponent> spotLight = std::dynamic_pointer_cast<SpotLightComponent>(component);
+            std::shared_ptr<Glacirer::SpotLightComponent> spotLight = std::dynamic_pointer_cast<Glacirer::SpotLightComponent>(component);
 
             assert(spotLight);
 
@@ -41,7 +41,7 @@ namespace Editor
 
         int SpotLightComponentInspector::GetComponentHash()
         {
-            return SpotLightComponent::GetClassHash();
+            return Glacirer::SpotLightComponent::GetClassHash();
         }
     }
 }

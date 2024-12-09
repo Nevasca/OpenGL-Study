@@ -4,13 +4,13 @@
 #include <cassert>
 #include <imgui/imgui.h>
 
-namespace Editor
+namespace GlacirerEditor
 {
     namespace Inspector
     {
-        void PointLightComponentInspector::RenderGUI(const std::shared_ptr<Component>& component)
+        void PointLightComponentInspector::RenderGUI(const std::shared_ptr<Glacirer::Component>& component)
         {
-            std::shared_ptr<PointLightComponent> pointLight = std::dynamic_pointer_cast<PointLightComponent>(component);
+            std::shared_ptr<Glacirer::PointLightComponent> pointLight = std::dynamic_pointer_cast<Glacirer::PointLightComponent>(component);
 
             assert(pointLight);
 
@@ -34,7 +34,7 @@ namespace Editor
 
         int PointLightComponentInspector::GetComponentHash()
         {
-            return PointLightComponent::GetClassHash();
+            return Glacirer::PointLightComponent::GetClassHash();
         }
     }
 }

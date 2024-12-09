@@ -5,13 +5,13 @@
 #include "Basics/Components/DirectionalLightComponent.h"
 #include <imgui/imgui.h>
 
-namespace Editor
+namespace GlacirerEditor
 {
     namespace Inspector
     {
-        void DirectionalLightComponentInspector::RenderGUI(const std::shared_ptr<Component>& component)
+        void DirectionalLightComponentInspector::RenderGUI(const std::shared_ptr<Glacirer::Component>& component)
         {
-            std::shared_ptr<DirectionalLightComponent> directionalLight = std::dynamic_pointer_cast<DirectionalLightComponent>(component);
+            std::shared_ptr<Glacirer::DirectionalLightComponent> directionalLight = std::dynamic_pointer_cast<Glacirer::DirectionalLightComponent>(component);
 
             assert(directionalLight);
 
@@ -39,7 +39,7 @@ namespace Editor
 
         int DirectionalLightComponentInspector::GetComponentHash()
         {
-            return DirectionalLightComponent::GetClassHash();
+            return Glacirer::DirectionalLightComponent::GetClassHash();
         }
     }
 }

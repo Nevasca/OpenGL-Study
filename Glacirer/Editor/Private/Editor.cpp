@@ -12,7 +12,7 @@
 #include "Basics/Components/MeshComponent.h"
 #include "Sandbox/SandboxSceneSpawner.h"
 
-namespace Editor
+namespace GlacirerEditor
 {
     void Editor::Initialize()
     {
@@ -60,7 +60,7 @@ namespace Editor
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
-    void Editor::RenderGUI(World& world)
+    void Editor::RenderGUI(Glacirer::World& world)
     {
         m_MainMenuBar.RenderGUI(world);
 
@@ -74,7 +74,7 @@ namespace Editor
         m_StatisticsWindow.RenderGUI();
     }
 
-    void Editor::UpdateSelectedGameObject(const World& world)
+    void Editor::UpdateSelectedGameObject(const Glacirer::World& world)
     {
         if(m_MainPanel.HasAnyGameObjectSelected())
         {
@@ -95,10 +95,10 @@ namespace Editor
         }
     }
 
-    void Editor::SelectGameObject(int index, const World& world)
+    void Editor::SelectGameObject(int index, const Glacirer::World& world)
     {
-        std::shared_ptr<GameObject> selectedGameObject = world.GetGameObjectAt(index);
-        std::shared_ptr<MeshComponent> meshComponent = selectedGameObject->GetComponent<MeshComponent>();
+        std::shared_ptr<Glacirer::GameObject> selectedGameObject = world.GetGameObjectAt(index);
+        std::shared_ptr<Glacirer::MeshComponent> meshComponent = selectedGameObject->GetComponent<Glacirer::MeshComponent>();
 
         if(meshComponent)
         {
@@ -106,10 +106,10 @@ namespace Editor
         }
     }
 
-    void Editor::DeselectGameObject(int index, const World& world)
+    void Editor::DeselectGameObject(int index, const Glacirer::World& world)
     {
-        std::shared_ptr<GameObject> selectedGameObject = world.GetGameObjectAt(index);
-        std::shared_ptr<MeshComponent> meshComponent = selectedGameObject->GetComponent<MeshComponent>();
+        std::shared_ptr<Glacirer::GameObject> selectedGameObject = world.GetGameObjectAt(index);
+        std::shared_ptr<Glacirer::MeshComponent> meshComponent = selectedGameObject->GetComponent<Glacirer::MeshComponent>();
 
         if(meshComponent)
         {
@@ -119,7 +119,7 @@ namespace Editor
 
     void Editor::UpdateShortcuts()
     {
-        if(Input::GetKey(GLFW_KEY_LEFT_CONTROL) && Input::GetKeyDown(GLFW_KEY_SPACE))
+        if(Glacirer::Input::GetKey(GLFW_KEY_LEFT_CONTROL) && Glacirer::Input::GetKeyDown(GLFW_KEY_SPACE))
         {
             bShowPanelsEnabled = !bShowPanelsEnabled;
         }

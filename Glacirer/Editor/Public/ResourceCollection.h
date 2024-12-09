@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace Editor
+namespace GlacirerEditor
 {
     class ResourceCollection
     {

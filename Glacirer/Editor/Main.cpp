@@ -2,7 +2,7 @@
 
 int main()
 {
-    Editor::Editor editor{};
+    GlacirerEditor::Editor editor{};
     editor.Initialize();
     assert(editor.IsInitialized());
     

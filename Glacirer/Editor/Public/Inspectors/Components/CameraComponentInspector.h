@@ -1,9 +1,12 @@
 #pragma once
 #include "IComponentInspector.h"
 
-class CameraComponent;
+namespace Glacirer
+{
+    class CameraComponent;
+}
 
-namespace Editor
+namespace GlacirerEditor
 {
     namespace Inspector
     {
@@ -11,14 +14,14 @@ namespace Editor
         {
         public:
 
-            void RenderGUI(const std::shared_ptr<Component>& component) override;
+            void RenderGUI(const std::shared_ptr<Glacirer::Component>& component) override;
 
             static int GetComponentHash();
 
         private:
 
-            void RenderOrthographicGUI(CameraComponent& camera);
-            void RenderPerspectiveGUI(CameraComponent& camera);
+            void RenderOrthographicGUI(Glacirer::CameraComponent& camera);
+            void RenderPerspectiveGUI(Glacirer::CameraComponent& camera);
         };
     }
 }

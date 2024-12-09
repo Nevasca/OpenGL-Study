@@ -3,9 +3,9 @@
 #include <imgui/imgui.h>
 #include "World.h"
 
-namespace Editor
+namespace GlacirerEditor
 {
-    void MainPanel::RenderGUI(World& world)
+    void MainPanel::RenderGUI(Glacirer::World& world)
     {
         const ImGuiViewport* mainViewport = ImGui::GetMainViewport();
         ImGui::SetNextWindowPos(ImVec2(mainViewport->WorkSize.x - m_MainPanelWidth, mainViewport->WorkPos.y), ImGuiCond_Always);
@@ -42,7 +42,7 @@ namespace Editor
         ImGui::End();
     }
 
-    void MainPanel::RenderHierarchyTabItem(World& world)
+    void MainPanel::RenderHierarchyTabItem(Glacirer::World& world)
     {
         if(ImGui::BeginTabItem("Hierarchy"))
         {
@@ -51,14 +51,14 @@ namespace Editor
         }
     }
 
-    void MainPanel::RenderInspectorTabItem(World& world)
+    void MainPanel::RenderInspectorTabItem(Glacirer::World& world)
     {
         if(ImGui::BeginTabItem("Inspector"))
         {
             if(m_Hierarchy.HasAnyGameObjectSelected())
             {
                 int selectedIndex = m_Hierarchy.GetCurrentSelectedGameObjectIndex();
-                std::shared_ptr<GameObject> selectedObject = world.GetGameObjectAt(selectedIndex);
+                std::shared_ptr<Glacirer::GameObject> selectedObject = world.GetGameObjectAt(selectedIndex);
 
                 m_GameObjectInspector.RenderGUI(*selectedObject);
             }
@@ -67,7 +67,7 @@ namespace Editor
         }
     }
 
-    void MainPanel::RenderWorldSettingsTabItem(World& world)
+    void MainPanel::RenderWorldSettingsTabItem(Glacirer::World& world)
     {
         if(ImGui::BeginTabItem("World Settings"))
         {

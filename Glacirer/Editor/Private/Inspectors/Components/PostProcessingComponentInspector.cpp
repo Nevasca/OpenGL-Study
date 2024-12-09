@@ -3,13 +3,13 @@
 #include "Basics/Components/PostProcessingComponent.h"
 #include "imgui/imgui.h"
 
-namespace Editor
+namespace GlacirerEditor
 {
     namespace Inspector
     {
-        void PostProcessingComponentInspector::RenderGUI(const std::shared_ptr<Component>& component)
+        void PostProcessingComponentInspector::RenderGUI(const std::shared_ptr<Glacirer::Component>& component)
         {
-            std::shared_ptr<PostProcessingComponent> postProcessing = std::dynamic_pointer_cast<PostProcessingComponent>(component);
+            std::shared_ptr<Glacirer::PostProcessingComponent> postProcessing = std::dynamic_pointer_cast<Glacirer::PostProcessingComponent>(component);
             assert(postProcessing);
 
             float gammaValue = postProcessing->GetGammaValue();
@@ -40,7 +40,7 @@ namespace Editor
 
         int PostProcessingComponentInspector::GetComponentHash()
         {
-            return PostProcessingComponent::GetClassHash();
+            return Glacirer::PostProcessingComponent::GetClassHash();
         }
     }
 }

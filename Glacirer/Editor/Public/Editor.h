@@ -5,9 +5,12 @@
 #include "ResourcesPanel.h"
 #include "StatisticsWindow.h"
 
-class World;
+namespace Glacirer
+{
+    class World;
+}
 
-namespace Editor
+namespace GlacirerEditor
 {
     class Editor
     {
@@ -32,10 +35,10 @@ namespace Editor
         int m_SelectedGameObjectIndex{-1};
         bool bShowPanelsEnabled{true};
 
-        void RenderGUI(World& world);
-        void UpdateSelectedGameObject(const World& world);
-        void SelectGameObject(int index, const World& world);
-        void DeselectGameObject(int index, const World& world);
+        void RenderGUI(Glacirer::World& world);
+        void UpdateSelectedGameObject(const Glacirer::World& world);
+        void SelectGameObject(int index, const Glacirer::World& world);
+        void DeselectGameObject(int index, const Glacirer::World& world);
         void UpdateShortcuts();
 
         void InitializeImGUI();

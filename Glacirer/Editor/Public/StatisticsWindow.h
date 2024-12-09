@@ -2,7 +2,7 @@
 
 #include "imgui/imgui.h"
 
-namespace Editor
+namespace GlacirerEditor
 {
     class StatisticsWindow
     {

@@ -1,13 +1,16 @@
 #pragma once
 
-class World;
+namespace Glacirer
+{
+    class World;
+}
 
-namespace Editor
+namespace GlacirerEditor
 {
     class WorldHierarchy
     {
     public:
-        void RenderGUI(World& world);
+        void RenderGUI(Glacirer::World& world);
 
         bool HasAnyGameObjectSelected() const { return m_SelectedIndex >= 0; }
         int GetCurrentSelectedGameObjectIndex() const { return m_SelectedIndex; } 

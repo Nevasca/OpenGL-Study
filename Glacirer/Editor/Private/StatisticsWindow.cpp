@@ -1,6 +1,6 @@
 #include "StatisticsWindow.h"
 
-namespace Editor
+namespace GlacirerEditor
 {
     void StatisticsWindow::RenderGUI()
     {

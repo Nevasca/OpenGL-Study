@@ -1,8 +1,11 @@
 #pragma once
 
-class World;
+namespace Glacirer
+{
+    class World;
+}
 
-namespace Editor
+namespace GlacirerEditor
 {
     namespace Inspector
     {
@@ -10,12 +13,12 @@ namespace Editor
         {
         public:
 
-            void RenderGUI(World& world);
+            void RenderGUI(Glacirer::World& world);
 
         private:
 
-            void RenderLightingProperties(World& world);
-            void RenderRenderingProperties(World& world);
+            void RenderLightingProperties(Glacirer::World& world);
+            void RenderRenderingProperties(Glacirer::World& world);
         };
     }
 }

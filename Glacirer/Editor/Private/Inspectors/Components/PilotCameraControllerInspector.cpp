@@ -3,11 +3,11 @@
 #include "Basics/Components/PilotCameraController.h"
 #include <imgui/imgui.h>
 
-namespace Editor
+namespace GlacirerEditor
 {
     namespace Inspector
     {
-        void PilotCameraControllerInspector::RenderGUI(const std::shared_ptr<Component>& component)
+        void PilotCameraControllerInspector::RenderGUI(const std::shared_ptr<Glacirer::Component>& component)
         {
             ImGui::TextWrapped("F: enter pilot Mode");
             ImGui::TextWrapped("Esc: exit pilot mode");
@@ -15,7 +15,7 @@ namespace Editor
 
         int PilotCameraControllerInspector::GetComponentHash()
         {
-            return PilotCameraController::GetClassHash();
+            return Glacirer::PilotCameraController::GetClassHash();
         }
     }
 }

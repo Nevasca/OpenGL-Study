@@ -1,27 +1,30 @@
 #pragma once
 #include <string>
 
-class GameObject;
-class World;
+namespace Glacirer
+{
+    class GameObject;
+    class World;
+}
 
-namespace Editor
+namespace GlacirerEditor
 {
     namespace Sandbox
     {
         class SandboxSceneSpawner
         {
         public:
-            static void Spawn(World& world);
+            static void Spawn(Glacirer::World& world);
 
         private:
             static std::string SANDBOX_RESOURCES_PATH;
             
-            static void SpawnCrates(World& world);
-            static void SpawnBridge(World& world);
-            static void SpawnWarrior(World& world);
-            static void SpawnTransparentObjects(World& world);
-            static void SpawnFloor(World& world);
-            static void SpawnLights(World& world, GameObject& camera);
+            static void SpawnCrates(Glacirer::World& world);
+            static void SpawnBridge(Glacirer::World& world);
+            static void SpawnWarrior(Glacirer::World& world);
+            static void SpawnTransparentObjects(Glacirer::World& world);
+            static void SpawnFloor(Glacirer::World& world);
+            static void SpawnLights(Glacirer::World& world, Glacirer::GameObject& camera);
         };
     }
 }

@@ -6,13 +6,13 @@
 #include "World.h"
 #include "GameObject/GameObject.h"
 
-namespace Editor
+namespace GlacirerEditor
 {
-    void WorldHierarchy::RenderGUI(World& world)
+    void WorldHierarchy::RenderGUI(Glacirer::World& world)
     {
         TryDeselectingNode();
 
-        std::vector<std::shared_ptr<GameObject>>& gameObjects = world.GetAllGameObjects();
+        std::vector<std::shared_ptr<Glacirer::GameObject>>& gameObjects = world.GetAllGameObjects();
 
         for(int i = 0; i < static_cast<int>(gameObjects.size()); i++)
         {

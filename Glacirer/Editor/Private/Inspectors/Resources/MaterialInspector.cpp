@@ -6,15 +6,15 @@
 #include "Rendering/Shader.h"
 #include "Rendering/Texture.h"
 
-namespace Editor
+namespace GlacirerEditor
 {
     namespace Inspector
     {
-        void MaterialInspector::RenderGUI(Material& material)
+        void MaterialInspector::RenderGUI(Glacirer::Rendering::Material& material)
         {
             ImGui::SeparatorText(material.GetName().c_str());
 
-            const std::shared_ptr<Shader>& shader = material.GetShader();
+            const std::shared_ptr<Glacirer::Rendering::Shader>& shader = material.GetShader();
             std::string shaderName = shader ? shader->GetName() : "None";
             ImGui::Text("Shader: %s", shaderName.c_str());
 
@@ -26,7 +26,7 @@ namespace Editor
             RenderIntProperties(material);
         }
 
-        void MaterialInspector::RenderRenderingMode(Material& material)
+        void MaterialInspector::RenderRenderingMode(Glacirer::Rendering::Material& material)
         {
             const char* renderingModes[] = { "Opaque", "AlphaCutout", "Transparent" };
             int currentModeIndex = static_cast<int>(material.GetRenderingMode()); 
@@ -52,10 +52,10 @@ namespace Editor
                 ImGui::EndCombo();
             }
 
-            material.SetRenderingMode(static_cast<MaterialRenderingMode>(currentModeIndex));
+            material.SetRenderingMode(static_cast<Glacirer::Rendering::MaterialRenderingMode>(currentModeIndex));
         }
 
-        void MaterialInspector::RenderColorProperties(Material& material)
+        void MaterialInspector::RenderColorProperties(Glacirer::Rendering::Material& material)
         {
             const auto& materialColorProperties = material.GetAllColorProperties();
             std::map<std::string, glm::vec4> inspectorColorProperties{};
@@ -74,7 +74,7 @@ namespace Editor
             }
         }
 
-        void MaterialInspector::RenderTextureProperties(Material& material)
+        void MaterialInspector::RenderTextureProperties(Glacirer::Rendering::Material& material)
         {
             const auto& materialTextureProperties = material.GetAllTextureProperties();
             
@@ -98,7 +98,7 @@ namespace Editor
             }
         }
 
-        void MaterialInspector::RenderBoolProperties(Material& material)
+        void MaterialInspector::RenderBoolProperties(Glacirer::Rendering::Material& material)
         {
             const auto& materialBoolProperties = material.GetAllBoolProperties();
             std::map<std::string, bool> inspectorBoolProperties{};
@@ -117,7 +117,7 @@ namespace Editor
             }
         }
 
-        void MaterialInspector::RenderFloatProperties(Material& material)
+        void MaterialInspector::RenderFloatProperties(Glacirer::Rendering::Material& material)
         {
             const auto& materialFloatProperties = material.GetAllFloatProperties();
             std::map<std::string, float> inspectorFloatProperties{};
@@ -136,7 +136,7 @@ namespace Editor
             }
         }
 
-        void MaterialInspector::RenderIntProperties(Material& material)
+        void MaterialInspector::RenderIntProperties(Glacirer::Rendering::Material& material)
         {
             const auto& materialIntProperties = material.GetAllIntProperties();
             std::map<std::string, int> inspectorIntProperties{};

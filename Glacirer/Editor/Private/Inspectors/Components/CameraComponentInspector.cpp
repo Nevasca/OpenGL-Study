@@ -3,13 +3,13 @@
 #include "Basics/Components/CameraComponent.h"
 #include <imgui/imgui.h>
 
-namespace Editor
+namespace GlacirerEditor
 {
     namespace Inspector
     {
-        void CameraComponentInspector::RenderGUI(const std::shared_ptr<Component>& component)
+        void CameraComponentInspector::RenderGUI(const std::shared_ptr<Glacirer::Component>& component)
         {
-            std::shared_ptr<CameraComponent> camera = std::dynamic_pointer_cast<CameraComponent>(component);
+            std::shared_ptr<Glacirer::CameraComponent> camera = std::dynamic_pointer_cast<Glacirer::CameraComponent>(component);
 
             assert(camera);
 
@@ -36,7 +36,7 @@ namespace Editor
             }
         }
 
-        void CameraComponentInspector::RenderOrthographicGUI(CameraComponent& camera)
+        void CameraComponentInspector::RenderOrthographicGUI(Glacirer::CameraComponent& camera)
         {
             bool bEnableAspectCorrection = camera.IsOrthographicAspectCorrectionEnabled();
             ImGui::Checkbox("Aspect Correction", &bEnableAspectCorrection);
@@ -54,7 +54,7 @@ namespace Editor
             camera.SetOrthographicSize(width, height, bEnableAspectCorrection);
         }
 
-        void CameraComponentInspector::RenderPerspectiveGUI(CameraComponent& camera)
+        void CameraComponentInspector::RenderPerspectiveGUI(Glacirer::CameraComponent& camera)
         {
             float fov = camera.GetFov();
             ImGui::DragFloat("Fov", &fov);
@@ -64,7 +64,7 @@ namespace Editor
 
         int CameraComponentInspector::GetComponentHash()
         {
-            return CameraComponent::GetClassHash();
+            return Glacirer::CameraComponent::GetClassHash();
         }
     }
 }

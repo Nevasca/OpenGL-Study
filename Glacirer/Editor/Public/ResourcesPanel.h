@@ -3,7 +3,7 @@
 #include "ResourceCollection.h"
 #include "inspectors/resources/MaterialInspector.h"
 
-namespace Editor
+namespace GlacirerEditor
 {
     class ResourcesPanel
     {

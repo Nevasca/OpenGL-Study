@@ -3,13 +3,13 @@
 #include "Basics/Components/PilotComponent.h"
 #include <imgui/imgui.h>
 
-namespace Editor
+namespace GlacirerEditor
 {
     namespace Inspector
     {
-        void PilotComponentInspector::RenderGUI(const std::shared_ptr<Component>& component)
+        void PilotComponentInspector::RenderGUI(const std::shared_ptr<Glacirer::Component>& component)
         {
-            std::shared_ptr<PilotComponent> pilotComponent = std::dynamic_pointer_cast<PilotComponent>(component);
+            std::shared_ptr<Glacirer::PilotComponent> pilotComponent = std::dynamic_pointer_cast<Glacirer::PilotComponent>(component);
 
             assert(pilotComponent);
 
@@ -29,7 +29,7 @@ namespace Editor
 
         int PilotComponentInspector::GetComponentHash()
         {
-            return PilotComponent::GetClassHash();
+            return Glacirer::PilotComponent::GetClassHash();
         }
     }
 }

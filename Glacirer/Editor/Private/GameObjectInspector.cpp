@@ -14,14 +14,14 @@
 #include "inspectors/components/PostProcessingComponentInspector.h"
 #include "inspectors/components/SpotLightComponentInspector.h"
 
-namespace Editor
+namespace GlacirerEditor
 {
     GameObjectInspector::GameObjectInspector()
     {
         RegisterComponentInspectors();
     }
 
-    void GameObjectInspector::RenderGUI(GameObject& gameObject)
+    void GameObjectInspector::RenderGUI(Glacirer::GameObject& gameObject)
     {
         ImGui::SeparatorText(gameObject.GetName().c_str());
 
@@ -29,9 +29,9 @@ namespace Editor
         RenderComponentsGUI(gameObject);
     }
 
-    void GameObjectInspector::RenderTransformGUI(GameObject& gameObject)
+    void GameObjectInspector::RenderTransformGUI(Glacirer::GameObject& gameObject)
     {
-        Transform& transform = gameObject.GetTransform();
+        Glacirer::Transform& transform = gameObject.GetTransform();
 
         glm::vec3 position = transform.GetPosition();
         glm::vec3 rotation = transform.GetRotation();
@@ -44,11 +44,11 @@ namespace Editor
         transform.SetPositionRotationScale(position, rotation, scale);
     }
 
-    void GameObjectInspector::RenderComponentsGUI(GameObject& gameObject)
+    void GameObjectInspector::RenderComponentsGUI(Glacirer::GameObject& gameObject)
     {
         ImGui::SeparatorText("Components");
 
-        std::vector<std::shared_ptr<Component>> components = gameObject.GetComponents();
+        std::vector<std::shared_ptr<Glacirer::Component>> components = gameObject.GetComponents();
 
         for(int i = 0; i < static_cast<int>(components.size()); i++)
         {

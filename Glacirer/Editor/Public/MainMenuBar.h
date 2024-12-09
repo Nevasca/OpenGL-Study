@@ -1,17 +1,20 @@
 #pragma once
 
-class World;
+namespace Glacirer
+{
+    class World;
+}
 
-namespace Editor
+namespace GlacirerEditor
 {
     class MainMenuBar
     {
     public:
 
-        void RenderGUI(World& world);
+        void RenderGUI(Glacirer::World& world);
 
     private:
 
-        void RenderViewportMenu(World& world);
+        void RenderViewportMenu(Glacirer::World& world);
     };
 }

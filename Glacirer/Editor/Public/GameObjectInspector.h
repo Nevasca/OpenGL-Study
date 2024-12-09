@@ -3,22 +3,25 @@
 #include <unordered_map>
 #include "IComponentInspector.h"
 
-class GameObject;
+namespace Glacirer
+{
+    class GameObject;
+}
 
-namespace Editor
+namespace GlacirerEditor
 {
     class GameObjectInspector
     {
     public:
         GameObjectInspector();
 
-        void RenderGUI(GameObject& gameObject);
+        void RenderGUI(Glacirer::GameObject& gameObject);
 
     private:
 
         void RegisterComponentInspectors();
-        void RenderTransformGUI(GameObject& gameObject);
-        void RenderComponentsGUI(GameObject& gameObject);
+        void RenderTransformGUI(Glacirer::GameObject& gameObject);
+        void RenderComponentsGUI(Glacirer::GameObject& gameObject);
 
         std::unordered_map<int, std::unique_ptr<IComponentInspector>> m_ComponentInspectorMapping{};
     };
