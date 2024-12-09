@@ -52,7 +52,9 @@ namespace Glacirer
 
             std::shared_ptr<Rendering::ModelData> model = std::make_shared<Rendering::ModelData>();
 
+#ifdef _DEBUG
             std::cout << "Processing scene " << scene->mName.C_Str() << "\n";
+#endif
     
             ProcessNode(scene->mRootNode, scene, *model);
 
@@ -62,7 +64,9 @@ namespace Glacirer
         // Recursively process node and children nodes
         void MeshResource::ProcessNode(aiNode* node, const aiScene* scene, Rendering::ModelData& outModel)
         {
+#ifdef _DEBUG
             std::cout << "Processing node " << node->mName.C_Str() << "\n";
+#endif
 
             // Process all the node's meshes if any
             for(unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -88,7 +92,9 @@ namespace Glacirer
 
         std::shared_ptr<Rendering::Mesh> MeshResource::ProcessMesh(aiMesh* mesh, const aiScene* scene)
         {
+#ifdef _DEBUG           
             std::cout << "Processing mesh " << mesh->mName.C_Str() << "\n";
+#endif
 
             std::vector<Rendering::Vertex> vertices{};
             vertices.reserve(mesh->mNumVertices);
