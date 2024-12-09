@@ -65,7 +65,7 @@ The idea is to keep core implementations in the Engine project and make it custo
 
 Compile and run the `Glacirer/Glacirer.sln` using `Debug|x64` or `Release|x64` configs.
 
-The custom post-build event should copy the required `.dll` (both Engine.dll and external dependencies) to the Editor's output folder `bin/x64/[Debug|Release]/Editor`. But if for some reason it doesn't, make sure to copy `assimp-vc143-mt.dll`, `glfw3.dll` (from the `External` folder) and `Engine.dll` (from Engine output directory) to the Editor's output folder.
+The custom post-build event should copy the required `.dll` (both Engine.dll and external dependencies) to the Editor's output folder `bin/x64/[Debug|Release]/Editor`. But if for some reason it doesn't, make sure to copy `assimp-vc143-mt.dll`, `glfw3.dll` (from the `External` folder) and `Engine.dll` (from Engine `bin/x64/[Debug|Release]/Engine` output directory) to the Editor's output folder.
 
 If you run the application by compiling and running inside Visual Studio or Rider, the working directory (solution directory) should be able to find the `EngineData` and `EditorData` folders containing the required resources (shaders, textures, models) for running the application. If you intend on running it outside the IDE, make sure to copy both directories into the root of the application .exe folder, like so:
 
