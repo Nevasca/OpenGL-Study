@@ -60,6 +60,11 @@ namespace GlacirerEditor
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
+    void Editor::Shutdown()
+    {
+        m_Engine.Shutdown();
+    }
+
     void Editor::RenderGUI(Glacirer::World& world)
     {
         m_MainMenuBar.RenderGUI(world);

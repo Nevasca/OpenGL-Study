@@ -14,5 +14,7 @@ int main()
         editor.Render();
     }
 
+    editor.Shutdown();
+
     return 0;
 }

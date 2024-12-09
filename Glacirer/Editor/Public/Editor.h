@@ -20,6 +20,7 @@ namespace GlacirerEditor
         void Setup();
         void Update();
         void Render();
+        void Shutdown();
 
         bool IsInitialized() const;
         bool ShouldClose() const;
