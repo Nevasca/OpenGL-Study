@@ -40,3 +40,6 @@ bin/
 
 # ImGUI files
 **/imgui.ini
+
+# User configs
+**/*.sln.DotSettings.user
