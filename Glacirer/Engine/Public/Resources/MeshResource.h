@@ -4,20 +4,29 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 
-class ModelData;
-class Mesh;
-
-class MeshResource
+namespace Glacirer
 {
-public:
+    namespace Rendering
+    {
+        class ModelData;
+        class Mesh;
+    }
 
-    static std::shared_ptr<Mesh> LoadCube();
-    static std::shared_ptr<Mesh> LoadQuad();
-    static std::shared_ptr<Mesh> LoadSphere(const std::string& filePath);
-    static std::shared_ptr<ModelData> LoadModelFromFile(const std::string& filePath);
+    namespace Resources
+    {
+        class MeshResource
+        {
+        public:
 
-private:
+            static std::shared_ptr<Rendering::Mesh> LoadCube();
+            static std::shared_ptr<Rendering::Mesh> LoadQuad();
+            static std::shared_ptr<Rendering::Mesh> LoadSphere(const std::string& filePath);
+            static std::shared_ptr<Rendering::ModelData> LoadModelFromFile(const std::string& filePath);
+                                              
+        private:
 
-    static void ProcessNode(aiNode* node, const aiScene* scene, ModelData& outModel);
-    static std::shared_ptr<Mesh> ProcessMesh(aiMesh* mesh, const aiScene* scene);
-};
+            static void ProcessNode(aiNode* node, const aiScene* scene, Rendering::ModelData& outModel);
+            static std::shared_ptr<Rendering::Mesh> ProcessMesh(aiMesh* mesh, const aiScene* scene);
+        };
+    }
+}

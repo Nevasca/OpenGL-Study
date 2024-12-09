@@ -1,8 +1,11 @@
 #include "Basics/Objects/SpotLight.h"
 
-void SpotLight::Initialize()
+namespace Glacirer
 {
-    GameObject::Initialize();
+    void SpotLight::Initialize()
+    {
+        GameObject::Initialize();
 
-    m_LightComponent = AddComponent<SpotLightComponent>();
+        m_LightComponent = AddComponent<SpotLightComponent>();
+    }
 }

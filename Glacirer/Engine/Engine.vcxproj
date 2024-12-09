@@ -243,8 +243,8 @@ if exist "$(TargetDir)Engine.pdb" if exist "$(SolutionDir)bin\$(Platform)\$(Conf
     <ClCompile Include="Private\Rendering\VertexArray.cpp" />
     <ClCompile Include="Private\Rendering\VertexBuffer.cpp" />
     <ClCompile Include="Private\Rendering\VertexBufferLayout.cpp" />
-    <ClCompile Include="Private\ResourceManager.cpp" />
     <ClCompile Include="Private\Resources\MeshResource.cpp" />
+    <ClCompile Include="Private\Resources\ResourceManager.cpp" />
     <ClCompile Include="Private\Resources\ShaderResource.cpp" />
     <ClCompile Include="Private\Resources\TextureResource.cpp" />
     <ClCompile Include="Private\Screen.cpp" />
@@ -729,8 +729,8 @@ if exist "$(TargetDir)Engine.pdb" if exist "$(SolutionDir)bin\$(Platform)\$(Conf
     <ClInclude Include="Public\Rendering\VertexArray.h" />
     <ClInclude Include="Public\Rendering\VertexBuffer.h" />
     <ClInclude Include="Public\Rendering\VertexBufferLayout.h" />
-    <ClInclude Include="Public\ResourceManager.h" />
     <ClInclude Include="Public\Resources\MeshResource.h" />
+    <ClInclude Include="Public\Resources\ResourceManager.h" />
     <ClInclude Include="Public\Resources\ShaderResource.h" />
     <ClInclude Include="Public\Resources\TextureResource.h" />
     <ClInclude Include="Public\Screen.h" />

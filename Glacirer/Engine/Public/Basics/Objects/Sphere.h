@@ -1,21 +1,28 @@
 #pragma once
 #include "GameObject/GameObject.h"
 
-class Material;
-class MeshComponent;
-
-class ENGINE_API Sphere : public GameObject
+namespace Glacirer
 {
-    GENERATE_OBJECT_BODY(Sphere)
+    class MeshComponent;
 
-public:
+    namespace Rendering
+    {
+        class Material;
+    }
 
-    void Initialize() override;
-    void Destroy() override;
+    class ENGINE_API Sphere : public GameObject
+    {
+        GENERATE_OBJECT_BODY(Sphere)
 
-    void SetMaterial(const std::shared_ptr<Material>& material) const;
+    public:
 
-private:
+        void Initialize() override;
+        void Destroy() override;
 
-    std::shared_ptr<MeshComponent> m_MeshComponent{};
-};
+        void SetMaterial(const std::shared_ptr<Rendering::Material>& material) const;
+
+    private:
+
+        std::shared_ptr<MeshComponent> m_MeshComponent{};
+    };
+}

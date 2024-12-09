@@ -1,19 +1,22 @@
 #pragma once
 #include "Rendering/Resolution.h"
 
-class Screen
+namespace Glacirer
 {
-public:
+    class Screen
+    {
+    public:
 
-    static void SetSize(int width, int height);
+        static void SetSize(int width, int height);
 
-    static int GetWidth() { return m_Width; }
-    static int GetHeight() { return m_Height; }
-    static Rendering::Resolution GetResolution();
-    static float GetAspectRatio();
+        static int GetWidth() { return m_Width; }
+        static int GetHeight() { return m_Height; }
+        static Rendering::Resolution GetResolution();
+        static float GetAspectRatio();
     
-private:
+    private:
 
-    static int m_Width;
-    static int m_Height;
-};
+        static int m_Width;
+        static int m_Height;
+    };
+}

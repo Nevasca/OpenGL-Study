@@ -1,8 +1,11 @@
 #include "Basics/Objects/PointLight.h"
 
-void PointLight::Initialize()
+namespace Glacirer
 {
-    GameObject::Initialize();
+    void PointLight::Initialize()
+    {
+        GameObject::Initialize();
 
-    m_LightComponent = AddComponent<PointLightComponent>();
+        m_LightComponent = AddComponent<PointLightComponent>();
+    }
 }

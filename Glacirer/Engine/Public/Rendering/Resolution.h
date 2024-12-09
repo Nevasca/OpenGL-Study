@@ -1,18 +1,21 @@
 ﻿#pragma once
 
-namespace Rendering
+namespace Glacirer
 {
-    struct Resolution
+    namespace Rendering
     {
-        unsigned int Width{0};
-        unsigned int Height{0};
-
-        Resolution() = default;
-        
-        Resolution(const unsigned int width, const unsigned int height)
+        struct Resolution
         {
-            Width = width;
-            Height = height;
-        }
+            unsigned int Width{0};
+            unsigned int Height{0};
+
+            Resolution() = default;
+        
+            Resolution(const unsigned int width, const unsigned int height)
+            {
+                Width = width;
+                Height = height;
+            }
+        };
     };
-};
+}

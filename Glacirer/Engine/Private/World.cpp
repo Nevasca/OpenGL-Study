@@ -4,121 +4,124 @@
 #include "Basics/Components/MeshComponent.h"
 #include "Basics/Components/CameraComponent.h"
 
-void World::Initialize()
+namespace Glacirer
 {
-    m_RenderSystem = std::make_unique<RenderSystem>();
-}
-
-void World::Setup()
-{
-    m_RenderSystem->Setup();
-}
-
-void World::Shutdown()
-{
-    for(const std::shared_ptr<GameObject>& gameObject : m_GameObjects)
+    void World::Initialize()
     {
-        gameObject->Destroy();
+        m_RenderSystem = std::make_unique<Rendering::RenderSystem>();
     }
 
-    m_RenderSystem->Shutdown();
-    m_RenderSystem.reset();
-    m_GameObjects.clear();
-}
-
-void World::Update(float deltaTime)
-{
-    for(const std::shared_ptr<GameObject>& gameObject : m_GameObjects)
+    void World::Setup()
     {
-        gameObject->Update(deltaTime);
-    }
-}
-
-void World::Render()
-{
-    if(!m_ActiveCamera)
-    {
-        // TODO: Log warning (create a log class)
-        return;        
+        m_RenderSystem->Setup();
     }
 
-    m_RenderSystem->Render(*m_ActiveCamera);
-}
+    void World::Shutdown()
+    {
+        for(const std::shared_ptr<GameObject>& gameObject : m_GameObjects)
+        {
+            gameObject->Destroy();
+        }
 
-void World::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
-{
-    m_RenderSystem->AddMeshComponent(meshComponent);
-}
+        m_RenderSystem->Shutdown();
+        m_RenderSystem.reset();
+        m_GameObjects.clear();
+    }
 
-void World::RemoveMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
-{
-    m_RenderSystem->RemoveMeshComponent(meshComponent);
-}
+    void World::Update(float deltaTime)
+    {
+        for(const std::shared_ptr<GameObject>& gameObject : m_GameObjects)
+        {
+            gameObject->Update(deltaTime);
+        }
+    }
 
-void World::AddOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
-{
-    m_RenderSystem->AddOutlinedMeshComponent(meshComponent);
-}
+    void World::Render()
+    {
+        if(!m_ActiveCamera)
+        {
+            // TODO: Log warning (create a log class)
+            return;        
+        }
 
-void World::RemoveOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
-{
-    m_RenderSystem->RemoveOutlinedMeshComponent(meshComponent);
-}
+        m_RenderSystem->Render(*m_ActiveCamera);
+    }
 
-void World::SetActiveCamera(const std::shared_ptr<CameraComponent>& camera)
-{
-    m_ActiveCamera = camera;
-}
+    void World::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
+    {
+        m_RenderSystem->AddMeshComponent(meshComponent);
+    }
 
-void World::AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent)
-{
-    m_RenderSystem->AddDirectionalLight(directionalLightComponent);
-}
+    void World::RemoveMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
+    {
+        m_RenderSystem->RemoveMeshComponent(meshComponent);
+    }
 
-void World::AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent)
-{
-    m_RenderSystem->AddPointLight(pointLightComponent);
-}
+    void World::AddOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
+    {
+        m_RenderSystem->AddOutlinedMeshComponent(meshComponent);
+    }
 
-void World::AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent)
-{
-    m_RenderSystem->AddSpotLight(spotLightComponent);
-}
+    void World::RemoveOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
+    {
+        m_RenderSystem->RemoveOutlinedMeshComponent(meshComponent);
+    }
 
-void World::SetPostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent)
-{
-    m_RenderSystem->SetPostProcessingComponent(postProcessingComponent);
-}
+    void World::SetActiveCamera(const std::shared_ptr<CameraComponent>& camera)
+    {
+        m_ActiveCamera = camera;
+    }
 
-void World::RemovePostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent)
-{
-    m_RenderSystem->RemovePostProcessingComponent(postProcessingComponent);
-}
+    void World::AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent)
+    {
+        m_RenderSystem->AddDirectionalLight(directionalLightComponent);
+    }
 
-void World::SetSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent)
-{
-    m_RenderSystem->SetSkyboxComponent(skyboxComponent);
-}
+    void World::AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent)
+    {
+        m_RenderSystem->AddPointLight(pointLightComponent);
+    }
 
-void World::RemoveSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent)
-{
-    m_RenderSystem->RemoveSkyboxComponent(skyboxComponent);
-}
+    void World::AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent)
+    {
+        m_RenderSystem->AddSpotLight(spotLightComponent);
+    }
 
-void World::InitializeGameObject(const std::shared_ptr<GameObject>& gameObject) const
-{
-    gameObject->Initialize();
-    gameObject->SetName("GameObject" + std::to_string(gameObject->GetId()));
-    gameObject->Start();
-}
+    void World::SetPostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent)
+    {
+        m_RenderSystem->SetPostProcessingComponent(postProcessingComponent);
+    }
 
-void World::InitializeGameObject(const std::shared_ptr<GameObject>& gameObject, const glm::vec3& position, const glm::vec3& eulerRotation, const glm::vec3& scale) const
-{
-    gameObject->SetPosition(position);
-    gameObject->SetRotation(eulerRotation);
-    gameObject->SetScale(scale);
+    void World::RemovePostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent)
+    {
+        m_RenderSystem->RemovePostProcessingComponent(postProcessingComponent);
+    }
 
-    gameObject->Initialize();
-    gameObject->SetName("GameObject" + std::to_string(gameObject->GetId()));
-    gameObject->Start();
+    void World::SetSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent)
+    {
+        m_RenderSystem->SetSkyboxComponent(skyboxComponent);
+    }
+
+    void World::RemoveSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent)
+    {
+        m_RenderSystem->RemoveSkyboxComponent(skyboxComponent);
+    }
+
+    void World::InitializeGameObject(const std::shared_ptr<GameObject>& gameObject) const
+    {
+        gameObject->Initialize();
+        gameObject->SetName("GameObject" + std::to_string(gameObject->GetId()));
+        gameObject->Start();
+    }
+
+    void World::InitializeGameObject(const std::shared_ptr<GameObject>& gameObject, const glm::vec3& position, const glm::vec3& eulerRotation, const glm::vec3& scale) const
+    {
+        gameObject->SetPosition(position);
+        gameObject->SetRotation(eulerRotation);
+        gameObject->SetScale(scale);
+
+        gameObject->Initialize();
+        gameObject->SetName("GameObject" + std::to_string(gameObject->GetId()));
+        gameObject->Start();
+    }
 }

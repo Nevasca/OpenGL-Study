@@ -1,14 +1,20 @@
 #pragma once
 #include <memory>
 
-class Mesh;
-
-class Primitive
+namespace Glacirer
 {
-public:
+    namespace Rendering
+    {
+        class Mesh;
 
-    static std::shared_ptr<Mesh> CreateCube();
-    static std::shared_ptr<Mesh> CreateQuad();
-    static std::shared_ptr<Mesh> CreateScreenQuad();
-    static std::shared_ptr<Mesh> CreateSkyCube();
-};
+        class Primitive
+        {
+        public:
+
+            static std::shared_ptr<Mesh> CreateCube();
+            static std::shared_ptr<Mesh> CreateQuad();
+            static std::shared_ptr<Mesh> CreateScreenQuad();
+            static std::shared_ptr<Mesh> CreateSkyCube();
+        };
+    }
+}

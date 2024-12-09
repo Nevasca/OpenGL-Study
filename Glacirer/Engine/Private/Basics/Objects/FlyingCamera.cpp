@@ -4,25 +4,26 @@
 #include "Basics/Components/PilotComponent.h"
 #include "Basics/Components/PilotCameraController.h"
 
-class CameraComponent;
-
-void FlyingCamera::Initialize()
+namespace Glacirer
 {
-    GameObject::Initialize();
+    void FlyingCamera::Initialize()
+    {
+        GameObject::Initialize();
 
-    std::shared_ptr<CameraComponent> cameraComponent = AddComponent<CameraComponent>();
-    std::shared_ptr<PilotComponent> pilotComponent = AddComponent<PilotComponent>();
+        std::shared_ptr<CameraComponent> cameraComponent = AddComponent<CameraComponent>();
+        std::shared_ptr<PilotComponent> pilotComponent = AddComponent<PilotComponent>();
 
-    m_CameraController = AddComponent<PilotCameraController>();
-    m_CameraController->Setup(cameraComponent, pilotComponent);
-}
+        m_CameraController = AddComponent<PilotCameraController>();
+        m_CameraController->Setup(cameraComponent, pilotComponent);
+    }
 
-void FlyingCamera::EnablePilotMode()
-{
-    m_CameraController->EnablePilotMode();
-}
+    void FlyingCamera::EnablePilotMode()
+    {
+        m_CameraController->EnablePilotMode();
+    }
 
-void FlyingCamera::DisablePilotMode()
-{
-    m_CameraController->DisablePilotMode();
+    void FlyingCamera::DisablePilotMode()
+    {
+        m_CameraController->DisablePilotMode();
+    }
 }

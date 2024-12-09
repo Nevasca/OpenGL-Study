@@ -1,16 +1,22 @@
 #pragma once
 
-class VertexBuffer
+namespace Glacirer
 {
-public:
-    VertexBuffer(const void* data, unsigned int size, bool bIsDynamic = false);
-    ~VertexBuffer();
+    namespace Rendering
+    {
+        class VertexBuffer
+        {
+        public:
+            VertexBuffer(const void* data, unsigned int size, bool bIsDynamic = false);
+            ~VertexBuffer();
 
-    void Bind() const;
-    void Unbind() const;
-    void SetSubData(const void* data, unsigned int size) const;
+            void Bind() const;
+            void Unbind() const;
+            void SetSubData(const void* data, unsigned int size) const;
 
-private:
+        private:
 
-    unsigned int m_RendererID{0};
-};
+            unsigned int m_RendererID{0};
+        };
+    }
+}

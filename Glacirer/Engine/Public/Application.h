@@ -2,14 +2,17 @@
 
 struct GLFWwindow;
 
-class Application
+namespace Glacirer
 {
-public:
+    class Application
+    {
+    public:
 
-    inline static void SetCurrentWindow(GLFWwindow* window) { m_Window = window; }
-    inline static GLFWwindow* GetCurrentWindow() { return m_Window; }
+        inline static void SetCurrentWindow(GLFWwindow* window) { m_Window = window; }
+        inline static GLFWwindow* GetCurrentWindow() { return m_Window; }
 
-private:
+    private:
 
-    static GLFWwindow* m_Window;
-};
+        static GLFWwindow* m_Window;
+    };
+}

@@ -17,5 +17,11 @@
     #define GLCall(x) x
 #endif
 
-void GLClearError();
-bool GLLogCall(const char* Function, const char* File, int Line);
+namespace Glacirer
+{
+    namespace Rendering
+    {
+        void GLClearError();
+        bool GLLogCall(const char* Function, const char* File, int Line);
+    }
+}

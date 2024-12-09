@@ -1,21 +1,27 @@
 #pragma once
 
-class IndexBuffer
+namespace Glacirer
 {
-public:
+    namespace Rendering
+    {
+        class IndexBuffer
+        {
+        public:
 
-    IndexBuffer(const unsigned int* Data, unsigned int Count);
-    ~IndexBuffer();
+            IndexBuffer(const unsigned int* Data, unsigned int Count);
+            ~IndexBuffer();
 
-    void Bind() const;
-    void Unbind() const;
+            void Bind() const;
+            void Unbind() const;
 
-    unsigned int GetCount() const { return m_Count; }
+            unsigned int GetCount() const { return m_Count; }
 
-private:
+        private:
 
-    static unsigned int m_LastBoundIndexBufferId;
+            static unsigned int m_LastBoundIndexBufferId;
     
-    unsigned int m_RendererID{0};
-    unsigned int m_Count;
-};
+            unsigned int m_RendererID{0};
+            unsigned int m_Count;
+        };
+    }
+}

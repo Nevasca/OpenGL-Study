@@ -1,28 +1,31 @@
 ﻿#pragma once
 #include <string>
 
-class Shader;
-
-namespace Rendering
+namespace Glacirer
 {
-    class UniformBuffer
+    namespace Rendering
     {
-    public:
-        UniformBuffer(const void* data, unsigned int size, const unsigned int bindingIndex, const std::string&& name, const bool bIsDynamic = false);
-        ~UniformBuffer();
+        class Shader;
 
-        void Bind() const;
-        void Unbind() const;
-        bool IsBound() const { return LastBoundUniformBufferId == m_RendererID; }
-        void SetSubData(const void* data, unsigned int size, unsigned int offset = 0) const;
-        void SetBindingIndexFor(const Shader& shader) const;
+        class UniformBuffer
+        {
+        public:
+            UniformBuffer(const void* data, unsigned int size, const unsigned int bindingIndex, const std::string&& name, const bool bIsDynamic = false);
+            ~UniformBuffer();
 
-    private:
+            void Bind() const;
+            void Unbind() const;
+            bool IsBound() const { return LastBoundUniformBufferId == m_RendererID; }
+            void SetSubData(const void* data, unsigned int size, unsigned int offset = 0) const;
+            void SetBindingIndexFor(const Shader& shader) const;
 
-        static unsigned int LastBoundUniformBufferId;
+        private:
+
+            static unsigned int LastBoundUniformBufferId;
         
-        unsigned int m_RendererID{0};
-        unsigned int m_BindingIndex{0};
-        std::string m_Name;
-    };
+            unsigned int m_RendererID{0};
+            unsigned int m_BindingIndex{0};
+            std::string m_Name;
+        };
+    }
 }

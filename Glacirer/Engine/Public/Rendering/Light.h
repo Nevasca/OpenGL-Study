@@ -1,15 +1,21 @@
 #pragma once
 
-struct Attenuation
+namespace Glacirer
 {
-    float Constant{1.f};
-    float Linear{0.14f};
-    float Quadratic{0.07f};
-};
+    namespace Rendering
+    {
+        struct Attenuation
+        {
+            float Constant{1.f};
+            float Linear{0.14f};
+            float Quadratic{0.07f};
+        };
 
-class Light
-{
-public:
+        class Light
+        {
+        public:
 
-    static Attenuation CalculateAttenuation(float range);
-};
+            static Attenuation CalculateAttenuation(float range);
+        };
+    }
+}

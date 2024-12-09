@@ -4,94 +4,97 @@
 #include "World.h"
 #include "Rendering/Material.h"
 
-void MeshComponent::SetMesh(const std::shared_ptr<Mesh>& mesh)
+namespace Glacirer
 {
-    if(bIsAddedToWorld)
+    void MeshComponent::SetMesh(const std::shared_ptr<Rendering::Mesh>& mesh)
     {
-        RemoveFromWorld();
+        if(bIsAddedToWorld)
+        {
+            RemoveFromWorld();
+        }
+
+        m_Mesh = mesh;
+
+        if(IsReadyToDraw())
+        {
+            AddToWorld();
+        }
     }
 
-    m_Mesh = mesh;
-
-    if(IsReadyToDraw())
+    void MeshComponent::SetMaterial(const std::shared_ptr<Rendering::Material>& material)
     {
-        AddToWorld();
-    }
-}
+        if(bIsAddedToWorld)
+        {
+            RemoveFromWorld();
+        }
 
-void MeshComponent::SetMaterial(const std::shared_ptr<Material>& material)
-{
-    if(bIsAddedToWorld)
-    {
-        RemoveFromWorld();
-    }
+        m_Material = material;
 
-    m_Material = material;
-
-    if(IsReadyToDraw())
-    {
-        AddToWorld();
-    }
-}
-
-void MeshComponent::SetIsOutlined(const bool bOutlined)
-{
-    if(bIsOutlined == bOutlined)
-    {
-        return;
+        if(IsReadyToDraw())
+        {
+            AddToWorld();
+        }
     }
 
-    if(bIsAddedToWorld)
+    void MeshComponent::SetIsOutlined(const bool bOutlined)
     {
-        RemoveFromWorld();
+        if(bIsOutlined == bOutlined)
+        {
+            return;
+        }
+
+        if(bIsAddedToWorld)
+        {
+            RemoveFromWorld();
+        }
+
+        bIsOutlined = bOutlined;
+
+        if(IsReadyToDraw())
+        {
+            AddToWorld();
+        }
     }
 
-    bIsOutlined = bOutlined;
-
-    if(IsReadyToDraw())
+    std::shared_ptr<Rendering::Shader> MeshComponent::GetShader() const
     {
-        AddToWorld();
-    }
-}
-
-std::shared_ptr<Shader> MeshComponent::GetShader() const
-{
-    return m_Material ? m_Material->GetShader() : nullptr;   
-}
-
-void MeshComponent::AddToWorld()
-{
-    if(bIsAddedToWorld)
-    {
-        return;
+        return m_Material ? m_Material->GetShader() : nullptr;   
     }
 
-    World& world = GetOwner().GetWorld();
-
-    if(bIsOutlined)
+    void MeshComponent::AddToWorld()
     {
-        world.AddOutlinedMeshComponent(GetThis());
-    }
-    else
-    {
-        world.AddMeshComponent(GetThis());
-    }
+        if(bIsAddedToWorld)
+        {
+            return;
+        }
 
-    bIsAddedToWorld = true;
-}
+        World& world = GetOwner().GetWorld();
 
-void MeshComponent::RemoveFromWorld()
-{
-    World& world = GetOwner().GetWorld();
+        if(bIsOutlined)
+        {
+            world.AddOutlinedMeshComponent(GetThis());
+        }
+        else
+        {
+            world.AddMeshComponent(GetThis());
+        }
 
-    if(bIsOutlined)
-    {
-        world.RemoveOutlinedMeshComponent(GetThis());
-    }
-    else
-    {
-        world.RemoveMeshComponent(GetThis());
+        bIsAddedToWorld = true;
     }
 
-    bIsAddedToWorld = false;
+    void MeshComponent::RemoveFromWorld()
+    {
+        World& world = GetOwner().GetWorld();
+
+        if(bIsOutlined)
+        {
+            world.RemoveOutlinedMeshComponent(GetThis());
+        }
+        else
+        {
+            world.RemoveMeshComponent(GetThis());
+        }
+
+        bIsAddedToWorld = false;
+    }
 }

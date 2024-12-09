@@ -1,16 +1,18 @@
 #include "Basics/Objects/DirectionalLight.h"
 
-
-void DirectionalLight::Initialize()
+namespace Glacirer
 {
-    GameObject::Initialize();
+    void DirectionalLight::Initialize()
+    {
+        GameObject::Initialize();
 
-    m_LightComponent = AddComponent<DirectionalLightComponent>();
-}
+        m_LightComponent = AddComponent<DirectionalLightComponent>();
+    }
 
-void DirectionalLight::Destroy()
-{
-    GameObject::Destroy();
+    void DirectionalLight::Destroy()
+    {
+        GameObject::Destroy();
 
-    m_LightComponent.reset();
+        m_LightComponent.reset();
+    }
 }

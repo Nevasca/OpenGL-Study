@@ -1,19 +1,22 @@
 #pragma once
 #include "GameObject/GameObject.h"
 
-class SkyboxComponent;
-
-class ENGINE_API Skybox : public GameObject
+namespace Glacirer
 {
-    GENERATE_OBJECT_BODY(Skybox)
+    class SkyboxComponent;
 
-public:
+    class ENGINE_API Skybox : public GameObject
+    {
+        GENERATE_OBJECT_BODY(Skybox)
 
-    void Initialize() override;
+    public:
 
-    void SetDefaultSky();
+        void Initialize() override;
 
-private:
+        void SetDefaultSky();
 
-    std::shared_ptr<SkyboxComponent> m_SkyboxComponent{};
-};
+    private:
+
+        std::shared_ptr<SkyboxComponent> m_SkyboxComponent{};
+    };
+}

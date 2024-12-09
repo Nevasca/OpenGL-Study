@@ -2,28 +2,31 @@
 #include <map>
 #include <memory>
 
-class Shader;
-
-namespace Rendering
+namespace Glacirer
 {
-    struct ActiveShader
+    namespace Rendering
     {
-        std::shared_ptr<Shader> Shader{};
-        unsigned int UsageCount{0};
-    };
+        class Shader;
+
+        struct ActiveShader
+        {
+            std::shared_ptr<Shader> Shader{};
+            unsigned int UsageCount{0};
+        };
     
-    class ShaderRenderSet
-    {
-    public:
+        class ShaderRenderSet
+        {
+        public:
 
-        void Add(const std::shared_ptr<Shader>& shader);
-        void Remove(const std::shared_ptr<Shader>& shader);
-        bool Contains(const std::shared_ptr<Shader>& shader);
-        void Clear();
+            void Add(const std::shared_ptr<Shader>& shader);
+            void Remove(const std::shared_ptr<Shader>& shader);
+            bool Contains(const std::shared_ptr<Shader>& shader);
+            void Clear();
 
-        std::map<unsigned int, ActiveShader>& GetShaders() { return m_UniqueActiveShaders; }
+            std::map<unsigned int, ActiveShader>& GetShaders() { return m_UniqueActiveShaders; }
 
-    private:
-        std::map<unsigned int, ActiveShader> m_UniqueActiveShaders{}; // Keyed by shader id
-    };
+        private:
+            std::map<unsigned int, ActiveShader> m_UniqueActiveShaders{}; // Keyed by shader id
+        };
+    }
 }

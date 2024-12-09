@@ -1,31 +1,34 @@
 #pragma once
 #include "GameObject/Component.h"
 
-class PilotComponent;
-class CameraComponent;
-
-class ENGINE_API PilotCameraController : public Component
+namespace Glacirer
 {
-    GENERATE_COMPONENT_BODY(PilotCameraController)
+    class PilotComponent;
+    class CameraComponent;
+
+    class ENGINE_API PilotCameraController : public Component
+    {
+        GENERATE_COMPONENT_BODY(PilotCameraController)
     
-public:
+    public:
 
-    void Initialize() override;
-    void Destroy() override;
-    void Update(float deltaTime) override;
-    void Enable() override;
-    void Disable() override;
+        void Initialize() override;
+        void Destroy() override;
+        void Update(float deltaTime) override;
+        void Enable() override;
+        void Disable() override;
 
-    void Setup(const std::shared_ptr<CameraComponent>& camera, const std::shared_ptr<PilotComponent>& pilot);
-    void UpdateCameraZoom(double YScrollOffset);
-    void EnablePilotMode();
-    void DisablePilotMode();
+        void Setup(const std::shared_ptr<CameraComponent>& camera, const std::shared_ptr<PilotComponent>& pilot);
+        void UpdateCameraZoom(double YScrollOffset);
+        void EnablePilotMode();
+        void DisablePilotMode();
 
-private:
+    private:
 
-    std::shared_ptr<CameraComponent> m_Camera;
-    std::shared_ptr<PilotComponent> m_Pilot;
-    float m_MinFov{1.f};
-    float m_MaxFov{90.f};
-    bool bIsPilotEnabled{true};
-};
+        std::shared_ptr<CameraComponent> m_Camera;
+        std::shared_ptr<PilotComponent> m_Pilot;
+        float m_MinFov{1.f};
+        float m_MaxFov{90.f};
+        bool bIsPilotEnabled{true};
+    };
+}

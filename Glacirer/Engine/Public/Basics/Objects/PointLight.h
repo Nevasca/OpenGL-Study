@@ -3,20 +3,23 @@
 
 #include "Basics/Components/PointLightComponent.h"
 
-class ENGINE_API PointLight : public GameObject
+namespace Glacirer
 {
-    GENERATE_OBJECT_BODY(PointLight)
+    class ENGINE_API PointLight : public GameObject
+    {
+        GENERATE_OBJECT_BODY(PointLight)
     
-public:
+    public:
 
-    void Initialize() override;
+        void Initialize() override;
 
-    void SetColor(const glm::vec3& color) { m_LightComponent->SetColor(color); }
-    void SetRange(float range) { m_LightComponent->SetRange(range); }
-    void SetIntensity(const float intensity) { m_LightComponent->SetIntensity(intensity); }
-    void SetCastShadowEnabled(const bool enable) { m_LightComponent->SetCastShadowEnabled(enable); }
+        void SetColor(const glm::vec3& color) { m_LightComponent->SetColor(color); }
+        void SetRange(float range) { m_LightComponent->SetRange(range); }
+        void SetIntensity(const float intensity) { m_LightComponent->SetIntensity(intensity); }
+        void SetCastShadowEnabled(const bool enable) { m_LightComponent->SetCastShadowEnabled(enable); }
 
-private:
+    private:
 
-    std::shared_ptr<PointLightComponent> m_LightComponent{};
-};
+        std::shared_ptr<PointLightComponent> m_LightComponent{};
+    };
+}

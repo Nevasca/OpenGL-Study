@@ -1,20 +1,23 @@
 #pragma once
 #include "GameObject/GameObject.h"
 
-class PilotCameraController;
-
-class ENGINE_API FlyingCamera : public GameObject
+namespace Glacirer
 {
-    GENERATE_OBJECT_BODY(FlyingCamera)
+    class PilotCameraController;
+
+    class ENGINE_API FlyingCamera : public GameObject
+    {
+        GENERATE_OBJECT_BODY(FlyingCamera)
     
-public:
+    public:
 
-    void Initialize() override;
+        void Initialize() override;
 
-    void EnablePilotMode();
-    void DisablePilotMode();
+        void EnablePilotMode();
+        void DisablePilotMode();
 
-private:
+    private:
 
-    std::shared_ptr<PilotCameraController> m_CameraController{}; 
-};
+        std::shared_ptr<PilotCameraController> m_CameraController{}; 
+    };
+}

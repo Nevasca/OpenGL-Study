@@ -2,21 +2,24 @@
 #include "GameObject/GameObject.h"
 #include "Basics/Components/PostProcessingComponent.h"
 
-class ENGINE_API PostProcessing : public GameObject
+namespace Glacirer
 {
-    GENERATE_OBJECT_BODY(PostProcessing)
+    class ENGINE_API PostProcessing : public GameObject
+    {
+        GENERATE_OBJECT_BODY(PostProcessing)
 
-public:
+    public:
 
-    void Initialize() override;
+        void Initialize() override;
 
-    void SetColorInversion(const bool bEnabled) const { m_PostProcessingComponent->SetColorInversion(bEnabled); }
-    void SetGrayScale(const bool bEnabled) const { m_PostProcessingComponent->SetGrayScale(bEnabled); }
-    void SetSharpen(const bool bEnabled) const { m_PostProcessingComponent->SetSharpen(bEnabled); }
-    void SetBlur(const bool bEnabled) const { m_PostProcessingComponent->SetBlur(bEnabled); }
-    void SetEdgeDetection(const bool bEnabled) const { m_PostProcessingComponent->SetEdgeDetection(bEnabled); }
+        void SetColorInversion(const bool bEnabled) const { m_PostProcessingComponent->SetColorInversion(bEnabled); }
+        void SetGrayScale(const bool bEnabled) const { m_PostProcessingComponent->SetGrayScale(bEnabled); }
+        void SetSharpen(const bool bEnabled) const { m_PostProcessingComponent->SetSharpen(bEnabled); }
+        void SetBlur(const bool bEnabled) const { m_PostProcessingComponent->SetBlur(bEnabled); }
+        void SetEdgeDetection(const bool bEnabled) const { m_PostProcessingComponent->SetEdgeDetection(bEnabled); }
 
-private:
+    private:
 
-    std::shared_ptr<PostProcessingComponent> m_PostProcessingComponent{};
-};
+        std::shared_ptr<PostProcessingComponent> m_PostProcessingComponent{};
+    };
+}

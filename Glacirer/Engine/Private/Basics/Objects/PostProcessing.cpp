@@ -1,8 +1,11 @@
 #include "Basics/Objects/PostProcessing.h"
 
-void PostProcessing::Initialize()
+namespace Glacirer
 {
-    GameObject::Initialize();
+    void PostProcessing::Initialize()
+    {
+        GameObject::Initialize();
 
-    m_PostProcessingComponent = AddComponent<PostProcessingComponent>();
+        m_PostProcessingComponent = AddComponent<PostProcessingComponent>();
+    }
 }

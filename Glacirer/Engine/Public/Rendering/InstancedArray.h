@@ -3,22 +3,28 @@
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 
-class VertexArray;
-
-class InstancedArray
+namespace Glacirer
 {
-public:
+    namespace Rendering
+    {
+        class VertexArray;
 
-    InstancedArray(const void* data, unsigned int size, bool bIsDynamic, VertexBufferLayout&& layout);
+        class InstancedArray
+        {
+        public:
 
-    void SetupInstancedAttributesFor(VertexArray& vertexArray);
-    void SetSubData(const void* data, unsigned int size) const;
+            InstancedArray(const void* data, unsigned int size, bool bIsDynamic, VertexBufferLayout&& layout);
+
+            void SetupInstancedAttributesFor(VertexArray& vertexArray);
+            void SetSubData(const void* data, unsigned int size) const;
     
-    void Bind() const;
-    void Unbind() const;
+            void Bind() const;
+            void Unbind() const;
     
-private:
+        private:
 
-    std::unique_ptr<VertexBuffer> m_VBO{};
-    VertexBufferLayout m_Layout{};
-};
+            std::unique_ptr<VertexBuffer> m_VBO{};
+            VertexBufferLayout m_Layout{};
+        };
+    }
+}

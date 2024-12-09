@@ -3,7 +3,7 @@
 #include "Application.h"
 #include "GameTime.h"
 #include "Input.h"
-#include "ResourceManager.h"
+#include "Resources/ResourceManager.h"
 #include "Screen.h"
 
 namespace
@@ -18,7 +18,7 @@ namespace
         }
 
         glViewport(0, 0, Width, Height);
-        Screen::SetSize(Width, Height);
+        Glacirer::Screen::SetSize(Width, Height);
     }
 }
 
@@ -41,7 +41,7 @@ namespace Glacirer
 
     void Engine::Setup()
     {
-        ResourceManager::LoadDefaultResources();
+        Resources::ResourceManager::LoadDefaultResources();
 
         m_World = std::make_unique<World>();
         m_World->Initialize();
@@ -57,7 +57,7 @@ namespace Glacirer
         m_World->Shutdown();
         m_World.reset();
 
-        ResourceManager::UnloadAll();
+        Resources::ResourceManager::UnloadAll();
     }
 
     bool Engine::ShouldClose() const

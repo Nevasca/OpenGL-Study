@@ -1,9 +1,12 @@
 #pragma once
 
-class GameTime
+namespace Glacirer
 {
-public:
+    class GameTime
+    {
+    public:
 
-    static float Time;
-    static float DeltaTime;
-};
+        static float Time;
+        static float DeltaTime;
+    };
+}

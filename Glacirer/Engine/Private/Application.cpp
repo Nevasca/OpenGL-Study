@@ -1,3 +1,6 @@
 #include "Application.h"
 
-GLFWwindow* Application::m_Window = nullptr;
+namespace Glacirer
+{
+    GLFWwindow* Application::m_Window = nullptr;
+}

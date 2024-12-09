@@ -26,49 +26,52 @@
     std::shared_ptr<ClassName> GetThis() const { return m_This; }
 
 
-class World;
-class Transform;
-class GameObject;
-
-class ENGINE_API Component
+namespace Glacirer
 {
-    friend class GameObject;
+    class World;
+    class Transform;
+    class GameObject;
 
-public:
+    class ENGINE_API Component
+    {
+        friend class GameObject;
 
-    virtual ~Component() = default;
+    public:
+
+        virtual ~Component() = default;
     
-    virtual void Initialize();
-    virtual void Start();
-    virtual void Update(float deltaTime);
-    virtual void Destroy();
-    virtual void Enable();
-    virtual void Disable();
-    void SetOwnerPosition(const glm::vec3& position) const;
-    void SetOwnerRotation(const glm::vec3& eulerRotation) const;
-    void SetOwnerScale(const glm::vec3& scale) const;
-    glm::vec3 GetOwnerPosition() const;
-    glm::vec3 GetOwnerRotation() const;
-    glm::vec3 GetOwnerScale() const;
-    Transform& GetOwnerTransform() const;
-    World& GetWorld() const;
+        virtual void Initialize();
+        virtual void Start();
+        virtual void Update(float deltaTime);
+        virtual void Destroy();
+        virtual void Enable();
+        virtual void Disable();
+        void SetOwnerPosition(const glm::vec3& position) const;
+        void SetOwnerRotation(const glm::vec3& eulerRotation) const;
+        void SetOwnerScale(const glm::vec3& scale) const;
+        glm::vec3 GetOwnerPosition() const;
+        glm::vec3 GetOwnerRotation() const;
+        glm::vec3 GetOwnerScale() const;
+        Transform& GetOwnerTransform() const;
+        World& GetWorld() const;
     
-    GameObject& GetOwner() const { return m_Owner; }
-    bool IsEnabled() const { return bIsEnabled; }
-    unsigned int GetId() const { return m_Id; }
-    virtual std::string GetName() const { return "Component"; }
+        GameObject& GetOwner() const { return m_Owner; }
+        bool IsEnabled() const { return bIsEnabled; }
+        unsigned int GetId() const { return m_Id; }
+        virtual std::string GetName() const { return "Component"; }
 
-    static int GetClassHash() { return 0; }
-    virtual int GetHash() { return GetClassHash(); } 
+        static int GetClassHash() { return 0; }
+        virtual int GetHash() { return GetClassHash(); } 
 
-protected:
+    protected:
 
-    Component(GameObject& owner);
+        Component(GameObject& owner);
 
-    bool bIsEnabled{true};
+        bool bIsEnabled{true};
 
-private:
+    private:
 
-    GameObject& m_Owner;
-    unsigned int m_Id{0};
-};
+        GameObject& m_Owner;
+        unsigned int m_Id{0};
+    };
+}

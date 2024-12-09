@@ -2,16 +2,22 @@
 #include <memory>
 #include <vector>
 
-class Mesh;
-
-class ModelData
+namespace Glacirer
 {
-public:
+    namespace Rendering
+    {
+        class Mesh;
 
-    void AddMesh(const std::shared_ptr<Mesh>&& mesh) { m_Meshes.emplace_back(mesh); }
-    const std::vector<std::shared_ptr<Mesh>>& GetMeshes() const { return m_Meshes; }
+        class ModelData
+        {
+        public:
 
-private:
+            void AddMesh(const std::shared_ptr<Mesh>&& mesh) { m_Meshes.emplace_back(mesh); }
+            const std::vector<std::shared_ptr<Mesh>>& GetMeshes() const { return m_Meshes; }
 
-    std::vector<std::shared_ptr<Mesh>> m_Meshes{};
-};
+        private:
+
+            std::vector<std::shared_ptr<Mesh>> m_Meshes{};
+        };
+    }
+}

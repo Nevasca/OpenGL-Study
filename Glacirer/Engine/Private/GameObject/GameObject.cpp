@@ -2,52 +2,55 @@
 
 #include "World.h"
 
-GameObject::GameObject(World& world)
-    : m_World(world)
-{ }
-
-void GameObject::Initialize()
+namespace Glacirer
 {
-    m_Id = m_World.GenerateUniqueId();
-}
+    GameObject::GameObject(World& world)
+        : m_World(world)
+    { }
 
-void GameObject::Start()
-{ }
-
-void GameObject::Update(float deltaTime)
-{
-    for(const std::shared_ptr<Component>& component : m_Components)
+    void GameObject::Initialize()
     {
-        if(component->IsEnabled())
+        m_Id = m_World.GenerateUniqueId();
+    }
+
+    void GameObject::Start()
+    { }
+
+    void GameObject::Update(float deltaTime)
+    {
+        for(const std::shared_ptr<Component>& component : m_Components)
         {
-            component->Update(deltaTime);
+            if(component->IsEnabled())
+            {
+                component->Update(deltaTime);
+            }
         }
     }
-}
 
-void GameObject::Destroy()
-{
-    for(const std::shared_ptr<Component>& component : m_Components)
+    void GameObject::Destroy()
     {
-        component->Disable();
-        component->Destroy();
+        for(const std::shared_ptr<Component>& component : m_Components)
+        {
+            component->Disable();
+            component->Destroy();
+        }
+
+        m_Components.clear();
+        b_IsPendingDestroy = true;
     }
 
-    m_Components.clear();
-    b_IsPendingDestroy = true;
-}
+    void GameObject::SetPosition(const glm::vec3& position)
+    {
+        m_Transform.SetPosition(position);
+    }
 
-void GameObject::SetPosition(const glm::vec3& position)
-{
-    m_Transform.SetPosition(position);
-}
+    void GameObject::SetRotation(const glm::vec3& eulerRotation)
+    {
+        m_Transform.SetRotation(eulerRotation);
+    }
 
-void GameObject::SetRotation(const glm::vec3& eulerRotation)
-{
-    m_Transform.SetRotation(eulerRotation);
-}
-
-void GameObject::SetScale(const glm::vec3& scale)
-{
-    m_Transform.SetScale(scale);
+    void GameObject::SetScale(const glm::vec3& scale)
+    {
+        m_Transform.SetScale(scale);
+    }
 }
