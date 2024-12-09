@@ -12,7 +12,7 @@
 
 ### Camera navigation
 
-For the sandbox and core scenes, you can fly around with the camera by using:
+You can fly around with the camera by using:
 
 * `F`: enable pilot mode to start flying around;
 * `ESC`: disable pilot mode to stop flying around and be able to select things on the Editor;
