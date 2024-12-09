@@ -31,7 +31,7 @@ namespace Glacirer
             m_DirectionalMatrixUniformBuffer.reset();
             m_PointLightMatricesUniformBuffer.reset();
 
-            // TODO: Unbind all shadow map textures, maybe do that on FrameBuffer destructor
+            UnbindShadowMapTextures();
 
             m_DirectionalShadowMapBuffers.clear();
             m_PointLightShadowMapBuffers.clear();
@@ -377,7 +377,7 @@ namespace Glacirer
 
             for(int i = 0; i < m_TotalActivePointLights; i++)
             {
-                std::shared_ptr<Rendering::Cubemap> pointDepthCubemap = m_PointLightShadowMapBuffers[i]->GetDepthBufferCubemap();
+                std::shared_ptr<Cubemap> pointDepthCubemap = m_PointLightShadowMapBuffers[i]->GetDepthBufferCubemap();
                 pointDepthCubemap->Bind(POINT_SHADOW_MAP_START_SLOT + i);
             }
 
@@ -385,6 +385,27 @@ namespace Glacirer
             {
                 std::shared_ptr<Texture> spotDepthTexture = m_SpotLightShadowMapBuffers[i]->GetDepthBufferTexture();
                 spotDepthTexture->Bind(SPOT_SHADOW_MAP_START_SLOT + i);
+            }
+        }
+
+        void LightingSystem::UnbindShadowMapTextures()
+        {
+            for(int i = 0; i < m_TotalActiveDirectionalLights; i++)
+            {
+                std::shared_ptr<Texture> directionalDepthTexture = m_DirectionalShadowMapBuffers[i]->GetDepthBufferTexture();
+                directionalDepthTexture->Unbind(DIRECTIONAL_SHADOW_MAP_START_SLOT + i);
+            }
+
+            for(int i = 0; i < m_TotalActivePointLights; i++)
+            {
+                std::shared_ptr<Cubemap> pointDepthCubemap = m_PointLightShadowMapBuffers[i]->GetDepthBufferCubemap();
+                pointDepthCubemap->Unbind(POINT_SHADOW_MAP_START_SLOT + i);
+            }
+
+            for(int i = 0; i < m_TotalActiveSpotLights; i++)
+            {
+                std::shared_ptr<Texture> spotDepthTexture = m_SpotLightShadowMapBuffers[i]->GetDepthBufferTexture();
+                spotDepthTexture->Unbind(SPOT_SHADOW_MAP_START_SLOT + i);
             }
         }
 

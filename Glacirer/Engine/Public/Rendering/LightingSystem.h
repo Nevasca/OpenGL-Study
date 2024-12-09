@@ -180,6 +180,7 @@ namespace Glacirer
 
             void CreateUniformBuffers();
             void BindShadowMapTextures();
+            void UnbindShadowMapTextures();
             void CreateShadowMaps();
             void CreateDirectionalLightShadowMapFor(int lightIndex);
             void CreatePointLightShadowMapFor(int lightIndex);
