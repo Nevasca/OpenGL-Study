@@ -139,7 +139,7 @@ copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
 
 echo copying Engine dll to Editor output folder
 echo if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy "$(TargetPath)" "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"
-if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy $(TargetPath)" $(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"
+if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy "$(TargetPath)" $(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"
 
 echo copying Engine pdb to Editor output folder
 echo if exist "$(TargetDir)Engine.pdb" if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy "$(TargetDir)Engine.pdb" "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"
@@ -179,7 +179,7 @@ copy "$(SolutionDir)External\Assimp\assimp-vc143-mt.dll" "$(TargetDir)"
 
 echo copying Engine dll to Editor output folder
 echo if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy "$(TargetPath)" "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"
-if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy $(TargetPath)" $(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"
+if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy "$(TargetPath)" $(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"
 
 echo copying Engine pdb to Editor output folder
 echo if exist "$(TargetDir)Engine.pdb" if exist "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\" copy "$(TargetDir)Engine.pdb" "$(SolutionDir)bin\$(Platform)\$(Configuration)\Editor\"

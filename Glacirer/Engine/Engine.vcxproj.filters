@@ -168,9 +168,6 @@
     <ClCompile Include="Private\Rendering\VertexBufferLayout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Private\ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Private\Resources\MeshResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -196,6 +193,9 @@
       <Filter>External\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="Private\Engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Private\Resources\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -345,9 +345,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Public\Rendering\VertexBufferLayout.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Public\ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Public\Resources\MeshResource.h">
@@ -1650,6 +1647,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Public\Engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Rendering\RenderingConstants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Public\Resources\ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
