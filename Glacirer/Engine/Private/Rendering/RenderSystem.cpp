@@ -20,7 +20,7 @@ namespace Glacirer
 {
     namespace Rendering
     {
-        RenderSystem::RenderSystem()
+        RenderSystem::RenderSystem(const unsigned int totalMSAASamples)
         {
             CreateInstancedBuffer();
             CreateUniformBuffers();
@@ -34,9 +34,7 @@ namespace Glacirer
             Rendering::Resolution resolution = Screen::GetResolution();
             m_Device.SetViewportResolution(resolution);
 
-            // TODO: add way to set how many samples to use
-            constexpr unsigned int MSAA_SAMPLES = 4;
-            m_MultisampleFramebuffer = std::make_unique<Framebuffer>(resolution, true, std::vector<TextureSettings>{}, MSAA_SAMPLES);
+            m_MultisampleFramebuffer = std::make_unique<Framebuffer>(resolution, true, std::vector<TextureSettings>{}, totalMSAASamples);
             m_IntermediateFramebuffer = std::make_unique<Framebuffer>(resolution, false, std::vector<TextureSettings>{});
 
             m_PostProcessingSystem.SetFramebuffer(*m_IntermediateFramebuffer);

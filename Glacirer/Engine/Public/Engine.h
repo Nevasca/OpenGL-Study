@@ -30,6 +30,8 @@ namespace Glacirer
 
     private:
 
+        static constexpr int DEFAULT_MSAA_TOTAL_SAMPLES = 4;
+
         GLFWwindow* m_Window{nullptr};
         std::unique_ptr<World> m_World{};
         std::shared_ptr<Rendering::RenderSystem> m_RenderSystem{};

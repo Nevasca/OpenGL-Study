@@ -43,7 +43,7 @@ namespace Glacirer
     {
         Resources::ResourceManager::LoadDefaultResources();
 
-        m_RenderSystem = std::make_shared<Rendering::RenderSystem>();
+        m_RenderSystem = std::make_shared<Rendering::RenderSystem>(static_cast<unsigned int>(DEFAULT_MSAA_TOTAL_SAMPLES));
         m_RenderSystem->Setup();
         
         m_World = std::make_unique<World>();
@@ -112,7 +112,7 @@ namespace Glacirer
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
-        glfwWindowHint(GLFW_SAMPLES, 4); // MSAA x4
+        glfwWindowHint(GLFW_SAMPLES, DEFAULT_MSAA_TOTAL_SAMPLES);
 
         int windowWidth = 1280;
         int windowHeight = 720;

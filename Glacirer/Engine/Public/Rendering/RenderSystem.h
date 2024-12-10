@@ -31,7 +31,7 @@ namespace Glacirer
         {
         public:
 
-            RenderSystem();
+            RenderSystem(const unsigned int totalMSAASamples);
             void Setup();
             void Shutdown();
 
