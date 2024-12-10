@@ -36,43 +36,36 @@ namespace Glacirer
         {
             stbi_set_flip_vertically_on_load(false);
     
-            Rendering::CubemapTextureData cubemapData;
-
             int width;
             int height;
             int channels;
 
-            // TODO: refactor cubemap load to use vector or a method to set data and create the desired side, so we can load one texture
-            // use it and then free memory before loading next. Right now we are loading all 6 textures at same time
-            cubemapData.RightTextureData = stbi_load(loadSettings.RightTextureFilePath.c_str(), &width, &height, &channels, 0);
-            cubemapData.LeftTextureData = stbi_load(loadSettings.LeftTextureFilePath.c_str(), &width, &height, &channels, 0);
-            cubemapData.TopTextureData = stbi_load(loadSettings.TopTextureFilePath.c_str(), &width, &height, &channels, 0);
-            cubemapData.BottomTextureData = stbi_load(loadSettings.BottomTextureFilePath.c_str(), &width, &height, &channels, 0);
-            cubemapData.BackTextureData = stbi_load(loadSettings.BackTextureFilePath.c_str(), &width, &height, &channels, 0);
-            cubemapData.FrontTextureData = stbi_load(loadSettings.FrontTextureFilePath.c_str(), &width, &height, &channels, 0);
-            cubemapData.Width = static_cast<unsigned int>(width);
-            cubemapData.Height = static_cast<unsigned int>(height);
-            cubemapData.bIsSRGB = loadSettings.bIsSRGB;
+            std::string sides[Rendering::Cubemap::TOTAL_SIDES]
+            {
+                loadSettings.RightTextureFilePath,
+                loadSettings.LeftTextureFilePath,
+                loadSettings.TopTextureFilePath,
+                loadSettings.BottomTextureFilePath,
+                loadSettings.FrontTextureFilePath,
+                loadSettings.BackTextureFilePath
+            };
 
-            std::shared_ptr<Rendering::Cubemap> cubemap = std::make_shared<Rendering::Cubemap>(cubemapData);
+            Rendering::TextureSettings textureSettings{false, loadSettings.bIsSRGB};
 
-            assert(cubemapData.RightTextureData);
-            stbi_image_free(cubemapData.RightTextureData);
+            std::shared_ptr<Rendering::Cubemap> cubemap = std::make_shared<Rendering::Cubemap>(0, 0, textureSettings, false);
+            cubemap->Bind();
 
-            assert(cubemapData.LeftTextureData);
-            stbi_image_free(cubemapData.LeftTextureData);
+            for (unsigned int i = 0; i < Rendering::Cubemap::TOTAL_SIDES; i++)
+            {
+                unsigned char* textureData = stbi_load(sides[i].c_str(), &width, &height, &channels, 0);
+                assert(textureData);
 
-            assert(cubemapData.TopTextureData);
-            stbi_image_free(cubemapData.TopTextureData);
+                cubemap->CreateSideTexture(i, textureData, width, height, textureSettings);
 
-            assert(cubemapData.BottomTextureData);
-            stbi_image_free(cubemapData.BottomTextureData);
+                stbi_image_free(textureData);
+            }
 
-            assert(cubemapData.BackTextureData);
-            stbi_image_free(cubemapData.BackTextureData);
-    
-            assert(cubemapData.FrontTextureData);
-            stbi_image_free(cubemapData.FrontTextureData);
+            cubemap->Unbind();
 
             return cubemap;
         }
