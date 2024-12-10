@@ -20,8 +20,8 @@ namespace Glacirer
             Resources::ResourceManager::RESOURCES_PATH + "Textures/skybox/left.jpg",
             Resources::ResourceManager::RESOURCES_PATH + "Textures/skybox/top.jpg",
             Resources::ResourceManager::RESOURCES_PATH + "Textures/skybox/bottom.jpg",
-            Resources::ResourceManager::RESOURCES_PATH + "Textures/skybox/back.jpg",
-            Resources::ResourceManager::RESOURCES_PATH + "Textures/skybox/front.jpg"
+            Resources::ResourceManager::RESOURCES_PATH + "Textures/skybox/front.jpg",
+            Resources::ResourceManager::RESOURCES_PATH + "Textures/skybox/back.jpg"
         };                             
     
         std::shared_ptr<Rendering::Cubemap> skyCubemap = Resources::ResourceManager::GetOrLoadCubemap(skyCubemapSettings, "C_Sky");
