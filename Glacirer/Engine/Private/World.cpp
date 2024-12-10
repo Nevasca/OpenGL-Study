@@ -6,15 +6,13 @@
 
 namespace Glacirer
 {
-    void World::Initialize()
+    void World::Initialize(const std::shared_ptr<Rendering::RenderSystem>& renderSystem)
     {
-        m_RenderSystem = std::make_unique<Rendering::RenderSystem>();
+        m_RenderSystem = renderSystem;
     }
 
     void World::Setup()
-    {
-        m_RenderSystem->Setup();
-    }
+    { }
 
     void World::Shutdown()
     {
@@ -23,7 +21,6 @@ namespace Glacirer
             gameObject->Destroy();
         }
 
-        m_RenderSystem->Shutdown();
         m_RenderSystem.reset();
         m_GameObjects.clear();
     }
@@ -34,17 +31,6 @@ namespace Glacirer
         {
             gameObject->Update(deltaTime);
         }
-    }
-
-    void World::Render()
-    {
-        if(!m_ActiveCamera)
-        {
-            // TODO: Log warning (create a log class)
-            return;        
-        }
-
-        m_RenderSystem->Render(*m_ActiveCamera);
     }
 
     void World::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)

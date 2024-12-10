@@ -32,6 +32,7 @@ namespace Glacirer
 
         GLFWwindow* m_Window{nullptr};
         std::unique_ptr<World> m_World{};
+        std::shared_ptr<Rendering::RenderSystem> m_RenderSystem{};
         bool bIsInitialized{false};
         float m_LastFrameTime{0.f};
 

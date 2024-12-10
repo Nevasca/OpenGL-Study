@@ -19,11 +19,10 @@ namespace Glacirer
     {
     public:
 
-        void Initialize();
+        void Initialize(const std::shared_ptr<Rendering::RenderSystem>& renderSystem);
         void Setup();
         void Shutdown();
         void Update(float deltaTime);
-        void Render();
         void AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
         void RemoveMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
         void AddOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
@@ -41,6 +40,7 @@ namespace Glacirer
         std::vector<std::shared_ptr<GameObject>>& GetAllGameObjects() { return m_GameObjects; }
         std::shared_ptr<GameObject> GetGameObjectAt(const int index) const { return m_GameObjects[index]; }
         Rendering::RenderSystem& GetRenderSystem() const { return *m_RenderSystem; }
+        std::shared_ptr<CameraComponent> GetActiveCamera() const { return m_ActiveCamera; }
 
         template <typename TObjectType, typename = std::enable_if_t<std::is_base_of_v<GameObject, TObjectType>>>
         std::shared_ptr<TObjectType> Spawn()
@@ -70,7 +70,7 @@ namespace Glacirer
         void InitializeGameObject(const std::shared_ptr<GameObject>& gameObject, const glm::vec3& position, const glm::vec3& eulerRotation, const glm::vec3& scale) const;
     
         std::vector<std::shared_ptr<GameObject>> m_GameObjects{};
-        std::unique_ptr<Rendering::RenderSystem> m_RenderSystem{};
+        std::shared_ptr<Rendering::RenderSystem> m_RenderSystem{};
         std::shared_ptr<CameraComponent> m_ActiveCamera{};
         unsigned int m_LastUsedId{0};
     };

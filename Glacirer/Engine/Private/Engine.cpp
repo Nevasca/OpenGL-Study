@@ -43,8 +43,11 @@ namespace Glacirer
     {
         Resources::ResourceManager::LoadDefaultResources();
 
+        m_RenderSystem = std::make_shared<Rendering::RenderSystem>();
+        m_RenderSystem->Setup();
+        
         m_World = std::make_unique<World>();
-        m_World->Initialize();
+        m_World->Initialize(m_RenderSystem);
         m_World->Setup();
     }
 
@@ -56,6 +59,9 @@ namespace Glacirer
 
         m_World->Shutdown();
         m_World.reset();
+
+        m_RenderSystem->Shutdown();
+        m_RenderSystem.reset();
 
         Resources::ResourceManager::UnloadAll();
     }
@@ -85,7 +91,14 @@ namespace Glacirer
         /* Swap front and back buffers */
         glfwSwapBuffers(m_Window);
 
-        m_World->Render();
+        std::shared_ptr<CameraComponent> activeCamera = m_World->GetActiveCamera();
+        if(!activeCamera)
+        {
+            // TODO: Log warning (create a log class)
+            return;
+        }
+
+        m_RenderSystem->Render(*activeCamera);
     }
 
     bool Engine::CreateWindow(const char* windowTitle)
