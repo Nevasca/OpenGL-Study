@@ -719,6 +719,7 @@ if exist "$(TargetDir)Engine.pdb" if exist "$(SolutionDir)bin\$(Platform)\$(Conf
     <ClInclude Include="Public\Rendering\ModelData.h" />
     <ClInclude Include="Public\Rendering\PostProcessingSystem.h" />
     <ClInclude Include="Public\Rendering\Primitive.h" />
+    <ClInclude Include="Public\Rendering\RenderingConstants.h" />
     <ClInclude Include="Public\Rendering\RenderSystem.h" />
     <ClInclude Include="Public\Rendering\Resolution.h" />
     <ClInclude Include="Public\Rendering\Shader.h" />

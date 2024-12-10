@@ -41,9 +41,9 @@ namespace Glacirer
         void LightingSystem::AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent)
         {
             m_DirectionalLights.push_back(directionalLightComponent);
-            m_TotalActiveDirectionalLights = std::min(static_cast<int>(m_DirectionalLights.size()), Rendering::MAX_DIRECTIONAL_LIGHTS);
+            m_TotalActiveDirectionalLights = std::min(static_cast<int>(m_DirectionalLights.size()), MAX_DIRECTIONAL_LIGHTS);
     
-            if(m_DirectionalLights.size() > Rendering::MAX_DIRECTIONAL_LIGHTS)
+            if(m_DirectionalLights.size() > MAX_DIRECTIONAL_LIGHTS)
             {
                 // TODO: replace for log class when implemented
                 std::cout << "Max directional lights reached. Last added directional light won't affect world\n";
@@ -56,7 +56,7 @@ namespace Glacirer
         void LightingSystem::AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent)
         {
             m_PointLights.push_back(pointLightComponent);
-            m_TotalActivePointLights = std::min(static_cast<int>(m_PointLights.size()), Rendering::MAX_POINT_LIGHTS);
+            m_TotalActivePointLights = std::min(static_cast<int>(m_PointLights.size()), MAX_POINT_LIGHTS);
 
             if(m_PointLights.size() > Rendering::MAX_POINT_LIGHTS)
             {
@@ -72,9 +72,9 @@ namespace Glacirer
         void LightingSystem::AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent)
         {
             m_SpotLights.push_back(spotLightComponent);
-            m_TotalActiveSpotLights = std::min(static_cast<int>(m_SpotLights.size()), Rendering::MAX_SPOT_LIGHTS);
+            m_TotalActiveSpotLights = std::min(static_cast<int>(m_SpotLights.size()), MAX_SPOT_LIGHTS);
 
-            if(m_SpotLights.size() > Rendering::MAX_SPOT_LIGHTS)
+            if(m_SpotLights.size() > MAX_SPOT_LIGHTS)
             {
                 // TODO: replace for log class when implemented
                 std::cout << "Max spot lights reached. Last added spot light won't affect world\n";
@@ -96,19 +96,19 @@ namespace Glacirer
 
             shader.Bind();
 
-            for(int i = 0; i < Rendering::MAX_DIRECTIONAL_LIGHTS; i++)
+            for(int i = 0; i < MAX_DIRECTIONAL_LIGHTS; i++)
             {
                 std::string uniformName = "u_DirectionalLightShadowMaps[" + std::to_string(i) + "]";
                 shader.SetUniform1i(uniformName, DIRECTIONAL_SHADOW_MAP_START_SLOT + i);
             }
 
-            for(int i = 0; i < Rendering::MAX_POINT_LIGHTS; i++)
+            for(int i = 0; i < MAX_POINT_LIGHTS; i++)
             {
                 std::string uniformName = "u_PointLightShadowMaps[" + std::to_string(i) + "]";
                 shader.SetUniform1i(uniformName, POINT_SHADOW_MAP_START_SLOT + i);
             }
 
-            for(int i = 0; i < Rendering::MAX_SPOT_LIGHTS; i++)
+            for(int i = 0; i < MAX_SPOT_LIGHTS; i++)
             {
                 std::string uniformName = "u_SpotLightShadowMaps[" + std::to_string(i) + "]";
                 shader.SetUniform1i(uniformName, SPOT_SHADOW_MAP_START_SLOT + i);
@@ -192,15 +192,15 @@ namespace Glacirer
             m_GeneralUniformBuffer->Unbind();
 
             m_DirectionalUniformBuffer->Bind();
-            m_DirectionalUniformBuffer->SetSubData(m_DirectionalsShaderData, Rendering::MAX_DIRECTIONAL_LIGHTS * sizeof(Rendering::DirectionalLightShaderData));
+            m_DirectionalUniformBuffer->SetSubData(m_DirectionalsShaderData, MAX_DIRECTIONAL_LIGHTS * sizeof(Rendering::DirectionalLightShaderData));
             m_DirectionalUniformBuffer->Unbind();
 
             m_PointUniformBuffer->Bind();
-            m_PointUniformBuffer->SetSubData(m_PointsShaderData, Rendering::MAX_POINT_LIGHTS * sizeof(Rendering::PointLightShaderData));
+            m_PointUniformBuffer->SetSubData(m_PointsShaderData, MAX_POINT_LIGHTS * sizeof(Rendering::PointLightShaderData));
             m_PointUniformBuffer->Unbind();
 
             m_SpotsUniformBuffer->Bind();
-            m_SpotsUniformBuffer->SetSubData(m_SpotsShaderData, Rendering::MAX_SPOT_LIGHTS * sizeof(Rendering::SpotLightShaderData));
+            m_SpotsUniformBuffer->SetSubData(m_SpotsShaderData, MAX_SPOT_LIGHTS * sizeof(Rendering::SpotLightShaderData));
             m_SpotsUniformBuffer->Unbind();
 
             UpdateDirectionalShadowMapUniformBuffers();
@@ -226,7 +226,7 @@ namespace Glacirer
             }
 
             m_DirectionalMatrixUniformBuffer->Bind();
-            m_DirectionalMatrixUniformBuffer->SetSubData(m_DirectionalLightShadowMapShaderData, Rendering::MAX_DIRECTIONAL_LIGHTS * sizeof(glm::mat4));
+            m_DirectionalMatrixUniformBuffer->SetSubData(m_DirectionalLightShadowMapShaderData, MAX_DIRECTIONAL_LIGHTS * sizeof(glm::mat4));
             m_DirectionalMatrixUniformBuffer->Unbind();
         }
 
@@ -250,7 +250,7 @@ namespace Glacirer
             }
 
             m_PointLightMatricesUniformBuffer->Bind();
-            m_PointLightMatricesUniformBuffer->SetSubData(m_PointLightShadowMapShaderData, Rendering::MAX_POINT_LIGHTS * sizeof(Rendering::PointLightShadowMapShaderData));
+            m_PointLightMatricesUniformBuffer->SetSubData(m_PointLightShadowMapShaderData, MAX_POINT_LIGHTS * sizeof(Rendering::PointLightShadowMapShaderData));
             m_PointLightMatricesUniformBuffer->Unbind();
         }
 
@@ -267,7 +267,7 @@ namespace Glacirer
             }
 
             m_SpotLightMatricesUniformBuffer->Bind();
-            m_SpotLightMatricesUniformBuffer->SetSubData(m_SpotLightShadowMapShaderData, Rendering::MAX_SPOT_LIGHTS * sizeof(Rendering::SpotLightShadowMapShaderData));
+            m_SpotLightMatricesUniformBuffer->SetSubData(m_SpotLightShadowMapShaderData, MAX_SPOT_LIGHTS * sizeof(Rendering::SpotLightShadowMapShaderData));
             m_SpotLightMatricesUniformBuffer->Unbind();
         }
 
@@ -326,42 +326,42 @@ namespace Glacirer
 
             m_DirectionalUniformBuffer = std::make_unique<Rendering::UniformBuffer>(
                 nullptr,
-                Rendering::MAX_DIRECTIONAL_LIGHTS * sizeof(Rendering::DirectionalLightShaderData),
+                MAX_DIRECTIONAL_LIGHTS * sizeof(Rendering::DirectionalLightShaderData),
                 UNIFORM_LIGHTING_DIRECTIONALS_BINDING_INDEX,
                 "LightingDirectionals",
                 true);
 
             m_PointUniformBuffer = std::make_unique<Rendering::UniformBuffer>(
                 nullptr,
-                Rendering::MAX_POINT_LIGHTS * sizeof(Rendering::PointLightShaderData),
+                MAX_POINT_LIGHTS * sizeof(Rendering::PointLightShaderData),
                 UNIFORM_LIGHTING_POINTS_BINDING_INDEX,
                 "LightingPoints",
                 true);
 
             m_SpotsUniformBuffer = std::make_unique<Rendering::UniformBuffer>(
                 nullptr,
-                Rendering::MAX_SPOT_LIGHTS * sizeof(Rendering::SpotLightShaderData),
+                MAX_SPOT_LIGHTS * sizeof(Rendering::SpotLightShaderData),
                 UNIFORM_LIGHTING_SPOTS_BINDING_INDEX,
                 "LightingSpots",
                 true);
 
             m_DirectionalMatrixUniformBuffer = std::make_unique<Rendering::UniformBuffer>(
                 nullptr,
-                Rendering::MAX_DIRECTIONAL_LIGHTS * sizeof(glm::mat4),
+                MAX_DIRECTIONAL_LIGHTS * sizeof(glm::mat4),
                 UNIFORM_LIGHTING_DIRECTIONAL_MATRIX_BINDING_INDEX,
                 "DirectionalLightShadowMapMatrices",
                 true);
 
             m_PointLightMatricesUniformBuffer = std::make_unique<Rendering::UniformBuffer>(
                 nullptr,
-                Rendering::MAX_POINT_LIGHTS * sizeof(Rendering::PointLightShadowMapShaderData),
+                MAX_POINT_LIGHTS * sizeof(Rendering::PointLightShadowMapShaderData),
                 UNIFORM_LIGHTING_POINT_MATRIX_BINDING_INDEX,
                 "PointLightShadowMapMatrices",
                 true);
 
             m_SpotLightMatricesUniformBuffer = std::make_unique<Rendering::UniformBuffer>(
                 nullptr,
-                Rendering::MAX_SPOT_LIGHTS * sizeof(Rendering::SpotLightShadowMapShaderData),
+                MAX_SPOT_LIGHTS * sizeof(Rendering::SpotLightShadowMapShaderData),
                 UNIFORM_LIGHTING_SPOT_MATRIX_BINDING_INDEX,
                 "SpotLightShadowMapMatrices",
                 true);
@@ -411,9 +411,9 @@ namespace Glacirer
 
         void LightingSystem::CreateShadowMaps()
         {
-            m_DirectionalShadowMapBuffers.reserve(Rendering::MAX_DIRECTIONAL_LIGHTS);
-            m_PointLightShadowMapBuffers.reserve(Rendering::MAX_POINT_LIGHTS);
-            m_SpotLightShadowMapBuffers.reserve(Rendering::MAX_SPOT_LIGHTS);
+            m_DirectionalShadowMapBuffers.reserve(MAX_DIRECTIONAL_LIGHTS);
+            m_PointLightShadowMapBuffers.reserve(MAX_POINT_LIGHTS);
+            m_SpotLightShadowMapBuffers.reserve(MAX_SPOT_LIGHTS);
         }
 
         void LightingSystem::CreateDirectionalLightShadowMapFor(int lightIndex)

@@ -1,5 +1,6 @@
 #include "Rendering/Material.h"
 
+#include "Rendering/RenderingConstants.h"
 #include "Rendering/Cubemap.h"
 #include "Rendering/Shader.h"
 #include "Rendering/Texture.h"
