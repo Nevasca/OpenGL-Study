@@ -53,10 +53,6 @@ namespace Glacirer
 
     void Engine::Shutdown()
     {
-        glfwTerminate();
-
-        m_Window = nullptr;
-
         m_World->Shutdown();
         m_World.reset();
 
@@ -64,6 +60,9 @@ namespace Glacirer
         m_RenderSystem.reset();
 
         Resources::ResourceManager::UnloadAll();
+
+        glfwTerminate();
+        m_Window = nullptr;
     }
 
     bool Engine::ShouldClose() const
