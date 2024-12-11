@@ -7,6 +7,7 @@
 #include "Basics/Objects/DirectionalLight.h"
 #include "Basics/Objects/PointLight.h"
 #include "Basics/Objects/Quad.h"
+#include "Basics/Objects/Skybox.h"
 #include "Basics/Objects/Sphere.h"
 #include "Basics/Objects/SpotLight.h"
 #include "GameObject/GameObject.h"
@@ -32,6 +33,7 @@ namespace GlacirerEditor
             RenderShapesSubmenu(world);
             RenderLightSubmenu(world);
             RenderCameraSubmenu(world);
+            RenderSkyboxSubmenu(world);
 
             ImGui::EndMenu();
         }
@@ -98,6 +100,17 @@ namespace GlacirerEditor
             {
                 std::shared_ptr<Glacirer::Camera> camera = world.Spawn<Glacirer::Camera>();
                 camera->SetName("Camera" + std::to_string(camera->GetId()));
+            }
+        }
+
+        
+        void GameObjectMenuBar::RenderSkyboxSubmenu(Glacirer::World& world)
+        {
+            if(ImGui::MenuItem("Skybox"))
+            {
+                std::shared_ptr<Glacirer::Skybox> skybox = world.Spawn<Glacirer::Skybox>();
+                skybox->SetName("Skybox" + std::to_string(skybox->GetId()));
+                skybox->SetDefaultSky();
             }
         }
     }
