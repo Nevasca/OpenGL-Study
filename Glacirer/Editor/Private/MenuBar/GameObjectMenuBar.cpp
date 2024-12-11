@@ -2,6 +2,7 @@
 
 #include <imgui/imgui.h>
 #include "World.h"
+#include "Basics/Objects/Camera.h"
 #include "Basics/Objects/Cube.h"
 #include "Basics/Objects/DirectionalLight.h"
 #include "Basics/Objects/PointLight.h"
@@ -30,6 +31,7 @@ namespace GlacirerEditor
 
             RenderShapesSubmenu(world);
             RenderLightSubmenu(world);
+            RenderCameraSubmenu(world);
 
             ImGui::EndMenu();
         }
@@ -88,6 +90,15 @@ namespace GlacirerEditor
             }
             
             ImGui::EndMenu();
+        }
+
+        void GameObjectMenuBar::RenderCameraSubmenu(Glacirer::World& world)
+        {
+            if(ImGui::MenuItem("Camera"))
+            {
+                std::shared_ptr<Glacirer::Camera> camera = world.Spawn<Glacirer::Camera>();
+                camera->SetName("Camera" + std::to_string(camera->GetId()));
+            }
         }
     }
 }

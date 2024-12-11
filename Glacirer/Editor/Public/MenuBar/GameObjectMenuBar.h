@@ -17,6 +17,7 @@ namespace GlacirerEditor
         private:
             void RenderShapesSubmenu(Glacirer::World& world);
             void RenderLightSubmenu(Glacirer::World& world);
+            void RenderCameraSubmenu(Glacirer::World& world);
         };
     }
 }

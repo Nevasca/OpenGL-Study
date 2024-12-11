@@ -203,6 +203,7 @@ if exist "$(TargetDir)Engine.pdb" if exist "$(SolutionDir)bin\$(Platform)\$(Conf
     <ClCompile Include="Private\Basics\Components\PostProcessingComponent.cpp" />
     <ClCompile Include="Private\Basics\Components\SkyboxComponent.cpp" />
     <ClCompile Include="Private\Basics\Components\SpotLightComponent.cpp" />
+    <ClCompile Include="Private\Basics\Objects\Camera.cpp" />
     <ClCompile Include="Private\Basics\Objects\Cube.cpp" />
     <ClCompile Include="Private\Basics\Objects\DirectionalLight.cpp" />
     <ClCompile Include="Private\Basics\Objects\FlyingCamera.cpp" />
@@ -687,6 +688,7 @@ if exist "$(TargetDir)Engine.pdb" if exist "$(SolutionDir)bin\$(Platform)\$(Conf
     <ClInclude Include="Public\Basics\Components\PostProcessingComponent.h" />
     <ClInclude Include="Public\Basics\Components\SkyboxComponent.h" />
     <ClInclude Include="Public\Basics\Components\SpotLightComponent.h" />
+    <ClInclude Include="Public\Basics\Objects\Camera.h" />
     <ClInclude Include="Public\Basics\Objects\Cube.h" />
     <ClInclude Include="Public\Basics\Objects\DirectionalLight.h" />
     <ClInclude Include="Public\Basics\Objects\FlyingCamera.h" />
