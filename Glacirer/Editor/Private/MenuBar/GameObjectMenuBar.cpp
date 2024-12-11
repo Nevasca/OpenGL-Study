@@ -6,6 +6,7 @@
 #include "Basics/Objects/Cube.h"
 #include "Basics/Objects/DirectionalLight.h"
 #include "Basics/Objects/PointLight.h"
+#include "Basics/Objects/PostProcessing.h"
 #include "Basics/Objects/Quad.h"
 #include "Basics/Objects/Skybox.h"
 #include "Basics/Objects/Sphere.h"
@@ -34,6 +35,7 @@ namespace GlacirerEditor
             RenderLightSubmenu(world);
             RenderCameraSubmenu(world);
             RenderSkyboxSubmenu(world);
+            RenderPostProcessingSubmenu(world);
 
             ImGui::EndMenu();
         }
@@ -102,7 +104,6 @@ namespace GlacirerEditor
                 camera->SetName("Camera" + std::to_string(camera->GetId()));
             }
         }
-
         
         void GameObjectMenuBar::RenderSkyboxSubmenu(Glacirer::World& world)
         {
@@ -111,6 +112,15 @@ namespace GlacirerEditor
                 std::shared_ptr<Glacirer::Skybox> skybox = world.Spawn<Glacirer::Skybox>();
                 skybox->SetName("Skybox" + std::to_string(skybox->GetId()));
                 skybox->SetDefaultSky();
+            }
+        }
+
+        void GameObjectMenuBar::RenderPostProcessingSubmenu(Glacirer::World& world)
+        {
+            if(ImGui::MenuItem("PostProcessing"))
+            {
+                std::shared_ptr<Glacirer::PostProcessing> postProcessing = world.Spawn<Glacirer::PostProcessing>();
+                postProcessing->SetName("PostProcessing" + std::to_string(postProcessing->GetId()));
             }
         }
     }
