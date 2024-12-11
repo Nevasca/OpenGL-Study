@@ -1,4 +1,5 @@
 #pragma once
+#include "MenuBar/GameObjectMenuBar.h"
 
 namespace Glacirer
 {
@@ -16,5 +17,7 @@ namespace GlacirerEditor
     private:
 
         void RenderViewportMenu(Glacirer::World& world);
+
+        MenuBar::GameObjectMenuBar m_GameObjectMenuBar{};
     };
 }

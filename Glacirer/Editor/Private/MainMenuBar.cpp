@@ -16,6 +16,7 @@ namespace GlacirerEditor
         }
 
         RenderViewportMenu(world);
+        m_GameObjectMenuBar.RenderGUI(world);
 
         ImGui::EndMainMenuBar();
     }

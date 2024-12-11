@@ -197,6 +197,7 @@ if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $
     <ClCompile Include="Private\Inspectors\WorldInspector.cpp" />
     <ClCompile Include="Private\MainMenuBar.cpp" />
     <ClCompile Include="Private\MainPanel.cpp" />
+    <ClCompile Include="Private\MenuBar\GameObjectMenuBar.cpp" />
     <ClCompile Include="Private\ResourceCollection.cpp" />
     <ClCompile Include="Private\ResourcesPanel.cpp" />
     <ClCompile Include="Private\Sandbox\SandboxSceneSpawner.cpp" />
@@ -228,6 +229,7 @@ if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $
     <ClInclude Include="Public\Inspectors\WorldInspector.h" />
     <ClInclude Include="Public\MainMenuBar.h" />
     <ClInclude Include="Public\MainPanel.h" />
+    <ClInclude Include="Public\MenuBar\GameObjectMenuBar.h" />
     <ClInclude Include="Public\ResourceCollection.h" />
     <ClInclude Include="Public\ResourcesPanel.h" />
     <ClInclude Include="Public\Sandbox\SandboxSceneSpawner.h" />
