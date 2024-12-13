@@ -27,9 +27,31 @@ namespace Glacirer
 
     void World::Update(float deltaTime)
     {
+        UpdateGameObjects(deltaTime);
+        DestroyPendingGameObjects();
+    }
+
+    void World::UpdateGameObjects(float deltaTime)
+    {
         for(const std::shared_ptr<GameObject>& gameObject : m_GameObjects)
         {
             gameObject->Update(deltaTime);
+        }
+    }
+
+    void World::DestroyPendingGameObjects()
+    {
+        auto gameObjectIterator = m_GameObjects.begin();
+        while (gameObjectIterator != m_GameObjects.end())
+        {
+            if (gameObjectIterator->get()->IsPendingDestroy())
+            {
+                gameObjectIterator = m_GameObjects.erase(gameObjectIterator);
+            }
+            else
+            {
+                ++gameObjectIterator;
+            }
         }
     }
 

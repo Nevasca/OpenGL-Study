@@ -128,6 +128,28 @@ namespace GlacirerEditor
         {
             bShowPanelsEnabled = !bShowPanelsEnabled;
         }
+
+        if (Glacirer::Input::GetKeyDown(GLFW_KEY_DELETE) && m_MainPanel.HasAnyGameObjectSelected())
+        {
+            DeleteSelectedGameObject();
+        }
+    }
+
+    void Editor::DeleteSelectedGameObject()
+    {
+        int selectedIndex = m_MainPanel.GetCurrentSelectedGameObjectIndex();
+
+        if(selectedIndex < 0)
+        {
+            return;
+        }
+
+        const Glacirer::World& world = m_Engine.GetWorld();
+        std::shared_ptr<Glacirer::GameObject> selectedGameObject = world.GetGameObjectAt(selectedIndex);
+        selectedGameObject->Destroy();
+
+        m_MainPanel.ResetSelection();
+        m_SelectedGameObjectIndex = -1;
     }
 
     void Editor::InitializeImGUI()

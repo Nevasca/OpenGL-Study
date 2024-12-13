@@ -16,7 +16,8 @@ namespace GlacirerEditor
 
         void RenderGUI(Glacirer::World& world);
         bool HasAnyGameObjectSelected() const { return m_Hierarchy.HasAnyGameObjectSelected(); }
-        int GetCurrentSelectedGameObjectIndex() const { return m_Hierarchy.GetCurrentSelectedGameObjectIndex(); } 
+        int GetCurrentSelectedGameObjectIndex() const { return m_Hierarchy.GetCurrentSelectedGameObjectIndex(); }
+        void ResetSelection() { m_Hierarchy.ResetSelection(); }
 
     private:
 

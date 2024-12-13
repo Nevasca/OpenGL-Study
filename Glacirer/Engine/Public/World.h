@@ -68,6 +68,8 @@ namespace Glacirer
 
         void InitializeGameObject(const std::shared_ptr<GameObject>& gameObject) const;
         void InitializeGameObject(const std::shared_ptr<GameObject>& gameObject, const glm::vec3& position, const glm::vec3& eulerRotation, const glm::vec3& scale) const;
+        void UpdateGameObjects(float deltaTime);
+        void DestroyPendingGameObjects();
     
         std::vector<std::shared_ptr<GameObject>> m_GameObjects{};
         std::shared_ptr<Rendering::RenderSystem> m_RenderSystem{};

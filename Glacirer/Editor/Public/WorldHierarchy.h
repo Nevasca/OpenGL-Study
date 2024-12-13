@@ -13,7 +13,8 @@ namespace GlacirerEditor
         void RenderGUI(Glacirer::World& world);
 
         bool HasAnyGameObjectSelected() const { return m_SelectedIndex >= 0; }
-        int GetCurrentSelectedGameObjectIndex() const { return m_SelectedIndex; } 
+        int GetCurrentSelectedGameObjectIndex() const { return m_SelectedIndex; }
+        void ResetSelection();
 
     private:
         int m_SelectedIndex{-1};

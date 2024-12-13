@@ -32,6 +32,11 @@ namespace GlacirerEditor
         }
     }
 
+    void WorldHierarchy::ResetSelection()
+    {
+        m_SelectedIndex = -1;
+    }
+
     void WorldHierarchy::TryDeselectingNode()
     {
         if(m_SelectedIndex == -1)
