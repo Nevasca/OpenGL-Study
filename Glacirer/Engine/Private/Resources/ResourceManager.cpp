@@ -191,6 +191,16 @@ namespace Glacirer
             return m_Models[name];
         }
 
+        std::shared_ptr<Rendering::ModelData> ResourceManager::GetOrLoadModel(const std::string& filePath, const std::string& name)
+        {
+            if(m_Models.find(name) == m_Models.end())
+            {
+                return LoadModel(filePath, name);
+            }
+
+            return m_Models[name];
+        }
+
         std::shared_ptr<Rendering::ModelData> ResourceManager::GetModel(const std::string& name)
         {
             return m_Models[name];

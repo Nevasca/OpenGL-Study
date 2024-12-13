@@ -52,6 +52,7 @@ namespace Glacirer
 
             static std::shared_ptr<Rendering::Mesh> GetMesh(const std::string& name);
             static std::shared_ptr<Rendering::ModelData> LoadModel(const std::string& filePath, const std::string& name);
+            static std::shared_ptr<Rendering::ModelData> GetOrLoadModel(const std::string& filePath, const std::string& name);
             static std::shared_ptr<Rendering::ModelData> GetModel(const std::string& name);
     
             static void UnloadAll();

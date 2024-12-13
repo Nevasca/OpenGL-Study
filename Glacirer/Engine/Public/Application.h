@@ -1,10 +1,12 @@
 #pragma once
 
+#include "EngineAPI.h"
+
 struct GLFWwindow;
 
 namespace Glacirer
 {
-    class Application
+    class ENGINE_API Application
     {
     public:
 

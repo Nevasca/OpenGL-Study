@@ -202,6 +202,8 @@ if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $
     <ClCompile Include="Private\ResourcesPanel.cpp" />
     <ClCompile Include="Private\Sandbox\SandboxSceneSpawner.cpp" />
     <ClCompile Include="Private\StatisticsWindow.cpp" />
+    <ClCompile Include="Private\Util\FileDialog.cpp" />
+    <ClCompile Include="Private\Util\StringConverter.cpp" />
     <ClCompile Include="Private\WorldHierarchy.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +236,8 @@ if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $
     <ClInclude Include="Public\ResourcesPanel.h" />
     <ClInclude Include="Public\Sandbox\SandboxSceneSpawner.h" />
     <ClInclude Include="Public\StatisticsWindow.h" />
+    <ClInclude Include="Public\Util\FileDialog.h" />
+    <ClInclude Include="Public\Util\StringConverter.h" />
     <ClInclude Include="Public\WorldHierarchy.h" />
   </ItemGroup>
   <ItemGroup>
