@@ -27,17 +27,22 @@ namespace GlacirerEditor
                 return;
             }
 
-            ImGui::SeparatorText("Add new");
-        
             if(ImGui::MenuItem("Empty"))
             {
                 world.Spawn<Glacirer::GameObject>();
             }
 
+            ImGui::Separator();
             RenderShapesSubmenu(world);
             RenderModelSubmenu(world);
+
+            ImGui::Separator();
             RenderLightSubmenu(world);
+
+            ImGui::Separator();
             RenderCameraSubmenu(world);
+
+            ImGui::Separator();
             RenderSkyboxSubmenu(world);
             RenderPostProcessingSubmenu(world);
 
