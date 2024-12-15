@@ -19,6 +19,14 @@ namespace Glacirer
         world.SetActiveCamera(GetThis());
     }
 
+    void CameraComponent::Destroy()
+    {
+        Component::Destroy();
+
+        World& world = GetOwner().GetWorld();
+        world.SetActiveCamera(nullptr);
+    }
+
     glm::mat4 CameraComponent::GetViewMatrix() const
     {
         const Transform& OwnerTransform = GetOwner().GetTransform();

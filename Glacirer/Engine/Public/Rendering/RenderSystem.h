@@ -50,6 +50,7 @@ namespace Glacirer
             void SetSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent);
             void RemoveSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent);
             void Render(const CameraComponent& activeCamera);
+            void RenderEmpty();
 
             void SetAmbientLightColor(const glm::vec3& ambientLightColor) { m_LightingSystem.SetAmbientLightColor(ambientLightColor); }
             glm::vec3 GetAmbientLightColor() const { return m_LightingSystem.GetAmbientLightColor(); }

@@ -240,6 +240,11 @@ namespace Glacirer
             // m_Device.DisableGammaCorrection();
         }
 
+        void RenderSystem::RenderEmpty()
+        {
+            m_Device.Clear();
+        }
+
         void RenderSystem::SetOverrideShader(const std::shared_ptr<Shader>& overrideShader, bool bSetupUniforms)
         {
             m_WorldOverrideShader = overrideShader;

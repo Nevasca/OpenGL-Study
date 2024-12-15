@@ -94,6 +94,7 @@ namespace Glacirer
         if(!activeCamera)
         {
             // TODO: Log warning (create a log class)
+            m_RenderSystem->RenderEmpty();
             return;
         }
 

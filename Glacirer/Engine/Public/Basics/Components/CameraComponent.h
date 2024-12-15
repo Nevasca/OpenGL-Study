@@ -13,6 +13,7 @@ namespace Glacirer
     public:
 
         void Initialize() override;
+        void Destroy() override;
 
         glm::mat4 GetViewMatrix() const;
         glm::mat4 GetViewNoTranslationMatrix() const;
