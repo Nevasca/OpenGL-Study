@@ -6,7 +6,7 @@
 
 namespace Glacirer
 {
-    class ENGINE_API CameraComponent : public Component 
+    class ENGINE_API CameraComponent : INHERIT_FROM_COMPONENT(CameraComponent)
     {
         GENERATE_COMPONENT_BODY(CameraComponent)
 

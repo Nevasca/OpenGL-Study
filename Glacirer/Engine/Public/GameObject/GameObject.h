@@ -51,7 +51,6 @@ namespace Glacirer
         {
             std::shared_ptr<TComponent> component = std::make_shared<TComponent>(*this);
 
-            component->SetThis(component);
             component->Initialize();
             component->Enable();
             component->Start();

@@ -20,11 +20,9 @@
         return static_cast<int>(hasher(#ClassName));\
     }\
     int GetHash() override { return GetClassHash(); }\
-    private:\
-    std::shared_ptr<ClassName> m_This{};\
-    void SetThis(const std::shared_ptr<ClassName>& InThis) { m_This = InThis; }\
-    std::shared_ptr<ClassName> GetThis() const { return m_This; }
+    std::shared_ptr<ClassName> GetThis() { return shared_from_this(); }
 
+#define INHERIT_FROM_COMPONENT(ClassName) public Component, public std::enable_shared_from_this<ClassName>
 
 namespace Glacirer
 {

@@ -3,7 +3,7 @@
 
 namespace Glacirer
 {
-    class ENGINE_API PostProcessingComponent : public Component
+    class ENGINE_API PostProcessingComponent : INHERIT_FROM_COMPONENT(PostProcessingComponent)
     {
         GENERATE_COMPONENT_BODY(PostProcessingComponent)
 

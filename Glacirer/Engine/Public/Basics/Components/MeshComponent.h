@@ -11,7 +11,7 @@ namespace Glacirer
         class Mesh;
     }
 
-    class ENGINE_API MeshComponent : public Component
+    class ENGINE_API MeshComponent : INHERIT_FROM_COMPONENT(MeshComponent)
     {
         GENERATE_COMPONENT_BODY(MeshComponent)
 

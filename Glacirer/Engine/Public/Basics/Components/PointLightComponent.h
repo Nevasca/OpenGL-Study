@@ -12,7 +12,7 @@ namespace Glacirer
         struct Resolution;
     }
 
-    class ENGINE_API PointLightComponent : public Component
+    class ENGINE_API PointLightComponent : INHERIT_FROM_COMPONENT(PointLightComponent)
     {
         GENERATE_COMPONENT_BODY(PointLightComponent)
     

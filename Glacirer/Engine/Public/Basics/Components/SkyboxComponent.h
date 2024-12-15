@@ -11,7 +11,7 @@ namespace Glacirer
     }
 
 
-    class ENGINE_API SkyboxComponent : public Component
+    class ENGINE_API SkyboxComponent : INHERIT_FROM_COMPONENT(SkyboxComponent)
     {
         GENERATE_COMPONENT_BODY(SkyboxComponent)
 

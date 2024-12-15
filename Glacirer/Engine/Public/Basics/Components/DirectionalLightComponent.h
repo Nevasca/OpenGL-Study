@@ -5,7 +5,7 @@
 
 namespace Glacirer
 {
-    class ENGINE_API DirectionalLightComponent : public Component
+    class ENGINE_API DirectionalLightComponent : INHERIT_FROM_COMPONENT(DirectionalLightComponent)
     {
         GENERATE_COMPONENT_BODY(DirectionalLightComponent)
     

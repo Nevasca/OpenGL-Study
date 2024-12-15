@@ -6,7 +6,7 @@ namespace Glacirer
     class PilotComponent;
     class CameraComponent;
 
-    class ENGINE_API PilotCameraController : public Component
+    class ENGINE_API PilotCameraController : INHERIT_FROM_COMPONENT(PilotCameraController)
     {
         GENERATE_COMPONENT_BODY(PilotCameraController)
     

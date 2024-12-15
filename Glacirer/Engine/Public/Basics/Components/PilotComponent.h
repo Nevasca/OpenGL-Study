@@ -3,7 +3,7 @@
 
 namespace Glacirer
 {
-    class ENGINE_API PilotComponent : public Component
+    class ENGINE_API PilotComponent : INHERIT_FROM_COMPONENT(PilotComponent)
     {
         GENERATE_COMPONENT_BODY(PilotComponent)
     
