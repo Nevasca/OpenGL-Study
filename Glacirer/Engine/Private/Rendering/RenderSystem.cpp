@@ -21,6 +21,7 @@ namespace Glacirer
     namespace Rendering
     {
         RenderSystem::RenderSystem(const unsigned int totalMSAASamples)
+            : m_TotalMSAASamples(totalMSAASamples)
         {
             CreateInstancedBuffer();
             CreateUniformBuffers();
@@ -32,12 +33,7 @@ namespace Glacirer
             m_Device.EnableMSAA(); // Seems we don't actually need to enable when using custom framebuffer
     
             Rendering::Resolution resolution = Screen::GetResolution();
-            m_Device.SetViewportResolution(resolution);
-
-            m_MultisampleFramebuffer = std::make_unique<Framebuffer>(resolution, true, std::vector<TextureSettings>{}, totalMSAASamples);
-            m_IntermediateFramebuffer = std::make_unique<Framebuffer>(resolution, false, std::vector<TextureSettings>{});
-
-            m_PostProcessingSystem.SetFramebuffer(*m_IntermediateFramebuffer);
+            SetViewportResolution(resolution);
 
             constexpr glm::vec4 defaultClearColor{0.1f, 0.1f, 0.1f, 1.f};
             SetClearColor(defaultClearColor);
@@ -67,6 +63,16 @@ namespace Glacirer
             m_LightingSystem.Shutdown();
 
             m_SkyboxComponent.reset();
+        }
+
+        void RenderSystem::SetViewportResolution(const Resolution& resolution)
+        {
+            m_Device.SetViewportResolution(resolution);
+
+            m_MultisampleFramebuffer = std::make_unique<Framebuffer>(resolution, true, std::vector<TextureSettings>{}, m_TotalMSAASamples);
+            m_IntermediateFramebuffer = std::make_unique<Framebuffer>(resolution, false, std::vector<TextureSettings>{});
+
+            m_PostProcessingSystem.SetFramebuffer(*m_IntermediateFramebuffer);
         }
 
         void RenderSystem::AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)

@@ -8,17 +8,14 @@
 
 namespace
 {
-    void HandleWindowResized(GLFWwindow* Window, int Width, int Height)
+    Glacirer::Engine* g_Engine;
+    
+    void HandleWindowResizedAnonymous(GLFWwindow* window, int width, int height)
     {
-        // Don't update viewport size if window has been minimized
-        // it causes an assert on glm perspective matrix calculation
-        if(Width == 0 || Height == 0)
+        if(g_Engine)
         {
-            return;
+            g_Engine->HandleWindowResized(width, height);
         }
-
-        glViewport(0, 0, Width, Height);
-        Glacirer::Screen::SetSize(Width, Height);
     }
 }
 
@@ -49,10 +46,14 @@ namespace Glacirer
         m_World = std::make_unique<World>();
         m_World->Initialize(m_RenderSystem);
         m_World->Setup();
+
+        g_Engine = this;
     }
 
     void Engine::Shutdown()
     {
+        g_Engine = nullptr;
+
         m_World->Shutdown();
         m_World.reset();
 
@@ -138,7 +139,7 @@ namespace Glacirer
         glViewport(0, 0, windowWidth, windowHeight);
         Screen::SetSize(windowWidth, windowHeight);
     
-        glfwSetFramebufferSizeCallback(m_Window, HandleWindowResized); // Add callback for window resized
+        glfwSetFramebufferSizeCallback(m_Window, HandleWindowResizedAnonymous);
 
         return true;
     }
@@ -147,6 +148,19 @@ namespace Glacirer
     {
         const GLenum result = glewInit();
         return result == GLEW_OK;
+    }
+
+    void Engine::HandleWindowResized(int width, int height)
+    {
+        // Don't update viewport size if window has been minimized
+        // it causes an assert on glm perspective matrix calculation
+        if(width == 0 || height == 0)
+        {
+            return;
+        }
+
+        Screen::SetSize(width, height);
+        m_RenderSystem->SetViewportResolution(Screen::GetResolution());
     }
 
     const char* Engine::GetGLSLVersion()

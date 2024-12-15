@@ -22,6 +22,7 @@ namespace Glacirer
 
         World& GetWorld() const { return *m_World; }
         GLFWwindow* GetWindow() const { return m_Window; }
+        void HandleWindowResized(int width, int height);
 
         bool IsInitialized() const { return bIsInitialized; }
         bool ShouldClose() const;

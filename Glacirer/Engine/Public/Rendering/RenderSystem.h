@@ -35,6 +35,10 @@ namespace Glacirer
             void Setup();
             void Shutdown();
 
+            void Render(const CameraComponent& activeCamera);
+            void RenderEmpty();
+            void SetViewportResolution(const Resolution& resolution);
+
             void AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
             void RemoveMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
             void AddOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
@@ -49,8 +53,6 @@ namespace Glacirer
             void RemovePostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent);
             void SetSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent);
             void RemoveSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent);
-            void Render(const CameraComponent& activeCamera);
-            void RenderEmpty();
 
             void SetAmbientLightColor(const glm::vec3& ambientLightColor) { m_LightingSystem.SetAmbientLightColor(ambientLightColor); }
             glm::vec3 GetAmbientLightColor() const { return m_LightingSystem.GetAmbientLightColor(); }
@@ -69,6 +71,7 @@ namespace Glacirer
             LightingSystem m_LightingSystem{};
             PostProcessingSystem m_PostProcessingSystem{};
             Rendering::Device m_Device{};
+            unsigned int m_TotalMSAASamples{1};
 
             Rendering::MeshComponentRenderSet m_OpaqueMeshComponentSet{};
             Rendering::MeshComponentRenderSet m_TransparentMeshComponentSet{};
