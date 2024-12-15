@@ -9,7 +9,7 @@
 #include "EngineAPI.h"
 #include <glm/vec3.hpp>
 
-#define GENERATE_COMPONENT_BODY(ClassName) friend class GameObject;\
+#define GENERATE_COMPONENT_BODY(ClassName)\
     public:\
     ClassName(GameObject& owner)\
     : Component(owner) { }\
@@ -20,6 +20,7 @@
         return static_cast<int>(hasher(#ClassName));\
     }\
     int GetHash() override { return GetClassHash(); }\
+    private:\
     std::shared_ptr<ClassName> GetThis() { return shared_from_this(); }
 
 #define INHERIT_FROM_COMPONENT(ClassName) public Component, public std::enable_shared_from_this<ClassName>
@@ -32,8 +33,6 @@ namespace Glacirer
 
     class ENGINE_API Component
     {
-        friend class GameObject;
-
     public:
 
         virtual ~Component() = default;
