@@ -16,6 +16,7 @@ namespace Glacirer
         GENERATE_COMPONENT_BODY(MeshComponent)
 
     public:
+        void Destroy() override;
 
         void SetMesh(const std::shared_ptr<Rendering::Mesh>& mesh);
         void SetMaterial(const std::shared_ptr<Rendering::Material>& material);

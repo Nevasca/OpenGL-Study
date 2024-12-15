@@ -97,4 +97,14 @@ namespace Glacirer
 
         bIsAddedToWorld = false;
     }
+
+    void MeshComponent::Destroy()
+    {
+        Component::Destroy();
+
+        if(bIsAddedToWorld)
+        {
+            RemoveFromWorld();
+        }
+    }
 }
