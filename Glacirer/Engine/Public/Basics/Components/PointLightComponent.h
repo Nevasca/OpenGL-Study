@@ -19,6 +19,7 @@ namespace Glacirer
     public:
 
         void Initialize() override;
+        void Destroy() override;
 
         void SetAttenuation(float constant, float linear, float quadratic);
         glm::vec3 GetPosition() const;

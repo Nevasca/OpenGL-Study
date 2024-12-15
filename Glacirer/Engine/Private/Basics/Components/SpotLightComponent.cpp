@@ -18,6 +18,14 @@ namespace Glacirer
         World.AddSpotLight(GetThis());
     }
 
+    void SpotLightComponent::Destroy()
+    {
+        Component::Destroy();
+
+        World& World = GetOwner().GetWorld();
+        World.RemoveSpotLight(GetThis());
+    }
+
     glm::vec3 SpotLightComponent::GetDirection() const
     {
         return GetOwnerTransform().GetForwardVector();

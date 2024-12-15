@@ -17,6 +17,8 @@ namespace Glacirer
     public:
 
         void Initialize() override;
+        void Destroy() override;
+
         glm::vec3 GetDirection() const;
         glm::vec3 GetPosition() const;
         void SetRange(float range);

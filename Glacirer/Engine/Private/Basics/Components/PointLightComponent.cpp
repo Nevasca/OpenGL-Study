@@ -17,6 +17,14 @@ namespace Glacirer
         world.AddPointLight(GetThis());
     }
 
+    void PointLightComponent::Destroy()
+    {
+        Component::Destroy();
+
+        World& world = GetOwner().GetWorld();
+        world.RemovePointLight(GetThis());
+    }
+
     void PointLightComponent::SetAttenuation(float constant, float linear, float quadratic)
     {
         m_Attenuation.Constant = constant;

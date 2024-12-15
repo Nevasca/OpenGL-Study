@@ -115,8 +115,11 @@ namespace Glacirer
             void Shutdown();
         
             void AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent);
+            void RemoveDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent);
             void AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent);
+            void RemovePointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent);
             void AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent);
+            void RemoveSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent);
             void SetupUniformsFor(Shader& shader) const;
             void UpdateLightingUniformBuffer(const CameraComponent& activeCamera);
 
@@ -179,9 +182,12 @@ namespace Glacirer
             void BindShadowMapTextures();
             void UnbindShadowMapTextures();
             void CreateShadowMaps();
-            void CreateDirectionalLightShadowMapFor(int lightIndex);
-            void CreatePointLightShadowMapFor(int lightIndex);
-            void CreateSportLightShadowMapFor(int lightIndex);
+            void CreateDirectionalLightShadowMap();
+            void RemoveDirectionalLightShadowMap();
+            void CreatePointLightShadowMap();
+            void RemovePointLightShadowMap();
+            void CreateSpotLightShadowMap();
+            void RemoveSpotLightShadowMap();
         };
     }
 }

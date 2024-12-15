@@ -47,10 +47,25 @@ namespace Glacirer
             {
                 // TODO: replace for log class when implemented
                 std::cout << "Max directional lights reached. Last added directional light won't affect world\n";
+                return;
             }
 
-            int lastActiveLightIndex = m_TotalActiveDirectionalLights - 1;
-            CreateDirectionalLightShadowMapFor(lastActiveLightIndex);
+            CreateDirectionalLightShadowMap();
+        }
+
+        void LightingSystem::RemoveDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent)
+        {
+            auto iterator = std::find(m_DirectionalLights.cbegin(), m_DirectionalLights.cend(), directionalLightComponent);
+            assert(iterator != m_DirectionalLights.cend());
+            m_DirectionalLights.erase(iterator);
+            
+            if(m_DirectionalLights.size() >= MAX_DIRECTIONAL_LIGHTS)
+            {
+                return;
+            }
+
+            m_TotalActiveDirectionalLights--;
+            RemoveDirectionalLightShadowMap();
         }
 
         void LightingSystem::AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent)
@@ -65,8 +80,22 @@ namespace Glacirer
                 return;
             }
 
-            int lastActiveLightIndex = m_TotalActivePointLights - 1;
-            CreatePointLightShadowMapFor(lastActiveLightIndex);
+            CreatePointLightShadowMap();
+        }
+
+        void LightingSystem::RemovePointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent)
+        {
+            auto iterator = std::find(m_PointLights.cbegin(), m_PointLights.cend(), pointLightComponent);
+            assert(iterator != m_PointLights.cend());
+            m_PointLights.erase(iterator);
+            
+            if(m_PointLights.size() >= MAX_POINT_LIGHTS)
+            {
+                return;
+            }
+
+            m_TotalActivePointLights--;
+            RemovePointLightShadowMap();
         }
 
         void LightingSystem::AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent)
@@ -78,10 +107,25 @@ namespace Glacirer
             {
                 // TODO: replace for log class when implemented
                 std::cout << "Max spot lights reached. Last added spot light won't affect world\n";
+                return;
             }
 
-            int lastActiveLightIndex = m_TotalActiveSpotLights - 1;
-            CreateSportLightShadowMapFor(lastActiveLightIndex);
+            CreateSpotLightShadowMap();
+        }
+
+        void LightingSystem::RemoveSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent)
+        {
+            auto iterator = std::find(m_SpotLights.cbegin(), m_SpotLights.cend(), spotLightComponent);
+            assert(iterator != m_SpotLights.cend());
+            m_SpotLights.erase(iterator);
+            
+            if(m_SpotLights.size() >= MAX_SPOT_LIGHTS)
+            {
+                return;
+            }
+
+            m_TotalActiveSpotLights--;
+            RemoveSpotLightShadowMap();
         }
 
         void LightingSystem::SetupUniformsFor(Shader& shader) const
@@ -416,10 +460,8 @@ namespace Glacirer
             m_SpotLightShadowMapBuffers.reserve(MAX_SPOT_LIGHTS);
         }
 
-        void LightingSystem::CreateDirectionalLightShadowMapFor(int lightIndex)
+        void LightingSystem::CreateDirectionalLightShadowMap()
         {
-            ASSERT(lightIndex >= 0 && lightIndex < static_cast<int>(m_DirectionalShadowMapBuffers.capacity()));
-
             FramebufferSettings settings{};
             settings.Resolution = m_DirectionalShadowResolution;
             settings.EnableDepthMapOnly = true;
@@ -427,10 +469,14 @@ namespace Glacirer
             m_DirectionalShadowMapBuffers.emplace_back(std::make_unique<Framebuffer>(settings));
         }
 
-        void LightingSystem::CreatePointLightShadowMapFor(int lightIndex)
+        void LightingSystem::RemoveDirectionalLightShadowMap()
         {
-            assert(lightIndex >= 0 && lightIndex < static_cast<int>(m_PointLightShadowMapBuffers.capacity()));
+            assert(!m_DirectionalShadowMapBuffers.empty());
+            m_DirectionalShadowMapBuffers.pop_back();
+        }
 
+        void LightingSystem::CreatePointLightShadowMap()
+        {
             FramebufferSettings settings{};
             settings.Resolution = m_ShadowResolution;
             settings.EnableDepthMapOnly = true;
@@ -439,15 +485,25 @@ namespace Glacirer
             m_PointLightShadowMapBuffers.emplace_back(std::make_unique<Framebuffer>(settings));
         }
 
-        void LightingSystem::CreateSportLightShadowMapFor(int lightIndex)
+        void LightingSystem::RemovePointLightShadowMap()
         {
-            ASSERT(lightIndex >= 0 && lightIndex < static_cast<int>(m_SpotLightShadowMapBuffers.capacity()));
+            assert(!m_PointLightShadowMapBuffers.empty());
+            m_PointLightShadowMapBuffers.pop_back();
+        }
 
+        void LightingSystem::CreateSpotLightShadowMap()
+        {
             FramebufferSettings settings{};
             settings.Resolution = m_ShadowResolution;
             settings.EnableDepthMapOnly = true;
     
             m_SpotLightShadowMapBuffers.emplace_back(std::make_unique<Framebuffer>(settings));
+        }
+
+        void LightingSystem::RemoveSpotLightShadowMap()
+        {
+            assert(!m_SpotLightShadowMapBuffers.empty());
+            m_SpotLightShadowMapBuffers.pop_back();
         }
     }
 }

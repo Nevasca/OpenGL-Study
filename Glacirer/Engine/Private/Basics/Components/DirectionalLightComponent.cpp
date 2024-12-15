@@ -16,6 +16,14 @@ namespace Glacirer
         world.AddDirectionalLight(GetThis());
     }
 
+    void DirectionalLightComponent::Destroy()
+    {
+        Component::Destroy();
+
+        World& world = GetOwner().GetWorld();
+        world.RemoveDirectionalLight(GetThis());
+    }
+
     glm::vec3 DirectionalLightComponent::GetDirection() const
     {
         return GetOwnerTransform().GetForwardVector();

@@ -40,8 +40,11 @@ namespace Glacirer
             void AddOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
             void RemoveOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
             void AddDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent);
+            void RemoveDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent);
             void AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent);
+            void RemovePointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent);
             void AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent);
+            void RemoveSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent);
             void SetPostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent);
             void RemovePostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent);
             void SetSkyboxComponent(const std::shared_ptr<SkyboxComponent>& skyboxComponent);

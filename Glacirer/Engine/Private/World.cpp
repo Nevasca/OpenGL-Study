@@ -85,14 +85,29 @@ namespace Glacirer
         m_RenderSystem->AddDirectionalLight(directionalLightComponent);
     }
 
+    void World::RemoveDirectionalLight(const std::shared_ptr<DirectionalLightComponent>& directionalLightComponent)
+    {
+        m_RenderSystem->RemoveDirectionalLight(directionalLightComponent);
+    }
+
     void World::AddPointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent)
     {
         m_RenderSystem->AddPointLight(pointLightComponent);
     }
 
+    void World::RemovePointLight(const std::shared_ptr<PointLightComponent>& pointLightComponent)
+    {
+        m_RenderSystem->RemovePointLight(pointLightComponent);
+    }
+
     void World::AddSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent)
     {
         m_RenderSystem->AddSpotLight(spotLightComponent);
+    }
+
+    void World::RemoveSpotLight(const std::shared_ptr<SpotLightComponent>& spotLightComponent)
+    {
+        m_RenderSystem->RemoveSpotLight(spotLightComponent);
     }
 
     void World::SetPostProcessingComponent(const std::shared_ptr<PostProcessingComponent>& postProcessingComponent)

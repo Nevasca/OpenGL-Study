@@ -12,6 +12,8 @@ namespace Glacirer
     public:
 
         void Initialize() override;
+        void Destroy() override;
+
         glm::vec3 GetDirection() const;
 
         void SetColor(const glm::vec3& color) { m_Color = color; }
