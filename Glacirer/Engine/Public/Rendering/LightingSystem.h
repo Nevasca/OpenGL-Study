@@ -148,25 +148,25 @@ namespace Glacirer
             int m_TotalActivePointLights{0};
             int m_TotalActiveSpotLights{0};
 
-            std::unique_ptr<Rendering::UniformBuffer> m_GeneralUniformBuffer{};
-            std::unique_ptr<Rendering::UniformBuffer> m_DirectionalUniformBuffer{};
-            std::unique_ptr<Rendering::UniformBuffer> m_PointUniformBuffer{};
-            std::unique_ptr<Rendering::UniformBuffer> m_SpotsUniformBuffer{};
-            std::unique_ptr<Rendering::UniformBuffer> m_DirectionalMatrixUniformBuffer{};
-            std::unique_ptr<Rendering::UniformBuffer> m_PointLightMatricesUniformBuffer{};
-            std::unique_ptr<Rendering::UniformBuffer> m_SpotLightMatricesUniformBuffer{};
+            std::unique_ptr<UniformBuffer> m_GeneralUniformBuffer{};
+            std::unique_ptr<UniformBuffer> m_DirectionalUniformBuffer{};
+            std::unique_ptr<UniformBuffer> m_PointUniformBuffer{};
+            std::unique_ptr<UniformBuffer> m_SpotsUniformBuffer{};
+            std::unique_ptr<UniformBuffer> m_DirectionalMatrixUniformBuffer{};
+            std::unique_ptr<UniformBuffer> m_PointLightMatricesUniformBuffer{};
+            std::unique_ptr<UniformBuffer> m_SpotLightMatricesUniformBuffer{};
 
-            Rendering::LightingGeneralShaderData m_GeneralShaderData{};
-            Rendering::DirectionalLightShaderData m_DirectionalsShaderData[MAX_DIRECTIONAL_LIGHTS]{};
-            Rendering::PointLightShaderData m_PointsShaderData[MAX_POINT_LIGHTS]{};
-            Rendering::SpotLightShaderData m_SpotsShaderData[MAX_SPOT_LIGHTS]{};
-            Rendering::DirectionalLightShadowMapShaderData m_DirectionalLightShadowMapShaderData[MAX_DIRECTIONAL_LIGHTS]{};
-            Rendering::PointLightShadowMapShaderData m_PointLightShadowMapShaderData[MAX_POINT_LIGHTS]{};
-            Rendering::SpotLightShadowMapShaderData m_SpotLightShadowMapShaderData[MAX_SPOT_LIGHTS]{};
+            LightingGeneralShaderData m_GeneralShaderData{};
+            DirectionalLightShaderData m_DirectionalsShaderData[MAX_DIRECTIONAL_LIGHTS]{};
+            PointLightShaderData m_PointsShaderData[MAX_POINT_LIGHTS]{};
+            SpotLightShaderData m_SpotsShaderData[MAX_SPOT_LIGHTS]{};
+            DirectionalLightShadowMapShaderData m_DirectionalLightShadowMapShaderData[MAX_DIRECTIONAL_LIGHTS]{};
+            PointLightShadowMapShaderData m_PointLightShadowMapShaderData[MAX_POINT_LIGHTS]{};
+            SpotLightShadowMapShaderData m_SpotLightShadowMapShaderData[MAX_SPOT_LIGHTS]{};
 
             // TODO: fix directional shadow map quality to not required separate and higher resolution
-            Rendering::Resolution m_DirectionalShadowResolution{2048, 2048};
-            Rendering::Resolution m_ShadowResolution{1024, 1024};
+            Resolution m_DirectionalShadowResolution{2048, 2048};
+            Resolution m_ShadowResolution{1024, 1024};
             std::vector<std::unique_ptr<Framebuffer>> m_DirectionalShadowMapBuffers{};
             std::vector<std::unique_ptr<Framebuffer>> m_PointLightShadowMapBuffers{};
             std::vector<std::unique_ptr<Framebuffer>> m_SpotLightShadowMapBuffers{};
