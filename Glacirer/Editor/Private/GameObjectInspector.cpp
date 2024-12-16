@@ -54,16 +54,21 @@ namespace GlacirerEditor
         {
             std::string componentLabel = components[i]->GetName() + std::to_string(i);
 
-            if(!ImGui::CollapsingHeader(componentLabel.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+            bool bAdded = true;
+            
+            if(ImGui::CollapsingHeader(componentLabel.c_str(), &bAdded, ImGuiTreeNodeFlags_DefaultOpen))
             {
-                continue;
+                int componentHash = components[i]->GetHash();
+
+                if(m_ComponentInspectorMapping.find(componentHash) != m_ComponentInspectorMapping.end())
+                {
+                    m_ComponentInspectorMapping[componentHash]->RenderGUI(components[i]);
+                }
             }
 
-            int componentHash = components[i]->GetHash();
-
-            if(m_ComponentInspectorMapping.find(componentHash) != m_ComponentInspectorMapping.end())
+            if (!bAdded)
             {
-                m_ComponentInspectorMapping[componentHash]->RenderGUI(components[i]);
+                gameObject.RemoveComponent(components[i]);
             }
         }
     }

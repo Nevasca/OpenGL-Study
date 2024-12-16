@@ -53,4 +53,15 @@ namespace Glacirer
     {
         m_Transform.SetScale(scale);
     }
+
+    void GameObject::RemoveComponent(const std::shared_ptr<Component>& component)
+    {
+        auto iterator = std::find(m_Components.cbegin(), m_Components.cend(), component);
+        assert(iterator != m_Components.cend());
+
+        component->Disable();
+        component->Destroy();
+
+        m_Components.erase(iterator);
+    }
 }

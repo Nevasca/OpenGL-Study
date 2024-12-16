@@ -43,6 +43,7 @@ namespace Glacirer
         bool IsPendingDestroy() const { return b_IsPendingDestroy; }
         World& GetWorld() const { return m_World; }
         std::vector<std::shared_ptr<Component>> GetComponents() const { return m_Components; }
+        void RemoveComponent(const std::shared_ptr<Component>& component);
 
         // Only accepts components based on the Component class
         template <typename TComponent, typename = std::enable_if_t<
