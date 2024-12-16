@@ -34,6 +34,13 @@ namespace GlacirerEditor
             {
                 RenderPerspectiveGUI(*camera);
             }
+
+            ImGui::Spacing();
+
+            if(ImGui::Button("Active camera"))
+            {
+                camera->SetAsActive();
+            }
         }
 
         void CameraComponentInspector::RenderOrthographicGUI(Glacirer::CameraComponent& camera)

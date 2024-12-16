@@ -15,8 +15,7 @@ namespace Glacirer
     {
         Component::Initialize();
 
-        World& world = GetOwner().GetWorld();
-        world.SetActiveCamera(GetThis());
+        SetAsActive();
     }
 
     void CameraComponent::Destroy()
@@ -62,6 +61,12 @@ namespace Glacirer
         }
 
         return glm::ortho(-m_OrthographicWidth / 2.f, m_OrthographicWidth / 2.f, -height /2.f, height / 2.f, m_NearPlane, m_FarPlane);
+    }
+
+    void CameraComponent::SetAsActive()
+    {
+        World& world = GetOwner().GetWorld();
+        world.SetActiveCamera(GetThis());
     }
 
     void CameraComponent::SetFov(const float fov)

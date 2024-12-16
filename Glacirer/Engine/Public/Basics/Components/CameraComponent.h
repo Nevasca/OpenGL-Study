@@ -19,11 +19,13 @@ namespace Glacirer
         glm::mat4 GetViewNoTranslationMatrix() const;
         glm::mat4 GetViewCenteredMatrix() const;
         glm::mat4 GetProjectionMatrix() const;
+
+        void SetAsActive();
+
         void SetNearPlane(const float nearPlane) { m_NearPlane = nearPlane; }
         float GetNearPlane() const { return m_NearPlane; }
         void SetFarPlane(const float farPlane) { m_FarPlane = farPlane; }
         float GetFarPlane() const { return m_FarPlane; }
-
         void SetFov(const float fov);
         float GetFov() const { return m_Fov; }
 
