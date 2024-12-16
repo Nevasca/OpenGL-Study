@@ -9,7 +9,10 @@ namespace Glacirer
     {
         for (const std::shared_ptr<Rendering::Mesh>& mesh : modelData->GetMeshes())
         {
-            std::shared_ptr<MeshComponent> meshComponent = AddComponent<MeshComponent>();
+            std::weak_ptr<MeshComponent> component = AddComponent<MeshComponent>();
+            std::shared_ptr<MeshComponent> meshComponent = component.lock();
+            assert(meshComponent);
+
             meshComponent->SetMesh(mesh);
             meshComponent->SetMaterial(material);
         }

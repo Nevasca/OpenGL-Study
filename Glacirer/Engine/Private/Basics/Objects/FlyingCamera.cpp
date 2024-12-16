@@ -10,20 +10,33 @@ namespace Glacirer
     {
         GameObject::Initialize();
 
-        std::shared_ptr<CameraComponent> cameraComponent = AddComponent<CameraComponent>();
-        std::shared_ptr<PilotComponent> pilotComponent = AddComponent<PilotComponent>();
+        std::weak_ptr<CameraComponent> cameraComponent = AddComponent<CameraComponent>();
+        std::weak_ptr<PilotComponent> pilotComponent = AddComponent<PilotComponent>();
 
         m_CameraController = AddComponent<PilotCameraController>();
-        m_CameraController->Setup(cameraComponent, pilotComponent);
+        std::shared_ptr<PilotCameraController> cameraController = m_CameraController.lock();
+        assert(cameraController);
+
+        cameraController->Setup(cameraComponent, pilotComponent);
     }
 
     void FlyingCamera::EnablePilotMode()
     {
-        m_CameraController->EnablePilotMode();
+        std::shared_ptr<PilotCameraController> cameraController = m_CameraController.lock();
+
+        if(cameraController)
+        {
+            cameraController->EnablePilotMode();
+        }
     }
 
     void FlyingCamera::DisablePilotMode()
     {
-        m_CameraController->DisablePilotMode();
+        std::shared_ptr<PilotCameraController> cameraController = m_CameraController.lock();
+
+        if(cameraController)
+        {
+            cameraController->DisablePilotMode();
+        }
     }
 }

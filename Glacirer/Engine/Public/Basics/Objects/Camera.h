@@ -17,6 +17,6 @@ namespace Glacirer
         void Initialize() override;
 
     private:
-        std::shared_ptr<CameraComponent> m_CameraComponent; 
+        std::weak_ptr<CameraComponent> m_CameraComponent; 
     };
 }

@@ -48,7 +48,7 @@ namespace Glacirer
         // Only accepts components based on the Component class
         template <typename TComponent, typename = std::enable_if_t<
                       std::is_base_of_v<Component, TComponent> && !std::is_same_v<Component, std::remove_cv_t<TComponent>>>>
-        std::shared_ptr<TComponent> AddComponent()
+        std::weak_ptr<TComponent> AddComponent()
         {
             std::shared_ptr<TComponent> component = std::make_shared<TComponent>(*this);
 
@@ -63,7 +63,7 @@ namespace Glacirer
 
         template <typename TComponent, typename = std::enable_if_t<
                       std::is_base_of_v<Component, TComponent> && !std::is_same_v<Component, std::remove_cv_t<TComponent>>>>
-        std::shared_ptr<TComponent> GetComponent()
+        std::weak_ptr<TComponent> GetComponent()
         {
             for(const std::shared_ptr<Component>& component : m_Components)
             {
@@ -75,7 +75,7 @@ namespace Glacirer
                 }
             }
 
-            return nullptr;
+            return std::weak_ptr<TComponent>{};
         }
 
     protected:

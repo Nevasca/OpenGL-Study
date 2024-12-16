@@ -10,8 +10,11 @@ namespace Glacirer
         GameObject::Initialize();
 
         m_MeshComponent = AddComponent<MeshComponent>();
-        m_MeshComponent->SetMaterial(Resources::ResourceManager::GetDefaultMaterial());
-        m_MeshComponent->SetMesh(Resources::ResourceManager::GetDefaultSphere());
+        std::shared_ptr<MeshComponent> meshComponent = m_MeshComponent.lock();
+        assert(meshComponent);
+
+        meshComponent->SetMaterial(Resources::ResourceManager::GetDefaultMaterial());
+        meshComponent->SetMesh(Resources::ResourceManager::GetDefaultSphere());
     }
 
     void Sphere::Destroy()
@@ -22,6 +25,11 @@ namespace Glacirer
 
     void Sphere::SetMaterial(const std::shared_ptr<Rendering::Material>& material) const
     {
-        m_MeshComponent->SetMaterial(material);
+        std::shared_ptr<MeshComponent> meshComponent = m_MeshComponent.lock();
+
+        if(meshComponent)
+        {
+            meshComponent->SetMaterial(material);
+        }
     }
 }

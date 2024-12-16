@@ -12,14 +12,14 @@ namespace Glacirer
 
         void Initialize() override;
 
-        void SetColor(const glm::vec3& color) { m_LightComponent->SetColor(color); }
-        void SetRange(float range) { m_LightComponent->SetRange(range); }
-        void SetInnerCutoffDegrees(float innerCutoffDegrees) { m_LightComponent->SetInnerCutoffDegrees(innerCutoffDegrees); }
-        void SetOuterCutoffDegrees(float outerCutoffDegrees) { m_LightComponent->SetOuterCutoffDegrees(outerCutoffDegrees); }
-        void SetCastShadowEnabled(const bool enable) { m_LightComponent->SetCastShadowEnabled(enable); }
+        void SetColor(const glm::vec3& color);
+        void SetRange(float range);
+        void SetInnerCutoffDegrees(float innerCutoffDegrees);
+        void SetOuterCutoffDegrees(float outerCutoffDegrees);
+        void SetCastShadowEnabled(const bool enable);
 
     private:
 
-        std::shared_ptr<SpotLightComponent> m_LightComponent;
+        std::weak_ptr<SpotLightComponent> m_LightComponent;
     };
 }

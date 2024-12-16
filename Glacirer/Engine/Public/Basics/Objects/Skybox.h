@@ -17,6 +17,6 @@ namespace Glacirer
 
     private:
 
-        std::shared_ptr<SkyboxComponent> m_SkyboxComponent{};
+        std::weak_ptr<SkyboxComponent> m_SkyboxComponent{};
     };
 }

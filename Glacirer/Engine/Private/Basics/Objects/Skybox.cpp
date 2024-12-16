@@ -15,6 +15,13 @@ namespace Glacirer
 
     void Skybox::SetDefaultSky()
     {
+        std::shared_ptr<SkyboxComponent> skyboxComponent = m_SkyboxComponent.lock();
+
+        if(!skyboxComponent)
+        {
+            return;
+        }
+        
         Rendering::CubemapLoadSettings skyCubemapSettings{
             Resources::ResourceManager::RESOURCES_PATH + "Textures/skybox/right.jpg",
             Resources::ResourceManager::RESOURCES_PATH + "Textures/skybox/left.jpg",
@@ -30,7 +37,7 @@ namespace Glacirer
         std::shared_ptr<Rendering::Shader> skyboxShader = Resources::ResourceManager::GetOrLoadShader(Resources::ResourceManager::RESOURCES_PATH + "Shaders/Skybox.glsl", SKYBOX_SHADER_NAME);
         std::shared_ptr<Rendering::Material> skyMaterial = Resources::ResourceManager::GetOrCreateMaterial("M_Skybox", SKYBOX_SHADER_NAME);
 
-        m_SkyboxComponent->SetCubemap(skyCubemap);
-        m_SkyboxComponent->SetMaterial(skyMaterial);
+        skyboxComponent->SetCubemap(skyCubemap);
+        skyboxComponent->SetMaterial(skyMaterial);
     }
 }

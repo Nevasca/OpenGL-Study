@@ -15,12 +15,12 @@ namespace Glacirer
         void Initialize() override;
         void Destroy() override;
 
-        void SetColor(const glm::vec3& color) { m_LightComponent->SetColor(color); }
-        void SetIntensity(const float intensity) { m_LightComponent->SetIntensity(intensity); }
-        void SetCastShadowEnabled(const bool enable) { m_LightComponent->SetCastShadowEnabled(enable); }
+        void SetColor(const glm::vec3& color);
+        void SetIntensity(const float intensity);
+        void SetCastShadowEnabled(const bool enable);
 
     private:
 
-        std::shared_ptr<DirectionalLightComponent> m_LightComponent{};
+        std::weak_ptr<DirectionalLightComponent> m_LightComponent{};
     };
 }

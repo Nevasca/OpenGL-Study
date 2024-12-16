@@ -48,7 +48,7 @@ namespace Glacirer
         m_Pilot.reset();
     }
 
-    void PilotCameraController::Setup(const std::shared_ptr<CameraComponent>& camera, const std::shared_ptr<PilotComponent>& pilot)
+    void PilotCameraController::Setup(const std::weak_ptr<CameraComponent>& camera, const std::weak_ptr<PilotComponent>& pilot)
     {
         m_Camera = camera;
         m_Pilot = pilot;
@@ -75,23 +75,40 @@ namespace Glacirer
             return;
         }
 
-        float fov = m_Camera->GetFov();
+        std::shared_ptr<CameraComponent> camera = m_Camera.lock();
+
+        if(!camera)
+        {
+            return;
+        }
+        
+        float fov = camera->GetFov();
         fov -= static_cast<float>(YScrollOffset);
         fov = glm::clamp(fov, m_MinFov, m_MaxFov);
 
-        m_Camera->SetFov(fov);
+        camera->SetFov(fov);
     }
 
     void PilotCameraController::EnablePilotMode()
     {
         bIsPilotEnabled = true;
-        m_Pilot->Enable();
+
+        std::shared_ptr<PilotComponent> pilotComponent = m_Pilot.lock();
+        if(pilotComponent)
+        {
+            pilotComponent->Enable();
+        }
     }
 
     void PilotCameraController::DisablePilotMode()
     {
         bIsPilotEnabled = false;
-        m_Pilot->Disable();
+
+        std::shared_ptr<PilotComponent> pilotComponent = m_Pilot.lock();
+        if(pilotComponent)
+        {
+            pilotComponent->Disable();
+        }
     }
 
     void PilotCameraController::Enable()

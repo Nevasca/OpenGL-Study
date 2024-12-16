@@ -103,7 +103,9 @@ namespace GlacirerEditor
     void Editor::SelectGameObject(int index, const Glacirer::World& world)
     {
         std::shared_ptr<Glacirer::GameObject> selectedGameObject = world.GetGameObjectAt(index);
-        std::shared_ptr<Glacirer::MeshComponent> meshComponent = selectedGameObject->GetComponent<Glacirer::MeshComponent>();
+
+        std::weak_ptr<Glacirer::MeshComponent> meshComponentWeak = selectedGameObject->GetComponent<Glacirer::MeshComponent>();
+        std::shared_ptr<Glacirer::MeshComponent> meshComponent = meshComponentWeak.lock();
 
         if(meshComponent)
         {
@@ -114,7 +116,9 @@ namespace GlacirerEditor
     void Editor::DeselectGameObject(int index, const Glacirer::World& world)
     {
         std::shared_ptr<Glacirer::GameObject> selectedGameObject = world.GetGameObjectAt(index);
-        std::shared_ptr<Glacirer::MeshComponent> meshComponent = selectedGameObject->GetComponent<Glacirer::MeshComponent>();
+
+        std::weak_ptr<Glacirer::MeshComponent> meshComponentWeak = selectedGameObject->GetComponent<Glacirer::MeshComponent>();
+        std::shared_ptr<Glacirer::MeshComponent> meshComponent = meshComponentWeak.lock();
 
         if(meshComponent)
         {

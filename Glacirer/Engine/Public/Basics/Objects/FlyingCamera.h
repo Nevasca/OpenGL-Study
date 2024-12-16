@@ -18,6 +18,6 @@ namespace Glacirer
 
     private:
 
-        std::shared_ptr<PilotCameraController> m_CameraController{}; 
+        std::weak_ptr<PilotCameraController> m_CameraController{}; 
     };
 }

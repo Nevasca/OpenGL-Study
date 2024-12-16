@@ -11,9 +11,12 @@ namespace Glacirer
     {
         GameObject::Initialize();
 
-        m_MeshComponent = AddComponent<MeshComponent>();
-        m_MeshComponent->SetMesh(Resources::ResourceManager::GetDefaultCube());
-        m_MeshComponent->SetMaterial(Resources::ResourceManager::GetDefaultMaterial());
+        m_MeshComponent = AddComponent<MeshComponent>(); 
+        std::shared_ptr<MeshComponent> meshComponent = m_MeshComponent.lock();
+        assert(meshComponent);
+        
+        meshComponent->SetMesh(Resources::ResourceManager::GetDefaultCube());
+        meshComponent->SetMaterial(Resources::ResourceManager::GetDefaultMaterial());
     }
 
     void Cube::Destroy()
@@ -25,6 +28,11 @@ namespace Glacirer
 
     void Cube::SetMaterial(const std::shared_ptr<Rendering::Material>& material) const
     {
-        m_MeshComponent->SetMaterial(material);
+        std::shared_ptr<MeshComponent> meshComponent = m_MeshComponent.lock();
+
+        if (meshComponent)
+        {
+            meshComponent->SetMaterial(material);
+        }
     }
 }

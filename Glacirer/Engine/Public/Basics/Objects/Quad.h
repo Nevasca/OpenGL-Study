@@ -23,6 +23,6 @@ namespace Glacirer
 
     private:
 
-        std::shared_ptr<MeshComponent> m_MeshComponent{};
+        std::weak_ptr<MeshComponent> m_MeshComponent{};
     };
 }
