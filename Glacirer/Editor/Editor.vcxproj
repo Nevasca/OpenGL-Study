@@ -183,6 +183,7 @@ if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $
     <ClCompile Include="..\External\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Private\ComponentAdderPopup.cpp" />
     <ClCompile Include="Private\Editor.cpp" />
     <ClCompile Include="Private\GameObjectInspector.cpp" />
     <ClCompile Include="Private\Inspectors\Components\CameraComponentInspector.cpp" />
@@ -216,6 +217,7 @@ if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $
     <ClInclude Include="..\External\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\External\imgui\imstb_textedit.h" />
     <ClInclude Include="..\External\imgui\imstb_truetype.h" />
+    <ClInclude Include="Public\ComponentAdderPopup.h" />
     <ClInclude Include="Public\Editor.h" />
     <ClInclude Include="Public\GameObjectInspector.h" />
     <ClInclude Include="Public\IComponentInspector.h" />

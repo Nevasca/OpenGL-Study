@@ -53,18 +53,35 @@ namespace GlacirerEditor
 
     void MainPanel::RenderInspectorTabItem(Glacirer::World& world)
     {
-        if(ImGui::BeginTabItem("Inspector"))
+        if(!ImGui::BeginTabItem("Inspector"))
         {
-            if(m_Hierarchy.HasAnyGameObjectSelected())
-            {
-                int selectedIndex = m_Hierarchy.GetCurrentSelectedGameObjectIndex();
-                std::shared_ptr<Glacirer::GameObject> selectedObject = world.GetGameObjectAt(selectedIndex);
-
-                m_GameObjectInspector.RenderGUI(*selectedObject);
-            }
-
-            ImGui::EndTabItem();
+            return;
         }
+
+        if(!m_Hierarchy.HasAnyGameObjectSelected())
+        {
+            ImGui::EndTabItem();
+            return;
+        }
+
+        int selectedIndex = m_Hierarchy.GetCurrentSelectedGameObjectIndex();
+        std::shared_ptr<Glacirer::GameObject> selectedObject = world.GetGameObjectAt(selectedIndex);
+        assert(selectedObject);
+
+        m_GameObjectInspector.RenderGUI(*selectedObject);
+
+        ImGui::Spacing();
+        ImGui::Separator();
+        ImGui::Spacing();
+
+        if(ImGui::Button("Add Component", ImVec2(m_MainPanelWidth * 0.5f, 25.f)))
+        {
+            m_ComponentAdderPopup.OpenPopup();
+        }
+
+        m_ComponentAdderPopup.RenderGUI(*selectedObject);
+
+        ImGui::EndTabItem();
     }
 
     void MainPanel::RenderWorldSettingsTabItem(Glacirer::World& world)

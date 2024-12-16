@@ -1,4 +1,5 @@
 #pragma once
+#include "ComponentAdderPopup.h"
 #include "GameObjectInspector.h"
 #include "WorldHierarchy.h"
 #include "inspectors/WorldInspector.h"
@@ -24,6 +25,7 @@ namespace GlacirerEditor
         WorldHierarchy m_Hierarchy{};
         GameObjectInspector m_GameObjectInspector{};
         Inspector::WorldInspector m_WorldInspector{};
+        ComponentAdderPopup m_ComponentAdderPopup{};
         float m_MainPanelWidth{350.f};
 
         void RenderHierarchyTabItem(Glacirer::World& world);
