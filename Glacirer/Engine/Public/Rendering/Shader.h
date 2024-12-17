@@ -10,11 +10,18 @@ namespace Glacirer
 {
     namespace Rendering
     {
+        struct ShaderProperties
+        {
+            std::vector<std::string> Textures{};            
+        };
+        
         struct ShaderSource
         {
             std::string VertexShader{};
             std::string FragmentShader{};
             std::string GeometryShader{};
+
+            ShaderProperties Properties{};
         };
 
         class Shader
@@ -41,6 +48,7 @@ namespace Glacirer
             unsigned int GetRendererID() const { return m_RendererID; }
             void SetName(const std::string& name) { m_Name = name; }
             std::string GetName() const { return m_Name; }
+            const ShaderProperties& GetProperties() const { return m_Properties; }
 
         private:
 
@@ -49,6 +57,7 @@ namespace Glacirer
             unsigned int m_RendererID{0};
             mutable std::unordered_map<std::string, int> m_UniformLocationCache{};
             std::string m_Name{};
+            ShaderProperties m_Properties{};
 
             unsigned int CreateShader(const ShaderSource& source);
             unsigned int CompileShader(unsigned int type, const std::string& source);

@@ -12,7 +12,8 @@ namespace Glacirer
     {
         unsigned int Shader::m_LastBoundShaderId = 0;
 
-        Shader::Shader(const Rendering::ShaderSource& source)
+        Shader::Shader(const ShaderSource& source)
+            : m_Properties(source.Properties)
         {
             m_RendererID = CreateShader(source);
         }

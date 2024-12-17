@@ -50,8 +50,8 @@ namespace Glacirer
             void Bind(Shader& shader) const;
             void Unbind() const;
             void Unbind(const Shader& shader) const;
+            void SetShader(const std::shared_ptr<Shader>& shader);
 
-            void SetShader(const std::shared_ptr<Shader>& shader) { m_Shader = shader; }
             const std::shared_ptr<Shader>& GetShader() const { return m_Shader; }
             void SetId(unsigned int id) { m_Id = id; }
             unsigned int GetId() const { return m_Id; }

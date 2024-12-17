@@ -5,6 +5,8 @@
 #include "Rendering/Material.h"
 #include "Rendering/Shader.h"
 #include "Rendering/Texture.h"
+#include "Resources/ResourceManager.h"
+#include "Util/FileDialog.h"
 
 namespace GlacirerEditor
 {
@@ -81,20 +83,57 @@ namespace GlacirerEditor
             for (const auto& texturePropertyPair : materialTextureProperties)
             {
                 auto& textureProperty = texturePropertyPair.second;
-                ImGui::Text("%s: %s", texturePropertyPair.first.c_str(), textureProperty.Texture->GetName().c_str());
+                std::shared_ptr<Glacirer::Rendering::Texture> texture = textureProperty.Texture;
 
-                ImVec2 uv0{0, 0};
-                ImVec2 uv1{1, 1};
-
-                // If we flipped the texture on load (OpenGL generally requires that), we need to invert uv (top left v0 and top right v1)
-                // to proper display it on inspectors
-                if(textureProperty.Texture->IsFlippedOnLoad())
+                // TODO: refactor and implement showing empty square when no texture
+                if(texture)
                 {
-                    uv0.y = 1;
-                    uv1.y = 0;
-                }
+                    ImGui::Text("%s: %s", texturePropertyPair.first.c_str(), texture->GetName().c_str());
 
-                ImGui::Image((ImTextureID)textureProperty.Texture->GetRendererID(), ImVec2(100.f, 100.f), uv0, uv1);
+                    ImVec2 uv0{0, 0};
+                    ImVec2 uv1{1, 1};
+
+                    // If we flipped the texture on load (OpenGL generally requires that), we need to invert uv (top left v0 and top right v1)
+                    // to proper display it on inspectors
+                    if(texture->IsFlippedOnLoad())
+                    {
+                        uv0.y = 1;
+                        uv1.y = 0;
+                    }
+
+                    ImGui::Image((ImTextureID)texture->GetRendererID(), ImVec2(100.f, 100.f), uv0, uv1);
+                    if (ImGui::IsItemClicked())
+                    {
+                        TryApplyingTextureFor(material, texturePropertyPair.first, textureProperty.Slot);
+                    }
+                }
+                else
+                {
+                    ImGui::Text("%s", texturePropertyPair.first.c_str());
+                    ImGui::SameLine();
+                    if(ImGui::Button("Select Texture"))
+                    {
+                        TryApplyingTextureFor(material, texturePropertyPair.first, textureProperty.Slot);
+                    }
+                }
+            }
+        }
+
+        void MaterialInspector::TryApplyingTextureFor(Glacirer::Rendering::Material& material, const std::string& name, const unsigned int slot)
+        {
+            std::string texturePath;
+            // TODO: check supported formats on stb image lib
+            const wchar_t* filter = L"Textures\0*.png;*.jpg;*.jpeg\0";
+
+            if(Util::FileDialog::OpenFile(filter, texturePath))
+            {
+                static int test = 0;
+
+                Glacirer::Rendering::TextureSettings settings{false};
+                auto textureName = std::to_string(test++);
+                auto texture = Glacirer::Resources::ResourceManager::LoadTexture(texturePath, textureName, settings, true);
+
+                material.SetTexture(name, texture, slot);
             }
         }
 

@@ -16,8 +16,6 @@ namespace Glacirer
 
         void Material::SetTexture(const std::string& name, const std::shared_ptr<Texture>& texture, unsigned int slot)
         {
-            assert(texture != nullptr);
-    
             if(m_TextureProperties.find(name) == m_TextureProperties.end())
             {
                 m_TextureProperties[name] = MaterialTextureProperty{};
@@ -80,8 +78,13 @@ namespace Glacirer
             for(const auto& propertyPair : m_TextureProperties)
             {
                 const MaterialTextureProperty& textureProperty = propertyPair.second;
-                textureProperty.Texture->Bind(textureProperty.Slot);
 
+                if(!textureProperty.Texture)
+                {
+                    continue;
+                }
+
+                textureProperty.Texture->Bind(textureProperty.Slot);
                 // We also need to update the sample with correct slot,
                 // in case we are using a different shader with a greater than zero slot
                 shader.SetUniform1i(propertyPair.first, static_cast<int>(textureProperty.Slot));
@@ -122,7 +125,11 @@ namespace Glacirer
             for(const auto& propertyPair : m_TextureProperties)
             {
                 const MaterialTextureProperty& textureProperty = propertyPair.second;
-                textureProperty.Texture->Unbind(textureProperty.Slot);
+
+                if(textureProperty.Texture)
+                {
+                    textureProperty.Texture->Unbind(textureProperty.Slot);
+                }
             }
 
             for(const auto& propertyPair : m_CubemapProperties)
@@ -132,6 +139,17 @@ namespace Glacirer
             }
 
             shader.Unbind();
+        }
+
+        void Material::SetShader(const std::shared_ptr<Shader>& shader)
+        {
+            m_Shader = shader;
+
+            const ShaderProperties& shaderProperties = shader->GetProperties();
+            for (int i = 0; i < static_cast<int>(shaderProperties.Textures.size()); i++)
+            {
+                SetTexture(shaderProperties.Textures[i], nullptr, i);
+            }
         }
     }
 }

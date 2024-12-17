@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <regex>
 #include <sstream>
 
 #include "Rendering/Shader.h"
@@ -41,6 +42,9 @@ namespace Glacirer
 
         std::shared_ptr<Rendering::Shader> ShaderResource::LoadShaderFromFile(const std::string& singleFileShaderPath)
         {
+            Rendering::ShaderSource source{};
+            std::regex uniformRegex(R"(uniform\s+(\w+)\s+(\w+);)");
+
             std::ifstream Stream(singleFileShaderPath);
 
             enum class EShaderType
@@ -74,11 +78,23 @@ namespace Glacirer
                 }
                 else
                 {
+                    std::smatch match;
+                    if(std::regex_match(line, match, uniformRegex))
+                    {
+                        std::string uniformType = match[1].str();
+                        std::string uniformName = match[2].str();
+
+                        // TODO: add more supported uniform types
+                        if (uniformType == "sampler2D")
+                        {
+                            source.Properties.Textures.push_back(uniformName);
+                        }
+                    }
+                    
                     ss[static_cast<int>(type)] << line << "\n";
                 }
             }
 
-            Rendering::ShaderSource source{};
             source.VertexShader = ss[0].str();
             source.FragmentShader = ss[1].str();
             source.GeometryShader = ss[2].str();
