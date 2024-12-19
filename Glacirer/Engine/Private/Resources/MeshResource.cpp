@@ -40,9 +40,9 @@ namespace Glacirer
             // path
             // pFlags: desired post-processing options
             //  aiProcess_Triangulate: if the model doesn't (entirely) consist of triangles, transform model primitives to triangles first
-            //  aiProcess_FlipUVs: image is flipped on OpenGL, so we need to flip UV
+            //  aiProcess_FlipUVs: image is flipped on OpenGL, so we need to flip UV (no longer using it, flipping all textures to keep consistency when loading textures)
             // Mode post=processing options: https://assimp.sourceforge.net/lib_html/postprocess_8h.html
-            const aiScene* scene = importer.ReadFile(filePath, aiProcess_Triangulate | aiProcess_FlipUVs);
+            const aiScene* scene = importer.ReadFile(filePath, aiProcess_Triangulate);
 
             if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
             {

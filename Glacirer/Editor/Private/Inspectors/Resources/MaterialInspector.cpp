@@ -183,7 +183,7 @@ namespace GlacirerEditor
             std::string hashedPath = std::to_string(static_cast<int>(hasher(texturePath)));
 
             Glacirer::Rendering::TextureSettings settings{};
-            std::shared_ptr<Glacirer::Rendering::Texture> texture = Glacirer::Resources::ResourceManager::GetOrLoadTexture(texturePath, hashedPath, settings, false);
+            std::shared_ptr<Glacirer::Rendering::Texture> texture = Glacirer::Resources::ResourceManager::GetOrLoadTexture(texturePath, hashedPath, settings);
 
             material.SetTexture(name, texture, slot);
         }

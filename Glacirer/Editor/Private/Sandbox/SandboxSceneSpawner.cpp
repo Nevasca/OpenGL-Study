@@ -40,7 +40,7 @@ namespace GlacirerEditor
 
             Glacirer::Rendering::TextureSettings pigeonTextureSettings{false};
             pigeonTextureSettings.GenerateMipmap = true;
-            anotherMaterial->SetTexture("u_Diffuse", Glacirer::Resources::ResourceManager::LoadTexture(SANDBOX_RESOURCES_PATH + "Textures/FancyPigeon.png", "Pigeon", pigeonTextureSettings, true), 0);
+            anotherMaterial->SetTexture("u_Diffuse", Glacirer::Resources::ResourceManager::LoadTexture(SANDBOX_RESOURCES_PATH + "Textures/FancyPigeon.png", "Pigeon", pigeonTextureSettings), 0);
             cube->SetMaterial(anotherMaterial);
 
             SpawnBridge(world);
@@ -70,8 +70,8 @@ namespace GlacirerEditor
         {
             std::shared_ptr<Glacirer::Rendering::Material> crateMaterial = Glacirer::Resources::ResourceManager::CreateMaterial("M_Crate");
             crateMaterial->SetColor("u_Color", glm::vec4(0.f)); // When using a texture, we need to set default color to black
-            crateMaterial->SetTexture("u_Diffuse", Glacirer::Resources::ResourceManager::LoadTexture(SANDBOX_RESOURCES_PATH + "Textures/Container_Diff.png", "Container_Diffuse", Glacirer::Rendering::TextureSettings{false}, true), 0);
-            crateMaterial->SetTexture("u_Specular", Glacirer::Resources::ResourceManager::LoadTexture(SANDBOX_RESOURCES_PATH + "Textures/Container_Spec.png", "Container_Specular", Glacirer::Rendering::TextureSettings{false, false}, true), 1);
+            crateMaterial->SetTexture("u_Diffuse", Glacirer::Resources::ResourceManager::LoadTexture(SANDBOX_RESOURCES_PATH + "Textures/Container_Diff.png", "Container_Diffuse", Glacirer::Rendering::TextureSettings{false}), 0);
+            crateMaterial->SetTexture("u_Specular", Glacirer::Resources::ResourceManager::LoadTexture(SANDBOX_RESOURCES_PATH + "Textures/Container_Spec.png", "Container_Specular", Glacirer::Rendering::TextureSettings{false, false}), 1);
         
             int crateIndex = 0;
             for(int x = 0; x < 3; x++)
@@ -123,7 +123,7 @@ namespace GlacirerEditor
         {
             auto flowerMaterial = Glacirer::Resources::ResourceManager::CreateMaterial("M_Flower");
             flowerMaterial->SetColor("u_Color", glm::vec4(0.f));
-            flowerMaterial->SetTexture("u_Diffuse", Glacirer::Resources::ResourceManager::LoadTexture(SANDBOX_RESOURCES_PATH + "Textures/Flower.png", "T_Flower", Glacirer::Rendering::TextureSettings{true}, true), 0);
+            flowerMaterial->SetTexture("u_Diffuse", Glacirer::Resources::ResourceManager::LoadTexture(SANDBOX_RESOURCES_PATH + "Textures/Flower.png", "T_Flower", Glacirer::Rendering::TextureSettings{true}), 0);
             flowerMaterial->SetRenderingMode(Glacirer::Rendering::MaterialRenderingMode::AlphaCutout);
         
             auto flowerQuad = world.Spawn<Glacirer::Quad>(glm::vec3(-2.f, 0.f, -2.f), glm::vec3{0.f, -90.f, 0.f});
@@ -132,7 +132,7 @@ namespace GlacirerEditor
 
             auto windowMaterial = Glacirer::Resources::ResourceManager::CreateMaterial("M_Window");
             windowMaterial->SetColor("u_Color", glm::vec4(0.f));
-            windowMaterial->SetTexture("u_Diffuse", Glacirer::Resources::ResourceManager::LoadTexture(SANDBOX_RESOURCES_PATH + "Textures/TransparentWindow.png", "T_Window", Glacirer::Rendering::TextureSettings{true}, true), 0);
+            windowMaterial->SetTexture("u_Diffuse", Glacirer::Resources::ResourceManager::LoadTexture(SANDBOX_RESOURCES_PATH + "Textures/TransparentWindow.png", "T_Window", Glacirer::Rendering::TextureSettings{true}), 0);
             windowMaterial->SetRenderingMode(Glacirer::Rendering::MaterialRenderingMode::Transparent);
 
             glm::vec3 windowRotation{0.f, -90.f, 0.f};

@@ -19,7 +19,7 @@ namespace Glacirer
         {
         public:
 
-            static std::shared_ptr<Rendering::Texture> LoadTextureFromFile(const std::string& filePath, const Rendering::TextureSettings& settings, bool bFlipVertically = false);
+            static std::shared_ptr<Rendering::Texture> LoadTextureFromFile(const std::string& filePath, const Rendering::TextureSettings& settings, bool bFlipVertically = true);
             static std::shared_ptr<Rendering::Cubemap> LoadCubemapFromFile(const Rendering::CubemapLoadSettings& loadSettings);
         };
     }
