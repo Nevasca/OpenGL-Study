@@ -124,6 +124,12 @@ namespace GlacirerEditor
             {
                 TryApplyingTextureFor(material, uniformName, slot);
             }
+
+            ImGui::SameLine();
+            if(ImGui::Button("x"))
+            {
+                material.SetTexture(uniformName, nullptr, slot);
+            }
         }
 
         void MaterialInspector::RenderEmptyTextureProperty(Glacirer::Rendering::Material& material, const std::string& uniformName, unsigned int slot)
