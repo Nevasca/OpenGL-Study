@@ -146,9 +146,32 @@ namespace Glacirer
             m_Shader = shader;
 
             const ShaderProperties& shaderProperties = shader->GetProperties();
-            for (int i = 0; i < static_cast<int>(shaderProperties.Textures.size()); i++)
+            PopulateValuesFrom(shaderProperties);
+        }
+
+        void Material::PopulateValuesFrom(const ShaderProperties& shaderProperties)
+        {
+            for(int i = 0; i < static_cast<int>(shaderProperties.Textures.size()); i++)
             {
                 SetTexture(shaderProperties.Textures[i], nullptr, i);
+            }
+
+            for (const std::string& uniformName : shaderProperties.Colors)
+            {
+                constexpr glm::vec4 DEFAULT_COLOR{0.f, 0.f, 0.f, 1.f};
+                SetColor(uniformName, DEFAULT_COLOR);
+            }
+
+            for (const std::string& uniformName : shaderProperties.Integers)
+            {
+                constexpr int DEFAULT_INT = 0;
+                SetInt(uniformName, DEFAULT_INT);
+            }
+
+            for (const std::string& uniformName : shaderProperties.Floats)
+            {
+                constexpr float DEFAULT_FLOAT = 0.f;
+                SetFloat(uniformName, DEFAULT_FLOAT);
             }
         }
     }

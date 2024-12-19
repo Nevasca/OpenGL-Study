@@ -14,6 +14,7 @@ namespace Glacirer
         class Cubemap;
         class Texture;
         class Shader;
+        struct ShaderProperties;
 
         struct MaterialTextureProperty
         {
@@ -77,6 +78,8 @@ namespace Glacirer
     
             MaterialRenderingMode m_RenderingMode{MaterialRenderingMode::Opaque};
             std::string m_Name{};
+
+            void PopulateValuesFrom(const ShaderProperties& shaderProperties);
         };
     }
 }

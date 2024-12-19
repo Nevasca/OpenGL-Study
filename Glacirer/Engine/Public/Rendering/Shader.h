@@ -12,7 +12,15 @@ namespace Glacirer
     {
         struct ShaderProperties
         {
-            std::vector<std::string> Textures{};            
+            std::vector<std::string> Textures{};
+            std::vector<std::string> Colors{};
+            std::vector<std::string> Integers{};
+            std::vector<std::string> Floats{};
+
+            void AddTexture(const std::string&& uniformName) { Textures.emplace_back(uniformName); }
+            void AddColor(const std::string&& uniformName) { Colors.emplace_back(uniformName); }
+            void AddInt(const std::string&& uniformName) { Integers.emplace_back(uniformName); }
+            void AddFloat(const std::string&& uniformName) { Floats.emplace_back(uniformName); }
         };
         
         struct ShaderSource

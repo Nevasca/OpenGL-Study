@@ -84,10 +84,21 @@ namespace Glacirer
                         std::string uniformType = match[1].str();
                         std::string uniformName = match[2].str();
 
-                        // TODO: add more supported uniform types
                         if (uniformType == "sampler2D")
                         {
-                            source.Properties.Textures.push_back(uniformName);
+                            source.Properties.AddTexture(std::move(uniformName));
+                        }
+                        else if(uniformType == "vec4")
+                        {
+                            source.Properties.AddColor(std::move(uniformName));
+                        }
+                        else if(uniformType == "int" && uniformName != "u_RenderingMode")
+                        {
+                            source.Properties.AddInt(std::move(uniformName));
+                        }
+                        else if(uniformType == "float")
+                        {
+                            source.Properties.AddFloat(std::move(uniformName));
                         }
                     }
                     
