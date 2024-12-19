@@ -149,6 +149,16 @@ namespace Glacirer
             return texture;
         }
 
+        std::shared_ptr<Rendering::Texture> ResourceManager::GetOrLoadTexture(const std::string& filePath, const std::string& name, const Rendering::TextureSettings& settings, bool bFlipVertically)
+        {
+            if(m_Textures.find(name) == m_Textures.end())
+            {
+                return LoadTexture(filePath, name, settings, bFlipVertically);
+            }
+
+            return m_Textures[name];
+        }
+
         std::shared_ptr<Rendering::Texture> ResourceManager::GetTexture(const std::string& name)
         {
             return m_Textures[name];
