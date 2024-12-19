@@ -13,7 +13,11 @@ namespace Glacirer
         {
             stbi_set_flip_vertically_on_load(bFlipVertically);
 
-            int desiredChannels = settings.UseAlpha ? 4 : 3;
+            int desiredChannels = 0;
+            if(!settings.bAutoDesiredChannels)
+            {
+                desiredChannels = settings.UseAlpha ? 4 : 3;   
+            }
 
             int width;
             int height;
@@ -21,7 +25,15 @@ namespace Glacirer
 
             unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &channels, desiredChannels);
 
-            std::shared_ptr<Rendering::Texture> texture = std::make_shared<Rendering::Texture>(data, width, height, settings);
+            Rendering::TextureSettings appliedSettings = settings;
+
+            if(settings.bAutoDesiredChannels)
+            {
+                appliedSettings.UseAlpha = channels > 3;
+                appliedSettings.UpdateFormats();
+            }
+            
+            std::shared_ptr<Rendering::Texture> texture = std::make_shared<Rendering::Texture>(data, width, height, appliedSettings);
             texture->SetIsFlippedOnLoad(bFlipVertically);
     
             if(data)

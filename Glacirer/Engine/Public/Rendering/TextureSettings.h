@@ -24,9 +24,13 @@ namespace Glacirer
             bool GenerateMipmap{false};
             unsigned int Samples{1};
             bool UseAlpha{false};
+            bool bIsSRGB{true};
+            bool bAutoDesiredChannels{true};
 
             TextureSettings() = default;
-            TextureSettings(bool bUseAlpha, bool bIsSRGB = true);
+            TextureSettings(bool bUseAlpha, bool bInIsSRGB = true);
+
+            void UpdateFormats();
         };
     }
 }
