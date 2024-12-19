@@ -47,6 +47,6 @@ namespace GlacirerEditor
                 m_SelectedMaterialId = static_cast<int>(material->GetId());
                 m_SelectedMaterialName = material->GetName();
             }
-        }   
+        }
     }
 }
