@@ -15,5 +15,8 @@ namespace GlacirerEditor
 
         int m_SelectedMaterialId{-1};
         std::string m_SelectedMaterialName{};
+
+        void RenderMaterialsTools();
+        void RenderMaterialsList();
     };
 }

@@ -8,6 +8,25 @@ namespace GlacirerEditor
 {
     void ResourceCollection::RenderMaterialsGUI()
     {
+        RenderMaterialsTools();
+        ImGui::Separator();
+        
+        ImGui::BeginChild("MaterialsList");
+        RenderMaterialsList();
+        ImGui::EndChild();
+    }
+
+    void ResourceCollection::RenderMaterialsTools()
+    {
+        if(ImGui::Button("+ Add"))
+        {
+            unsigned int nextMaterialId = Glacirer::Resources::ResourceManager::GetNextMaterialId();
+            Glacirer::Resources::ResourceManager::CreateMaterial("Material" + std::to_string(nextMaterialId));
+        }
+    }
+
+    void ResourceCollection::RenderMaterialsList()
+    {
         const std::unordered_map<std::string, std::shared_ptr<Glacirer::Rendering::Material>>& materials = Glacirer::Resources::ResourceManager::GetAllMaterials();
 
         for(const auto& materialPair : materials)
@@ -28,6 +47,6 @@ namespace GlacirerEditor
                 m_SelectedMaterialId = static_cast<int>(material->GetId());
                 m_SelectedMaterialName = material->GetName();
             }
-        }
+        }   
     }
 }

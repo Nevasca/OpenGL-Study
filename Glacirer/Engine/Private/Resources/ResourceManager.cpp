@@ -23,7 +23,7 @@ namespace Glacirer
 
         std::string ResourceManager::RESOURCES_PATH = "EngineData/";
 
-        unsigned int ResourceManager::m_LastMaterialID = 0;
+        unsigned int ResourceManager::m_NextMaterialID = 0;
         std::string ResourceManager::DEFAULT_SHADER_NAME = "Default";
         std::string ResourceManager::DEFAULT_MATERIAL_NAME = "Default";
         std::string ResourceManager::DEFAULT_MESH_CUBE_NAME = "Cube";
@@ -110,7 +110,7 @@ namespace Glacirer
         std::shared_ptr<Rendering::Material> ResourceManager::CreateMaterial(const std::string& name, const std::string& shaderName)
         {
             std::shared_ptr<Rendering::Material> material = std::make_shared<Rendering::Material>();
-            material->SetId(m_LastMaterialID++);
+            material->SetId(m_NextMaterialID++);
             material->SetShader(m_Shaders[shaderName]);
             material->SetName(name);
 
@@ -137,6 +137,11 @@ namespace Glacirer
         const std::unordered_map<std::string, std::shared_ptr<Rendering::Material>>& ResourceManager::GetAllMaterials()
         {
             return m_Materials;
+        }
+
+        unsigned int ResourceManager::GetNextMaterialId()
+        {
+            return m_NextMaterialID;
         }
 
         std::shared_ptr<Rendering::Texture> ResourceManager::LoadTexture(const std::string& filePath, const std::string& name, const Rendering::TextureSettings& settings, bool bFlipVertically)
@@ -225,7 +230,7 @@ namespace Glacirer
             m_Models.clear();
             m_Cubemaps.clear();
 
-            m_LastMaterialID = 0;
+            m_NextMaterialID = 0;
         }
     }
 }

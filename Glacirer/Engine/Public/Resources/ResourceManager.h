@@ -43,6 +43,7 @@ namespace Glacirer
             static std::shared_ptr<Rendering::Material> GetOrCreateMaterial(const std::string& name, const std::string& shaderName);
             static std::shared_ptr<Rendering::Material> GetMaterial(const std::string& name);
             static const std::unordered_map<std::string, std::shared_ptr<Rendering::Material>>& GetAllMaterials();
+            static unsigned int GetNextMaterialId();
 
             static std::shared_ptr<Rendering::Texture> LoadTexture(const std::string& filePath, const std::string& name, const Rendering::TextureSettings& settings, bool bFlipVertically = true);
             static std::shared_ptr<Rendering::Texture> GetOrLoadTexture(const std::string& filePath, const std::string& name, const Rendering::TextureSettings& settings, bool bFlipVertically = true);
@@ -73,7 +74,7 @@ namespace Glacirer
             static std::unordered_map<std::string, std::shared_ptr<Rendering::ModelData>> m_Models;
             static std::unordered_map<std::string, std::shared_ptr<Rendering::Cubemap>> m_Cubemaps;
     
-            static unsigned int m_LastMaterialID;
+            static unsigned int m_NextMaterialID;
 
             ResourceManager() = default;
         };
