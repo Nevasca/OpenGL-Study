@@ -10,6 +10,6 @@ namespace Glacirer
         static constexpr int MAX_POINT_LIGHTS = 20;
         static constexpr int MAX_SPOT_LIGHTS = 20;
         
-        static constexpr int TOTAL_SYSTEM_RESERVED_TEXTURE_SLOTS = MAX_SKYBOXES + MAX_DIRECTIONAL_LIGHTS + MAX_POINT_LIGHTS + MAX_SPOT_LIGHTS;
+        static constexpr unsigned int TOTAL_SYSTEM_RESERVED_TEXTURE_SLOTS = MAX_SKYBOXES + MAX_DIRECTIONAL_LIGHTS + MAX_POINT_LIGHTS + MAX_SPOT_LIGHTS;
     }
 }

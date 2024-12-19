@@ -41,7 +41,7 @@ namespace Glacirer
     
             void SetColor(const std::string& name, const glm::vec4& color);
             void SetTexture(const std::string& name, const std::shared_ptr<Texture>& texture, unsigned int slot);
-            void SetCubemap(const std::string& name, const std::shared_ptr<Rendering::Cubemap>& cubemap, unsigned int slot);
+            void SetCubemap(const std::string& name, const std::shared_ptr<Cubemap>& cubemap, unsigned int slot);
             void SetMat4(const std::string& name, const glm::mat4& matrix) const;
             void SetBool(const std::string& name, const bool value);
             void SetFloat(const std::string& name, const float value);

@@ -22,10 +22,16 @@ namespace Glacirer
             }
 
             m_TextureProperties[name].Texture = texture;
-            m_TextureProperties[name].Slot = TOTAL_SYSTEM_RESERVED_TEXTURE_SLOTS + slot;
+
+            if(slot < TOTAL_SYSTEM_RESERVED_TEXTURE_SLOTS)
+            {
+                slot += TOTAL_SYSTEM_RESERVED_TEXTURE_SLOTS;
+            }
+            
+            m_TextureProperties[name].Slot = slot;
         }
 
-        void Material::SetCubemap(const std::string& name, const std::shared_ptr<Rendering::Cubemap>& cubemap, unsigned int slot)
+        void Material::SetCubemap(const std::string& name, const std::shared_ptr<Cubemap>& cubemap, unsigned int slot)
         {
             if(m_CubemapProperties.find(name) == m_CubemapProperties.end())
             {
@@ -33,7 +39,13 @@ namespace Glacirer
             }
 
             m_CubemapProperties[name].Cubemap = cubemap;
-            m_CubemapProperties[name].Slot = TOTAL_SYSTEM_RESERVED_TEXTURE_SLOTS + slot;
+
+            if(slot < TOTAL_SYSTEM_RESERVED_TEXTURE_SLOTS)
+            {
+                slot += TOTAL_SYSTEM_RESERVED_TEXTURE_SLOTS;
+            }
+
+            m_CubemapProperties[name].Slot = slot;
         }
 
         void Material::SetMat4(const std::string& name, const glm::mat4& matrix) const
