@@ -25,6 +25,7 @@ namespace Glacirer
         void Update(float deltaTime);
         void AddMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
         void RemoveMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
+        void RemoveMeshComponentsUsing(const std::shared_ptr<Rendering::Material>& material);
         void AddOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
         void RemoveOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent);
         void SetActiveCamera(const std::shared_ptr<CameraComponent>& camera);

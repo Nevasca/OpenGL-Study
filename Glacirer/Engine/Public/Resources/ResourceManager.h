@@ -24,6 +24,7 @@ namespace Glacirer
         class ENGINE_API ResourceManager
         {
         public:
+            static std::string MISSING_MATERIAL_NAME;
 
             static std::string RESOURCES_PATH;
     
@@ -38,10 +39,12 @@ namespace Glacirer
             static std::shared_ptr<Rendering::Shader> LoadShader(const std::string& singleFileShaderPath, const std::string& name);
             static std::shared_ptr<Rendering::Shader> GetOrLoadShader(const std::string& singleFileShaderPath, const std::string& name);
             static std::shared_ptr<Rendering::Shader> GetShader(const std::string& name);
+
             static std::shared_ptr<Rendering::Material> CreateMaterial(const std::string& name);
             static std::shared_ptr<Rendering::Material> CreateMaterial(const std::string& name, const std::string& shaderName);
             static std::shared_ptr<Rendering::Material> GetOrCreateMaterial(const std::string& name, const std::string& shaderName);
             static std::shared_ptr<Rendering::Material> GetMaterial(const std::string& name);
+            static void UnloadMaterial(const std::string& name);
             static const std::unordered_map<std::string, std::shared_ptr<Rendering::Material>>& GetAllMaterials();
             static unsigned int GetNextMaterialId();
 
@@ -61,8 +64,9 @@ namespace Glacirer
 
         private:
 
-            static std::string DEFAULT_SHADER_NAME;
             static std::string DEFAULT_MATERIAL_NAME;
+            static std::string DEFAULT_SHADER_NAME;
+            static std::string ERROR_SHADER_NAME;
             static std::string DEFAULT_MESH_CUBE_NAME;
             static std::string DEFAULT_MESH_QUAD_NAME;
             static std::string DEFAULT_MESH_SPHERE_NAME;

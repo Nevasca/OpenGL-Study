@@ -13,6 +13,8 @@ namespace GlacirerEditor
 
         bool HasAnyMaterialSelected() const override;
         std::string GetCurrentSelectedMaterialName() const override;
+
+        void ResetMaterialSelection();
     private:
 
         ResourceCollection m_ResourceCollection{};

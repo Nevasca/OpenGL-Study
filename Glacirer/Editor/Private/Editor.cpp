@@ -11,6 +11,7 @@
 #include "World.h"
 #include "GameObject/GameObject.h"
 #include "Basics/Components/MeshComponent.h"
+#include "Resources/ResourceManager.h"
 #include "Sandbox/SandboxSceneSpawner.h"
 
 namespace GlacirerEditor
@@ -138,9 +139,16 @@ namespace GlacirerEditor
             bShowPanelsEnabled = !bShowPanelsEnabled;
         }
 
-        if (Glacirer::Input::GetKeyDown(GLFW_KEY_DELETE) && m_MainPanel.HasAnyGameObjectSelected())
+        if (Glacirer::Input::GetKeyDown(GLFW_KEY_DELETE))
         {
-            DeleteSelectedGameObject();
+            if(m_MainPanel.HasAnyGameObjectSelected())
+            {
+                DeleteSelectedGameObject();
+            }
+            else if(m_ResourcesPanel->HasAnyMaterialSelected())
+            {
+                DeleteSelectedMaterial();
+            }
         }
     }
 
@@ -159,6 +167,20 @@ namespace GlacirerEditor
 
         m_MainPanel.ResetSelection();
         m_SelectedGameObjectIndex = -1;
+    }
+
+    void Editor::DeleteSelectedMaterial()
+    {
+        std::string materialName = m_ResourcesPanel->GetCurrentSelectedMaterialName();
+        std::shared_ptr<Glacirer::Rendering::Material> selectedMaterial = Glacirer::Resources::ResourceManager::GetMaterial(materialName);
+
+        Glacirer::World& world = m_Engine.GetWorld();
+        world.RemoveMeshComponentsUsing(selectedMaterial);
+
+        selectedMaterial.reset();
+        Glacirer::Resources::ResourceManager::UnloadMaterial(materialName);
+
+        m_ResourcesPanel->ResetMaterialSelection();
     }
 
     void Editor::InitializeImGUI()

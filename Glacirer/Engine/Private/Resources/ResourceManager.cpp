@@ -25,17 +25,22 @@ namespace Glacirer
 
         unsigned int ResourceManager::m_NextMaterialID = 0;
         std::string ResourceManager::DEFAULT_SHADER_NAME = "Default";
+        std::string ResourceManager::ERROR_SHADER_NAME = "Error";
         std::string ResourceManager::DEFAULT_MATERIAL_NAME = "Default";
+        std::string ResourceManager::MISSING_MATERIAL_NAME = "MissingMaterial";
         std::string ResourceManager::DEFAULT_MESH_CUBE_NAME = "Cube";
         std::string ResourceManager::DEFAULT_MESH_QUAD_NAME = "Quad";
         std::string ResourceManager::DEFAULT_MESH_SPHERE_NAME = "Sphere";
 
         void ResourceManager::LoadDefaultResources()
         {
-            std::shared_ptr<Rendering::Shader> defaultShader = LoadShader(RESOURCES_PATH + "Shaders/BlinnPhong.glsl", DEFAULT_SHADER_NAME);
+            LoadShader(RESOURCES_PATH + "Shaders/BlinnPhong.glsl", DEFAULT_SHADER_NAME);
+            LoadShader(RESOURCES_PATH + "Shaders/Error.glsl", ERROR_SHADER_NAME);
 
             std::shared_ptr<Rendering::Material> defaultMaterial = CreateMaterial(DEFAULT_MATERIAL_NAME);
             defaultMaterial->SetColor("u_Color", glm::vec4(0.5f, 0.5f, 0.5f, 1.f));
+
+            CreateMaterial(MISSING_MATERIAL_NAME, ERROR_SHADER_NAME);
 
             m_Meshes[DEFAULT_MESH_CUBE_NAME] = MeshResource::LoadCube();
             m_Meshes[DEFAULT_MESH_QUAD_NAME] = MeshResource::LoadQuad();
@@ -132,6 +137,11 @@ namespace Glacirer
         std::shared_ptr<Rendering::Material> ResourceManager::GetMaterial(const std::string& name)
         {
             return m_Materials[name];
+        }
+
+        void ResourceManager::UnloadMaterial(const std::string& name)
+        {
+            m_Materials.erase(name);
         }
 
         const std::unordered_map<std::string, std::shared_ptr<Rendering::Material>>& ResourceManager::GetAllMaterials()

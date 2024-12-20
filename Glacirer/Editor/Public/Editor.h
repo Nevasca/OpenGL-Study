@@ -42,6 +42,7 @@ namespace GlacirerEditor
         void DeselectGameObject(int index, const Glacirer::World& world);
         void UpdateShortcuts();
         void DeleteSelectedGameObject();
+        void DeleteSelectedMaterial();
 
         void InitializeImGUI();
     };

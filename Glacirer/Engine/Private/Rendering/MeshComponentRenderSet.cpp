@@ -63,6 +63,27 @@ namespace Glacirer
             m_TotalMeshComponents--;
         }
 
+        std::vector<std::shared_ptr<MeshComponent>> MeshComponentRenderSet::GetAllMeshComponentsUsing(const std::shared_ptr<Material>& material)
+        {
+            std::vector<std::shared_ptr<MeshComponent>> allMeshComponents{};
+            unsigned int materialId = material->GetId();
+
+            for (const auto& meshMappingPair : m_MeshComponents)
+            {
+                auto materialsMap = meshMappingPair.second;
+                
+                if(materialsMap.find(materialId) == materialsMap.end())
+                {
+                    continue;
+                }
+
+                auto meshComponents = materialsMap[materialId];
+                allMeshComponents.insert(allMeshComponents.end(), meshComponents.begin(), meshComponents.end());
+            }
+
+            return allMeshComponents;
+        }
+
         void MeshComponentRenderSet::OverrideAllObjectsScale(const glm::vec3& scaleToAdd)
         {
             for(const auto& meshMappingPair : m_MeshComponents)

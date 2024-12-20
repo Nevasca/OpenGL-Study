@@ -102,6 +102,29 @@ namespace Glacirer
             m_UniqueActiveShaderSet.Remove(meshComponent->GetShader());
         }
 
+        void RenderSystem::RemoveMeshComponentsUsing(const std::shared_ptr<Material>& material)
+        {
+            std::shared_ptr<Material> missingMaterial = Resources::ResourceManager::GetMaterial(Resources::ResourceManager::MISSING_MATERIAL_NAME);
+            assert(missingMaterial);
+
+            // TODO: think on an more efficient approach
+            std::vector<std::shared_ptr<MeshComponent>> allMeshComponentsUsingMaterial;
+
+            std::vector<std::shared_ptr<MeshComponent>> meshComponents = m_OpaqueMeshComponentSet.GetAllMeshComponentsUsing(material);
+            allMeshComponentsUsingMaterial.insert(allMeshComponentsUsingMaterial.end(), meshComponents.begin(), meshComponents.end());
+            meshComponents = m_TransparentMeshComponentSet.GetAllMeshComponentsUsing(material);
+            allMeshComponentsUsingMaterial.insert(allMeshComponentsUsingMaterial.end(), meshComponents.begin(), meshComponents.end());
+            meshComponents = m_OpaqueOutlinedMeshComponentSet.GetAllMeshComponentsUsing(material);
+            allMeshComponentsUsingMaterial.insert(allMeshComponentsUsingMaterial.end(), meshComponents.begin(), meshComponents.end());
+            meshComponents = m_TransparentOutlinedMeshComponentSet.GetAllMeshComponentsUsing(material);
+            allMeshComponentsUsingMaterial.insert(allMeshComponentsUsingMaterial.end(), meshComponents.begin(), meshComponents.end());
+
+            for(const std::shared_ptr<MeshComponent>& meshComponent : allMeshComponentsUsingMaterial)
+            {
+                meshComponent->SetMaterial(missingMaterial);
+            }
+        }
+
         void RenderSystem::AddOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
         {
             assert(meshComponent->IsReadyToDraw());

@@ -75,4 +75,9 @@ namespace GlacirerEditor
 
         return m_ResourceCollection.GetCurrentSelectedMaterialName();
     }
+
+    void ResourcesPanel::ResetMaterialSelection()
+    {
+        m_ResourceCollection.ResetMaterialSelection();
+    }
 }

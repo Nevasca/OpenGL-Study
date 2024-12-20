@@ -11,6 +11,7 @@ namespace Glacirer
 
     namespace Rendering
     {
+        class Material;
         class InstancedArray;
 
         struct MeshComponentRenderElement
@@ -26,6 +27,7 @@ namespace Glacirer
 
             void Add(const std::shared_ptr<MeshComponent>& meshComponent, InstancedArray& instancedArray);
             void Remove(const std::shared_ptr<MeshComponent>& meshComponent);
+            std::vector<std::shared_ptr<MeshComponent>> GetAllMeshComponentsUsing(const std::shared_ptr<Material>& material);
             void OverrideAllObjectsScale(const glm::vec3& scaleToAdd);
             std::multimap<float, MeshComponentRenderElement> GetMeshComponentsSortedByDistance(const glm::vec3& cameraPosition) const;
             void Clear();

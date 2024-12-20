@@ -9,10 +9,10 @@ namespace GlacirerEditor
         void RenderMaterialsGUI();
 
         bool HasAnyMaterialSelected() const { return m_SelectedMaterialId >= 0; }
-        std::string GetCurrentSelectedMaterialName() const { return m_SelectedMaterialName; } 
+        std::string GetCurrentSelectedMaterialName() const { return m_SelectedMaterialName; }
+        void ResetMaterialSelection() {m_SelectedMaterialId = -1; }
 
     private:
-
         int m_SelectedMaterialId{-1};
         std::string m_SelectedMaterialName{};
 

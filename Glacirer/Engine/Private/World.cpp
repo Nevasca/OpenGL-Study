@@ -65,6 +65,11 @@ namespace Glacirer
         m_RenderSystem->RemoveMeshComponent(meshComponent);
     }
 
+    void World::RemoveMeshComponentsUsing(const std::shared_ptr<Rendering::Material>& material)
+    {
+        m_RenderSystem->RemoveMeshComponentsUsing(material);
+    }
+
     void World::AddOutlinedMeshComponent(const std::shared_ptr<MeshComponent>& meshComponent)
     {
         m_RenderSystem->AddOutlinedMeshComponent(meshComponent);
