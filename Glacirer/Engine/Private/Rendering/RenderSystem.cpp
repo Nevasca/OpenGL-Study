@@ -632,9 +632,9 @@ namespace Glacirer
             // effect by drawing the outline color on the cube upon it
             // m_Device.DisableDepthTest();
 
-            constexpr glm::vec3 outlineThickness{0.06f};
-            m_OpaqueOutlinedMeshComponentSet.OverrideAllObjectsScale(outlineThickness);
-            m_TransparentOutlinedMeshComponentSet.OverrideAllObjectsScale(outlineThickness);
+            constexpr float outlineGrowthFactor{1.06f};
+            m_OpaqueOutlinedMeshComponentSet.MultiplyAllObjectsScaleBy(outlineGrowthFactor);
+            m_TransparentOutlinedMeshComponentSet.MultiplyAllObjectsScaleBy(outlineGrowthFactor);
 
             std::shared_ptr<Shader> currentOverrideShader = m_WorldOverrideShader;
             SetOverrideShader(m_OutlineShader, false);
@@ -642,8 +642,8 @@ namespace Glacirer
             RenderObjects(m_OpaqueOutlinedMeshComponentSet);
             RenderObjects(m_TransparentOutlinedMeshComponentSet);
 
-            m_OpaqueOutlinedMeshComponentSet.OverrideAllObjectsScale(-outlineThickness);
-            m_TransparentOutlinedMeshComponentSet.OverrideAllObjectsScale(-outlineThickness);
+            m_OpaqueOutlinedMeshComponentSet.DivideAllObjectsScaleBy(outlineGrowthFactor);
+            m_TransparentOutlinedMeshComponentSet.DivideAllObjectsScaleBy(outlineGrowthFactor);
             SetOverrideShader(currentOverrideShader, false);
 
             m_Device.EnableStencilWrite();

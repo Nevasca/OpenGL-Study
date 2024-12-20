@@ -99,6 +99,39 @@ namespace Glacirer
             }
         }
 
+        void MeshComponentRenderSet::MultiplyAllObjectsScaleBy(const float factor)
+        {
+            for(const auto& meshMappingPair : m_MeshComponents)
+            {
+                for(const auto& meshComponentPair : meshMappingPair.second)
+                {
+                    for(const auto& meshComponent : meshComponentPair.second)
+                    {
+                        glm::vec3 originalScale = meshComponent->GetOwnerScale();
+                        
+                        meshComponent->SetOwnerScale(originalScale * factor);
+                    }
+                }
+            }
+        }
+
+        void MeshComponentRenderSet::DivideAllObjectsScaleBy(const float factor)
+        {
+            assert(factor != 0.f);
+
+            for(const auto& meshMappingPair : m_MeshComponents)
+            {
+                for(const auto& meshComponentPair : meshMappingPair.second)
+                {
+                    for(const auto& meshComponent : meshComponentPair.second)
+                    {
+                        glm::vec3 originalScale = meshComponent->GetOwnerScale();
+                        meshComponent->SetOwnerScale(originalScale / factor);
+                    }
+                }
+            }
+        }
+
         // Using multimap to avoid two objects with same distance from camera override each other on single map entry
         std::multimap<float, MeshComponentRenderElement> MeshComponentRenderSet::GetMeshComponentsSortedByDistance(const glm::vec3& cameraPosition) const
         {

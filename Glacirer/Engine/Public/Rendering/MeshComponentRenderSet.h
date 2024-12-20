@@ -29,6 +29,8 @@ namespace Glacirer
             void Remove(const std::shared_ptr<MeshComponent>& meshComponent);
             std::vector<std::shared_ptr<MeshComponent>> GetAllMeshComponentsUsing(const std::shared_ptr<Material>& material);
             void OverrideAllObjectsScale(const glm::vec3& scaleToAdd);
+            void MultiplyAllObjectsScaleBy(const float factor);
+            void DivideAllObjectsScaleBy(const float factor);
             std::multimap<float, MeshComponentRenderElement> GetMeshComponentsSortedByDistance(const glm::vec3& cameraPosition) const;
             void Clear();
 
