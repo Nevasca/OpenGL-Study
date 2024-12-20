@@ -126,7 +126,8 @@ namespace GlacirerEditor
             }
 
             ImGui::SameLine();
-            if(ImGui::Button("x"))
+            std::string removeTextureButtonLabel = "x##" + std::to_string(texture->GetRendererID());
+            if(ImGui::Button(removeTextureButtonLabel.c_str()))
             {
                 material.SetTexture(uniformName, nullptr, slot);
             }
