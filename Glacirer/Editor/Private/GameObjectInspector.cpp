@@ -52,7 +52,7 @@ namespace GlacirerEditor
 
         for(int i = 0; i < static_cast<int>(components.size()); i++)
         {
-            std::string componentLabel = components[i]->GetName() + std::to_string(i);
+            std::string componentLabel = components[i]->GetName() + "##" + std::to_string(i);
 
             bool bAdded = true;
             
