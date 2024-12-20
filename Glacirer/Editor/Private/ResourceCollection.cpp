@@ -16,6 +16,12 @@ namespace GlacirerEditor
         ImGui::EndChild();
     }
 
+    void ResourceCollection::ResetMaterialSelection()
+    {
+        m_SelectedMaterialId = -1;
+        m_SelectedMaterialName = "";
+    }
+
     void ResourceCollection::RenderMaterialsTools()
     {
         if(ImGui::Button("+ Add"))
