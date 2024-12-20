@@ -63,4 +63,16 @@ namespace GlacirerEditor
             ImGui::EndTabItem();
         }
     }
+
+    bool ResourcesPanel::HasAnyMaterialSelected() const
+    {
+        return m_ResourceCollection.HasAnyMaterialSelected();
+    }
+
+    std::string ResourcesPanel::GetCurrentSelectedMaterialName() const
+    {
+        assert(m_ResourceCollection.HasAnyMaterialSelected());
+
+        return m_ResourceCollection.GetCurrentSelectedMaterialName();
+    }
 }

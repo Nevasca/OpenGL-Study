@@ -16,9 +16,9 @@
 
 namespace GlacirerEditor
 {
-    GameObjectInspector::GameObjectInspector()
+    void GameObjectInspector::Setup(const std::weak_ptr<IMaterialProvider>& materialProvider)
     {
-        RegisterComponentInspectors();
+        RegisterComponentInspectors(materialProvider);
     }
 
     void GameObjectInspector::RenderGUI(Glacirer::GameObject& gameObject)
@@ -73,7 +73,7 @@ namespace GlacirerEditor
         }
     }
 
-    void GameObjectInspector::RegisterComponentInspectors()
+    void GameObjectInspector::RegisterComponentInspectors(const std::weak_ptr<IMaterialProvider>& materialProvider)
     {
         using namespace Inspector;
 
@@ -82,7 +82,7 @@ namespace GlacirerEditor
         m_ComponentInspectorMapping[SpotLightComponentInspector::GetComponentHash()] = std::make_unique<SpotLightComponentInspector>();
         m_ComponentInspectorMapping[CameraComponentInspector::GetComponentHash()] = std::make_unique<CameraComponentInspector>();
         m_ComponentInspectorMapping[PilotComponentInspector::GetComponentHash()] = std::make_unique<PilotComponentInspector>();
-        m_ComponentInspectorMapping[MeshComponentInspector::GetComponentHash()] = std::make_unique<MeshComponentInspector>();
+        m_ComponentInspectorMapping[MeshComponentInspector::GetComponentHash()] = std::make_unique<MeshComponentInspector>(materialProvider);
         m_ComponentInspectorMapping[PostProcessingComponentInspector::GetComponentHash()] = std::make_unique<PostProcessingComponentInspector>();
         m_ComponentInspectorMapping[PilotCameraControllerInspector::GetComponentHash()] = std::make_unique<PilotCameraControllerInspector>();
     }

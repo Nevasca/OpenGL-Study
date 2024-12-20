@@ -1,5 +1,6 @@
 #include "Editor.h"
 
+#include <memory>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <imgui/imgui.h>
@@ -24,6 +25,9 @@ namespace GlacirerEditor
     void Editor::Setup()
     {
         m_Engine.Setup();
+
+        m_ResourcesPanel = std::make_shared<ResourcesPanel>();
+        m_MainPanel.Setup(m_ResourcesPanel);
 
         Sandbox::SandboxSceneSpawner::Spawn(m_Engine.GetWorld());
     }
@@ -63,6 +67,7 @@ namespace GlacirerEditor
     void Editor::Shutdown()
     {
         m_Engine.Shutdown();
+        m_ResourcesPanel.reset();
     }
 
     void Editor::RenderGUI(Glacirer::World& world)
@@ -75,7 +80,7 @@ namespace GlacirerEditor
         }
 
         m_MainPanel.RenderGUI(world);
-        m_ResourcesPanel.RenderGUI();
+        m_ResourcesPanel->RenderGUI();
         m_StatisticsWindow.RenderGUI();
     }
 

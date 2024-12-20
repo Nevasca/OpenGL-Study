@@ -221,6 +221,7 @@ if exist $(SolutionDir)bin\$(Platform)\$(Configuration)\Engine\Engine.pdb copy $
     <ClInclude Include="Public\Editor.h" />
     <ClInclude Include="Public\GameObjectInspector.h" />
     <ClInclude Include="Public\IComponentInspector.h" />
+    <ClInclude Include="Public\IMaterialProvider.h" />
     <ClInclude Include="Public\Inspectors\Components\CameraComponentInspector.h" />
     <ClInclude Include="Public\Inspectors\Components\DirectionalLightComponentInspector.h" />
     <ClInclude Include="Public\Inspectors\Components\MeshComponentInspector.h" />

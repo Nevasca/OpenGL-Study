@@ -31,7 +31,7 @@ namespace GlacirerEditor
 
         MainMenuBar m_MainMenuBar{};
         MainPanel m_MainPanel{};
-        ResourcesPanel m_ResourcesPanel{};
+        std::shared_ptr<ResourcesPanel> m_ResourcesPanel{};
         StatisticsWindow m_StatisticsWindow{};
         int m_SelectedGameObjectIndex{-1};
         bool bShowPanelsEnabled{true};

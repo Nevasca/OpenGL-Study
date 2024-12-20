@@ -10,16 +10,16 @@ namespace Glacirer
 
 namespace GlacirerEditor
 {
+    class IMaterialProvider;
+
     class GameObjectInspector
     {
     public:
-        GameObjectInspector();
-
+        void Setup(const std::weak_ptr<IMaterialProvider>& materialProvider);
         void RenderGUI(Glacirer::GameObject& gameObject);
 
     private:
-
-        void RegisterComponentInspectors();
+        void RegisterComponentInspectors(const std::weak_ptr<IMaterialProvider>& materialProvider);
         void RenderTransformGUI(Glacirer::GameObject& gameObject);
         void RenderComponentsGUI(Glacirer::GameObject& gameObject);
 

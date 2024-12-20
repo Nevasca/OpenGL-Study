@@ -1,16 +1,18 @@
 #pragma once
 
+#include "IMaterialProvider.h"
 #include "ResourceCollection.h"
 #include "inspectors/resources/MaterialInspector.h"
 
 namespace GlacirerEditor
 {
-    class ResourcesPanel
+    class ResourcesPanel : public IMaterialProvider
     {
     public:
-
         void RenderGUI();
 
+        bool HasAnyMaterialSelected() const override;
+        std::string GetCurrentSelectedMaterialName() const override;
     private:
 
         ResourceCollection m_ResourceCollection{};

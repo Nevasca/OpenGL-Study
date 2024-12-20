@@ -11,10 +11,14 @@ namespace Glacirer
 
 namespace GlacirerEditor
 {
+    class IMaterialProvider;
+
     class MainPanel
     {
     public:
 
+        void Setup(const std::weak_ptr<IMaterialProvider>& materialProvider);
+        
         void RenderGUI(Glacirer::World& world);
         bool HasAnyGameObjectSelected() const { return m_Hierarchy.HasAnyGameObjectSelected(); }
         int GetCurrentSelectedGameObjectIndex() const { return m_Hierarchy.GetCurrentSelectedGameObjectIndex(); }

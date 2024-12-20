@@ -5,6 +5,11 @@
 
 namespace GlacirerEditor
 {
+    void MainPanel::Setup(const std::weak_ptr<IMaterialProvider>& materialProvider)
+    {
+        m_GameObjectInspector.Setup(materialProvider);
+    }
+
     void MainPanel::RenderGUI(Glacirer::World& world)
     {
         const ImGuiViewport* mainViewport = ImGui::GetMainViewport();
