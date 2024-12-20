@@ -49,7 +49,7 @@ Continuing on the right side of the Editor, you can find a World Settings tab wh
 ### Material Inspector
 
 Now to the left side of the Editor. You can find all the current used materials for the world in the Materials tab.
-Selecting one of them will present their details on the inspector panel below it, where you can also modify some of their values (changing textures not implemented yet).
+Selecting one of them will present their details on the inspector panel below it, where you can also modify their values and assign new textures.
 
 ![Material Inspector](Docs/ReadmeResources/Readme_MaterialInspector.png)
 
@@ -164,11 +164,10 @@ Here are some things required for that:
 * Improve engine performance;
 * Improve editor performance;
 * Improve directional light shadow quality;
-* Implement adding and removing objects on the fly (add a cube, a model to the scene from the Editor instead of adding on code).
-* Implement adding and removing resources on the fly (add and apply textures);
 * Save and load scenes;
 * Implement object picking;
 * Gizmos;
-* Implement other rendering techniques, such as normal map, ambient occlusion.
+* Implement other rendering techniques, such as normal map, ambient occlusion;
+* Study DX12 and implement support for it on the engine (currently supports only OpenGL).
 
 All of this to later mature it into a game engine, which will require tons of new things as well (particles, collision, physics, animation, audio, UI).
