@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>   // for glfwGetWin32Window()
 #define WIN32_LEAN_AND_MEAN
+#include <cassert>
 #include <Windows.h>
 #include <commdlg.h>
 
@@ -17,6 +18,10 @@ namespace GlacirerEditor
     {
         bool FileDialog::OpenFile(const wchar_t* filter, std::string& outFilePath)
         {
+            wchar_t applicationCurrentDirectory[MAX_PATH];
+            bool bCurrentDirectorySuccess = GetCurrentDirectory(MAX_PATH, applicationCurrentDirectory);
+            assert(bCurrentDirectorySuccess);
+            
             wchar_t fileName[256];
             OPENFILENAME fileSettings = {};
             fileSettings.lStructSize = sizeof(fileSettings);
@@ -31,14 +36,21 @@ namespace GlacirerEditor
             fileSettings.lpstrInitialDir = nullptr;
             fileSettings.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
+            bool bFileNameRetrieved = false;
+            outFilePath = std::string{};
+
             if(GetOpenFileName(&fileSettings))
             {
                 outFilePath = StringConverter::ConvertWideCharToString(fileSettings.lpstrFile);
-                return true;
+                bFileNameRetrieved = true;
             }
 
-            outFilePath = std::string{};
-            return false;
+            // When using GetOpenFileName, CurrentDirectory is set to retrieved file directory
+            // Reset to application desired working directory to not fail when loading resources with relative path, such as shaders
+            bCurrentDirectorySuccess = SetCurrentDirectory(applicationCurrentDirectory);
+            assert(bCurrentDirectorySuccess);
+
+            return bFileNameRetrieved;
         }
     }
 }
