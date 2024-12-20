@@ -6,6 +6,13 @@
 
 namespace GlacirerEditor
 {
+    ResourceCollection::ResourceCollection()
+    {
+        m_EngineHiddenMaterials.insert(Glacirer::Resources::ResourceManager::MISSING_MATERIAL_NAME);
+        m_EngineHiddenMaterials.insert("M_PostProcessing");
+        m_EngineHiddenMaterials.insert("M_Skybox");
+    }
+
     void ResourceCollection::RenderMaterialsGUI()
     {
         RenderMaterialsTools();
@@ -38,6 +45,12 @@ namespace GlacirerEditor
         for(const auto& materialPair : materials)
         {
             const std::shared_ptr<Glacirer::Rendering::Material>& material = materialPair.second;
+            std::string materialName = material->GetName();
+
+            if(m_EngineHiddenMaterials.find(materialName) != m_EngineHiddenMaterials.end())
+            {
+                continue;
+            }
 
             ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_SpanAvailWidth;
 
@@ -45,13 +58,13 @@ namespace GlacirerEditor
             {
                 nodeFlags |= ImGuiTreeNodeFlags_Selected;
             }
-            
-            ImGui::TreeNodeEx((void*)(uintptr_t)material->GetId(), nodeFlags, "%s", material->GetName().c_str());
+
+            ImGui::TreeNodeEx((void*)(uintptr_t)material->GetId(), nodeFlags, "%s", materialName.c_str());
 
             if(ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
             {
                 m_SelectedMaterialId = static_cast<int>(material->GetId());
-                m_SelectedMaterialName = material->GetName();
+                m_SelectedMaterialName = materialName;
             }
         }
     }
