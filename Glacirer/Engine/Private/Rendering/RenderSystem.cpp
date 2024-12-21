@@ -32,11 +32,8 @@ namespace Glacirer
             m_Device.EnableFaceCulling();
             m_Device.EnableMSAA(); // Seems we don't actually need to enable when using custom framebuffer
     
-            Rendering::Resolution resolution = Screen::GetResolution();
+            Resolution resolution = Screen::GetResolution();
             SetViewportResolution(resolution);
-
-            constexpr glm::vec4 defaultClearColor{0.1f, 0.1f, 0.1f, 1.f};
-            SetClearColor(defaultClearColor);
 
             SetupOutlineRendering();
             SetupShadowRendering();
@@ -67,11 +64,15 @@ namespace Glacirer
 
         void RenderSystem::SetViewportResolution(const Resolution& resolution)
         {
+            constexpr glm::vec4 DEFAULT_CLEAR_COLOR{0.1f, 0.1f, 0.1f, 1.f};
+            glm::vec4 currentClearColor = m_MultisampleFramebuffer ? m_MultisampleFramebuffer->GetClearColor() : DEFAULT_CLEAR_COLOR;
+
             m_Device.SetViewportResolution(resolution);
 
             m_MultisampleFramebuffer = std::make_unique<Framebuffer>(resolution, true, std::vector<TextureSettings>{}, m_TotalMSAASamples);
-            m_IntermediateFramebuffer = std::make_unique<Framebuffer>(resolution, false, std::vector<TextureSettings>{});
+            m_MultisampleFramebuffer->SetClearColor(currentClearColor);
 
+            m_IntermediateFramebuffer = std::make_unique<Framebuffer>(resolution, false, std::vector<TextureSettings>{});
             m_PostProcessingSystem.SetFramebuffer(*m_IntermediateFramebuffer);
         }
 
